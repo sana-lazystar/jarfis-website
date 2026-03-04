@@ -15,13 +15,18 @@ const redirectUrl = localePath(locale, 'docs/getting-started');
 <html lang={locale}>
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="refresh" content={`0; url=${redirectUrl}`} />
     <link rel="canonical" href={redirectUrl} />
-    <title>Redirecting to Getting Started...</title>
+    <title>JARFIS Docs</title>
+    <script is:inline define:vars={{ redirectUrl }}>
+      window.location.replace(redirectUrl);
+    </script>
+    <noscript>
+      <meta http-equiv="refresh" content={`0; url=${redirectUrl}`} />
+    </noscript>
   </head>
   <body>
-    <p>
-      Redirecting to <a href={redirectUrl}>Getting Started</a>...
-    </p>
+    <noscript>
+      <p>Redirecting to <a href={redirectUrl}>Getting Started</a></p>
+    </noscript>
   </body>
 </html>
