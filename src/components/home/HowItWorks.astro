@@ -1,0 +1,111 @@
+---
+import type { Locale } from '../../i18n/config';
+import { t } from '../../i18n/utils';
+import { localePath } from '../../i18n/utils';
+import Button from '../common/Button.astro';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+
+const steps = [
+  { num: 1, titleKey: 'how_it_works.step1_title', descKey: 'how_it_works.step1_desc' },
+  { num: 2, titleKey: 'how_it_works.step2_title', descKey: 'how_it_works.step2_desc' },
+  { num: 3, titleKey: 'how_it_works.step3_title', descKey: 'how_it_works.step3_desc' },
+  { num: 4, titleKey: 'how_it_works.step4_title', descKey: 'how_it_works.step4_desc' },
+  { num: 5, titleKey: 'how_it_works.step5_title', descKey: 'how_it_works.step5_desc' },
+];
+---
+<section
+  class="py-20 lg:py-28 bg-white dark:bg-slate-900"
+  aria-labelledby="how-it-works-heading"
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- Section header -->
+    <div class="text-center mb-12 lg:mb-16">
+      <h2
+        id="how-it-works-heading"
+        class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mb-4"
+      >
+        {t(locale, 'how_it_works.title')}
+      </h2>
+      <p class="text-lg text-slate-500 dark:text-slate-400 max-w-xl mx-auto">
+        {t(locale, 'how_it_works.subtitle')}
+      </p>
+    </div>
+
+    <!-- Desktop: Horizontal flow -->
+    <div class="hidden lg:flex items-start gap-0 mb-12" role="list" aria-label="JARFIS workflow steps">
+      {steps.map((step, idx) => (
+        <div class="flex-1 flex flex-col items-center text-center relative" role="listitem">
+          <!-- Step number badge -->
+          <div
+            class="w-12 h-12 rounded-full bg-cyan-500 text-slate-900 flex items-center justify-center font-bold text-lg mb-4 shadow-[0_0_20px_rgba(6,182,212,0.4)] z-10"
+            aria-hidden="true"
+          >
+            {step.num}
+          </div>
+
+          <!-- Connector line (not for last item) -->
+          {idx < steps.length - 1 && (
+            <div
+              class="absolute top-6 left-1/2 w-full h-px border-t border-dashed border-cyan-500/40 dark:border-cyan-400/30"
+              aria-hidden="true"
+            />
+          )}
+
+          <!-- Step content -->
+          <h3 class="text-base font-semibold text-slate-900 dark:text-white mb-1">
+            {t(locale, step.titleKey)}
+          </h3>
+          <p class="text-sm text-slate-500 dark:text-slate-400 px-2">
+            {t(locale, step.descKey)}
+          </p>
+        </div>
+      ))}
+    </div>
+
+    <!-- Mobile: Vertical timeline -->
+    <div class="flex lg:hidden flex-col gap-0 mb-12" role="list" aria-label="JARFIS workflow steps">
+      {steps.map((step, idx) => (
+        <div class="flex gap-4 relative" role="listitem">
+          <!-- Left: step number + line -->
+          <div class="flex flex-col items-center">
+            <div
+              class="w-10 h-10 rounded-full bg-cyan-500 text-slate-900 flex items-center justify-center font-bold shrink-0 shadow-[0_0_16px_rgba(6,182,212,0.4)]"
+              aria-hidden="true"
+            >
+              {step.num}
+            </div>
+            {idx < steps.length - 1 && (
+              <div class="w-px flex-1 border-l border-dashed border-cyan-500/40 dark:border-cyan-400/30 my-1" aria-hidden="true" />
+            )}
+          </div>
+
+          <!-- Right: content -->
+          <div class="pb-8">
+            <h3 class="text-base font-semibold text-slate-900 dark:text-white mb-1">
+              {t(locale, step.titleKey)}
+            </h3>
+            <p class="text-sm text-slate-500 dark:text-slate-400">
+              {t(locale, step.descKey)}
+            </p>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- CTA -->
+    <div class="text-center">
+      <Button href={localePath(locale, 'docs')} variant="secondary">
+        {t(locale, 'how_it_works.cta')}
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+      </Button>
+    </div>
+
+  </div>
+</section>

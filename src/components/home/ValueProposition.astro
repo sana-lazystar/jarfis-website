@@ -1,0 +1,70 @@
+---
+import type { Locale } from '../../i18n/config';
+import { t } from '../../i18n/utils';
+import Card from '../common/Card.astro';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+
+const agentTeamIcon = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`;
+
+const openSourceIcon = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>`;
+
+const productionIcon = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`;
+
+const multilangIcon = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`;
+
+const values = [
+  {
+    icon: agentTeamIcon,
+    titleKey: 'value.agent_team_title',
+    descKey: 'value.agent_team_desc',
+  },
+  {
+    icon: openSourceIcon,
+    titleKey: 'value.open_source_title',
+    descKey: 'value.open_source_desc',
+  },
+  {
+    icon: productionIcon,
+    titleKey: 'value.production_title',
+    descKey: 'value.production_desc',
+  },
+  {
+    icon: multilangIcon,
+    titleKey: 'value.multilang_title',
+    descKey: 'value.multilang_desc',
+  },
+];
+---
+<section
+  class="py-20 lg:py-28 bg-slate-50 dark:bg-slate-800/30"
+  aria-labelledby="value-heading"
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- Section header -->
+    <div class="text-center mb-12 lg:mb-16">
+      <h2
+        id="value-heading"
+        class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mb-4"
+      >
+        {t(locale, 'value.title')}
+      </h2>
+    </div>
+
+    <!-- Cards grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {values.map(({ icon, titleKey, descKey }) => (
+        <Card
+          icon={icon}
+          title={t(locale, titleKey)}
+          description={t(locale, descKey)}
+        />
+      ))}
+    </div>
+
+  </div>
+</section>

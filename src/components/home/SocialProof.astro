@@ -1,0 +1,77 @@
+---
+import type { Locale } from '../../i18n/config';
+import { t } from '../../i18n/utils';
+import { formatStarCount } from '../../utils/github';
+
+interface Props {
+  locale: Locale;
+  starCount?: number;
+}
+const { locale, starCount = 0 } = Astro.props;
+const formattedStars = formatStarCount(starCount);
+const hasStars = starCount >= 100;
+---
+<section
+  class="py-16 lg:py-20 bg-slate-50 dark:bg-slate-800/30"
+  aria-labelledby="social-proof-heading"
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-3xl mx-auto rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/50 p-8 sm:p-12 text-center shadow-sm">
+
+      <!-- Stats row -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 mb-8">
+        <!-- GitHub Stars -->
+        <div class="flex flex-col items-center gap-2">
+          <div class="flex items-center gap-2 text-3xl font-bold text-slate-900 dark:text-white">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true">
+              <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/>
+            </svg>
+            {hasStars ? formattedStars : '—'}
+          </div>
+          <p class="text-sm text-slate-500 dark:text-slate-400">
+            {t(locale, 'social_proof.github_stars')}
+          </p>
+        </div>
+
+        <!-- Contributors -->
+        <div class="flex flex-col items-center gap-2">
+          <div class="flex items-center gap-2 text-3xl font-bold text-slate-900 dark:text-white">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-cyan-500" aria-hidden="true">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+            —
+          </div>
+          <p class="text-sm text-slate-500 dark:text-slate-400">
+            {t(locale, 'social_proof.contributors')}
+          </p>
+        </div>
+
+        <!-- Forks -->
+        <div class="flex flex-col items-center gap-2">
+          <div class="flex items-center gap-2 text-3xl font-bold text-slate-900 dark:text-white">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-cyan-500" aria-hidden="true">
+              <line x1="6" y1="3" x2="6" y2="15"/>
+              <circle cx="18" cy="6" r="3"/>
+              <circle cx="6" cy="18" r="3"/>
+              <path d="M18 9a9 9 0 0 1-9 9"/>
+            </svg>
+            —
+          </div>
+          <p class="text-sm text-slate-500 dark:text-slate-400">
+            {t(locale, 'social_proof.forks')}
+          </p>
+        </div>
+      </div>
+
+      <!-- Message -->
+      <p class="text-lg font-medium text-slate-700 dark:text-slate-200 max-w-lg mx-auto">
+        {hasStars
+          ? t(locale, 'social_proof.title')
+          : t(locale, 'social_proof.growing')}
+      </p>
+    </div>
+  </div>
+</section>

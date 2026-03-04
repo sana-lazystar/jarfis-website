@@ -1,0 +1,190 @@
+---
+import type { Locale } from '../../i18n/config';
+import { t } from '../../i18n/utils';
+import { localePath } from '../../i18n/utils';
+import Button from '../common/Button.astro';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+---
+<section
+  class="relative min-h-screen flex items-center overflow-hidden bg-white dark:bg-slate-900"
+  aria-labelledby="hero-heading"
+>
+  <!-- Background gradient glow -->
+  <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+    <div class="absolute top-1/4 right-1/4 w-[600px] h-[600px] rounded-full bg-cyan-500/5 dark:bg-cyan-500/10 blur-3xl"></div>
+    <div class="absolute bottom-1/4 left-1/4 w-[400px] h-[400px] rounded-full bg-cyan-300/5 dark:bg-cyan-300/10 blur-3xl"></div>
+  </div>
+
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-0 w-full">
+    <div class="grid lg:grid-cols-[1fr_1fr] gap-12 lg:gap-16 items-center">
+
+      <!-- Text content -->
+      <div class="text-center lg:text-left">
+        <!-- Badge -->
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium bg-cyan-500/10 dark:bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 border border-cyan-500/20 mb-6">
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+          </span>
+          100% Open Source
+        </div>
+
+        <!-- Tagline -->
+        <h1
+          id="hero-heading"
+          class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight text-slate-900 dark:text-white mb-4"
+          style="font-size: clamp(2.5rem, 5vw, 4rem);"
+        >
+          The Fantastic Way to<br/>
+          Ship Software with{' '}
+          <span class="text-cyan-500 dark:text-cyan-400">AI</span>
+        </h1>
+
+        <!-- Subtitle -->
+        <p class="text-lg font-medium text-slate-600 dark:text-slate-300 mb-3">
+          {t(locale, 'hero.subtitle')}
+        </p>
+
+        <!-- Description -->
+        <p class="text-base text-slate-500 dark:text-slate-400 max-w-lg mx-auto lg:mx-0 mb-8 leading-relaxed">
+          {t(locale, 'hero.description')}
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+          <Button
+            href="https://github.com/sana-lazystar/jarfis"
+            variant="primary"
+            size="lg"
+            external={true}
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+            </svg>
+            {t(locale, 'hero.cta_github')}
+          </Button>
+
+          <Button
+            href={localePath(locale, 'docs/getting-started')}
+            variant="secondary"
+            size="lg"
+          >
+            {t(locale, 'hero.cta_start')}
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+              <polyline points="9,18 15,12 9,6"/>
+            </svg>
+          </Button>
+        </div>
+      </div>
+
+      <!-- Visual: Atom orbit animation -->
+      <div class="flex items-center justify-center lg:justify-end" aria-hidden="true">
+        <div class="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96">
+
+          <!-- Orbit paths (SVG) -->
+          <svg viewBox="0 0 300 300" class="absolute inset-0 w-full h-full" aria-hidden="true">
+            <!-- Orbit ellipses -->
+            <ellipse
+              cx="150" cy="150" rx="130" ry="50"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1"
+              class="text-cyan-500/20 dark:text-cyan-400/30"
+              transform="rotate(-30 150 150)"
+            />
+            <ellipse
+              cx="150" cy="150" rx="130" ry="50"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1"
+              class="text-cyan-500/20 dark:text-cyan-400/30"
+              transform="rotate(30 150 150)"
+            />
+            <ellipse
+              cx="150" cy="150" rx="130" ry="50"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1"
+              class="text-cyan-500/20 dark:text-cyan-400/30"
+            />
+
+            <!-- Center nucleus -->
+            <circle cx="150" cy="150" r="18" fill="#06b6d4" opacity="0.9"/>
+            <text x="150" y="155" text-anchor="middle" fill="white" font-size="10" font-weight="bold">J</text>
+          </svg>
+
+          <!-- Orbiting dots (CSS animated) -->
+          <div class="absolute inset-0 flex items-center justify-center">
+            <!-- Orbit 1 -->
+            <div
+              class="absolute w-full h-full"
+              style="animation: spin-orbit-1 6s linear infinite;"
+            >
+              <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                <div class="w-4 h-4 rounded-full bg-cyan-400 shadow-[0_0_12px_rgba(34,211,238,0.8)]"></div>
+              </div>
+            </div>
+
+            <!-- Orbit 2 -->
+            <div
+              class="absolute w-[85%] h-[85%]"
+              style="animation: spin-orbit-2 4s linear infinite reverse;"
+            >
+              <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                <div class="w-3 h-3 rounded-full bg-cyan-300 shadow-[0_0_8px_rgba(34,211,238,0.6)]"></div>
+              </div>
+            </div>
+
+            <!-- Orbit 3 -->
+            <div
+              class="absolute w-[70%] h-[70%]"
+              style="animation: spin-orbit-3 8s linear infinite;"
+            >
+              <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                <div class="w-2.5 h-2.5 rounded-full bg-cyan-500 shadow-[0_0_10px_rgba(6,182,212,0.8)]"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500 animate-bounce" aria-hidden="true">
+    <span class="text-xs tracking-widest uppercase">scroll</span>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polyline points="6 9 12 15 18 9"/>
+    </svg>
+  </div>
+</section>
+
+<style>
+  @keyframes spin-orbit-1 {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  @keyframes spin-orbit-2 {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  @keyframes spin-orbit-3 {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [style*="animation"] {
+      animation: none !important;
+    }
+    .animate-bounce,
+    .animate-ping {
+      animation: none !important;
+    }
+  }
+</style>
