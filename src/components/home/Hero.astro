@@ -30,7 +30,7 @@ const { locale } = Astro.props;
             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
             <span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
           </span>
-          100% Open Source
+          {t(locale, 'hero.badge')}
         </div>
 
         <!-- Tagline -->
@@ -38,11 +38,8 @@ const { locale } = Astro.props;
           id="hero-heading"
           class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight text-slate-900 dark:text-white mb-4"
           style="font-size: clamp(2.5rem, 5vw, 4rem);"
-        >
-          The Fantastic Way to<br/>
-          Ship Software with{' '}
-          <span class="text-cyan-500 dark:text-cyan-400">AI</span>
-        </h1>
+          set:html={t(locale, 'hero.tagline')}
+        />
 
         <!-- Subtitle -->
         <p class="text-lg font-medium text-slate-600 dark:text-slate-300 mb-3">

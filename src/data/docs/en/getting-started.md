@@ -124,8 +124,8 @@ Open `output/index.html` in your browser to see the result.
 
 ## Next Steps
 
-- Read [Concepts Overview](/en/docs/concepts-overview) to understand JARFIS architecture
-- Explore [Guides](/en/docs) for more complex workflows
+- Read [Concepts Overview](/jarfis-website/en/docs/concepts-overview) to understand JARFIS architecture
+- Explore [Guides](/jarfis-website/en/docs) for more complex workflows
 - Join [GitHub Discussions](https://github.com/sana-lazystar/jarfis/discussions) for community support
 
 ## Troubleshooting

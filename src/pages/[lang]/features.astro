@@ -1,6 +1,6 @@
 ---
 import { SUPPORTED_LOCALES, type Locale } from '../../i18n/config';
-import { t } from '../../i18n/utils';
+import { t, tArray } from '../../i18n/utils';
 import { localePath } from '../../i18n/utils';
 import PageLayout from '../../layouts/PageLayout.astro';
 import SEOHead from '../../components/common/SEOHead.astro';
@@ -57,14 +57,9 @@ const multilangSvg = `<svg width="96" height="96" viewBox="0 0 24 24" fill="none
       <!-- Feature 1: AI Agent Team (odd = image left, text right) -->
       <FeatureDetail
         locale={locale}
-        title="AI Agent Team Collaboration"
-        description="JARFIS orchestrates multiple specialized AI agents — PO, UX, Frontend, QA — that work together like a real development team. Each agent has deep expertise in its domain, and they hand off work to each other just like real teammates."
-        bullets={[
-          'Parallel agent execution for speed',
-          'Context sharing between agents',
-          'Automatic handoff & code review',
-          'Each agent specializes in its domain',
-        ]}
+        title={t(locale, 'features.agent_team_title')}
+        description={t(locale, 'features.agent_team_desc')}
+        bullets={tArray(locale, 'features.agent_team_bullets')}
         docsPath="docs/concepts-overview"
         docsLabel={t(locale, 'features.learn_more')}
         icon={agentTeamSvg}
@@ -74,14 +69,9 @@ const multilangSvg = `<svg width="96" height="96" viewBox="0 0 24 24" fill="none
       <!-- Feature 2: Open Source (even = image right, text left) -->
       <FeatureDetail
         locale={locale}
-        title="100% Open Source"
-        description="MIT Licensed. Self-host on your own infrastructure. No API keys sent to third parties. No vendor lock-in. JARFIS runs wherever you want — cloud, on-premise, or your local machine."
-        bullets={[
-          'Full source code access — read every line',
-          'Bring your own LLM (OpenAI, Anthropic, Ollama)',
-          'Community-driven development',
-          'Transparent, auditable agent behavior',
-        ]}
+        title={t(locale, 'features.open_source_title')}
+        description={t(locale, 'features.open_source_desc')}
+        bullets={tArray(locale, 'features.open_source_bullets')}
         docsPath=""
         githubLink={true}
         githubLabel={t(locale, 'features.view_github')}
@@ -92,14 +82,9 @@ const multilangSvg = `<svg width="96" height="96" viewBox="0 0 24 24" fill="none
       <!-- Feature 3: Production Ready (odd) -->
       <FeatureDetail
         locale={locale}
-        title="Production Ready Output"
-        description="JARFIS doesn't just write code — it ships software. The QA agent reviews every output, checks edge cases, and ensures the result is ready for production, not just a prototype that needs more work."
-        bullets={[
-          'Real deployable code, not just snippets',
-          'QA agent verifies quality automatically',
-          'Proper error handling and edge cases',
-          'Production-grade architecture decisions',
-        ]}
+        title={t(locale, 'features.production_title')}
+        description={t(locale, 'features.production_desc')}
+        bullets={tArray(locale, 'features.production_bullets')}
         docsPath="docs/getting-started"
         docsLabel={t(locale, 'features.learn_more')}
         icon={productionSvg}
@@ -109,14 +94,9 @@ const multilangSvg = `<svg width="96" height="96" viewBox="0 0 24 24" fill="none
       <!-- Feature 4: Multi-language (even) -->
       <FeatureDetail
         locale={locale}
-        title="Multi-language Support"
-        description="JARFIS has internationalization built in from the ground up. Ship to global teams in their native language. The UX agent understands locale-specific design patterns, and outputs support multiple languages by default."
-        bullets={[
-          'i18n support out of the box',
-          'Locale-aware UX agent decisions',
-          'CJK character support (Korean, Japanese, Chinese)',
-          'RTL language awareness',
-        ]}
+        title={t(locale, 'features.multilang_title')}
+        description={t(locale, 'features.multilang_desc')}
+        bullets={tArray(locale, 'features.multilang_bullets')}
         docsPath="docs"
         docsLabel={t(locale, 'features.learn_more')}
         icon={multilangSvg}
@@ -133,11 +113,11 @@ const multilangSvg = `<svg width="96" height="96" viewBox="0 0 24 24" fill="none
   <section class="py-16 bg-slate-50 dark:bg-slate-800/30 text-center">
     <div class="max-w-2xl mx-auto px-4 sm:px-6">
       <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-6">
-        Ready to see it in action?
+        {t(locale, 'features.cta_heading')}
       </h2>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
         <Button href={localePath(locale, 'docs/getting-started')} variant="primary">
-          Get Started
+          {t(locale, 'hero.cta_start')}
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <polyline points="9 18 15 12 9 6"/>
           </svg>
@@ -147,7 +127,7 @@ const multilangSvg = `<svg width="96" height="96" viewBox="0 0 24 24" fill="none
           variant="ghost"
           external={true}
         >
-          View on GitHub
+          {t(locale, 'hero.cta_github')}
         </Button>
       </div>
     </div>

@@ -4,14 +4,12 @@ import Header from '../components/common/Header.astro';
 import Footer from '../components/common/Footer.astro';
 import Button from '../components/common/Button.astro';
 
-// Default to English for 404
-const locale = 'en';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const currentPath = Astro.url.pathname;
 
-// Try to detect locale from path for better UX
+// Detect locale from path for proper lang attribute and navigation links
 const segments = currentPath.split('/').filter(Boolean);
-const detectedLocale = ['ko', 'ja', 'zh'].includes(segments[1] ?? '') ? segments[1] : 'en';
+const locale = ['ko', 'ja', 'zh'].includes(segments[1] ?? '') ? segments[1] as 'ko' | 'ja' | 'zh' : 'en' as const;
 
 const messages: Record<string, { title: string; description: string; backHome: string }> = {
   en: {
@@ -36,10 +34,10 @@ const messages: Record<string, { title: string; description: string; backHome: s
   },
 };
 
-const msg = messages[detectedLocale] ?? messages.en;
-const homeUrl = `${base}/${detectedLocale}/`;
+const msg = messages[locale] ?? messages.en;
+const homeUrl = `${base}/${locale}/`;
 ---
-<BaseLayout title="404 — Page Not Found" locale={locale}>
+<BaseLayout title={msg.title} locale={locale}>
   <Header locale={locale} currentPath={currentPath} />
 
   <main id="main-content" class="min-h-screen flex items-center justify-center px-4">
@@ -81,4 +79,5 @@ const homeUrl = `${base}/${detectedLocale}/`;
   </main>
 
   <Footer locale={locale} />
+
 </BaseLayout>

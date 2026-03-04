@@ -8,9 +8,10 @@
     "github": "GitHub"
   },
   "hero": {
-    "tagline": "用AI发布软件的绝妙方式",
+    "tagline": "用AI发布软件的<br/>绝妙方式",
     "subtitle": "100%开源。您的AI团队，您的规则。",
     "description": "AI智能体作为团队协作，自主构建生产就绪的软件。无供应商锁定。无黑盒。",
+    "badge": "100%开源",
     "cta_github": "在GitHub上查看",
     "cta_start": "开始使用"
   },
@@ -71,7 +72,41 @@
       "transparent": "透明且可审计"
     },
     "learn_more": "在文档中了解更多",
-    "view_github": "在GitHub上查看"
+    "view_github": "在GitHub上查看",
+    "agent_team_title": "AI智能体团队协作",
+    "agent_team_desc": "JARFIS协调多个专业AI智能体——PO、UX、前端、QA——像真实开发团队一样协同工作。每个智能体在其领域拥有深厚专业知识，像真实队友一样相互交接工作。",
+    "agent_team_bullets": [
+      "并行智能体执行以提高速度",
+      "智能体间共享上下文",
+      "自动交接和代码审查",
+      "每个智能体专注于其领域"
+    ],
+    "open_source_title": "100%开源",
+    "open_source_desc": "MIT许可证。在自己的基础设施上自托管。无需向第三方发送API密钥。无供应商锁定。JARFIS可在任何地方运行——云端、本地部署或您的本地机器。",
+    "open_source_bullets": [
+      "完整源代码访问——阅读每一行",
+      "使用您自己的LLM（OpenAI、Anthropic、Ollama）",
+      "社区驱动的开发",
+      "透明且可审计的智能体行为"
+    ],
+    "production_title": "生产就绪输出",
+    "production_desc": "JARFIS不仅仅是编写代码——它发布软件。QA智能体审查每个输出，检查边缘情况，确保结果可以投入生产，而不仅仅是需要更多工作的原型。",
+    "production_bullets": [
+      "真正可部署的代码，而非代码片段",
+      "QA智能体自动验证质量",
+      "适当的错误处理和边缘情况",
+      "生产级架构决策"
+    ],
+    "multilang_title": "多语言支持",
+    "multilang_desc": "JARFIS从底层内置了国际化支持。以团队的母语向全球团队发布。UX智能体理解特定区域设计模式，输出默认支持多种语言。",
+    "multilang_bullets": [
+      "开箱即用的i18n支持",
+      "区域感知的UX智能体决策",
+      "CJK字符支持（韩语、日语、中文）",
+      "RTL语言感知"
+    ],
+    "cta_heading": "准备好查看实际效果了吗？",
+    "footnote": "* 基于一般类别模式的比较，而非针对特定产品。"
   },
   "docs": {
     "page_title": "文档",
@@ -99,7 +134,9 @@
     "watch_repo": "Watch仓库",
     "read_more": "阅读更多",
     "min_read": "分钟阅读",
-    "back_to_blog": "返回博客"
+    "back_to_blog": "返回博客",
+    "prev_post": "上一篇",
+    "next_post": "下一篇"
   },
   "showcase": {
     "page_title": "展示",
@@ -138,7 +175,8 @@
     "issues": "GitHub问题",
     "contributing": "贡献指南",
     "copyright": "JARFIS贡献者",
-    "built_with": "用JARFIS构建"
+    "built_with": "用JARFIS构建",
+    "tagline": "用AI发布软件的绝妙方式"
   },
   "a11y": {
     "skip_to_content": "跳转到主要内容",

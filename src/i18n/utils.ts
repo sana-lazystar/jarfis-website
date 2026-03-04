@@ -47,6 +47,44 @@ export function t(locale: Locale, key: string): string {
 }
 
 /**
+ * Get a nested translation value as an array of strings.
+ * Falls back to English if the key is missing in the target locale.
+ */
+export function tArray(locale: Locale, key: string): string[] {
+  const keys = key.split('.');
+  let value: TranslationValue = translations[locale];
+
+  for (const k of keys) {
+    if (value && typeof value === 'object') {
+      value = (value as Record<string, TranslationValue>)[k];
+    } else {
+      value = undefined as unknown as TranslationValue;
+      break;
+    }
+  }
+
+  if (Array.isArray(value)) {
+    return value as unknown as string[];
+  }
+
+  // Fallback to English
+  let fallback: TranslationValue = translations[DEFAULT_LOCALE];
+  for (const k of keys) {
+    if (fallback && typeof fallback === 'object') {
+      fallback = (fallback as Record<string, TranslationValue>)[k];
+    } else {
+      fallback = undefined as unknown as TranslationValue;
+      break;
+    }
+  }
+  if (Array.isArray(fallback)) {
+    return fallback as unknown as string[];
+  }
+
+  return [];
+}
+
+/**
  * Extract locale from URL pathname.
  * pathname: '/jarfis-website/ko/features'
  * segment[0] = 'jarfis-website' (base path)

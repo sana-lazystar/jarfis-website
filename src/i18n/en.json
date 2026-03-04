@@ -8,9 +8,10 @@
     "github": "GitHub"
   },
   "hero": {
-    "tagline": "The Fantastic Way to Ship Software with AI",
+    "tagline": "The Fantastic Way to<br/>Ship Software with AI",
     "subtitle": "100% Open Source. Your AI team, your rules.",
     "description": "AI agents collaborate as a team to build production-ready software — autonomously. No vendor lock-in. No black box.",
+    "badge": "100% Open Source",
     "cta_github": "View on GitHub",
     "cta_start": "Get Started"
   },
@@ -71,7 +72,41 @@
       "transparent": "Transparent, auditable"
     },
     "learn_more": "Learn more in Docs",
-    "view_github": "View on GitHub"
+    "view_github": "View on GitHub",
+    "agent_team_title": "AI Agent Team Collaboration",
+    "agent_team_desc": "JARFIS orchestrates multiple specialized AI agents — PO, UX, Frontend, QA — that work together like a real development team. Each agent has deep expertise in its domain, and they hand off work to each other just like real teammates.",
+    "agent_team_bullets": [
+      "Parallel agent execution for speed",
+      "Context sharing between agents",
+      "Automatic handoff & code review",
+      "Each agent specializes in its domain"
+    ],
+    "open_source_title": "100% Open Source",
+    "open_source_desc": "MIT Licensed. Self-host on your own infrastructure. No API keys sent to third parties. No vendor lock-in. JARFIS runs wherever you want — cloud, on-premise, or your local machine.",
+    "open_source_bullets": [
+      "Full source code access — read every line",
+      "Bring your own LLM (OpenAI, Anthropic, Ollama)",
+      "Community-driven development",
+      "Transparent, auditable agent behavior"
+    ],
+    "production_title": "Production Ready Output",
+    "production_desc": "JARFIS doesn't just write code — it ships software. The QA agent reviews every output, checks edge cases, and ensures the result is ready for production, not just a prototype that needs more work.",
+    "production_bullets": [
+      "Real deployable code, not just snippets",
+      "QA agent verifies quality automatically",
+      "Proper error handling and edge cases",
+      "Production-grade architecture decisions"
+    ],
+    "multilang_title": "Multi-language Support",
+    "multilang_desc": "JARFIS has internationalization built in from the ground up. Ship to global teams in their native language. The UX agent understands locale-specific design patterns, and outputs support multiple languages by default.",
+    "multilang_bullets": [
+      "i18n support out of the box",
+      "Locale-aware UX agent decisions",
+      "CJK character support (Korean, Japanese, Chinese)",
+      "RTL language awareness"
+    ],
+    "cta_heading": "Ready to see it in action?",
+    "footnote": "* Comparison based on general category patterns, not specific products."
   },
   "docs": {
     "page_title": "Documentation",
@@ -99,7 +134,9 @@
     "watch_repo": "Watch Repo",
     "read_more": "Read more",
     "min_read": "min read",
-    "back_to_blog": "Back to Blog"
+    "back_to_blog": "Back to Blog",
+    "prev_post": "Previous",
+    "next_post": "Next"
   },
   "showcase": {
     "page_title": "Showcase",
@@ -138,7 +175,8 @@
     "issues": "GitHub Issues",
     "contributing": "Contributing Guide",
     "copyright": "JARFIS Contributors",
-    "built_with": "Built with JARFIS"
+    "built_with": "Built with JARFIS",
+    "tagline": "The Fantastic Way to Ship Software with AI"
   },
   "a11y": {
     "skip_to_content": "Skip to main content",
