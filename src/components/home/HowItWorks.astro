@@ -9,12 +9,16 @@ interface Props {
 }
 const { locale } = Astro.props;
 
-const steps = [
-  { num: 1, titleKey: 'how_it_works.step1_title', descKey: 'how_it_works.step1_desc' },
-  { num: 2, titleKey: 'how_it_works.step2_title', descKey: 'how_it_works.step2_desc' },
-  { num: 3, titleKey: 'how_it_works.step3_title', descKey: 'how_it_works.step3_desc' },
-  { num: 4, titleKey: 'how_it_works.step4_title', descKey: 'how_it_works.step4_desc' },
-  { num: 5, titleKey: 'how_it_works.step5_title', descKey: 'how_it_works.step5_desc' },
+const phases = [
+  { num: 1, titleKey: 'how_it_works.phase1_title', descKey: 'how_it_works.phase1_desc' },
+  { num: 2, titleKey: 'how_it_works.phase2_title', descKey: 'how_it_works.phase2_desc' },
+  { num: 3, titleKey: 'how_it_works.phase3_title', descKey: 'how_it_works.phase3_desc' },
+  { num: 4, titleKey: 'how_it_works.phase4_title', descKey: 'how_it_works.phase4_desc' },
+  { num: 5, titleKey: 'how_it_works.phase5_title', descKey: 'how_it_works.phase5_desc' },
+  { num: 6, titleKey: 'how_it_works.phase6_title', descKey: 'how_it_works.phase6_desc' },
+  { num: 7, titleKey: 'how_it_works.phase7_title', descKey: 'how_it_works.phase7_desc' },
+  { num: 8, titleKey: 'how_it_works.phase8_title', descKey: 'how_it_works.phase8_desc' },
+  { num: 9, titleKey: 'how_it_works.phase9_title', descKey: 'how_it_works.phase9_desc' },
 ];
 ---
 <section
@@ -36,50 +40,87 @@ const steps = [
       </p>
     </div>
 
-    <!-- Desktop: Horizontal flow -->
-    <div class="hidden lg:flex items-start gap-0 mb-12" role="list" aria-label="JARFIS workflow steps">
-      {steps.map((step, idx) => (
-        <div class="flex-1 flex flex-col items-center text-center relative" role="listitem">
-          <!-- Step number badge -->
-          <div
-            class="w-12 h-12 rounded-full bg-cyan-500 text-slate-900 flex items-center justify-center font-bold text-lg mb-4 shadow-[0_0_20px_rgba(6,182,212,0.4)] z-10"
-            aria-hidden="true"
-          >
-            {step.num}
-          </div>
-
-          <!-- Connector line (not for last item) -->
-          {idx < steps.length - 1 && (
+    <!-- Desktop: 2-row grid layout (5 + 4) for 9 phases -->
+    <!-- ADR-002: 9 phases exceed single-row readability, using 2-row split -->
+    <div class="hidden lg:block mb-12">
+      <!-- Row 1: phases 1-5 -->
+      <div class="flex items-start gap-0 mb-8" role="list" aria-label="JARFIS workflow phases (1-5)">
+        {phases.slice(0, 5).map((phase, idx) => (
+          <div class="flex-1 flex flex-col items-center text-center relative" role="listitem">
+            <!-- Phase number badge -->
             <div
-              class="absolute top-6 left-1/2 w-full h-px border-t border-dashed border-cyan-500/40 dark:border-cyan-400/30"
+              class="w-12 h-12 rounded-full bg-cyan-500 text-slate-900 flex items-center justify-center font-bold text-lg mb-4 shadow-[0_0_20px_rgba(6,182,212,0.4)] z-10"
               aria-hidden="true"
-            />
-          )}
+            >
+              {phase.num}
+            </div>
 
-          <!-- Step content -->
-          <h3 class="text-base font-semibold text-slate-900 dark:text-white mb-1">
-            {t(locale, step.titleKey)}
-          </h3>
-          <p class="text-sm text-slate-500 dark:text-slate-400 px-2">
-            {t(locale, step.descKey)}
-          </p>
-        </div>
-      ))}
+            <!-- Connector line (not for last item in row) -->
+            {idx < 4 && (
+              <div
+                class="absolute top-6 left-1/2 w-full h-px border-t border-dashed border-cyan-500/40 dark:border-cyan-400/30"
+                aria-hidden="true"
+              />
+            )}
+
+            <!-- Phase content -->
+            <h3 class="text-sm font-semibold text-slate-900 dark:text-white mb-1">
+              {t(locale, phase.titleKey)}
+            </h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 px-1">
+              {t(locale, phase.descKey)}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      <!-- Row 2: phases 6-9 -->
+      <div class="flex items-start gap-0" role="list" aria-label="JARFIS workflow phases (6-9)">
+        {phases.slice(5).map((phase, idx) => (
+          <div class="flex-1 flex flex-col items-center text-center relative" role="listitem">
+            <!-- Phase number badge -->
+            <div
+              class="w-12 h-12 rounded-full bg-cyan-500 text-slate-900 flex items-center justify-center font-bold text-lg mb-4 shadow-[0_0_20px_rgba(6,182,212,0.4)] z-10"
+              aria-hidden="true"
+            >
+              {phase.num}
+            </div>
+
+            <!-- Connector line (not for last item in row) -->
+            {idx < 3 && (
+              <div
+                class="absolute top-6 left-1/2 w-full h-px border-t border-dashed border-cyan-500/40 dark:border-cyan-400/30"
+                aria-hidden="true"
+              />
+            )}
+
+            <!-- Phase content -->
+            <h3 class="text-sm font-semibold text-slate-900 dark:text-white mb-1">
+              {t(locale, phase.titleKey)}
+            </h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 px-1">
+              {t(locale, phase.descKey)}
+            </p>
+          </div>
+        ))}
+        <!-- Empty spacer to align 4 items in a 5-column-wide row -->
+        <div class="flex-1" aria-hidden="true" />
+      </div>
     </div>
 
     <!-- Mobile: Vertical timeline -->
-    <div class="flex lg:hidden flex-col gap-0 mb-12" role="list" aria-label="JARFIS workflow steps">
-      {steps.map((step, idx) => (
+    <div class="flex lg:hidden flex-col gap-0 mb-12" role="list" aria-label="JARFIS workflow phases">
+      {phases.map((phase, idx) => (
         <div class="flex gap-4 relative" role="listitem">
-          <!-- Left: step number + line -->
+          <!-- Left: phase number + line -->
           <div class="flex flex-col items-center">
             <div
               class="w-10 h-10 rounded-full bg-cyan-500 text-slate-900 flex items-center justify-center font-bold shrink-0 shadow-[0_0_16px_rgba(6,182,212,0.4)]"
               aria-hidden="true"
             >
-              {step.num}
+              {phase.num}
             </div>
-            {idx < steps.length - 1 && (
+            {idx < phases.length - 1 && (
               <div class="w-px flex-1 border-l border-dashed border-cyan-500/40 dark:border-cyan-400/30 my-1" aria-hidden="true" />
             )}
           </div>
@@ -87,10 +128,10 @@ const steps = [
           <!-- Right: content -->
           <div class="pb-8">
             <h3 class="text-base font-semibold text-slate-900 dark:text-white mb-1">
-              {t(locale, step.titleKey)}
+              {t(locale, phase.titleKey)}
             </h3>
             <p class="text-sm text-slate-500 dark:text-slate-400">
-              {t(locale, step.descKey)}
+              {t(locale, phase.descKey)}
             </p>
           </div>
         </div>

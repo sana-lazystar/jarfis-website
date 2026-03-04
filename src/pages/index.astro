@@ -5,11 +5,18 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 <html>
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="refresh" content={`0; url=${base}/en/`} />
     <link rel="canonical" href={`${base}/en/`} />
-    <title>Redirecting...</title>
+    <title>JARFIS</title>
+    <script is:inline define:vars={{ base }}>
+      window.location.replace(base + '/en/');
+    </script>
+    <noscript>
+      <meta http-equiv="refresh" content={`0; url=${base}/en/`} />
+    </noscript>
   </head>
   <body>
-    <p>Redirecting to <a href={`${base}/en/`}>/en/</a></p>
+    <noscript>
+      <p>Redirecting to <a href={`${base}/en/`}>/en/</a></p>
+    </noscript>
   </body>
 </html>

@@ -26,9 +26,12 @@ const skipLinkText = t(locale, 'a11y.skip_to_content');
     <meta name="generator" content={Astro.generator} />
 
     <!-- CSP meta tag -->
+    <!-- script-src: 'unsafe-inline' applied (ADR-003). SSG static site with no user input or
+         third-party scripts — no practical XSS risk. Re-evaluate if search, comments,
+         or third-party scripts (Analytics, ads) are added in the future. -->
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self' 'sha256-YxoZ2MkHPm7JhpdQMpPcR2zzwr+kXOnKPUSzcRcVT2U=' 'sha256-L3iAYqJIVqzqYvXPglzHAbfWlt6zvRexBR8UdGt2w6k=' 'sha256-i7B83grpnZ50Ie1ZPI6g8dcZHjVRrScrhW6BkMiJkIg=' 'sha256-PnUcEx1UHK1H7d3wmDWG9Q432uxxlw+yUNhvsu+yRAg=' 'sha256-hpYVaf8zNYm0fxkQMeRkiqB9NR9t/DmmHVHQTRi5ZfY=' 'sha256-1Tmstdrt/2FtKVNF7yMJKMlreVG4bHNyWVQCcZDTF7w=' 'sha256-0JoSUCUEYi9ApLxzFOOE9aRSeJoYkeEwwmVFh8/ndCM='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; base-uri 'self'; upgrade-insecure-requests;"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; base-uri 'self'; upgrade-insecure-requests;"
     />
 
     <meta name="theme-color" content="#06b6d4" />

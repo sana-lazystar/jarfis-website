@@ -9,7 +9,6 @@ import ValueProposition from '../../components/home/ValueProposition.astro';
 import HowItWorks from '../../components/home/HowItWorks.astro';
 import SocialProof from '../../components/home/SocialProof.astro';
 import Button from '../../components/common/Button.astro';
-import { getGitHubStars } from '../../utils/github';
 
 export function getStaticPaths() {
   return SUPPORTED_LOCALES.map((lang) => ({ params: { lang } }));
@@ -17,9 +16,6 @@ export function getStaticPaths() {
 
 const { lang } = Astro.params as { lang: Locale };
 const locale = lang as Locale;
-
-// Build-time fetch of GitHub stars
-const starCount = await getGitHubStars();
 ---
 <PageLayout
   title={t(locale, 'hero.tagline')}
@@ -45,7 +41,7 @@ const starCount = await getGitHubStars();
   <HowItWorks locale={locale} />
 
   <!-- Social proof -->
-  <SocialProof locale={locale} starCount={starCount} />
+  <SocialProof locale={locale} />
 
   <!-- Final CTA section -->
   <section class="py-20 lg:py-28 bg-white dark:bg-slate-900 text-center" aria-labelledby="final-cta-heading">
