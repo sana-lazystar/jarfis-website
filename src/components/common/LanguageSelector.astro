@@ -1,0 +1,100 @@
+---
+import type { Locale } from '../../i18n/config';
+import { LOCALE_LABELS, LOCALE_NATIVE_LABELS, SUPPORTED_LOCALES } from '../../i18n/config';
+import { getAlternateLocalePaths } from '../../i18n/utils';
+import { t } from '../../i18n/utils';
+
+interface Props {
+  locale: Locale;
+  class?: string;
+}
+
+const { locale, class: className = '' } = Astro.props;
+const currentPath = Astro.url.pathname;
+const alternates = getAlternateLocalePaths(currentPath);
+---
+<div class={`relative ${className}`} data-language-selector>
+  <button
+    type="button"
+    id="lang-btn"
+    class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+    aria-haspopup="listbox"
+    aria-expanded="false"
+    aria-label={t(locale, 'a11y.switch_language')}
+  >
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <circle cx="12" cy="12" r="10"/>
+      <line x1="2" y1="12" x2="22" y2="12"/>
+      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+    </svg>
+    <span>{LOCALE_NATIVE_LABELS[locale]}</span>
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true" class="transition-transform" id="lang-chevron">
+      <polyline points="6 9 12 15 18 9"/>
+    </svg>
+  </button>
+
+  <!-- Dropdown -->
+  <ul
+    id="lang-dropdown"
+    role="listbox"
+    aria-label={t(locale, 'a11y.switch_language')}
+    class="hidden absolute right-0 top-full mt-1 w-36 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-lg z-50 py-1 overflow-hidden"
+  >
+    {SUPPORTED_LOCALES.map((loc) => (
+      <li role="option" aria-selected={loc === locale ? 'true' : 'false'}>
+        <a
+          href={alternates[loc]}
+          class={`flex items-center justify-between px-4 py-2.5 text-sm transition-colors ${
+            loc === locale
+              ? 'text-cyan-500 dark:text-cyan-400 bg-cyan-50 dark:bg-cyan-900/20 font-medium'
+              : 'text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700'
+          }`}
+          lang={loc}
+          hreflang={loc}
+        >
+          <span>{LOCALE_LABELS[loc]}</span>
+          {loc === locale && (
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          )}
+        </a>
+      </li>
+    ))}
+  </ul>
+</div>
+
+<script is:inline>
+  (function () {
+    var selector = document.querySelector('[data-language-selector]');
+    if (!selector) return;
+
+    var btn = selector.querySelector('#lang-btn');
+    var dropdown = selector.querySelector('#lang-dropdown');
+    var chevron = selector.querySelector('#lang-chevron');
+
+    function open() {
+      dropdown.classList.remove('hidden');
+      btn.setAttribute('aria-expanded', 'true');
+      if (chevron) chevron.style.transform = 'rotate(180deg)';
+    }
+
+    function close() {
+      dropdown.classList.add('hidden');
+      btn.setAttribute('aria-expanded', 'false');
+      if (chevron) chevron.style.transform = '';
+    }
+
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var isOpen = btn.getAttribute('aria-expanded') === 'true';
+      if (isOpen) { close(); } else { open(); }
+    });
+
+    document.addEventListener('click', function () { close(); });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { close(); btn.focus(); }
+    });
+  })();
+</script>

@@ -1,0 +1,258 @@
+---
+import type { Locale } from '../../i18n/config';
+import { t } from '../../i18n/utils';
+import { localePath } from '../../i18n/utils';
+import ThemeToggle from './ThemeToggle.astro';
+import LanguageSelector from './LanguageSelector.astro';
+
+interface Props {
+  locale: Locale;
+  currentPath?: string;
+}
+
+const { locale, currentPath = '' } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const navItems = [
+  { key: 'nav.home', path: '' },
+  { key: 'nav.features', path: 'features' },
+  { key: 'nav.docs', path: 'docs' },
+  { key: 'nav.blog', path: 'blog' },
+  { key: 'nav.showcase', path: 'showcase' },
+];
+
+function isActive(path: string): boolean {
+  if (path === '') {
+    // Home: matches /{locale}/ exactly
+    const homePattern = new RegExp(`^${base}/${locale}/?$`);
+    return homePattern.test(currentPath);
+  }
+  return currentPath.includes(`/${locale}/${path}`);
+}
+---
+<header
+  class="sticky top-0 z-40 h-16 flex items-center border-b border-slate-200 dark:border-slate-700/80 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md"
+  role="banner"
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between w-full">
+    <!-- Logo -->
+    <a
+      href={localePath(locale, '')}
+      class="flex items-center gap-2 font-bold text-slate-900 dark:text-white hover:text-cyan-500 dark:hover:text-cyan-400 transition-colors"
+      aria-label="JARFIS — Home"
+    >
+      <!-- Atom orbit logo mark -->
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <ellipse cx="16" cy="16" rx="14" ry="6" stroke="#06b6d4" stroke-width="1.5" transform="rotate(-30 16 16)"/>
+        <ellipse cx="16" cy="16" rx="14" ry="6" stroke="#06b6d4" stroke-width="1.5" transform="rotate(30 16 16)"/>
+        <ellipse cx="16" cy="16" rx="14" ry="6" stroke="#06b6d4" stroke-width="1.5"/>
+        <circle cx="16" cy="16" r="3" fill="#06b6d4"/>
+        <circle cx="30" cy="16" r="2" fill="#22d3ee"/>
+      </svg>
+      <span class="text-lg tracking-tight">JARFIS</span>
+    </a>
+
+    <!-- Desktop navigation -->
+    <nav class="hidden lg:flex items-center gap-1" aria-label="Main navigation">
+      {navItems.map(({ key, path }) => {
+        const active = isActive(path);
+        return (
+          <a
+            href={localePath(locale, path)}
+            class={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+              active
+                ? 'text-cyan-500 dark:text-cyan-400 border-b-2 border-cyan-500'
+                : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800'
+            }`}
+            aria-current={active ? 'page' : undefined}
+          >
+            {t(locale, key)}
+          </a>
+        );
+      })}
+    </nav>
+
+    <!-- Right side actions -->
+    <div class="flex items-center gap-2">
+      <!-- GitHub link (desktop) -->
+      <a
+        href="https://github.com/sana-lazystar/jarfis"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="hidden md:inline-flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-medium border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:border-cyan-500 hover:text-cyan-500 dark:hover:text-cyan-400 transition-colors"
+        aria-label="View JARFIS on GitHub (opens in new tab)"
+      >
+        <!-- GitHub icon -->
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+        </svg>
+        GitHub
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
+          <polyline points="15,3 21,3 21,9"/>
+          <line x1="10" y1="14" x2="21" y2="3"/>
+        </svg>
+      </a>
+
+      <!-- Language selector (desktop) -->
+      <div class="hidden md:block">
+        <LanguageSelector locale={locale} />
+      </div>
+
+      <!-- Theme toggle (desktop) -->
+      <ThemeToggle class="hidden md:flex" />
+
+      <!-- Mobile: Hamburger -->
+      <button
+        type="button"
+        id="mobile-menu-btn"
+        class="lg:hidden inline-flex items-center justify-center w-9 h-9 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+        aria-label="Open navigation menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <!-- Hamburger icon -->
+        <svg id="icon-hamburger" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+        <!-- Close icon -->
+        <svg id="icon-close" class="hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile navigation drawer -->
+<div
+  id="mobile-menu"
+  class="hidden fixed inset-0 z-30 lg:hidden"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Navigation menu"
+>
+  <!-- Overlay -->
+  <div id="mobile-overlay" class="fixed inset-0 bg-black/50 backdrop-blur-sm" aria-hidden="true"></div>
+
+  <!-- Drawer -->
+  <nav
+    class="fixed right-0 top-0 h-full w-72 max-w-[85vw] bg-white dark:bg-slate-900 border-l border-slate-200 dark:border-slate-700 flex flex-col shadow-xl"
+    aria-label="Mobile navigation"
+  >
+    <!-- Drawer header -->
+    <div class="flex items-center justify-between px-4 h-16 border-b border-slate-200 dark:border-slate-700">
+      <a
+        href={localePath(locale, '')}
+        class="flex items-center gap-2 font-bold text-slate-900 dark:text-white"
+      >
+        <svg width="28" height="28" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <ellipse cx="16" cy="16" rx="14" ry="6" stroke="#06b6d4" stroke-width="1.5" transform="rotate(-30 16 16)"/>
+          <ellipse cx="16" cy="16" rx="14" ry="6" stroke="#06b6d4" stroke-width="1.5" transform="rotate(30 16 16)"/>
+          <ellipse cx="16" cy="16" rx="14" ry="6" stroke="#06b6d4" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="3" fill="#06b6d4"/>
+        </svg>
+        JARFIS
+      </a>
+      <button
+        type="button"
+        id="mobile-close-btn"
+        class="inline-flex items-center justify-center w-9 h-9 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+        aria-label="Close navigation menu"
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Nav links -->
+    <ul class="flex-1 overflow-y-auto py-4 px-2">
+      {navItems.map(({ key, path }) => {
+        const active = isActive(path);
+        return (
+          <li>
+            <a
+              href={localePath(locale, path)}
+              class={`flex items-center px-4 py-3 rounded-lg text-base font-medium transition-colors ${
+                active
+                  ? 'text-cyan-500 dark:text-cyan-400 bg-cyan-50 dark:bg-cyan-900/20'
+                  : 'text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800'
+              }`}
+              aria-current={active ? 'page' : undefined}
+            >
+              {t(locale, key)}
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+
+    <!-- Bottom actions -->
+    <div class="border-t border-slate-200 dark:border-slate-700 p-4 flex flex-col gap-3">
+      <a
+        href="https://github.com/sana-lazystar/jarfis"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:border-cyan-500 hover:text-cyan-500 transition-colors text-sm font-medium"
+        aria-label="View JARFIS on GitHub (opens in new tab)"
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+        </svg>
+        GitHub
+      </a>
+      <div class="flex items-center justify-between">
+        <LanguageSelector locale={locale} />
+        <ThemeToggle />
+      </div>
+    </div>
+  </nav>
+</div>
+
+<script is:inline>
+  (function () {
+    var menuBtn = document.getElementById('mobile-menu-btn');
+    var closeBtn = document.getElementById('mobile-close-btn');
+    var menu = document.getElementById('mobile-menu');
+    var overlay = document.getElementById('mobile-overlay');
+    var hamburger = document.getElementById('icon-hamburger');
+    var closeIcon = document.getElementById('icon-close');
+
+    if (!menuBtn || !menu) return;
+
+    function openMenu() {
+      menu.classList.remove('hidden');
+      menuBtn.setAttribute('aria-expanded', 'true');
+      if (hamburger) hamburger.classList.add('hidden');
+      if (closeIcon) closeIcon.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      // Focus first nav link
+      var firstLink = menu.querySelector('a');
+      if (firstLink) firstLink.focus();
+    }
+
+    function closeMenu() {
+      menu.classList.add('hidden');
+      menuBtn.setAttribute('aria-expanded', 'false');
+      if (hamburger) hamburger.classList.remove('hidden');
+      if (closeIcon) closeIcon.classList.add('hidden');
+      document.body.style.overflow = '';
+      menuBtn.focus();
+    }
+
+    menuBtn.addEventListener('click', openMenu);
+    if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+    if (overlay) overlay.addEventListener('click', closeMenu);
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !menu.classList.contains('hidden')) {
+        closeMenu();
+      }
+    });
+  })();
+</script>

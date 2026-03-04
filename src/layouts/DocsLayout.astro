@@ -1,6 +1,8 @@
 ---
 import type { Locale } from '../i18n/config';
 import BaseLayout from './BaseLayout.astro';
+import Header from '../components/common/Header.astro';
+import Footer from '../components/common/Footer.astro';
 
 interface Props {
   title: string;
@@ -15,60 +17,129 @@ const {
   locale = 'en',
   lastUpdated,
 } = Astro.props;
+
+const currentPath = Astro.url.pathname;
 ---
 <BaseLayout title={title} description={description} locale={locale}>
   <slot name="head" slot="head" />
 
-  <!-- Header -->
-  <slot name="header" />
+  <Header locale={locale} currentPath={currentPath} />
 
-  <!-- 3-column docs layout: sidebar + content + TOC -->
-  <div class="flex min-h-screen">
+  <!-- 3-column docs layout -->
+  <div class="flex min-h-[calc(100vh-4rem)]">
     <!-- Sidebar (left) -->
     <aside
       id="docs-sidebar"
-      class="hidden lg:flex flex-col w-60 shrink-0 border-r border-slate-200 dark:border-slate-700 sticky top-16 h-[calc(100vh-4rem)] overflow-y-auto"
+      class="hidden lg:flex flex-col w-60 shrink-0 border-r border-slate-200 dark:border-slate-700 sticky top-16 h-[calc(100vh-4rem)] overflow-y-auto bg-white dark:bg-slate-900"
       aria-label="Documentation navigation"
     >
       <slot name="sidebar" />
     </aside>
 
     <!-- Main content -->
-    <main id="main-content" class="flex-1 min-w-0">
+    <div class="flex-1 min-w-0 flex flex-col">
       <!-- Mobile sidebar toggle -->
-      <div class="lg:hidden px-4 py-3 border-b border-slate-200 dark:border-slate-700">
+      <div class="lg:hidden px-4 py-3 border-b border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 sticky top-16 z-10">
         <slot name="sidebar-toggle" />
       </div>
 
-      <article class="px-6 py-8 max-w-3xl mx-auto">
-        <!-- Last updated -->
-        {lastUpdated && (
-          <p class="text-sm text-slate-500 dark:text-slate-400 mb-6">
-            Last updated: {lastUpdated.toLocaleDateString(locale, { year: 'numeric', month: 'long', day: 'numeric' })}
-          </p>
-        )}
+      <main id="main-content" class="flex-1">
+        <article class="px-6 py-8 max-w-3xl">
+          <!-- Last updated -->
+          {lastUpdated && (
+            <p class="text-sm text-slate-500 dark:text-slate-400 mb-6">
+              Last updated:{' '}
+              <time datetime={lastUpdated.toISOString()}>
+                {lastUpdated.toLocaleDateString(locale, { year: 'numeric', month: 'long', day: 'numeric' })}
+              </time>
+            </p>
+          )}
 
-        <!-- Content -->
-        <div class="prose dark:prose-invert max-w-none">
-          <slot />
-        </div>
+          <!-- Content -->
+          <div class="prose dark:prose-invert max-w-none">
+            <slot />
+          </div>
 
-        <!-- Prev/Next navigation -->
-        <nav class="mt-12 pt-6 border-t border-slate-200 dark:border-slate-700 flex justify-between" aria-label="Documentation pagination">
-          <slot name="prev-next" />
-        </nav>
-      </article>
-    </main>
+          <!-- Prev/Next navigation -->
+          <nav
+            class="mt-12 pt-6 border-t border-slate-200 dark:border-slate-700 flex justify-between gap-4"
+            aria-label="Documentation pagination"
+          >
+            <slot name="prev-next" />
+          </nav>
+        </article>
+      </main>
+    </div>
 
     <!-- Table of Contents (right) -->
     <aside
-      class="hidden xl:block w-56 shrink-0 sticky top-16 h-[calc(100vh-4rem)] overflow-y-auto pl-4 py-8"
+      class="hidden xl:block w-56 shrink-0 sticky top-16 h-[calc(100vh-4rem)] overflow-y-auto border-l border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900"
       aria-label="Table of contents"
     >
-      <slot name="toc" />
+      <div class="py-8 px-4">
+        <slot name="toc" />
+      </div>
     </aside>
   </div>
 
-  <!-- Footer -->
-  <slot name="footer" />
+  <Footer locale={locale} />
 </BaseLayout>
+
+<!-- Mobile sidebar drawer -->
+<div
+  id="mobile-sidebar-drawer"
+  class="hidden fixed inset-0 z-50 lg:hidden"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Documentation navigation"
+>
+  <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 backdrop-blur-sm" aria-hidden="true"></div>
+  <div class="fixed left-0 top-0 h-full w-72 max-w-[85vw] bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-700 overflow-y-auto shadow-xl">
+    <div class="flex items-center justify-between px-4 h-14 border-b border-slate-200 dark:border-slate-700">
+      <span class="font-semibold text-slate-900 dark:text-white text-sm">Documentation</span>
+      <button
+        type="button"
+        id="sidebar-close-btn"
+        class="p-1.5 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800"
+        aria-label="Close documentation navigation"
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+    <slot name="sidebar" />
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    var toggleBtn = document.getElementById('sidebar-toggle-btn');
+    var drawer = document.getElementById('mobile-sidebar-drawer');
+    var overlay = document.getElementById('sidebar-overlay');
+    var closeBtn = document.getElementById('sidebar-close-btn');
+
+    if (!drawer) return;
+
+    function openDrawer() {
+      drawer.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeDrawer() {
+      drawer.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    if (toggleBtn) toggleBtn.addEventListener('click', openDrawer);
+    if (overlay) overlay.addEventListener('click', closeDrawer);
+    if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !drawer.classList.contains('hidden')) {
+        closeDrawer();
+      }
+    });
+  })();
+</script>

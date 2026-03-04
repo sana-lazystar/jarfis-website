@@ -1,0 +1,53 @@
+---
+import { SUPPORTED_LOCALES, type Locale } from '../../i18n/config';
+import { localePath } from '../../i18n/utils';
+
+interface Props {
+  title: string;
+  description: string;
+  locale: Locale;
+  pagePath: string; // e.g., 'features' or '' for home
+  ogImage?: string;
+}
+
+const { title, description, locale, pagePath, ogImage } = Astro.props;
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const siteUrl = 'https://sana-lazystar.github.io';
+const canonicalUrl = `${siteUrl}${localePath(locale, pagePath)}`;
+const ogImageUrl = ogImage
+  ? `${siteUrl}${base}${ogImage}`
+  : `${siteUrl}${base}/images/og/default.png`;
+---
+<title>{title} | JARFIS</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalUrl} />
+
+<!-- hreflang for all supported locales -->
+{SUPPORTED_LOCALES.map((loc) => (
+  <link
+    rel="alternate"
+    hreflang={loc}
+    href={`${siteUrl}${localePath(loc, pagePath)}`}
+  />
+))}
+<link
+  rel="alternate"
+  hreflang="x-default"
+  href={`${siteUrl}${localePath('en', pagePath)}`}
+/>
+
+<!-- Open Graph -->
+<meta property="og:title" content={`${title} | JARFIS`} />
+<meta property="og:description" content={description} />
+<meta property="og:locale" content={locale} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:image" content={ogImageUrl} />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="JARFIS" />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={`${title} | JARFIS`} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImageUrl} />

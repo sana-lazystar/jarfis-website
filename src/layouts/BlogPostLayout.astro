@@ -1,6 +1,9 @@
 ---
 import type { Locale } from '../i18n/config';
 import BaseLayout from './BaseLayout.astro';
+import Header from '../components/common/Header.astro';
+import Footer from '../components/common/Footer.astro';
+import { localePath } from '../i18n/utils';
 
 interface Props {
   title: string;
@@ -21,18 +24,19 @@ const {
   tags = [],
   ogImage,
 } = Astro.props;
+
+const currentPath = Astro.url.pathname;
 ---
 <BaseLayout title={title} description={description} locale={locale} ogImage={ogImage}>
   <slot name="head" slot="head" />
 
-  <!-- Header -->
-  <slot name="header" />
+  <Header locale={locale} currentPath={currentPath} />
 
   <main id="main-content" class="min-h-screen">
     <!-- Back to blog link -->
-    <div class="max-w-3xl mx-auto px-4 pt-8">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 pt-8">
       <a
-        href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/${locale}/blog`}
+        href={localePath(locale, 'blog')}
         class="inline-flex items-center gap-1 text-sm text-slate-500 dark:text-slate-400 hover:text-cyan-500 dark:hover:text-cyan-400 transition-colors"
       >
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -43,12 +47,11 @@ const {
     </div>
 
     <!-- Post header -->
-    <header class="max-w-3xl mx-auto px-4 py-8">
+    <header class="max-w-3xl mx-auto px-4 sm:px-6 py-8">
       <h1 class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mb-4 leading-tight">
         {title}
       </h1>
 
-      <!-- Meta info -->
       <div class="flex flex-wrap items-center gap-3 text-sm text-slate-500 dark:text-slate-400 mb-4">
         {pubDate && (
           <time datetime={pubDate.toISOString()}>
@@ -57,13 +60,12 @@ const {
         )}
         {author && (
           <>
-            <span aria-hidden="true">·</span>
+            <span aria-hidden="true">&middot;</span>
             <span>{author}</span>
           </>
         )}
       </div>
 
-      <!-- Tags -->
       {tags.length > 0 && (
         <div class="flex flex-wrap gap-2" aria-label="Tags">
           {tags.map((tag) => (
@@ -75,27 +77,23 @@ const {
       )}
     </header>
 
-    <!-- Divider -->
-    <div class="max-w-3xl mx-auto px-4">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6">
       <hr class="border-slate-200 dark:border-slate-700" />
     </div>
 
-    <!-- Content -->
-    <article class="max-w-3xl mx-auto px-4 py-8">
+    <article class="max-w-3xl mx-auto px-4 sm:px-6 py-8">
       <div class="prose dark:prose-invert max-w-none">
         <slot />
       </div>
     </article>
 
-    <!-- Prev/Next post navigation -->
     <nav
-      class="max-w-3xl mx-auto px-4 pb-12 pt-6 border-t border-slate-200 dark:border-slate-700 flex justify-between"
+      class="max-w-3xl mx-auto px-4 sm:px-6 pb-12 pt-6 border-t border-slate-200 dark:border-slate-700 flex justify-between gap-4"
       aria-label="Blog post navigation"
     >
       <slot name="prev-next" />
     </nav>
   </main>
 
-  <!-- Footer -->
-  <slot name="footer" />
+  <Footer locale={locale} />
 </BaseLayout>
