@@ -1,0 +1,56 @@
+ci:
+  collect:
+    # Serve the built static output (./dist) with a local server
+    staticDistDir: ./dist
+    # Audit all locale home pages + key pages
+    url:
+      - http://localhost/jarfis-website/en/
+      - http://localhost/jarfis-website/en/features/
+      - http://localhost/jarfis-website/en/docs/getting-started/
+      - http://localhost/jarfis-website/en/blog/
+      - http://localhost/jarfis-website/en/showcase/
+    numberOfRuns: 3
+
+  assert:
+    # Performance budget - fail PR if these thresholds are not met
+    assertions:
+      categories:performance:
+        - error
+        - minScore: 0.9
+          aggregationMethod: optimistic
+      categories:accessibility:
+        - warn
+        - minScore: 0.9
+          aggregationMethod: optimistic
+      categories:best-practices:
+        - warn
+        - minScore: 0.8
+          aggregationMethod: optimistic
+      categories:seo:
+        - warn
+        - minScore: 0.9
+          aggregationMethod: optimistic
+
+      # Core Web Vitals
+      first-contentful-paint:
+        - warn
+        - maxNumericValue: 1800  # 1.8s
+          aggregationMethod: optimistic
+      largest-contentful-paint:
+        - error
+        - maxNumericValue: 2500  # 2.5s
+          aggregationMethod: optimistic
+      total-blocking-time:
+        - error
+        - maxNumericValue: 200   # 200ms
+          aggregationMethod: optimistic
+      cumulative-layout-shift:
+        - error
+        - maxNumericValue: 0.1
+          aggregationMethod: optimistic
+
+  upload:
+    # Upload results as GitHub Actions artifact
+    target: filesystem
+    outputDir: ./lighthouse-results
+    reportFilenamePattern: "%%PATHNAME%%.report.%%EXTENSION%%"
