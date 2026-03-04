@@ -1,0 +1,155 @@
+---
+import { SUPPORTED_LOCALES, type Locale } from '../../i18n/config';
+import { t } from '../../i18n/utils';
+import { localePath } from '../../i18n/utils';
+import PageLayout from '../../layouts/PageLayout.astro';
+import SEOHead from '../../components/common/SEOHead.astro';
+import FeatureDetail from '../../components/features/FeatureDetail.astro';
+import Differentiator from '../../components/features/Differentiator.astro';
+import Button from '../../components/common/Button.astro';
+
+export function getStaticPaths() {
+  return SUPPORTED_LOCALES.map((lang) => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params as { lang: Locale };
+const locale = lang as Locale;
+
+// Feature SVG icons
+const agentTeamSvg = `<svg width="96" height="96" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`;
+
+const openSourceSvg = `<svg width="96" height="96" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>`;
+
+const productionSvg = `<svg width="96" height="96" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`;
+
+const multilangSvg = `<svg width="96" height="96" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`;
+---
+<PageLayout
+  title={t(locale, 'features.page_title')}
+  description={t(locale, 'features.page_subtitle')}
+  locale={locale}
+  pagePath="features"
+>
+  <SEOHead
+    slot="head"
+    title={t(locale, 'features.page_title')}
+    description={t(locale, 'features.page_subtitle')}
+    locale={locale}
+    pagePath="features"
+  />
+
+  <!-- Page hero -->
+  <section class="py-20 bg-white dark:bg-slate-900 text-center border-b border-slate-200 dark:border-slate-700">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6">
+      <h1 class="text-4xl sm:text-5xl font-bold text-slate-900 dark:text-white mb-4">
+        {t(locale, 'features.page_title')}
+      </h1>
+      <p class="text-xl text-slate-500 dark:text-slate-400">
+        {t(locale, 'features.page_subtitle')}
+      </p>
+    </div>
+  </section>
+
+  <!-- Feature details (alternating layout) -->
+  <section class="py-16 lg:py-24 bg-white dark:bg-slate-900" aria-label="Core features">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24">
+
+      <!-- Feature 1: AI Agent Team (odd = image left, text right) -->
+      <FeatureDetail
+        locale={locale}
+        title="AI Agent Team Collaboration"
+        description="JARFIS orchestrates multiple specialized AI agents — PO, UX, Frontend, QA — that work together like a real development team. Each agent has deep expertise in its domain, and they hand off work to each other just like real teammates."
+        bullets={[
+          'Parallel agent execution for speed',
+          'Context sharing between agents',
+          'Automatic handoff & code review',
+          'Each agent specializes in its domain',
+        ]}
+        docsPath="docs/concepts-overview"
+        docsLabel={t(locale, 'features.learn_more')}
+        icon={agentTeamSvg}
+        reverse={false}
+      />
+
+      <!-- Feature 2: Open Source (even = image right, text left) -->
+      <FeatureDetail
+        locale={locale}
+        title="100% Open Source"
+        description="MIT Licensed. Self-host on your own infrastructure. No API keys sent to third parties. No vendor lock-in. JARFIS runs wherever you want — cloud, on-premise, or your local machine."
+        bullets={[
+          'Full source code access — read every line',
+          'Bring your own LLM (OpenAI, Anthropic, Ollama)',
+          'Community-driven development',
+          'Transparent, auditable agent behavior',
+        ]}
+        docsPath=""
+        githubLink={true}
+        githubLabel={t(locale, 'features.view_github')}
+        icon={openSourceSvg}
+        reverse={true}
+      />
+
+      <!-- Feature 3: Production Ready (odd) -->
+      <FeatureDetail
+        locale={locale}
+        title="Production Ready Output"
+        description="JARFIS doesn't just write code — it ships software. The QA agent reviews every output, checks edge cases, and ensures the result is ready for production, not just a prototype that needs more work."
+        bullets={[
+          'Real deployable code, not just snippets',
+          'QA agent verifies quality automatically',
+          'Proper error handling and edge cases',
+          'Production-grade architecture decisions',
+        ]}
+        docsPath="docs/getting-started"
+        docsLabel={t(locale, 'features.learn_more')}
+        icon={productionSvg}
+        reverse={false}
+      />
+
+      <!-- Feature 4: Multi-language (even) -->
+      <FeatureDetail
+        locale={locale}
+        title="Multi-language Support"
+        description="JARFIS has internationalization built in from the ground up. Ship to global teams in their native language. The UX agent understands locale-specific design patterns, and outputs support multiple languages by default."
+        bullets={[
+          'i18n support out of the box',
+          'Locale-aware UX agent decisions',
+          'CJK character support (Korean, Japanese, Chinese)',
+          'RTL language awareness',
+        ]}
+        docsPath="docs"
+        docsLabel={t(locale, 'features.learn_more')}
+        icon={multilangSvg}
+        reverse={true}
+      />
+
+    </div>
+  </section>
+
+  <!-- Differentiator section -->
+  <Differentiator locale={locale} />
+
+  <!-- Feature CTA -->
+  <section class="py-16 bg-slate-50 dark:bg-slate-800/30 text-center">
+    <div class="max-w-2xl mx-auto px-4 sm:px-6">
+      <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-6">
+        Ready to see it in action?
+      </h2>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <Button href={localePath(locale, 'docs/getting-started')} variant="primary">
+          Get Started
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <polyline points="9 18 15 12 9 6"/>
+          </svg>
+        </Button>
+        <Button
+          href="https://github.com/sana-lazystar/jarfis"
+          variant="ghost"
+          external={true}
+        >
+          View on GitHub
+        </Button>
+      </div>
+    </div>
+  </section>
+</PageLayout>
