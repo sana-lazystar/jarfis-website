@@ -1,26 +1,19 @@
 name: Showcase Submission
-description: Submit your project built with JARFIS to the Showcase gallery
-title: "[Showcase] "
+description: Submit your project to the JARFIS Showcase gallery
+title: "[Showcase] Your Project Name"
 labels: ["showcase", "needs-review"]
-assignees: []
-
 body:
   - type: markdown
     attributes:
       value: |
-        ## Submit Your Project to the JARFIS Showcase
-
-        Thank you for building with JARFIS! Fill out the form below to submit your project
-        to the [Showcase gallery](https://sana-lazystar.github.io/jarfis-website/en/showcase/).
-
-        **Review process**: Maintainers will review submissions and add approved entries
-        to `src/data/showcase.json` in the next release.
+        Thanks for submitting your project to the JARFIS Showcase! 
+        Please fill out the information below and we'll review your submission.
 
   - type: input
     id: project-name
     attributes:
       label: Project Name
-      description: The name of your project
+      description: What is your project called?
       placeholder: "My Awesome Project"
     validations:
       required: true
@@ -29,8 +22,8 @@ body:
     id: project-url
     attributes:
       label: Project URL
-      description: The live URL of your project (must be publicly accessible)
-      placeholder: "https://example.com"
+      description: The live URL where we can view your project
+      placeholder: "https://myproject.example.com"
     validations:
       required: true
 
@@ -38,17 +31,16 @@ body:
     id: description
     attributes:
       label: Project Description
-      description: A brief description of your project (1-2 sentences, max 160 characters)
-      placeholder: "A brief description of what your project does and how it uses JARFIS."
-      render: text
+      description: Briefly describe your project (1-2 sentences)
+      placeholder: "A SaaS dashboard built with JARFIS agents in 2 weeks..."
     validations:
       required: true
 
   - type: input
     id: repo-url
     attributes:
-      label: Repository URL (Optional)
-      description: Link to the public GitHub/GitLab repository (if open source)
+      label: Repository URL (optional)
+      description: Link to the source code repository if public
       placeholder: "https://github.com/your-username/your-project"
     validations:
       required: false
@@ -56,41 +48,31 @@ body:
   - type: textarea
     id: screenshot
     attributes:
-      label: Screenshot (Optional)
+      label: Screenshot (optional)
       description: |
-        Attach a screenshot of your project (recommended: 1200x630px or 16:9 ratio, PNG or JPG).
-        Drag and drop the image file here, or paste a URL to an existing image.
-      placeholder: "Drag and drop a screenshot here..."
+        Attach a screenshot of your project (drag and drop an image here).
+        Recommended: 1200x675px (16:9 ratio)
     validations:
       required: false
 
   - type: input
     id: tags
     attributes:
-      label: Tags (Optional)
-      description: Comma-separated list of tags describing your project (e.g., astro, tailwind, typescript)
-      placeholder: "astro, tailwind, jarfis, open-source"
+      label: Tags (optional)
+      description: Comma-separated tags to categorize your project
+      placeholder: "web, saas, react, jarfis"
     validations:
       required: false
 
   - type: checkboxes
-    id: checklist
+    id: terms
     attributes:
-      label: Submission Checklist
-      description: Please confirm the following before submitting
+      label: Submission Agreement
+      description: By submitting this form, you agree to the following
       options:
-        - label: My project is publicly accessible at the URL provided
+        - label: "This project was built using JARFIS"
           required: true
-        - label: My project was built with JARFIS workflow
+        - label: "I have the right to submit this project"
           required: true
-        - label: I have the rights to submit this project
+        - label: "The project URL is publicly accessible"
           required: true
-        - label: The project description is accurate and does not contain misleading information
-          required: true
-
-  - type: markdown
-    attributes:
-      value: |
-        ---
-        After submission, a maintainer will review your project and add it to the showcase if approved.
-        You will be notified in this issue thread.

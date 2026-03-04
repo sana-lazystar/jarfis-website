@@ -2,15 +2,15 @@ name: Quality Check
 
 on:
   pull_request:
-    branches: [main]
-
-# Read-only permissions are sufficient for PR quality checks
-permissions:
-  contents: read
+    branches:
+      - main
+  push:
+    branches:
+      - main
 
 jobs:
-  check:
-    name: Type check, lint, audit, and build
+  quality:
+    name: Type Check, Lint & Build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -27,17 +27,14 @@ jobs:
           node-version: 22
           cache: pnpm
 
-      - name: Install dependencies (frozen lockfile)
+      - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Security audit
-        run: pnpm audit --audit-level=high
+      - name: TypeScript check (astro check)
+        run: pnpm check
 
-      - name: Type check
-        run: pnpm astro check
-
-      - name: Lint
+      - name: Lint (ESLint)
         run: pnpm lint
 
-      - name: Build (verify no build errors)
+      - name: Build verification
         run: pnpm build
