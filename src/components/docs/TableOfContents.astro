@@ -1,0 +1,76 @@
+---
+import type { Locale } from '../../i18n/config';
+import { t } from '../../i18n/utils';
+
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  locale: Locale;
+  headings: Heading[];
+}
+
+const { locale, headings } = Astro.props;
+
+// Filter to only h2 and h3
+const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
+---
+{toc.length > 0 && (
+  <div class="toc-container">
+    <p class="text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-3">
+      {t(locale, 'docs.on_this_page')}
+    </p>
+    <nav aria-label="Table of contents">
+      <ul class="space-y-1.5">
+        {toc.map((heading) => (
+          <li>
+            <a
+              href={`#${heading.slug}`}
+              class={`block text-sm transition-colors hover:text-cyan-500 dark:hover:text-cyan-400 toc-link ${
+                heading.depth === 3 ? 'pl-3 text-slate-500 dark:text-slate-400' : 'text-slate-600 dark:text-slate-300'
+              }`}
+              data-heading-slug={heading.slug}
+            >
+              {heading.text}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+)}
+
+<script is:inline>
+  // Highlight TOC link on scroll
+  (function () {
+    var links = document.querySelectorAll('.toc-link');
+    if (!links.length) return;
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            var slug = entry.target.id;
+            links.forEach(function (link) {
+              var linkSlug = link.getAttribute('data-heading-slug');
+              if (linkSlug === slug) {
+                link.classList.add('text-cyan-500', 'dark:text-cyan-400', 'font-medium');
+                link.classList.remove('text-slate-600', 'dark:text-slate-300', 'text-slate-500', 'dark:text-slate-400');
+              } else {
+                link.classList.remove('text-cyan-500', 'dark:text-cyan-400', 'font-medium');
+              }
+            });
+          }
+        });
+      },
+      { rootMargin: '-64px 0px -70% 0px', threshold: 0 }
+    );
+
+    document.querySelectorAll('h2[id], h3[id]').forEach(function (el) {
+      observer.observe(el);
+    });
+  })();
+</script>

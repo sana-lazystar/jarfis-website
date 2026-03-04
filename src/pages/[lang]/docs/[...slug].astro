@@ -1,0 +1,143 @@
+---
+import { SUPPORTED_LOCALES, type Locale } from '../../../i18n/config';
+import { t } from '../../../i18n/utils';
+import { localePath } from '../../../i18n/utils';
+import DocsLayout from '../../../layouts/DocsLayout.astro';
+import SEOHead from '../../../components/common/SEOHead.astro';
+import DocsSidebar from '../../../components/docs/DocsSidebar.astro';
+import TableOfContents from '../../../components/docs/TableOfContents.astro';
+import { getCollection, render } from 'astro:content';
+import { getDocsForLocale, getDocSlug } from '../../../utils/collections';
+
+export async function getStaticPaths() {
+  const paths = [];
+
+  for (const lang of SUPPORTED_LOCALES) {
+    const docs = await getDocsForLocale(lang as Locale);
+
+    for (const doc of docs) {
+      const slug = getDocSlug(doc);
+      paths.push({
+        params: { lang, slug },
+        props: { doc, lang, docs },
+      });
+    }
+  }
+
+  return paths;
+}
+
+type Props = {
+  doc: Awaited<ReturnType<typeof getCollection<'docs'>>>[number];
+  lang: Locale;
+  docs: Awaited<ReturnType<typeof getCollection<'docs'>>>;
+};
+
+const { doc, lang, docs } = Astro.props;
+const locale = lang as Locale;
+const currentSlug = getDocSlug(doc);
+
+// Render the markdown content
+const { Content, headings } = await render(doc);
+
+// Check if this is a fallback (English content shown for non-English locale)
+const isFallback = doc.data.locale === 'en' && locale !== 'en';
+
+// Get adjacent docs for prev/next navigation
+const allDocs = docs;
+const currentIndex = allDocs.findIndex((d) => getDocSlug(d) === currentSlug);
+const prevDoc = currentIndex > 0 ? allDocs[currentIndex - 1] : null;
+const nextDoc = currentIndex < allDocs.length - 1 ? allDocs[currentIndex + 1] : null;
+---
+<DocsLayout
+  title={doc.data.title}
+  description={doc.data.description}
+  locale={locale}
+  lastUpdated={doc.data.lastUpdated}
+>
+  <SEOHead
+    slot="head"
+    title={doc.data.title}
+    description={doc.data.description}
+    locale={locale}
+    pagePath={`docs/${currentSlug}`}
+  />
+
+  <!-- Sidebar -->
+  <DocsSidebar
+    slot="sidebar"
+    locale={locale}
+    docs={allDocs}
+    currentSlug={currentSlug}
+  />
+
+  <!-- Mobile sidebar toggle -->
+  <div slot="sidebar-toggle" class="flex items-center gap-2">
+    <button
+      type="button"
+      id="sidebar-toggle-btn"
+      class="inline-flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors border border-slate-200 dark:border-slate-700"
+      aria-label={t(locale, 'a11y.toggle_menu')}
+    >
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <line x1="3" y1="12" x2="21" y2="12"/>
+        <line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+      Menu
+    </button>
+    <span class="text-sm text-slate-500 dark:text-slate-400">{doc.data.title}</span>
+  </div>
+
+  <!-- Table of contents -->
+  <TableOfContents
+    slot="toc"
+    locale={locale}
+    headings={headings}
+  />
+
+  <!-- Fallback notice -->
+  {isFallback && (
+    <div class="mb-6 p-4 rounded-lg bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700">
+      <p class="text-sm text-amber-700 dark:text-amber-300">
+        {t(locale, 'docs.not_translated')}
+      </p>
+    </div>
+  )}
+
+  <!-- Main content -->
+  <Content />
+
+  <!-- Prev/Next navigation -->
+  <div slot="prev-next" class="w-full flex justify-between gap-4">
+    {prevDoc ? (
+      <a
+        href={localePath(locale, `docs/${getDocSlug(prevDoc)}`)}
+        class="group flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 hover:text-cyan-500 dark:hover:text-cyan-400 transition-colors"
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>
+          <span class="block text-xs text-slate-400">{t(locale, 'docs.prev_page')}</span>
+          {prevDoc.data.title}
+        </span>
+      </a>
+    ) : <div />}
+
+    {nextDoc ? (
+      <a
+        href={localePath(locale, `docs/${getDocSlug(nextDoc)}`)}
+        class="group flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 hover:text-cyan-500 dark:hover:text-cyan-400 transition-colors text-right ml-auto"
+      >
+        <span>
+          <span class="block text-xs text-slate-400">{t(locale, 'docs.next_page')}</span>
+          {nextDoc.data.title}
+        </span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+    ) : <div />}
+  </div>
+</DocsLayout>

@@ -1,0 +1,62 @@
+---
+import type { Locale } from '../../i18n/config';
+import { t } from '../../i18n/utils';
+import { localePath } from '../../i18n/utils';
+import { groupDocsByCategory, getDocSlug } from '../../utils/collections';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  locale: Locale;
+  docs: CollectionEntry<'docs'>[];
+  currentSlug?: string;
+}
+
+const { locale, docs, currentSlug = '' } = Astro.props;
+const groups = groupDocsByCategory(docs);
+
+const categoryLabels: Record<string, string> = {
+  'getting-started': t(locale, 'docs.categories.getting_started'),
+  concepts: t(locale, 'docs.categories.concepts'),
+  guides: t(locale, 'docs.categories.guides'),
+  'api-reference': t(locale, 'docs.categories.api_reference'),
+};
+---
+<div class="px-4 py-6">
+  <!-- Navigation by category -->
+  <nav aria-label="Documentation navigation">
+    {Object.entries(groups).map(([category, categoryDocs]) => {
+      if (categoryDocs.length === 0) return null;
+      return (
+        <div class="mb-6">
+          <!-- Category heading -->
+          <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2 px-2">
+            {categoryLabels[category] ?? category}
+          </h3>
+
+          <!-- Doc links -->
+          <ul class="space-y-0.5">
+            {categoryDocs.map((doc) => {
+              const slug = getDocSlug(doc);
+              const isActive = slug === currentSlug || doc.id === currentSlug;
+              return (
+                <li>
+                  <a
+                    href={localePath(locale, `docs/${slug}`)}
+                    class={`flex items-center px-3 py-2 rounded-md text-sm transition-colors ${
+                      isActive
+                        ? 'text-cyan-500 dark:text-cyan-400 bg-cyan-50 dark:bg-cyan-900/20 font-semibold border-l-2 border-cyan-500'
+                        : 'text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800'
+                    }`}
+                    aria-current={isActive ? 'page' : undefined}
+                  >
+                    {doc.data.title}
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      );
+    })}
+  </nav>
+</div>
