@@ -1,0 +1,47 @@
+version: 2
+
+updates:
+  # npm / pnpm dependencies
+  - package-ecosystem: npm
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:00"
+      timezone: "Asia/Seoul"
+    open-pull-requests-limit: 10
+    labels:
+      - "dependencies"
+      - "automated"
+    commit-message:
+      prefix: "chore(deps)"
+    groups:
+      astro-ecosystem:
+        patterns:
+          - "astro"
+          - "@astrojs/*"
+      tailwind-ecosystem:
+        patterns:
+          - "tailwindcss"
+          - "@tailwindcss/*"
+      dev-tools:
+        patterns:
+          - "eslint*"
+          - "prettier*"
+          - "typescript"
+
+  # GitHub Actions
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:00"
+      timezone: "Asia/Seoul"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "github-actions"
+      - "automated"
+    commit-message:
+      prefix: "chore(actions)"
