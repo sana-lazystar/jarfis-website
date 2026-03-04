@@ -12,13 +12,10 @@ interface Props {
 
 const {
   title,
-  description = 'The Fantastic Way to Ship Software with AI. 100% Open Source.',
   locale = 'en',
-  ogImage,
 } = Astro.props;
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const canonicalUrl = Astro.url.href;
 const skipLinkText = t(locale, 'a11y.skip_to_content');
 ---
 <!doctype html>
@@ -31,32 +28,13 @@ const skipLinkText = t(locale, 'a11y.skip_to_content');
     <!-- CSP meta tag -->
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self';"
+      content="default-src 'self'; script-src 'self' 'sha256-YxoZ2MkHPm7JhpdQMpPcR2zzwr+kXOnKPUSzcRcVT2U='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; base-uri 'self';"
     />
 
-    <!-- Primary Meta -->
+    <!-- Primary Meta (fallback — SEOHead overrides via slot="head") -->
     <title>{title} | JARFIS</title>
-    <meta name="description" content={description} />
-    <link rel="canonical" href={canonicalUrl} />
     <meta name="theme-color" content="#06b6d4" />
     <meta name="color-scheme" content="light dark" />
-
-    <!-- Open Graph -->
-    <meta property="og:title" content={`${title} | JARFIS`} />
-    <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content={canonicalUrl} />
-    <meta property="og:image" content={ogImage ?? `${base}/images/og/default.png`} />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:locale" content={locale} />
-    <meta property="og:site_name" content="JARFIS" />
-
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={`${title} | JARFIS`} />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={ogImage ?? `${base}/images/og/default.png`} />
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />

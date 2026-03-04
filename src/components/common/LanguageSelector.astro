@@ -16,7 +16,7 @@ const alternates = getAlternateLocalePaths(currentPath);
 <div class={`relative ${className}`} data-language-selector>
   <button
     type="button"
-    id="lang-btn"
+    data-lang-btn
     class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
     aria-haspopup="listbox"
     aria-expanded="false"
@@ -28,14 +28,14 @@ const alternates = getAlternateLocalePaths(currentPath);
       <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
     </svg>
     <span>{LOCALE_NATIVE_LABELS[locale]}</span>
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true" class="transition-transform" id="lang-chevron">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true" class="transition-transform" data-lang-chevron>
       <polyline points="6 9 12 15 18 9"/>
     </svg>
   </button>
 
   <!-- Dropdown -->
   <ul
-    id="lang-dropdown"
+    data-lang-dropdown
     role="listbox"
     aria-label={t(locale, 'a11y.switch_language')}
     class="hidden absolute right-0 top-full mt-1 w-36 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-lg z-50 py-1 overflow-hidden"
@@ -66,35 +66,37 @@ const alternates = getAlternateLocalePaths(currentPath);
 
 <script is:inline>
   (function () {
-    var selector = document.querySelector('[data-language-selector]');
-    if (!selector) return;
+    // Bind each instance independently — supports multiple renders on the same page
+    document.querySelectorAll('[data-language-selector]').forEach(function (selector) {
+      var btn = selector.querySelector('[data-lang-btn]');
+      var dropdown = selector.querySelector('[data-lang-dropdown]');
+      var chevron = selector.querySelector('[data-lang-chevron]');
 
-    var btn = selector.querySelector('#lang-btn');
-    var dropdown = selector.querySelector('#lang-dropdown');
-    var chevron = selector.querySelector('#lang-chevron');
+      if (!btn || !dropdown) return;
 
-    function open() {
-      dropdown.classList.remove('hidden');
-      btn.setAttribute('aria-expanded', 'true');
-      if (chevron) chevron.style.transform = 'rotate(180deg)';
-    }
+      function open() {
+        dropdown.classList.remove('hidden');
+        btn.setAttribute('aria-expanded', 'true');
+        if (chevron) chevron.style.transform = 'rotate(180deg)';
+      }
 
-    function close() {
-      dropdown.classList.add('hidden');
-      btn.setAttribute('aria-expanded', 'false');
-      if (chevron) chevron.style.transform = '';
-    }
+      function close() {
+        dropdown.classList.add('hidden');
+        btn.setAttribute('aria-expanded', 'false');
+        if (chevron) chevron.style.transform = '';
+      }
 
-    btn.addEventListener('click', function (e) {
-      e.stopPropagation();
-      var isOpen = btn.getAttribute('aria-expanded') === 'true';
-      if (isOpen) { close(); } else { open(); }
-    });
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var isOpen = btn.getAttribute('aria-expanded') === 'true';
+        if (isOpen) { close(); } else { open(); }
+      });
 
-    document.addEventListener('click', function () { close(); });
+      document.addEventListener('click', function () { close(); });
 
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') { close(); btn.focus(); }
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') { close(); btn.focus(); }
+      });
     });
   })();
 </script>

@@ -1,5 +1,6 @@
 ---
 import type { Locale } from '../i18n/config';
+import { t } from '../i18n/utils';
 import BaseLayout from './BaseLayout.astro';
 import Header from '../components/common/Header.astro';
 import Footer from '../components/common/Footer.astro';
@@ -48,7 +49,7 @@ const currentPath = Astro.url.pathname;
           <!-- Last updated -->
           {lastUpdated && (
             <p class="text-sm text-slate-500 dark:text-slate-400 mb-6">
-              Last updated:{' '}
+              {t(locale, 'docs.last_updated')}:{' '}
               <time datetime={lastUpdated.toISOString()}>
                 {lastUpdated.toLocaleDateString(locale, { year: 'numeric', month: 'long', day: 'numeric' })}
               </time>
@@ -96,7 +97,7 @@ const currentPath = Astro.url.pathname;
   <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 backdrop-blur-sm" aria-hidden="true"></div>
   <div class="fixed left-0 top-0 h-full w-72 max-w-[85vw] bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-700 overflow-y-auto shadow-xl">
     <div class="flex items-center justify-between px-4 h-14 border-b border-slate-200 dark:border-slate-700">
-      <span class="font-semibold text-slate-900 dark:text-white text-sm">Documentation</span>
+      <span class="font-semibold text-slate-900 dark:text-white text-sm">{t(locale, 'docs.sidebar_title')}</span>
       <button
         type="button"
         id="sidebar-close-btn"

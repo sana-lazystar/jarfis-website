@@ -5,7 +5,7 @@ interface Props {
 const { class: className = '' } = Astro.props;
 ---
 <button
-  id="theme-toggle"
+  data-theme-toggle
   type="button"
   class={`relative inline-flex items-center justify-center w-9 h-9 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors ${className}`}
   aria-label="Toggle dark mode"
@@ -13,7 +13,7 @@ const { class: className = '' } = Astro.props;
 >
   <!-- Sun icon (shown in dark mode) -->
   <svg
-    id="icon-sun"
+    data-icon-sun
     class="hidden dark:block w-5 h-5"
     viewBox="0 0 24 24"
     fill="none"
@@ -36,7 +36,7 @@ const { class: className = '' } = Astro.props;
 
   <!-- Moon icon (shown in light mode) -->
   <svg
-    id="icon-moon"
+    data-icon-moon
     class="block dark:hidden w-5 h-5"
     viewBox="0 0 24 24"
     fill="none"
@@ -52,9 +52,6 @@ const { class: className = '' } = Astro.props;
 
 <script is:inline>
   (function () {
-    var btn = document.getElementById('theme-toggle');
-    if (!btn) return;
-
     function applyTheme(theme) {
       if (theme === 'dark') {
         document.documentElement.classList.add('dark');
@@ -65,10 +62,13 @@ const { class: className = '' } = Astro.props;
       localStorage.setItem('theme', theme);
     }
 
-    btn.addEventListener('click', function () {
-      var currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
-      var newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      applyTheme(newTheme);
+    // Bind each instance independently — supports multiple renders on the same page
+    document.querySelectorAll('[data-theme-toggle]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+        var newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        applyTheme(newTheme);
+      });
     });
 
     // Listen for system preference changes (when theme is 'system')
