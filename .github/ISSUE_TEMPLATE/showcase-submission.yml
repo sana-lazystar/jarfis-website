@@ -1,0 +1,96 @@
+name: Showcase Submission
+description: Submit your project built with JARFIS to the Showcase gallery
+title: "[Showcase] "
+labels: ["showcase", "needs-review"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Submit Your Project to the JARFIS Showcase
+
+        Thank you for building with JARFIS! Fill out the form below to submit your project
+        to the [Showcase gallery](https://sana-lazystar.github.io/jarfis-website/en/showcase/).
+
+        **Review process**: Maintainers will review submissions and add approved entries
+        to `src/data/showcase.json` in the next release.
+
+  - type: input
+    id: project-name
+    attributes:
+      label: Project Name
+      description: The name of your project
+      placeholder: "My Awesome Project"
+    validations:
+      required: true
+
+  - type: input
+    id: project-url
+    attributes:
+      label: Project URL
+      description: The live URL of your project (must be publicly accessible)
+      placeholder: "https://example.com"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Project Description
+      description: A brief description of your project (1-2 sentences, max 160 characters)
+      placeholder: "A brief description of what your project does and how it uses JARFIS."
+      render: text
+    validations:
+      required: true
+
+  - type: input
+    id: repo-url
+    attributes:
+      label: Repository URL (Optional)
+      description: Link to the public GitHub/GitLab repository (if open source)
+      placeholder: "https://github.com/your-username/your-project"
+    validations:
+      required: false
+
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: Screenshot (Optional)
+      description: |
+        Attach a screenshot of your project (recommended: 1200x630px or 16:9 ratio, PNG or JPG).
+        Drag and drop the image file here, or paste a URL to an existing image.
+      placeholder: "Drag and drop a screenshot here..."
+    validations:
+      required: false
+
+  - type: input
+    id: tags
+    attributes:
+      label: Tags (Optional)
+      description: Comma-separated list of tags describing your project (e.g., astro, tailwind, typescript)
+      placeholder: "astro, tailwind, jarfis, open-source"
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Submission Checklist
+      description: Please confirm the following before submitting
+      options:
+        - label: My project is publicly accessible at the URL provided
+          required: true
+        - label: My project was built with JARFIS workflow
+          required: true
+        - label: I have the rights to submit this project
+          required: true
+        - label: The project description is accurate and does not contain misleading information
+          required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        After submission, a maintainer will review your project and add it to the showcase if approved.
+        You will be notified in this issue thread.
