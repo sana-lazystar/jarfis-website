@@ -1,0 +1,20 @@
+/* Self-hosted Inter font via @fontsource/inter */
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+@import "@fontsource/inter/600.css";
+@import "@fontsource/inter/700.css";
+
+/* CJK System Font Stack */
+/* Korean, Japanese, Chinese characters fall through to system fonts */
+
+/* Font feature settings for Inter */
+* {
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+}
+
+/* Mono font fallback stack */
+code, pre, kbd, samp {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Source Code Pro',
+               ui-monospace, 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas',
+               'Liberation Mono', 'Courier New', monospace;
+}

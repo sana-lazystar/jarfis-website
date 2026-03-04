@@ -1,0 +1,24 @@
+---
+import { SUPPORTED_LOCALES, type Locale } from '../../i18n/config';
+
+export function getStaticPaths() {
+  return SUPPORTED_LOCALES.map((lang) => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params as { lang: Locale };
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JARFIS — The Fantastic Way to Ship Software with AI</title>
+    <link rel="stylesheet" href="/jarfis-website/styles/global.css" />
+  </head>
+  <body>
+    <main>
+      <h1>JARFIS Website [{lang}]</h1>
+      <p>Coming soon...</p>
+    </main>
+  </body>
+</html>
