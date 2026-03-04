@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <!-- Atom orbit logo -->
+  <ellipse cx="16" cy="16" rx="13" ry="5" stroke="#06b6d4" stroke-width="1.5" transform="rotate(-30 16 16)"/>
+  <ellipse cx="16" cy="16" rx="13" ry="5" stroke="#06b6d4" stroke-width="1.5" transform="rotate(30 16 16)"/>
+  <ellipse cx="16" cy="16" rx="13" ry="5" stroke="#06b6d4" stroke-width="1.5"/>
+  <circle cx="16" cy="16" r="3" fill="#06b6d4"/>
+  <circle cx="29" cy="16" r="1.8" fill="#22d3ee"/>
+</svg>

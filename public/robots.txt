@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sana-lazystar.github.io/jarfis-website/sitemap-index.xml
