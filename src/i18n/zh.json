@@ -29,16 +29,6 @@
   "how_it_works": {
     "title": "JARFIS如何工作",
     "subtitle": "您的想法 → 通过自主步骤生成生产就绪软件",
-    "step1_title": "PO智能体",
-    "step1_desc": "定义需求",
-    "step2_title": "UX智能体",
-    "step2_desc": "设计线框图和流程",
-    "step3_title": "FE智能体",
-    "step3_desc": "构建组件和页面",
-    "step4_title": "QA智能体",
-    "step4_desc": "测试和验证质量",
-    "step5_title": "部署",
-    "step5_desc": "发布到生产环境",
     "cta": "查看完整文档"
   },
   "social_proof": {

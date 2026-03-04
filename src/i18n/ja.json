@@ -29,16 +29,6 @@
   "how_it_works": {
     "title": "JARFISの仕組み",
     "subtitle": "あなたのアイデア → 自律的なステップで本番対応ソフトウェアへ",
-    "step1_title": "POエージェント",
-    "step1_desc": "要件の定義",
-    "step2_title": "UXエージェント",
-    "step2_desc": "ワイヤーフレームとフローの設計",
-    "step3_title": "FEエージェント",
-    "step3_desc": "コンポーネントとページの構築",
-    "step4_title": "QAエージェント",
-    "step4_desc": "品質のテストと検証",
-    "step5_title": "デプロイ",
-    "step5_desc": "本番環境への出荷",
     "cta": "完全なドキュメントを見る"
   },
   "social_proof": {
