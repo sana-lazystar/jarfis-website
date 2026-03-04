@@ -12,6 +12,9 @@ interface Props {
 
 const { title, description, locale, pagePath, ogImage } = Astro.props;
 
+// Strip HTML tags (e.g. <br/>) from title for meta tags
+const plainTitle = title.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const siteUrl = 'https://sana-lazystar.github.io';
 const canonicalUrl = `${siteUrl}${localePath(locale, pagePath)}`;
@@ -19,7 +22,7 @@ const ogImageUrl = ogImage
   ? `${siteUrl}${base}${ogImage}`
   : `${siteUrl}${base}/images/og/default.png`;
 ---
-<title>{title} | JARFIS</title>
+<title>{plainTitle} | JARFIS</title>
 <meta name="description" content={description} />
 <link rel="canonical" href={canonicalUrl} />
 
@@ -38,7 +41,7 @@ const ogImageUrl = ogImage
 />
 
 <!-- Open Graph -->
-<meta property="og:title" content={`${title} | JARFIS`} />
+<meta property="og:title" content={`${plainTitle} | JARFIS`} />
 <meta property="og:description" content={description} />
 <meta property="og:locale" content={locale} />
 <meta property="og:url" content={canonicalUrl} />
@@ -48,6 +51,6 @@ const ogImageUrl = ogImage
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content={`${title} | JARFIS`} />
+<meta name="twitter:title" content={`${plainTitle} | JARFIS`} />
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={ogImageUrl} />

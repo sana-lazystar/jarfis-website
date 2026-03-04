@@ -38,6 +38,7 @@ const msg = messages[locale] ?? messages.en;
 const homeUrl = `${base}/${locale}/`;
 ---
 <BaseLayout title={msg.title} locale={locale}>
+  <title slot="head">{msg.title} | JARFIS</title>
   <Header locale={locale} currentPath={currentPath} />
 
   <main id="main-content" class="min-h-screen flex items-center justify-center px-4">

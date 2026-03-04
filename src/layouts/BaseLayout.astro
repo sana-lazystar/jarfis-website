@@ -31,8 +31,6 @@ const skipLinkText = t(locale, 'a11y.skip_to_content');
       content="default-src 'self'; script-src 'self' 'sha256-YxoZ2MkHPm7JhpdQMpPcR2zzwr+kXOnKPUSzcRcVT2U=' 'sha256-L3iAYqJIVqzqYvXPglzHAbfWlt6zvRexBR8UdGt2w6k=' 'sha256-i7B83grpnZ50Ie1ZPI6g8dcZHjVRrScrhW6BkMiJkIg=' 'sha256-PnUcEx1UHK1H7d3wmDWG9Q432uxxlw+yUNhvsu+yRAg=' 'sha256-hpYVaf8zNYm0fxkQMeRkiqB9NR9t/DmmHVHQTRi5ZfY=' 'sha256-1Tmstdrt/2FtKVNF7yMJKMlreVG4bHNyWVQCcZDTF7w=' 'sha256-0JoSUCUEYi9ApLxzFOOE9aRSeJoYkeEwwmVFh8/ndCM='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; base-uri 'self'; upgrade-insecure-requests;"
     />
 
-    <!-- Primary Meta (fallback — SEOHead overrides via slot="head") -->
-    <title>{title} | JARFIS</title>
     <meta name="theme-color" content="#06b6d4" />
     <meta name="color-scheme" content="light dark" />
 
@@ -40,7 +38,8 @@ const skipLinkText = t(locale, 'a11y.skip_to_content');
     <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
     <link rel="icon" type="image/x-icon" href={`${base}/favicon.ico`} />
 
-    <!-- Head slot for additional meta tags (hreflang, etc.) -->
+    <!-- SEOHead slot (pages that use SEOHead inject title + OG here) -->
+    <!-- Pages without SEOHead (e.g. 404) should include their own <title> -->
     <slot name="head" />
 
     <!-- FOUC prevention: Dark mode inline script (must be before first paint) -->
