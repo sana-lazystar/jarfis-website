@@ -1,0 +1,34 @@
+---
+import type { Locale } from '../i18n/config';
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  locale?: Locale;
+  ogImage?: string;
+  pagePath?: string;
+}
+
+const {
+  title,
+  description,
+  locale = 'en',
+  ogImage,
+  pagePath = '',
+} = Astro.props;
+---
+<BaseLayout title={title} description={description} locale={locale} ogImage={ogImage}>
+  <slot name="head" slot="head" />
+
+  <!-- Header slot (filled by page or defaults to imported Header) -->
+  <slot name="header" />
+
+  <!-- Main content -->
+  <main id="main-content" class="min-h-screen">
+    <slot />
+  </main>
+
+  <!-- Footer slot (filled by page or defaults to imported Footer) -->
+  <slot name="footer" />
+</BaseLayout>

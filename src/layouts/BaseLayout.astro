@@ -1,0 +1,92 @@
+---
+import type { Locale } from '../i18n/config';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  locale?: Locale;
+  ogImage?: string;
+}
+
+const {
+  title,
+  description = 'The Fantastic Way to Ship Software with AI. 100% Open Source.',
+  locale = 'en',
+  ogImage,
+} = Astro.props;
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const canonicalUrl = Astro.url.href;
+---
+<!doctype html>
+<html lang={locale} class="">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- CSP -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors 'none';"
+    />
+
+    <!-- Primary Meta -->
+    <title>{title} | JARFIS</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={`${title} | JARFIS`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImage ?? `${base}/images/og/default.png`} />
+    <meta property="og:locale" content={locale} />
+    <meta property="og:site_name" content="JARFIS" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={`${title} | JARFIS`} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage ?? `${base}/images/og/default.png`} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
+    <link rel="icon" type="image/x-icon" href={`${base}/favicon.ico`} />
+
+    <!-- Head slot for additional meta tags (hreflang, etc.) -->
+    <slot name="head" />
+
+    <!-- FOUC prevention: Dark mode inline script (must be before first paint) -->
+    <script is:inline>
+      (function () {
+        var stored = localStorage.getItem('theme');
+        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var theme = stored === 'dark' || stored === 'light' ? stored : (prefersDark ? 'dark' : 'light');
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+        document.documentElement.setAttribute('data-theme', theme);
+      })();
+    </script>
+  </head>
+  <body class="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 transition-colors duration-300">
+    <!-- Skip to main content (accessibility) -->
+    <a href="#main-content" class="skip-link">
+      Skip to main content
+    </a>
+
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  /* Ensure smooth transition but avoid FOUC */
+  html.dark {
+    color-scheme: dark;
+  }
+</style>

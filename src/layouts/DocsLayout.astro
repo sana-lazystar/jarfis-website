@@ -1,0 +1,74 @@
+---
+import type { Locale } from '../i18n/config';
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  locale?: Locale;
+  lastUpdated?: Date;
+}
+
+const {
+  title,
+  description,
+  locale = 'en',
+  lastUpdated,
+} = Astro.props;
+---
+<BaseLayout title={title} description={description} locale={locale}>
+  <slot name="head" slot="head" />
+
+  <!-- Header -->
+  <slot name="header" />
+
+  <!-- 3-column docs layout: sidebar + content + TOC -->
+  <div class="flex min-h-screen">
+    <!-- Sidebar (left) -->
+    <aside
+      id="docs-sidebar"
+      class="hidden lg:flex flex-col w-60 shrink-0 border-r border-slate-200 dark:border-slate-700 sticky top-16 h-[calc(100vh-4rem)] overflow-y-auto"
+      aria-label="Documentation navigation"
+    >
+      <slot name="sidebar" />
+    </aside>
+
+    <!-- Main content -->
+    <main id="main-content" class="flex-1 min-w-0">
+      <!-- Mobile sidebar toggle -->
+      <div class="lg:hidden px-4 py-3 border-b border-slate-200 dark:border-slate-700">
+        <slot name="sidebar-toggle" />
+      </div>
+
+      <article class="px-6 py-8 max-w-3xl mx-auto">
+        <!-- Last updated -->
+        {lastUpdated && (
+          <p class="text-sm text-slate-500 dark:text-slate-400 mb-6">
+            Last updated: {lastUpdated.toLocaleDateString(locale, { year: 'numeric', month: 'long', day: 'numeric' })}
+          </p>
+        )}
+
+        <!-- Content -->
+        <div class="prose dark:prose-invert max-w-none">
+          <slot />
+        </div>
+
+        <!-- Prev/Next navigation -->
+        <nav class="mt-12 pt-6 border-t border-slate-200 dark:border-slate-700 flex justify-between" aria-label="Documentation pagination">
+          <slot name="prev-next" />
+        </nav>
+      </article>
+    </main>
+
+    <!-- Table of Contents (right) -->
+    <aside
+      class="hidden xl:block w-56 shrink-0 sticky top-16 h-[calc(100vh-4rem)] overflow-y-auto pl-4 py-8"
+      aria-label="Table of contents"
+    >
+      <slot name="toc" />
+    </aside>
+  </div>
+
+  <!-- Footer -->
+  <slot name="footer" />
+</BaseLayout>
