@@ -1,0 +1,43 @@
+name: Quality Check
+
+on:
+  pull_request:
+    branches: [main]
+
+# Read-only permissions are sufficient for PR quality checks
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: Type check, lint, audit, and build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies (frozen lockfile)
+        run: pnpm install --frozen-lockfile
+
+      - name: Security audit
+        run: pnpm audit --audit-level=high
+
+      - name: Type check
+        run: pnpm astro check
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Build (verify no build errors)
+        run: pnpm build
