@@ -1,0 +1,57 @@
+---
+import type { Locale } from '../../i18n/config';
+import { t } from '../../i18n/utils';
+import Button from '../common/Button.astro';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+
+// GitHub Issue template URL for Showcase submission
+const submitUrl =
+  'https://github.com/sana-lazystar/jarfis-website/issues/new?template=showcase-submission.yml';
+---
+<div class="flex flex-col items-center justify-center text-center py-16 px-4">
+  <!-- Illustration: Rocket launch -->
+  <div class="mb-8 text-slate-300 dark:text-slate-600" aria-hidden="true">
+    <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Rocket body -->
+      <path d="M60 20 C45 35 40 55 40 70 L60 80 L80 70 C80 55 75 35 60 20Z" fill="currentColor" opacity="0.5"/>
+      <!-- Rocket nose -->
+      <path d="M60 20 C55 10 65 10 60 20Z" fill="currentColor" opacity="0.8"/>
+      <!-- Wings -->
+      <path d="M40 70 L28 90 L45 80Z" fill="currentColor" opacity="0.4"/>
+      <path d="M80 70 L92 90 L75 80Z" fill="currentColor" opacity="0.4"/>
+      <!-- Window -->
+      <circle cx="60" cy="52" r="8" fill="currentColor" opacity="0.6"/>
+      <circle cx="60" cy="52" r="5" fill="white" opacity="0.4"/>
+      <!-- Exhaust -->
+      <path d="M50 80 Q55 92 60 100 Q65 92 70 80" stroke="currentColor" stroke-width="2" fill="none" opacity="0.5"/>
+      <!-- Stars -->
+      <circle cx="25" cy="30" r="2" fill="currentColor" opacity="0.6"/>
+      <circle cx="95" cy="40" r="1.5" fill="currentColor" opacity="0.5"/>
+      <circle cx="30" cy="55" r="1" fill="currentColor" opacity="0.4"/>
+      <circle cx="90" cy="25" r="2" fill="currentColor" opacity="0.6"/>
+    </svg>
+  </div>
+
+  <!-- Message card -->
+  <div class="max-w-md border border-slate-200 dark:border-slate-700 rounded-2xl bg-white dark:bg-slate-800/50 p-10">
+    <h2 class="text-xl font-semibold text-slate-900 dark:text-white mb-3">
+      {t(locale, 'showcase.empty_title')}
+    </h2>
+    <p class="text-slate-500 dark:text-slate-400 mb-8 leading-relaxed">
+      {t(locale, 'showcase.empty_desc')}
+    </p>
+
+    <Button href={submitUrl} variant="primary" external={true}>
+      {t(locale, 'showcase.submit')}
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
+        <polyline points="15,3 21,3 21,9"/>
+        <line x1="10" y1="14" x2="21" y2="3"/>
+      </svg>
+    </Button>
+  </div>
+</div>

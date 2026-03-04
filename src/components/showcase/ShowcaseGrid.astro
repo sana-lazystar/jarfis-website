@@ -1,0 +1,28 @@
+---
+import type { Locale } from '../../i18n/config';
+import ShowcaseCard from './ShowcaseCard.astro';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  locale: Locale;
+  items: CollectionEntry<'showcase'>[];
+}
+
+const { locale, items } = Astro.props;
+---
+<section aria-label="Showcase projects">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    {items.map((item) => (
+      <ShowcaseCard
+        locale={locale}
+        name={item.data.name}
+        description={item.data.description}
+        url={item.data.url}
+        repoUrl={item.data.repoUrl}
+        thumbnail={item.data.thumbnail}
+        tags={item.data.tags}
+        featured={item.data.featured}
+      />
+    ))}
+  </div>
+</section>
