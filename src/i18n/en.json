@@ -1,0 +1,158 @@
+{
+  "nav": {
+    "home": "Home",
+    "features": "Features",
+    "docs": "Documentation",
+    "blog": "Blog",
+    "showcase": "Showcase",
+    "github": "GitHub"
+  },
+  "hero": {
+    "tagline": "The Fantastic Way to Ship Software with AI",
+    "subtitle": "100% Open Source. Your AI team, your rules.",
+    "description": "AI agents collaborate as a team to build production-ready software — autonomously. No vendor lock-in. No black box.",
+    "cta_github": "View on GitHub",
+    "cta_start": "Get Started"
+  },
+  "value": {
+    "title": "Why JARFIS?",
+    "agent_team_title": "AI Agent Team",
+    "agent_team_desc": "Several specialized AI agents work as a real team — PO, UX, Frontend, QA — collaborating autonomously.",
+    "open_source_title": "100% Open Source",
+    "open_source_desc": "MIT Licensed. Self-host on your own infrastructure. No vendor lock-in. Your infra, your rules.",
+    "production_title": "Production Ready",
+    "production_desc": "Real deployable output, not just prototypes. Code that ships to production — autonomously.",
+    "multilang_title": "Multi-language Support",
+    "multilang_desc": "Ship to global teams with i18n built in. JARFIS speaks your language."
+  },
+  "how_it_works": {
+    "title": "How JARFIS Works",
+    "subtitle": "Your idea → Production-ready software in autonomous steps",
+    "step1_title": "PO Agent",
+    "step1_desc": "Define requirements",
+    "step2_title": "UX Agent",
+    "step2_desc": "Design wireframes & flows",
+    "step3_title": "FE Agent",
+    "step3_desc": "Build components & pages",
+    "step4_title": "QA Agent",
+    "step4_desc": "Test & verify quality",
+    "step5_title": "Deploy",
+    "step5_desc": "Ship to production",
+    "cta": "View Full Documentation"
+  },
+  "social_proof": {
+    "title": "Join the developers building the future of AI-powered software",
+    "github_stars": "GitHub Stars",
+    "contributors": "Active Contributors",
+    "forks": "Forks",
+    "growing": "Growing Community"
+  },
+  "final_cta": {
+    "title": "Ready to ship software differently?",
+    "cta_github": "View on GitHub",
+    "cta_docs": "Read the Docs"
+  },
+  "features": {
+    "page_title": "Features",
+    "page_subtitle": "Everything you need to build with AI — without the trade-offs.",
+    "differentiator_title": "A different approach to AI-assisted development",
+    "traditional": "Traditional AI Coding Tools",
+    "jarfis": "JARFIS",
+    "compare": {
+      "single_ai": "Single AI assistant",
+      "team": "Team of specialized agents",
+      "suggestion": "Suggestion-based",
+      "autonomous": "Autonomous execution",
+      "vendor": "Vendor API dependent",
+      "selfhost": "Self-hostable, open source",
+      "completion": "Code completion focus",
+      "workflow": "Full workflow coverage",
+      "blackbox": "Black-box behavior",
+      "transparent": "Transparent, auditable"
+    },
+    "learn_more": "Learn more in Docs",
+    "view_github": "View on GitHub"
+  },
+  "docs": {
+    "page_title": "Documentation",
+    "sidebar_title": "Docs",
+    "categories": {
+      "getting_started": "Getting Started",
+      "concepts": "Concepts",
+      "guides": "Guides",
+      "api_reference": "API Reference"
+    },
+    "last_updated": "Last updated",
+    "prev_page": "Previous",
+    "next_page": "Next",
+    "on_this_page": "On this page",
+    "not_translated": "This page is not yet translated. Showing English version.",
+    "copied": "Copied!",
+    "copy_code": "Copy code"
+  },
+  "blog": {
+    "page_title": "Blog",
+    "page_subtitle": "Updates, deep dives, and release notes",
+    "empty_title": "Stories are being written.",
+    "empty_desc": "The first post is on its way — follow us on GitHub to stay updated when it drops.",
+    "follow_github": "Follow on GitHub",
+    "watch_repo": "Watch Repo",
+    "read_more": "Read more",
+    "min_read": "min read",
+    "back_to_blog": "Back to Blog"
+  },
+  "showcase": {
+    "page_title": "Showcase",
+    "page_subtitle": "Projects built with JARFIS",
+    "empty_title": "Be the first to build with JARFIS.",
+    "empty_desc": "This very website was built by JARFIS agents — UX, Frontend, and QA working together. Your project could be next.",
+    "submit": "Submit Your Project",
+    "view_project": "View Project",
+    "view_source": "View Source"
+  },
+  "common": {
+    "coming_soon": "Coming Soon",
+    "stay_tuned": "Stay tuned for updates!",
+    "built_with": "Built with JARFIS",
+    "read_more": "Read more",
+    "last_updated": "Last updated",
+    "back_to_top": "Back to top",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "not_found": "Page not found",
+    "home": "Go back home",
+    "external_link": "Opens in new tab"
+  },
+  "footer": {
+    "license": "MIT License",
+    "community": "Community",
+    "project": "Project",
+    "resources": "Resources",
+    "github_link": "GitHub",
+    "changelog": "Changelog",
+    "releases": "Releases",
+    "documentation": "Documentation",
+    "quick_start": "Quick Start",
+    "features_link": "Features",
+    "discussions": "GitHub Discussions",
+    "issues": "GitHub Issues",
+    "contributing": "Contributing Guide",
+    "copyright": "JARFIS Contributors",
+    "built_with": "Built with JARFIS"
+  },
+  "a11y": {
+    "skip_to_content": "Skip to main content",
+    "toggle_dark_mode": "Toggle dark mode",
+    "toggle_menu": "Toggle navigation menu",
+    "switch_language": "Switch language",
+    "close_menu": "Close menu",
+    "open_menu": "Open menu",
+    "current_page": "Current page",
+    "external_link": "Opens in new tab"
+  },
+  "404": {
+    "title": "Page Not Found",
+    "description": "The page you're looking for doesn't exist or has been moved.",
+    "back_home": "Go back home"
+  }
+}

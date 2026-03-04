@@ -1,0 +1,158 @@
+{
+  "nav": {
+    "home": "首页",
+    "features": "功能",
+    "docs": "文档",
+    "blog": "博客",
+    "showcase": "展示",
+    "github": "GitHub"
+  },
+  "hero": {
+    "tagline": "用AI发布软件的绝妙方式",
+    "subtitle": "100%开源。您的AI团队，您的规则。",
+    "description": "AI智能体作为团队协作，自主构建生产就绪的软件。无供应商锁定。无黑盒。",
+    "cta_github": "在GitHub上查看",
+    "cta_start": "开始使用"
+  },
+  "value": {
+    "title": "为什么选择JARFIS？",
+    "agent_team_title": "AI智能体团队",
+    "agent_team_desc": "多个专业AI智能体（PO、UX、前端、QA）像真实团队一样自主协作。",
+    "open_source_title": "100%开源",
+    "open_source_desc": "MIT许可证。在自己的基础设施上自托管。无供应商锁定。您的基础设施，您的规则。",
+    "production_title": "生产就绪",
+    "production_desc": "真正可部署的输出，而不仅仅是原型。自主发布到生产环境的代码。",
+    "multilang_title": "多语言支持",
+    "multilang_desc": "内置i18n向全球团队发布。JARFIS用您的语言交流。"
+  },
+  "how_it_works": {
+    "title": "JARFIS如何工作",
+    "subtitle": "您的想法 → 通过自主步骤生成生产就绪软件",
+    "step1_title": "PO智能体",
+    "step1_desc": "定义需求",
+    "step2_title": "UX智能体",
+    "step2_desc": "设计线框图和流程",
+    "step3_title": "FE智能体",
+    "step3_desc": "构建组件和页面",
+    "step4_title": "QA智能体",
+    "step4_desc": "测试和验证质量",
+    "step5_title": "部署",
+    "step5_desc": "发布到生产环境",
+    "cta": "查看完整文档"
+  },
+  "social_proof": {
+    "title": "加入构建AI驱动软件未来的开发者",
+    "github_stars": "GitHub星标",
+    "contributors": "活跃贡献者",
+    "forks": "分叉",
+    "growing": "成长中的社区"
+  },
+  "final_cta": {
+    "title": "准备好以不同方式发布软件了吗？",
+    "cta_github": "在GitHub上查看",
+    "cta_docs": "阅读文档"
+  },
+  "features": {
+    "page_title": "功能",
+    "page_subtitle": "无需妥协，用AI构建所需的一切。",
+    "differentiator_title": "AI辅助开发的不同方法",
+    "traditional": "传统AI编码工具",
+    "jarfis": "JARFIS",
+    "compare": {
+      "single_ai": "单一AI助手",
+      "team": "专业智能体团队",
+      "suggestion": "基于建议",
+      "autonomous": "自主执行",
+      "vendor": "依赖供应商API",
+      "selfhost": "可自托管，开源",
+      "completion": "代码补全为主",
+      "workflow": "完整工作流覆盖",
+      "blackbox": "黑盒行为",
+      "transparent": "透明且可审计"
+    },
+    "learn_more": "在文档中了解更多",
+    "view_github": "在GitHub上查看"
+  },
+  "docs": {
+    "page_title": "文档",
+    "sidebar_title": "文档",
+    "categories": {
+      "getting_started": "快速开始",
+      "concepts": "概念",
+      "guides": "指南",
+      "api_reference": "API参考"
+    },
+    "last_updated": "最后更新",
+    "prev_page": "上一页",
+    "next_page": "下一页",
+    "on_this_page": "本页内容",
+    "not_translated": "此页面尚未翻译。显示英文版本。",
+    "copied": "已复制！",
+    "copy_code": "复制代码"
+  },
+  "blog": {
+    "page_title": "博客",
+    "page_subtitle": "更新、深度解析和发布说明",
+    "empty_title": "故事正在撰写中。",
+    "empty_desc": "第一篇文章即将发布 — 在GitHub上关注我们，及时获取更新。",
+    "follow_github": "在GitHub上关注",
+    "watch_repo": "Watch仓库",
+    "read_more": "阅读更多",
+    "min_read": "分钟阅读",
+    "back_to_blog": "返回博客"
+  },
+  "showcase": {
+    "page_title": "展示",
+    "page_subtitle": "用JARFIS构建的项目",
+    "empty_title": "成为第一个用JARFIS构建的人。",
+    "empty_desc": "这个网站本身就是由JARFIS智能体（UX、前端、QA）共同构建的。您的项目可以是下一个。",
+    "submit": "提交您的项目",
+    "view_project": "查看项目",
+    "view_source": "查看源码"
+  },
+  "common": {
+    "coming_soon": "即将推出",
+    "stay_tuned": "敬请期待更新！",
+    "built_with": "用JARFIS构建",
+    "read_more": "阅读更多",
+    "last_updated": "最后更新",
+    "back_to_top": "返回顶部",
+    "loading": "加载中...",
+    "error": "发生错误",
+    "not_found": "页面未找到",
+    "home": "返回首页",
+    "external_link": "在新标签页中打开"
+  },
+  "footer": {
+    "license": "MIT许可证",
+    "community": "社区",
+    "project": "项目",
+    "resources": "资源",
+    "github_link": "GitHub",
+    "changelog": "变更日志",
+    "releases": "发布",
+    "documentation": "文档",
+    "quick_start": "快速开始",
+    "features_link": "功能",
+    "discussions": "GitHub讨论",
+    "issues": "GitHub问题",
+    "contributing": "贡献指南",
+    "copyright": "JARFIS贡献者",
+    "built_with": "用JARFIS构建"
+  },
+  "a11y": {
+    "skip_to_content": "跳转到主要内容",
+    "toggle_dark_mode": "切换暗色模式",
+    "toggle_menu": "切换导航菜单",
+    "switch_language": "切换语言",
+    "close_menu": "关闭菜单",
+    "open_menu": "打开菜单",
+    "current_page": "当前页面",
+    "external_link": "在新标签页中打开"
+  },
+  "404": {
+    "title": "页面未找到",
+    "description": "您要找的页面不存在或已被移动。",
+    "back_home": "返回首页"
+  }
+}

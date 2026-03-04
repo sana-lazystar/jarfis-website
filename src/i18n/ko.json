@@ -1,0 +1,158 @@
+{
+  "nav": {
+    "home": "홈",
+    "features": "기능",
+    "docs": "문서",
+    "blog": "블로그",
+    "showcase": "쇼케이스",
+    "github": "GitHub"
+  },
+  "hero": {
+    "tagline": "AI와 함께 소프트웨어를 출시하는 환상적인 방법",
+    "subtitle": "100% 오픈 소스. 나만의 AI 팀, 나만의 규칙.",
+    "description": "AI 에이전트들이 팀으로 협업하여 프로덕션 수준의 소프트웨어를 자율적으로 구축합니다. 벤더 종속 없음. 블랙박스 없음.",
+    "cta_github": "GitHub에서 보기",
+    "cta_start": "시작하기"
+  },
+  "value": {
+    "title": "왜 JARFIS인가?",
+    "agent_team_title": "AI 에이전트 팀",
+    "agent_team_desc": "여러 전문 AI 에이전트(PO, UX, 프론트엔드, QA)가 실제 팀처럼 자율적으로 협업합니다.",
+    "open_source_title": "100% 오픈 소스",
+    "open_source_desc": "MIT 라이선스. 자체 인프라에서 호스팅. 벤더 종속 없음. 내 인프라, 내 규칙.",
+    "production_title": "프로덕션 준비 완료",
+    "production_desc": "프로토타입이 아닌 실제 배포 가능한 결과물. 자율적으로 프로덕션에 배포되는 코드.",
+    "multilang_title": "다국어 지원",
+    "multilang_desc": "내장 i18n으로 글로벌 팀에 출시. JARFIS는 당신의 언어로 말합니다."
+  },
+  "how_it_works": {
+    "title": "JARFIS 작동 방식",
+    "subtitle": "아이디어 → 자율적인 단계로 프로덕션 수준의 소프트웨어",
+    "step1_title": "PO 에이전트",
+    "step1_desc": "요구사항 정의",
+    "step2_title": "UX 에이전트",
+    "step2_desc": "와이어프레임 & 플로우 설계",
+    "step3_title": "FE 에이전트",
+    "step3_desc": "컴포넌트 & 페이지 구축",
+    "step4_title": "QA 에이전트",
+    "step4_desc": "품질 테스트 & 검증",
+    "step5_title": "배포",
+    "step5_desc": "프로덕션에 출시",
+    "cta": "전체 문서 보기"
+  },
+  "social_proof": {
+    "title": "AI 기반 소프트웨어의 미래를 만드는 개발자들과 함께하세요",
+    "github_stars": "GitHub 스타",
+    "contributors": "활성 기여자",
+    "forks": "포크",
+    "growing": "성장하는 커뮤니티"
+  },
+  "final_cta": {
+    "title": "소프트웨어를 다르게 출시할 준비가 되셨나요?",
+    "cta_github": "GitHub에서 보기",
+    "cta_docs": "문서 읽기"
+  },
+  "features": {
+    "page_title": "기능",
+    "page_subtitle": "타협 없이 AI로 구축하는 데 필요한 모든 것.",
+    "differentiator_title": "AI 보조 개발에 대한 다른 접근 방식",
+    "traditional": "기존 AI 코딩 도구",
+    "jarfis": "JARFIS",
+    "compare": {
+      "single_ai": "단일 AI 어시스턴트",
+      "team": "전문화된 에이전트 팀",
+      "suggestion": "제안 기반",
+      "autonomous": "자율 실행",
+      "vendor": "벤더 API 의존",
+      "selfhost": "자체 호스팅, 오픈 소스",
+      "completion": "코드 완성 중심",
+      "workflow": "전체 워크플로우 커버리지",
+      "blackbox": "블랙박스 동작",
+      "transparent": "투명하고 감사 가능"
+    },
+    "learn_more": "문서에서 자세히 보기",
+    "view_github": "GitHub에서 보기"
+  },
+  "docs": {
+    "page_title": "문서",
+    "sidebar_title": "문서",
+    "categories": {
+      "getting_started": "시작하기",
+      "concepts": "개념",
+      "guides": "가이드",
+      "api_reference": "API 레퍼런스"
+    },
+    "last_updated": "마지막 업데이트",
+    "prev_page": "이전",
+    "next_page": "다음",
+    "on_this_page": "이 페이지에서",
+    "not_translated": "이 페이지는 아직 번역되지 않았습니다. 영어 버전을 표시합니다.",
+    "copied": "복사됨!",
+    "copy_code": "코드 복사"
+  },
+  "blog": {
+    "page_title": "블로그",
+    "page_subtitle": "업데이트, 심층 분석 및 릴리스 노트",
+    "empty_title": "이야기가 작성되고 있습니다.",
+    "empty_desc": "첫 번째 게시물이 곧 올라옵니다 — GitHub에서 팔로우하여 최신 소식을 받아보세요.",
+    "follow_github": "GitHub에서 팔로우",
+    "watch_repo": "레포 Watch",
+    "read_more": "더 읽기",
+    "min_read": "분 읽기",
+    "back_to_blog": "블로그로 돌아가기"
+  },
+  "showcase": {
+    "page_title": "쇼케이스",
+    "page_subtitle": "JARFIS로 구축된 프로젝트",
+    "empty_title": "JARFIS로 최초로 구축해 보세요.",
+    "empty_desc": "이 웹사이트 자체가 JARFIS 에이전트(UX, 프론트엔드, QA)가 함께 만들었습니다. 당신의 프로젝트가 다음이 될 수 있습니다.",
+    "submit": "프로젝트 제출",
+    "view_project": "프로젝트 보기",
+    "view_source": "소스 보기"
+  },
+  "common": {
+    "coming_soon": "곧 출시",
+    "stay_tuned": "업데이트를 기대해 주세요!",
+    "built_with": "JARFIS로 구축",
+    "read_more": "더 읽기",
+    "last_updated": "마지막 업데이트",
+    "back_to_top": "맨 위로",
+    "loading": "로딩 중...",
+    "error": "오류가 발생했습니다",
+    "not_found": "페이지를 찾을 수 없습니다",
+    "home": "홈으로 돌아가기",
+    "external_link": "새 탭에서 열립니다"
+  },
+  "footer": {
+    "license": "MIT 라이선스",
+    "community": "커뮤니티",
+    "project": "프로젝트",
+    "resources": "리소스",
+    "github_link": "GitHub",
+    "changelog": "변경 로그",
+    "releases": "릴리스",
+    "documentation": "문서",
+    "quick_start": "빠른 시작",
+    "features_link": "기능",
+    "discussions": "GitHub 토론",
+    "issues": "GitHub 이슈",
+    "contributing": "기여 가이드",
+    "copyright": "JARFIS 기여자",
+    "built_with": "JARFIS로 구축"
+  },
+  "a11y": {
+    "skip_to_content": "주 콘텐츠로 건너뛰기",
+    "toggle_dark_mode": "다크 모드 전환",
+    "toggle_menu": "내비게이션 메뉴 전환",
+    "switch_language": "언어 전환",
+    "close_menu": "메뉴 닫기",
+    "open_menu": "메뉴 열기",
+    "current_page": "현재 페이지",
+    "external_link": "새 탭에서 열립니다"
+  },
+  "404": {
+    "title": "페이지를 찾을 수 없습니다",
+    "description": "찾고 계신 페이지가 없거나 이동되었습니다.",
+    "back_home": "홈으로 돌아가기"
+  }
+}

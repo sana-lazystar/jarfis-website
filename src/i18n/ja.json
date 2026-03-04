@@ -1,0 +1,158 @@
+{
+  "nav": {
+    "home": "ホーム",
+    "features": "機能",
+    "docs": "ドキュメント",
+    "blog": "ブログ",
+    "showcase": "ショーケース",
+    "github": "GitHub"
+  },
+  "hero": {
+    "tagline": "AIでソフトウェアを出荷する素晴らしい方法",
+    "subtitle": "100%オープンソース。あなたのAIチーム、あなたのルール。",
+    "description": "AIエージェントがチームとして協働し、本番対応のソフトウェアを自律的に構築します。ベンダーロックインなし。ブラックボックスなし。",
+    "cta_github": "GitHubで見る",
+    "cta_start": "はじめる"
+  },
+  "value": {
+    "title": "なぜJARFIS？",
+    "agent_team_title": "AIエージェントチーム",
+    "agent_team_desc": "複数の専門AIエージェント（PO、UX、フロントエンド、QA）が実際のチームのように自律的に協働します。",
+    "open_source_title": "100%オープンソース",
+    "open_source_desc": "MITライセンス。自分のインフラでセルフホスト。ベンダーロックインなし。あなたのインフラ、あなたのルール。",
+    "production_title": "本番対応",
+    "production_desc": "プロトタイプではなく、実際にデプロイ可能なアウトプット。自律的に本番環境に出荷されるコード。",
+    "multilang_title": "多言語サポート",
+    "multilang_desc": "i18nが組み込まれたグローバルチームへの出荷。JARFISはあなたの言語で話します。"
+  },
+  "how_it_works": {
+    "title": "JARFISの仕組み",
+    "subtitle": "あなたのアイデア → 自律的なステップで本番対応ソフトウェアへ",
+    "step1_title": "POエージェント",
+    "step1_desc": "要件の定義",
+    "step2_title": "UXエージェント",
+    "step2_desc": "ワイヤーフレームとフローの設計",
+    "step3_title": "FEエージェント",
+    "step3_desc": "コンポーネントとページの構築",
+    "step4_title": "QAエージェント",
+    "step4_desc": "品質のテストと検証",
+    "step5_title": "デプロイ",
+    "step5_desc": "本番環境への出荷",
+    "cta": "完全なドキュメントを見る"
+  },
+  "social_proof": {
+    "title": "AIパワードソフトウェアの未来を構築する開発者に加わりましょう",
+    "github_stars": "GitHubスター",
+    "contributors": "アクティブコントリビューター",
+    "forks": "フォーク",
+    "growing": "成長するコミュニティ"
+  },
+  "final_cta": {
+    "title": "ソフトウェアを別の方法で出荷する準備はできていますか？",
+    "cta_github": "GitHubで見る",
+    "cta_docs": "ドキュメントを読む"
+  },
+  "features": {
+    "page_title": "機能",
+    "page_subtitle": "トレードオフなしにAIで構築するために必要なすべてのもの。",
+    "differentiator_title": "AI支援開発への異なるアプローチ",
+    "traditional": "従来のAIコーディングツール",
+    "jarfis": "JARFIS",
+    "compare": {
+      "single_ai": "単一のAIアシスタント",
+      "team": "専門エージェントのチーム",
+      "suggestion": "提案ベース",
+      "autonomous": "自律実行",
+      "vendor": "ベンダーAPI依存",
+      "selfhost": "セルフホスタブル、オープンソース",
+      "completion": "コード補完フォーカス",
+      "workflow": "完全なワークフローカバレッジ",
+      "blackbox": "ブラックボックス動作",
+      "transparent": "透明で監査可能"
+    },
+    "learn_more": "ドキュメントで詳しく学ぶ",
+    "view_github": "GitHubで見る"
+  },
+  "docs": {
+    "page_title": "ドキュメント",
+    "sidebar_title": "ドキュメント",
+    "categories": {
+      "getting_started": "はじめに",
+      "concepts": "コンセプト",
+      "guides": "ガイド",
+      "api_reference": "APIリファレンス"
+    },
+    "last_updated": "最終更新",
+    "prev_page": "前へ",
+    "next_page": "次へ",
+    "on_this_page": "このページの内容",
+    "not_translated": "このページはまだ翻訳されていません。英語版を表示しています。",
+    "copied": "コピーしました！",
+    "copy_code": "コードをコピー"
+  },
+  "blog": {
+    "page_title": "ブログ",
+    "page_subtitle": "アップデート、詳細解説、リリースノート",
+    "empty_title": "ストーリーが書かれています。",
+    "empty_desc": "最初の投稿が間もなく来ます — GitHubでフォローして最新情報を受け取りましょう。",
+    "follow_github": "GitHubでフォロー",
+    "watch_repo": "リポジトリをWatch",
+    "read_more": "続きを読む",
+    "min_read": "分で読める",
+    "back_to_blog": "ブログに戻る"
+  },
+  "showcase": {
+    "page_title": "ショーケース",
+    "page_subtitle": "JARFISで構築されたプロジェクト",
+    "empty_title": "JARFISで最初に構築しましょう。",
+    "empty_desc": "このウェブサイト自体がJARFISエージェント（UX、フロントエンド、QA）が協力して作りました。あなたのプロジェクトが次になれます。",
+    "submit": "プロジェクトを提出",
+    "view_project": "プロジェクトを見る",
+    "view_source": "ソースを見る"
+  },
+  "common": {
+    "coming_soon": "近日公開",
+    "stay_tuned": "アップデートをお楽しみに！",
+    "built_with": "JARFISで構築",
+    "read_more": "続きを読む",
+    "last_updated": "最終更新",
+    "back_to_top": "トップへ戻る",
+    "loading": "読み込み中...",
+    "error": "エラーが発生しました",
+    "not_found": "ページが見つかりません",
+    "home": "ホームに戻る",
+    "external_link": "新しいタブで開く"
+  },
+  "footer": {
+    "license": "MITライセンス",
+    "community": "コミュニティ",
+    "project": "プロジェクト",
+    "resources": "リソース",
+    "github_link": "GitHub",
+    "changelog": "変更履歴",
+    "releases": "リリース",
+    "documentation": "ドキュメント",
+    "quick_start": "クイックスタート",
+    "features_link": "機能",
+    "discussions": "GitHubディスカッション",
+    "issues": "GitHubイシュー",
+    "contributing": "コントリビューションガイド",
+    "copyright": "JARFISコントリビューター",
+    "built_with": "JARFISで構築"
+  },
+  "a11y": {
+    "skip_to_content": "メインコンテンツへスキップ",
+    "toggle_dark_mode": "ダークモードを切り替える",
+    "toggle_menu": "ナビゲーションメニューを切り替える",
+    "switch_language": "言語を切り替える",
+    "close_menu": "メニューを閉じる",
+    "open_menu": "メニューを開く",
+    "current_page": "現在のページ",
+    "external_link": "新しいタブで開く"
+  },
+  "404": {
+    "title": "ページが見つかりません",
+    "description": "お探しのページは存在しないか、移動されました。",
+    "back_home": "ホームに戻る"
+  }
+}
