@@ -1,0 +1,60 @@
+---
+import type { Locale } from '../../i18n/config';
+import { t } from '../../i18n/utils';
+import Button from '../common/Button.astro';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+---
+<div class="flex flex-col items-center justify-center text-center py-16 px-4">
+  <!-- Illustration -->
+  <div class="mb-8 text-slate-300 dark:text-slate-600" aria-hidden="true">
+    <!-- Writing/typewriter illustration (SVG) -->
+    <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Notebook -->
+      <rect x="20" y="15" width="80" height="90" rx="6" fill="currentColor" opacity="0.3"/>
+      <rect x="25" y="15" width="8" height="90" rx="3" fill="currentColor" opacity="0.4"/>
+      <!-- Lines -->
+      <line x1="38" y1="40" x2="85" y2="40" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+      <line x1="38" y1="52" x2="85" y2="52" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+      <line x1="38" y1="64" x2="72" y2="64" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity="0.4"/>
+      <!-- Pencil -->
+      <g transform="rotate(-30 80 80)">
+        <rect x="72" y="60" width="8" height="28" rx="1" fill="currentColor" opacity="0.7"/>
+        <polygon points="72,88 80,88 76,96" fill="currentColor" opacity="0.8"/>
+        <rect x="72" y="60" width="8" height="5" fill="currentColor" opacity="0.4"/>
+      </g>
+    </svg>
+  </div>
+
+  <!-- Message -->
+  <div class="max-w-md border border-slate-200 dark:border-slate-700 rounded-2xl bg-white dark:bg-slate-800/50 p-10">
+    <h2 class="text-xl font-semibold text-slate-900 dark:text-white mb-3">
+      {t(locale, 'blog.empty_title')}
+    </h2>
+    <p class="text-slate-500 dark:text-slate-400 mb-8 leading-relaxed">
+      {t(locale, 'blog.empty_desc')}
+    </p>
+
+    <div class="flex flex-col sm:flex-row gap-3 justify-center">
+      <Button
+        href="https://github.com/sana-lazystar/jarfis"
+        variant="secondary"
+        size="sm"
+        external={true}
+      >
+        {t(locale, 'blog.follow_github')}
+      </Button>
+      <Button
+        href="https://github.com/sana-lazystar/jarfis/subscription"
+        variant="ghost"
+        size="sm"
+        external={true}
+      >
+        {t(locale, 'blog.watch_repo')}
+      </Button>
+    </div>
+  </div>
+</div>

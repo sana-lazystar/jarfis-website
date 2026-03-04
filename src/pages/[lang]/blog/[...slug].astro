@@ -1,0 +1,96 @@
+---
+import { SUPPORTED_LOCALES, type Locale } from '../../../i18n/config';
+import { localePath } from '../../../i18n/utils';
+import BlogPostLayout from '../../../layouts/BlogPostLayout.astro';
+import SEOHead from '../../../components/common/SEOHead.astro';
+import { getCollection, render } from 'astro:content';
+import { getBlogPostsForLocale, getBlogSlug } from '../../../utils/collections';
+
+export async function getStaticPaths() {
+  const paths = [];
+
+  for (const lang of SUPPORTED_LOCALES) {
+    const posts = await getBlogPostsForLocale(lang as Locale);
+
+    for (const post of posts) {
+      const slug = getBlogSlug(post);
+      paths.push({
+        params: { lang, slug },
+        props: { post, lang, posts },
+      });
+    }
+  }
+
+  return paths;
+}
+
+type Props = {
+  post: Awaited<ReturnType<typeof getCollection<'blog'>>>[number];
+  lang: Locale;
+  posts: Awaited<ReturnType<typeof getCollection<'blog'>>>;
+};
+
+const { post, lang, posts } = Astro.props;
+const locale = lang as Locale;
+const currentSlug = getBlogSlug(post);
+
+const { Content } = await render(post);
+
+// Adjacent posts
+const currentIndex = posts.findIndex((p) => getBlogSlug(p) === currentSlug);
+const prevPost = currentIndex < posts.length - 1 ? posts[currentIndex + 1] : null;
+const nextPost = currentIndex > 0 ? posts[currentIndex - 1] : null;
+---
+<BlogPostLayout
+  title={post.data.title}
+  description={post.data.description}
+  locale={locale}
+  pubDate={post.data.pubDate}
+  author={post.data.author}
+  tags={post.data.tags}
+  ogImage={post.data.ogImage}
+>
+  <SEOHead
+    slot="head"
+    title={post.data.title}
+    description={post.data.description}
+    locale={locale}
+    pagePath={`blog/${currentSlug}`}
+    ogImage={post.data.ogImage}
+  />
+
+  <Content />
+
+  <!-- Prev/Next post navigation -->
+  <div slot="prev-next" class="w-full flex justify-between gap-4">
+    {prevPost ? (
+      <a
+        href={localePath(locale, `blog/${getBlogSlug(prevPost)}`)}
+        class="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 hover:text-cyan-500 dark:hover:text-cyan-400 transition-colors"
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>
+          <span class="block text-xs text-slate-400">Previous</span>
+          {prevPost.data.title}
+        </span>
+      </a>
+    ) : <div />}
+
+    {nextPost ? (
+      <a
+        href={localePath(locale, `blog/${getBlogSlug(nextPost)}`)}
+        class="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 hover:text-cyan-500 dark:hover:text-cyan-400 transition-colors text-right ml-auto"
+      >
+        <span>
+          <span class="block text-xs text-slate-400">Next</span>
+          {nextPost.data.title}
+        </span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+    ) : <div />}
+  </div>
+</BlogPostLayout>

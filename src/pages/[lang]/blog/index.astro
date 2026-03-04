@@ -1,0 +1,63 @@
+---
+import { SUPPORTED_LOCALES, type Locale } from '../../../i18n/config';
+import { t } from '../../../i18n/utils';
+import PageLayout from '../../../layouts/PageLayout.astro';
+import SEOHead from '../../../components/common/SEOHead.astro';
+import BlogList from '../../../components/blog/BlogList.astro';
+import EmptyState from '../../../components/blog/EmptyState.astro';
+import { getBlogPostsForLocale } from '../../../utils/collections';
+
+export async function getStaticPaths() {
+  const paths = [];
+  for (const lang of SUPPORTED_LOCALES) {
+    const posts = await getBlogPostsForLocale(lang as Locale);
+    paths.push({ params: { lang }, props: { posts } });
+  }
+  return paths;
+}
+
+type Props = {
+  posts: Awaited<ReturnType<typeof getBlogPostsForLocale>>;
+};
+
+const { lang } = Astro.params as { lang: Locale };
+const locale = lang as Locale;
+const { posts } = Astro.props;
+---
+<PageLayout
+  title={t(locale, 'blog.page_title')}
+  description={t(locale, 'blog.page_subtitle')}
+  locale={locale}
+  pagePath="blog"
+>
+  <SEOHead
+    slot="head"
+    title={t(locale, 'blog.page_title')}
+    description={t(locale, 'blog.page_subtitle')}
+    locale={locale}
+    pagePath="blog"
+  />
+
+  <!-- Page header -->
+  <section class="py-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 text-center">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6">
+      <h1 class="text-4xl sm:text-5xl font-bold text-slate-900 dark:text-white mb-4">
+        {t(locale, 'blog.page_title')}
+      </h1>
+      <p class="text-xl text-slate-500 dark:text-slate-400">
+        {t(locale, 'blog.page_subtitle')}
+      </p>
+    </div>
+  </section>
+
+  <!-- Blog content -->
+  <section class="py-12 lg:py-16 bg-slate-50 dark:bg-slate-800/20 min-h-[50vh]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {posts.length > 0 ? (
+        <BlogList locale={locale} posts={posts} />
+      ) : (
+        <EmptyState locale={locale} />
+      )}
+    </div>
+  </section>
+</PageLayout>
