@@ -19,16 +19,17 @@ const locale = lang as Locale;
 ---
 <PageLayout
   title={t(locale, 'hero.tagline')}
-  description={t(locale, 'hero.description')}
+  description={t(locale, 'seo.home_description')}
   locale={locale}
   pagePath=""
 >
   <SEOHead
     slot="head"
     title={t(locale, 'hero.tagline')}
-    description={t(locale, 'hero.description')}
+    description={t(locale, 'seo.home_description')}
     locale={locale}
     pagePath=""
+    ogImage="/images/og/og-default.png"
   />
 
   <!-- Hero section -->

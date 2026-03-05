@@ -1,139 +1,198 @@
 ---
 title: "Architecture & Concepts"
-description: "Understand the core JARFIS architecture: how agents orchestrate, communicate, and enable autonomous software development."
+description: "Understand JARFIS core architecture: 9 specialized agents, 8+ structured phases, 11 artifacts, and the PreCompact state system."
 category: "concepts"
-order: 2
+order: 1
 locale: "en"
-lastUpdated: 2026-03-04
+lastUpdated: 2026-03-05
 draft: false
 ---
 
 # Architecture & Concepts
 
-Understanding how JARFIS works under the hood.
+How JARFIS orchestrates 9 expert AI agents to ship production software.
 
-## The Agent Team Model
+## The Orchestration Model
 
-JARFIS is built around the concept of **specialized agents working as a team**. Unlike single-agent systems that handle everything, JARFIS orchestrates distinct agents, each with a focused role:
-
-```
-Task Input
-    │
-    ▼
-┌──────────────────────────────────────┐
-│         JARFIS Orchestrator          │
-│  (Task decomposition & coordination) │
-└──────────────────────────────────────┘
-    │           │           │           │
-    ▼           ▼           ▼           ▼
-┌──────┐   ┌──────┐   ┌──────┐   ┌──────┐
-│  PO  │   │  UX  │   │  FE  │   │  QA  │
-│Agent │   │Agent │   │Agent │   │Agent │
-└──────┘   └──────┘   └──────┘   └──────┘
-    │           │           │           │
-    └───────────┴───────────┴───────────┘
-                        │
-                        ▼
-                  Final Output
-```
-
-## Core Components
-
-### Orchestrator
-
-The Orchestrator is the central coordinator. It:
-- Parses your task description
-- Breaks it into subtasks
-- Assigns subtasks to appropriate agents
-- Manages agent dependencies and sequencing
-- Collects and merges outputs
-
-### Agent Types
-
-| Agent | Role | Primary Output |
-|-------|------|---------------|
-| PO Agent | Product Owner — requirements definition | `requirements.md`, user stories |
-| UX Agent | UX Designer — wireframes and flows | `wireframes/`, `ux-spec.md` |
-| Frontend Agent | Developer — implementation | Source code files |
-| QA Agent | Quality Assurance — review | `qa-report.md`, code review |
-
-### Context Sharing
-
-Agents share context through a structured **handoff protocol**:
-
-```yaml
-# Example handoff: PO → UX
-handoff:
-  from: po-agent
-  to: ux-agent
-  artifacts:
-    - requirements.md
-    - user-stories.md
-  context:
-    target_audience: "developers"
-    design_style: "minimal, technical"
-```
-
-This ensures each agent has exactly the context it needs — no more, no less.
-
-## Workflow Model
-
-A JARFIS workflow follows this lifecycle:
+JARFIS is built around **Claude Code as the orchestrator**. Unlike single-agent systems, JARFIS coordinates 9 specialized agents — each with a distinct role — through a structured phase pipeline:
 
 ```
-1. PLAN    → Orchestrator analyzes task
-2. ASSIGN  → Subtasks distributed to agents
-3. EXECUTE → Agents work in parallel where possible
-4. REVIEW  → QA Agent reviews all outputs
-5. MERGE   → Orchestrator combines final output
-6. DELIVER → Output written to disk
+/jarfis command
+      │
+      ▼
+┌─────────────────────────────────────────────────────┐
+│              JARFIS Orchestrator                    │
+│  (Phase coordination, artifact routing, state mgmt) │
+└─────────────────────────────────────────────────────┘
+      │
+      ├──► PO Agent         (requirements, user stories)
+      ├──► Architect        (system design, ADRs)
+      ├──► Tech Lead        (standards, review, coordination)
+      ├──► UX Designer      (wireframes, UX spec)
+      ├──► BE Engineer      (backend implementation)
+      ├──► FE Engineer      (frontend implementation)
+      ├──► DevOps/SRE       (infrastructure, CI/CD)
+      ├──► QA Engineer      (testing, quality gates)
+      └──► Security Engineer (security review, CVE analysis)
 ```
 
-### Parallel Execution
+## The 9 Agent Roles
 
-Where agent outputs don't depend on each other, JARFIS runs them in parallel:
+| Agent | Primary Responsibilities | Key Artifacts |
+|-------|--------------------------|---------------|
+| **Product Owner (PO)** | Requirements definition, user story writing, backlog prioritization | `press-release.md`, `prd.md` |
+| **Architect** | System design, tech decisions, ADR documentation | `architecture.md`, `impact-analysis.md` |
+| **Tech Lead** | Code standards, PR review criteria, cross-agent coordination | `tasks.md`, `review.md` |
+| **UX Designer** | User flows, wireframes, component specifications | `ux-spec.md` |
+| **BE Engineer** | API implementation, data models, backend services | `api-spec.md`, backend code |
+| **FE Engineer** | UI components, state management, frontend integration | Frontend code, component library |
+| **DevOps/SRE** | Infrastructure as code, CI/CD pipelines, deployment | `deployment-plan.md` |
+| **QA Engineer** | Test strategy, test case authoring, quality gates | `test-strategy.md` |
+| **Security Engineer** | Threat modeling, vulnerability review, compliance | Security review in `review.md` |
+
+## Phase Pipeline (8+ Phases)
+
+JARFIS structures every feature delivery through defined phases. Each phase has specific agents, inputs, and required outputs:
+
+### Phase T — Kickoff
+**Purpose**: Establish the feature scope and gather requirements.
+**Agents**: PO, Architect
+**Outputs**: Initial `press-release.md`, rough `prd.md`
+
+### Phase 0 — Foundation
+**Purpose**: Technology and architecture decisions.
+**Agents**: Architect, Tech Lead
+**Outputs**: `impact-analysis.md`, initial `architecture.md`
+
+### Phase 1 — Design
+**Purpose**: UX specification and API contract definition.
+**Agents**: UX Designer, Architect, BE Engineer
+**Outputs**: `ux-spec.md`, `api-spec.md` skeleton
+
+### Phase 2 — Architecture
+**Purpose**: Full system design, data models, service boundaries.
+**Agents**: Architect, BE Engineer, FE Engineer
+**Outputs**: Final `architecture.md`, `api-spec.md`
+
+### Phase 3 — Implementation
+**Purpose**: Parallel backend and frontend development.
+**Agents**: BE Engineer, FE Engineer (parallel execution)
+**Outputs**: Source code, `tasks.md` progress updates
+
+### Phase 4 — Integration
+**Purpose**: API wiring, end-to-end integration.
+**Agents**: BE Engineer, FE Engineer, Tech Lead
+**Outputs**: Integrated code, integration `review.md`
+
+### Phase 4.5 — QA & Security
+**Purpose**: Testing execution, security audit.
+**Agents**: QA Engineer, Security Engineer
+**Outputs**: `test-strategy.md`, security findings in `review.md`
+
+### Phase 5 — Deployment
+**Purpose**: Production deployment, monitoring setup.
+**Agents**: DevOps/SRE, Tech Lead
+**Outputs**: `deployment-plan.md`, infrastructure code
+
+### Phase 6 — Retrospective
+**Purpose**: Capture learnings, improve future iterations.
+**Agents**: All agents contribute
+**Outputs**: `retrospective.md`, updates to `jarfis-learnings.md`
+
+## The 11 Artifacts
+
+Every JARFIS workflow produces up to 11 structured artifacts, stored in `.jarfis/works/{date}/{feature}/`:
+
+| Artifact | Purpose | Typical Author |
+|----------|---------|----------------|
+| `press-release.md` | Feature announcement in customer language | PO |
+| `prd.md` | Product requirements document | PO |
+| `impact-analysis.md` | Technical risk and scope analysis | Architect |
+| `architecture.md` | System design, component diagram, ADRs | Architect |
+| `api-spec.md` | API contracts (endpoints, types, auth) | Architect / BE |
+| `tasks.md` | Development task breakdown with phases | Tech Lead |
+| `test-strategy.md` | Test plan, coverage targets, test cases | QA Engineer |
+| `ux-spec.md` | Wireframes, component specs, interaction design | UX Designer |
+| `deployment-plan.md` | Release plan, rollback strategy, monitoring | DevOps/SRE |
+| `review.md` | Post-implementation code & security review | Tech Lead / Security |
+| `retrospective.md` | Phase learnings and improvement actions | All agents |
+
+## State Management: `.jarfis-state.json`
+
+JARFIS maintains workflow state in `.jarfis-state.json` at your project root:
+
+```json
+{
+  "feature": "auth-system",
+  "currentPhase": "4",
+  "completedPhases": ["T", "0", "1", "2", "3"],
+  "agentContext": {
+    "po": "prd-approved",
+    "architect": "architecture-finalized",
+    "be": "api-implemented",
+    "fe": "components-built"
+  },
+  "artifactsGenerated": [
+    "prd.md", "architecture.md", "api-spec.md", "tasks.md", "ux-spec.md"
+  ]
+}
+```
+
+This file is read by the **PreCompact hook** on every Claude Code session start, restoring the exact phase and context — so you can pause and resume work across multiple sessions without losing state.
+
+## PreCompact Hook
+
+The PreCompact hook is a Claude Code lifecycle integration that runs before context compaction:
+
+1. **Reads** `.jarfis-state.json` for current phase and agent states
+2. **Injects** relevant artifact summaries into the compacted context
+3. **Preserves** critical decisions and learnings from `jarfis-learnings.md`
+4. **Restores** the active agent perspectives for the current phase
+
+This ensures that even in long-running features spanning many sessions, no critical context is lost.
+
+## Learning System
+
+JARFIS continuously improves through two learning mechanisms:
+
+### `jarfis-learnings.md`
+A project-level knowledge base updated after each Phase 6 retrospective. Contains:
+- Recurring patterns that work well in this codebase
+- Anti-patterns to avoid
+- Team preferences and conventions
+
+### `context.md`
+Project-specific context injected into every agent prompt:
+- Tech stack specifics
+- Existing conventions
+- Business domain knowledge
+- Integration constraints
+
+## Meeting System (`/jarfis:meeting`)
+
+When agents need to synchronize — resolve a blocker, make a joint decision, or align on scope — you can convene a structured meeting:
 
 ```
-PO Agent ──────────────────────────────► (done)
-                                              │
-UX Agent ─────────────────────────────────► (done)
-                                              │
-FE Agent ──────────────────────────────────► (done)
-                                              │
-                              QA Agent ──────► (done)
-                                              │
-                                    MERGE ────►
+/jarfis:meeting
 ```
 
-### Sequential with Dependencies
+The meeting system:
+- Identifies which agents are relevant to the current blocker
+- Structures a facilitated discussion between agent perspectives
+- Documents decisions in `review.md` or the relevant artifact
+- Updates `.jarfis-state.json` with resolved items
 
-When outputs are dependent, JARFIS sequences them:
+## Design Principles
 
-```
-PO Agent → UX Agent → FE Agent → QA Agent
-```
-
-## LLM Integration
-
-JARFIS is **LLM-agnostic**. It supports:
-
-- **OpenAI** (GPT-4o, GPT-4 Turbo)
-- **Anthropic** (Claude Opus 4, Claude Sonnet 4)
-- **Ollama** (local models — Llama, Mistral, etc.)
-- **Any OpenAI-compatible API**
-
-Agents can even use different LLMs based on their role — e.g., a cheaper model for PO/QA, a powerful model for the Frontend Agent.
-
-## Key Design Principles
-
-1. **Specialization over generalization** — Each agent does one thing well
-2. **Transparency** — All agent reasoning is logged and inspectable
-3. **Fail-safe** — Human review checkpoints can be inserted at any stage
-4. **Self-hostable** — Your data never leaves your infrastructure
-5. **Extensible** — Add custom agents via the plugin system
+1. **Specialization** — Each agent has deep expertise in one domain; no agent tries to do everything
+2. **Artifact-driven** — Every phase produces reviewable, human-readable outputs
+3. **Phase gates** — No phase begins without the previous phase's artifacts being available
+4. **Stateful** — Work survives session boundaries via `.jarfis-state.json`
+5. **Learning** — Every project makes the next one faster via the learning system
+6. **Claude Code native** — No external services; runs entirely within your development environment
 
 ## Next Steps
 
-- [Quick Start](/en/docs/getting-started) — Run your first workflow
-- [Building Your First Workflow](/en/docs) — Step-by-step guide
-- [API Reference](/en/docs) — Orchestrator and Agent APIs
+- [Quick Start](/en/docs/getting-started) — Run your first `/jarfis` workflow
+- [Guides & Customization](/en/docs/guides-customization) — Advanced configuration patterns
+- [API Reference](/en/docs/api-reference) — All commands and options

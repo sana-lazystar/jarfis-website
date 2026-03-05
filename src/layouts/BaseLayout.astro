@@ -29,9 +29,14 @@ const skipLinkText = t(locale, 'a11y.skip_to_content');
     <!-- script-src: 'unsafe-inline' applied (ADR-003). SSG static site with no user input or
          third-party scripts — no practical XSS risk. Re-evaluate if search, comments,
          or third-party scripts (Analytics, ads) are added in the future. -->
+    <!-- object-src 'none': blocks Flash/Java plugin content embedding. -->
+    <!-- frame-ancestors 'none': NOTE — this directive is ignored in <meta> tags per CSP Level 2
+         spec. It is included here as intent documentation for future platform migration
+         (e.g., Cloudflare Pages, Netlify) where HTTP header CSP is available.
+         GitHub Pages provides X-Frame-Options: DENY by default, covering clickjacking protection. -->
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; base-uri 'self'; upgrade-insecure-requests;"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; upgrade-insecure-requests;"
     />
 
     <meta name="theme-color" content="#06b6d4" />

@@ -26,16 +26,17 @@ const multilangSvg = `<svg width="96" height="96" viewBox="0 0 24 24" fill="none
 ---
 <PageLayout
   title={t(locale, 'features.page_title')}
-  description={t(locale, 'features.page_subtitle')}
+  description={t(locale, 'seo.features_description')}
   locale={locale}
   pagePath="features"
 >
   <SEOHead
     slot="head"
     title={t(locale, 'features.page_title')}
-    description={t(locale, 'features.page_subtitle')}
+    description={t(locale, 'seo.features_description')}
     locale={locale}
     pagePath="features"
+    ogImage="/images/og/og-features.png"
   />
 
   <!-- Page hero -->
@@ -69,9 +70,9 @@ const multilangSvg = `<svg width="96" height="96" viewBox="0 0 24 24" fill="none
       <!-- Feature 2: Open Source (even = image right, text left) -->
       <FeatureDetail
         locale={locale}
-        title={t(locale, 'features.open_source_title')}
-        description={t(locale, 'features.open_source_desc')}
-        bullets={tArray(locale, 'features.open_source_bullets')}
+        title={t(locale, 'features.claude_code_title')}
+        description={t(locale, 'features.claude_code_desc')}
+        bullets={tArray(locale, 'features.claude_code_bullets')}
         docsPath=""
         githubLink={true}
         githubLabel={t(locale, 'features.view_github')}
@@ -82,9 +83,9 @@ const multilangSvg = `<svg width="96" height="96" viewBox="0 0 24 24" fill="none
       <!-- Feature 3: Production Ready (odd) -->
       <FeatureDetail
         locale={locale}
-        title={t(locale, 'features.production_title')}
-        description={t(locale, 'features.production_desc')}
-        bullets={tArray(locale, 'features.production_bullets')}
+        title={t(locale, 'features.artifacts_title')}
+        description={t(locale, 'features.artifacts_desc')}
+        bullets={tArray(locale, 'features.artifacts_bullets')}
         docsPath="docs/getting-started"
         docsLabel={t(locale, 'features.learn_more')}
         icon={productionSvg}
@@ -94,9 +95,9 @@ const multilangSvg = `<svg width="96" height="96" viewBox="0 0 24 24" fill="none
       <!-- Feature 4: Multi-language (even) -->
       <FeatureDetail
         locale={locale}
-        title={t(locale, 'features.multilang_title')}
-        description={t(locale, 'features.multilang_desc')}
-        bullets={tArray(locale, 'features.multilang_bullets')}
+        title={t(locale, 'features.learning_title')}
+        description={t(locale, 'features.learning_desc')}
+        bullets={tArray(locale, 'features.learning_bullets')}
         docsPath="docs"
         docsLabel={t(locale, 'features.learn_more')}
         icon={multilangSvg}

@@ -78,74 +78,175 @@ const { locale } = Astro.props;
         </div>
       </div>
 
-      <!-- Visual: Atom orbit animation -->
+      <!-- Visual: Orchestration Hub illustration -->
       <div class="flex items-center justify-center lg:justify-end" aria-hidden="true">
         <div class="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96">
+          <!--
+            Orchestration Hub SVG
+            viewBox: 0 0 300 300
+            9 agent nodes on r=120 ring at 40° intervals starting from -90°
+            Node angles (degrees): -90, -50, -10, 30, 70, 110, 150, 190, 230
+            Node coords (cx, cy):
+              PO:        150, 30    (-90°)
+              Architect: 227, 57   (-50°)
+              TechLead:  268, 139  (-10°)
+              Backend:   242, 224   (30°)
+              Frontend:  175, 270   (70°)
+              DevOps:     83, 258  (110°)
+              QA:         22, 176  (150°)
+              Security:   32,  81  (190°)
+              UX:        107,  24  (230°)
+          -->
+          <svg
+            viewBox="0 0 300 300"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-full h-full text-cyan-500 dark:text-cyan-400"
+            aria-hidden="true"
+          >
+            <defs>
+              <!-- Ambient background glow -->
+              <radialGradient id="hero-hub-ambient" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="currentColor" stop-opacity="0.10"/>
+                <stop offset="100%" stop-color="currentColor" stop-opacity="0"/>
+              </radialGradient>
+            </defs>
 
-          <!-- Orbit paths (SVG) -->
-          <svg viewBox="0 0 300 300" class="absolute inset-0 w-full h-full" aria-hidden="true">
-            <!-- Orbit ellipses -->
-            <ellipse
-              cx="150" cy="150" rx="130" ry="50"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1"
-              class="text-cyan-500/20 dark:text-cyan-400/30"
-              transform="rotate(-30 150 150)"
-            />
-            <ellipse
-              cx="150" cy="150" rx="130" ry="50"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1"
-              class="text-cyan-500/20 dark:text-cyan-400/30"
-              transform="rotate(30 150 150)"
-            />
-            <ellipse
-              cx="150" cy="150" rx="130" ry="50"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1"
-              class="text-cyan-500/20 dark:text-cyan-400/30"
+            <!-- Ambient background -->
+            <circle cx="150" cy="150" r="140" fill="url(#hero-hub-ambient)"/>
+
+            <!-- Hub-to-Node edges (dashed lines) -->
+            <!-- PO: (150, 30) -->
+            <line x1="150" y1="150" x2="150" y2="30"
+                  stroke="currentColor" stroke-width="1" stroke-dasharray="4 3"
+                  opacity="0.25" class="hub-edge"/>
+            <!-- Architect: (227, 57) -->
+            <line x1="150" y1="150" x2="227" y2="57"
+                  stroke="currentColor" stroke-width="1" stroke-dasharray="4 3"
+                  opacity="0.25" class="hub-edge"/>
+            <!-- TechLead: (268, 139) -->
+            <line x1="150" y1="150" x2="268" y2="139"
+                  stroke="currentColor" stroke-width="1" stroke-dasharray="4 3"
+                  opacity="0.25" class="hub-edge"/>
+            <!-- Backend: (242, 224) -->
+            <line x1="150" y1="150" x2="242" y2="224"
+                  stroke="currentColor" stroke-width="1" stroke-dasharray="4 3"
+                  opacity="0.25" class="hub-edge"/>
+            <!-- Frontend: (175, 270) -->
+            <line x1="150" y1="150" x2="175" y2="270"
+                  stroke="currentColor" stroke-width="1" stroke-dasharray="4 3"
+                  opacity="0.25" class="hub-edge"/>
+            <!-- DevOps: (83, 258) -->
+            <line x1="150" y1="150" x2="83" y2="258"
+                  stroke="currentColor" stroke-width="1" stroke-dasharray="4 3"
+                  opacity="0.25" class="hub-edge"/>
+            <!-- QA: (22, 176) -->
+            <line x1="150" y1="150" x2="22" y2="176"
+                  stroke="currentColor" stroke-width="1" stroke-dasharray="4 3"
+                  opacity="0.25" class="hub-edge"/>
+            <!-- Security: (32, 81) -->
+            <line x1="150" y1="150" x2="32" y2="81"
+                  stroke="currentColor" stroke-width="1" stroke-dasharray="4 3"
+                  opacity="0.25" class="hub-edge"/>
+            <!-- UX: (107, 24) -->
+            <line x1="150" y1="150" x2="107" y2="24"
+                  stroke="currentColor" stroke-width="1" stroke-dasharray="4 3"
+                  opacity="0.25" class="hub-edge"/>
+
+            <!-- Agent node outer rings (animated with stagger) -->
+            <!-- PO -->
+            <circle cx="150" cy="30" r="10"
+                    stroke="currentColor" stroke-width="1.5"
+                    fill="none" opacity="0.7"
+                    class="agent-node-ring" style="animation-delay: 0s;"/>
+            <!-- Architect -->
+            <circle cx="227" cy="57" r="10"
+                    stroke="currentColor" stroke-width="1.5"
+                    fill="none" opacity="0.7"
+                    class="agent-node-ring" style="animation-delay: 0.33s;"/>
+            <!-- TechLead -->
+            <circle cx="268" cy="139" r="10"
+                    stroke="currentColor" stroke-width="1.5"
+                    fill="none" opacity="0.7"
+                    class="agent-node-ring" style="animation-delay: 0.66s;"/>
+            <!-- Backend -->
+            <circle cx="242" cy="224" r="10"
+                    stroke="currentColor" stroke-width="1.5"
+                    fill="none" opacity="0.7"
+                    class="agent-node-ring" style="animation-delay: 0.99s;"/>
+            <!-- Frontend -->
+            <circle cx="175" cy="270" r="10"
+                    stroke="currentColor" stroke-width="1.5"
+                    fill="none" opacity="0.7"
+                    class="agent-node-ring" style="animation-delay: 1.32s;"/>
+            <!-- DevOps -->
+            <circle cx="83" cy="258" r="10"
+                    stroke="currentColor" stroke-width="1.5"
+                    fill="none" opacity="0.7"
+                    class="agent-node-ring" style="animation-delay: 1.65s;"/>
+            <!-- QA -->
+            <circle cx="22" cy="176" r="10"
+                    stroke="currentColor" stroke-width="1.5"
+                    fill="none" opacity="0.7"
+                    class="agent-node-ring" style="animation-delay: 1.98s;"/>
+            <!-- Security -->
+            <circle cx="32" cy="81" r="10"
+                    stroke="currentColor" stroke-width="1.5"
+                    fill="none" opacity="0.7"
+                    class="agent-node-ring" style="animation-delay: 2.31s;"/>
+            <!-- UX -->
+            <circle cx="107" cy="24" r="10"
+                    stroke="currentColor" stroke-width="1.5"
+                    fill="none" opacity="0.7"
+                    class="agent-node-ring" style="animation-delay: 2.64s;"/>
+
+            <!-- Agent node inner dots -->
+            <circle cx="150" cy="30"  r="5" fill="currentColor"/>
+            <circle cx="227" cy="57"  r="5" fill="currentColor"/>
+            <circle cx="268" cy="139" r="5" fill="currentColor"/>
+            <circle cx="242" cy="224" r="5" fill="currentColor"/>
+            <circle cx="175" cy="270" r="5" fill="currentColor"/>
+            <circle cx="83"  cy="258" r="5" fill="currentColor"/>
+            <circle cx="22"  cy="176" r="5" fill="currentColor"/>
+            <circle cx="32"  cy="81"  r="5" fill="currentColor"/>
+            <circle cx="107" cy="24"  r="5" fill="currentColor"/>
+
+            <!-- Agent node role labels (desktop size, small text) -->
+            <text x="150" y="16"  text-anchor="middle" fill="currentColor" font-size="6" opacity="0.6" font-family="ui-sans-serif, sans-serif">PO</text>
+            <text x="238" y="47"  text-anchor="middle" fill="currentColor" font-size="6" opacity="0.6" font-family="ui-sans-serif, sans-serif">Arc</text>
+            <text x="280" y="136" text-anchor="middle" fill="currentColor" font-size="6" opacity="0.6" font-family="ui-sans-serif, sans-serif">TL</text>
+            <text x="254" y="238" text-anchor="middle" fill="currentColor" font-size="6" opacity="0.6" font-family="ui-sans-serif, sans-serif">BE</text>
+            <text x="175" y="284" text-anchor="middle" fill="currentColor" font-size="6" opacity="0.6" font-family="ui-sans-serif, sans-serif">FE</text>
+            <text x="76"  y="272" text-anchor="middle" fill="currentColor" font-size="6" opacity="0.6" font-family="ui-sans-serif, sans-serif">Ops</text>
+            <text x="14"  y="190" text-anchor="middle" fill="currentColor" font-size="6" opacity="0.6" font-family="ui-sans-serif, sans-serif">QA</text>
+            <text x="20"  y="70"  text-anchor="middle" fill="currentColor" font-size="6" opacity="0.6" font-family="ui-sans-serif, sans-serif">Sec</text>
+            <text x="96"  y="13"  text-anchor="middle" fill="currentColor" font-size="6" opacity="0.6" font-family="ui-sans-serif, sans-serif">UX</text>
+
+            <!-- Hub glow ring -->
+            <circle cx="150" cy="150" r="35"
+                    stroke="currentColor" stroke-width="1"
+                    fill="none" opacity="0.3"/>
+
+            <!-- Central JARFIS hexagon hub (flat-top, apothem=26, R=30) -->
+            <!-- Points: (180,150)(165,176)(135,176)(120,150)(135,124)(165,124) -->
+            <polygon
+              points="180,150 165,176 135,176 120,150 135,124 165,124"
+              fill="currentColor"
+              opacity="0.95"
+              class="hub-hexagon"
             />
 
-            <!-- Center nucleus -->
-            <circle cx="150" cy="150" r="18" fill="#06b6d4" opacity="0.9"/>
-            <text x="150" y="155" text-anchor="middle" fill="white" font-size="10" font-weight="bold">J</text>
+            <!-- Hub symbol: "/" (slash command identity) -->
+            <text
+              x="150" y="154"
+              text-anchor="middle"
+              dominant-baseline="middle"
+              fill="white"
+              font-size="20"
+              font-weight="bold"
+              font-family="ui-monospace, 'Courier New', monospace"
+            >/</text>
           </svg>
-
-          <!-- Orbiting dots (CSS animated) -->
-          <div class="absolute inset-0 flex items-center justify-center">
-            <!-- Orbit 1 -->
-            <div
-              class="absolute w-full h-full"
-              style="animation: spin-orbit-1 6s linear infinite;"
-            >
-              <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                <div class="w-4 h-4 rounded-full bg-cyan-400 shadow-[0_0_12px_rgba(34,211,238,0.8)]"></div>
-              </div>
-            </div>
-
-            <!-- Orbit 2 -->
-            <div
-              class="absolute w-[85%] h-[85%]"
-              style="animation: spin-orbit-2 4s linear infinite reverse;"
-            >
-              <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                <div class="w-3 h-3 rounded-full bg-cyan-300 shadow-[0_0_8px_rgba(34,211,238,0.6)]"></div>
-              </div>
-            </div>
-
-            <!-- Orbit 3 -->
-            <div
-              class="absolute w-[70%] h-[70%]"
-              style="animation: spin-orbit-3 8s linear infinite;"
-            >
-              <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                <div class="w-2.5 h-2.5 rounded-full bg-cyan-500 shadow-[0_0_10px_rgba(6,182,212,0.8)]"></div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -162,26 +263,62 @@ const { locale } = Astro.props;
 </section>
 
 <style>
-  @keyframes spin-orbit-1 {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
-  @keyframes spin-orbit-2 {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
-  @keyframes spin-orbit-3 {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+  /* Node pulse: staggered outer ring animation */
+  @keyframes node-pulse {
+    0%, 100% { opacity: 0.4; transform: scale(1); }
+    50%       { opacity: 0.85; transform: scale(1.15); }
   }
 
+  .agent-node-ring {
+    animation: node-pulse 3s ease-in-out infinite;
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  /* Edge flow: dashed line dash-offset animation */
+  @keyframes flow {
+    from { stroke-dashoffset: 20; }
+    to   { stroke-dashoffset: 0; }
+  }
+
+  .hub-edge {
+    animation: flow 1.5s linear infinite;
+  }
+
+  /* Hub breathe: subtle scale pulse on central hexagon */
+  @keyframes hub-breathe {
+    0%, 100% { transform: scale(1); opacity: 0.95; }
+    50%       { transform: scale(1.04); opacity: 1; }
+  }
+
+  .hub-hexagon {
+    animation: hub-breathe 4s ease-in-out infinite;
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  /* prefers-reduced-motion: stop all animations */
   @media (prefers-reduced-motion: reduce) {
+    /* Existing guards (kept for badge ping, scroll bounce) */
     [style*="animation"] {
       animation: none !important;
     }
     .animate-bounce,
     .animate-ping {
       animation: none !important;
+    }
+
+    /* SVG CSS class animations */
+    .agent-node-ring,
+    .hub-edge,
+    .hub-hexagon {
+      animation: none !important;
+      transition: none !important;
+    }
+
+    /* Static reduced-motion state */
+    .agent-node-ring {
+      opacity: 0.5;
     }
   }
 </style>

@@ -32,16 +32,17 @@ const sorted = [...showcaseItems].sort((a, b) => {
 ---
 <PageLayout
   title={t(locale, 'showcase.page_title')}
-  description={t(locale, 'showcase.page_subtitle')}
+  description={t(locale, 'seo.showcase_description')}
   locale={locale}
   pagePath="showcase"
 >
   <SEOHead
     slot="head"
     title={t(locale, 'showcase.page_title')}
-    description={t(locale, 'showcase.page_subtitle')}
+    description={t(locale, 'seo.showcase_description')}
     locale={locale}
     pagePath="showcase"
+    ogImage="/images/og/og-showcase.png"
   />
 
   <!-- Page header -->

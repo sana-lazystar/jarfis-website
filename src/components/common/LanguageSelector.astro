@@ -38,7 +38,7 @@ const alternates = getAlternateLocalePaths(currentPath);
     data-lang-dropdown
     role="listbox"
     aria-label={t(locale, 'a11y.switch_language')}
-    class="hidden absolute right-0 top-full mt-1 w-36 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-lg z-50 py-1 overflow-hidden"
+    class="hidden absolute right-0 w-36 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-lg z-50 py-1 overflow-hidden"
   >
     {SUPPORTED_LOCALES.map((loc) => (
       <li role="option" aria-selected={loc === locale ? 'true' : 'false'}>
@@ -66,6 +66,8 @@ const alternates = getAlternateLocalePaths(currentPath);
 
 <script is:inline>
   (function () {
+    if (window.__langSelectorInit) return;
+    window.__langSelectorInit = true;
     // Bind each instance independently — supports multiple renders on the same page
     document.querySelectorAll('[data-language-selector]').forEach(function (selector) {
       var btn = selector.querySelector('[data-lang-btn]');
@@ -75,6 +77,20 @@ const alternates = getAlternateLocalePaths(currentPath);
       if (!btn || !dropdown) return;
 
       function open() {
+        var rect = btn.getBoundingClientRect();
+        var spaceBelow = window.innerHeight - rect.bottom;
+        var dropdownHeight = dropdown.scrollHeight || 180;
+        if (spaceBelow < dropdownHeight + 8) {
+          dropdown.style.top = 'auto';
+          dropdown.style.bottom = '100%';
+          dropdown.style.marginTop = '0';
+          dropdown.style.marginBottom = '0.25rem';
+        } else {
+          dropdown.style.top = '100%';
+          dropdown.style.bottom = 'auto';
+          dropdown.style.marginTop = '0.25rem';
+          dropdown.style.marginBottom = '0';
+        }
         dropdown.classList.remove('hidden');
         btn.setAttribute('aria-expanded', 'true');
         if (chevron) chevron.style.transform = 'rotate(180deg)';
@@ -84,6 +100,10 @@ const alternates = getAlternateLocalePaths(currentPath);
         dropdown.classList.add('hidden');
         btn.setAttribute('aria-expanded', 'false');
         if (chevron) chevron.style.transform = '';
+        dropdown.style.top = '';
+        dropdown.style.bottom = '';
+        dropdown.style.marginTop = '';
+        dropdown.style.marginBottom = '';
       }
 
       btn.addEventListener('click', function (e) {
