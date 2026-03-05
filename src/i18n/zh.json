@@ -19,12 +19,12 @@
     "title": "为什么选择JARFIS？",
     "agent_team_title": "AI智能体团队",
     "agent_team_desc": "多个专业AI智能体（PO、UX、前端、QA）像真实团队一样自主协作。",
-    "open_source_title": "100%开源",
-    "open_source_desc": "MIT许可证。在自己的基础设施上自托管。无供应商锁定。您的基础设施，您的规则。",
-    "production_title": "生产就绪",
-    "production_desc": "真正可部署的输出，而不仅仅是原型。自主发布到生产环境的代码。",
-    "multilang_title": "多语言支持",
-    "multilang_desc": "内置i18n向全球团队发布。JARFIS用您的语言交流。"
+    "claude_code_title": "100%开源",
+    "claude_code_desc": "MIT许可证。在自己的基础设施上自托管。无供应商锁定。您的基础设施，您的规则。",
+    "artifacts_title": "生产就绪",
+    "artifacts_desc": "真正可部署的输出，而不仅仅是原型。自主发布到生产环境的代码。",
+    "learning_title": "多语言支持",
+    "learning_desc": "内置i18n向全球团队发布。JARFIS用您的语言交流。"
   },
   "how_it_works": {
     "title": "JARFIS如何工作",
@@ -33,10 +33,10 @@
   },
   "social_proof": {
     "title": "加入构建AI驱动软件未来的开发者",
-    "github_stars": "GitHub星标",
-    "contributors": "活跃贡献者",
-    "forks": "分叉",
-    "growing": "成长中的社区"
+    "version_label": "GitHub星标",
+    "agents_label": "活跃贡献者",
+    "artifacts_label": "分叉",
+    "commands_label": "成长中的社区"
   },
   "final_cta": {
     "title": "准备好以不同方式发布软件了吗？",
@@ -71,25 +71,25 @@
       "自动交接和代码审查",
       "每个智能体专注于其领域"
     ],
-    "open_source_title": "100%开源",
-    "open_source_desc": "MIT许可证。在自己的基础设施上自托管。无需向第三方发送API密钥。无供应商锁定。JARFIS可在任何地方运行——云端、本地部署或您的本地机器。",
-    "open_source_bullets": [
+    "claude_code_title": "100%开源",
+    "claude_code_desc": "MIT许可证。在自己的基础设施上自托管。无需向第三方发送API密钥。无供应商锁定。JARFIS可在任何地方运行——云端、本地部署或您的本地机器。",
+    "claude_code_bullets": [
       "完整源代码访问——阅读每一行",
       "使用您自己的LLM（OpenAI、Anthropic、Ollama）",
       "社区驱动的开发",
       "透明且可审计的智能体行为"
     ],
-    "production_title": "生产就绪输出",
-    "production_desc": "JARFIS不仅仅是编写代码——它发布软件。QA智能体审查每个输出，检查边缘情况，确保结果可以投入生产，而不仅仅是需要更多工作的原型。",
-    "production_bullets": [
+    "artifacts_title": "生产就绪输出",
+    "artifacts_desc": "JARFIS不仅仅是编写代码——它发布软件。QA智能体审查每个输出，检查边缘情况，确保结果可以投入生产，而不仅仅是需要更多工作的原型。",
+    "artifacts_bullets": [
       "真正可部署的代码，而非代码片段",
       "QA智能体自动验证质量",
       "适当的错误处理和边缘情况",
       "生产级架构决策"
     ],
-    "multilang_title": "多语言支持",
-    "multilang_desc": "JARFIS从底层内置了国际化支持。以团队的母语向全球团队发布。UX智能体理解特定区域设计模式，输出默认支持多种语言。",
-    "multilang_bullets": [
+    "learning_title": "多语言支持",
+    "learning_desc": "JARFIS从底层内置了国际化支持。以团队的母语向全球团队发布。UX智能体理解特定区域设计模式，输出默认支持多种语言。",
+    "learning_bullets": [
       "开箱即用的i18n支持",
       "区域感知的UX智能体决策",
       "CJK字符支持（韩语、日语、中文）",

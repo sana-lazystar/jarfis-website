@@ -19,12 +19,12 @@
     "title": "Why JARFIS?",
     "agent_team_title": "9 Expert Agents",
     "agent_team_desc": "PO, Architect, Tech Lead, Backend, Frontend, DevOps, QA, Security, UX — nine specialists collaborate on every task, each with domain-specific expertise and instructions.",
-    "open_source_title": "Claude Code Native",
-    "open_source_desc": "Built as a pure Claude Code workflow. No external servers, no API wrappers — just slash commands, CLAUDE.md conventions, and your local CLI. Works wherever Claude Code runs.",
-    "production_title": "Artifacts, Not Just Code",
-    "production_desc": "11 structured artifacts per workflow: press-release, PRD, architecture, API spec, UX spec, tasks, test strategy, deployment plan, review, and retrospective. Every decision documented.",
-    "multilang_title": "A System That Learns",
-    "multilang_desc": "Global learnings (jarfis-learnings.md) and project context (context.md) accumulate across runs. The PreCompact hook and .jarfis-state.json preserve workflow state, so JARFIS gets smarter with every iteration."
+    "claude_code_title": "Claude Code Native",
+    "claude_code_desc": "Built as a pure Claude Code workflow. No external servers, no API wrappers — just slash commands, CLAUDE.md conventions, and your local CLI. Works wherever Claude Code runs.",
+    "artifacts_title": "Artifacts, Not Just Code",
+    "artifacts_desc": "11 structured artifacts per workflow: press-release, PRD, architecture, API spec, UX spec, tasks, test strategy, deployment plan, review, and retrospective. Every decision documented.",
+    "learning_title": "A System That Learns",
+    "learning_desc": "Global learnings (jarfis-learnings.md) and project context (context.md) accumulate across runs. The PreCompact hook and .jarfis-state.json preserve workflow state, so JARFIS gets smarter with every iteration."
   },
   "how_it_works": {
     "title": "How JARFIS Works",
@@ -51,10 +51,10 @@
   },
   "social_proof": {
     "title": "JARFIS by the Numbers",
-    "github_stars": "v1.0.7",
-    "contributors": "9 Agents",
-    "forks": "11 Artifacts",
-    "growing": "10 Commands"
+    "version_label": "v1.0.7",
+    "agents_label": "9 Agents",
+    "artifacts_label": "11 Artifacts",
+    "commands_label": "10 Commands"
   },
   "final_cta": {
     "title": "Ready to ship software differently?",
@@ -89,25 +89,25 @@
       "Sequential collaboration with artifact handoffs",
       "Defined roles eliminate ambiguity and overlap"
     ],
-    "open_source_title": "Claude Code Native Architecture",
-    "open_source_desc": "JARFIS is built as a pure Claude Code workflow — no external servers, no API wrappers, no proprietary runtime. Everything runs through slash commands and CLAUDE.md conventions on your local CLI. The PreCompact hook preserves workflow state across context resets.",
-    "open_source_bullets": [
+    "claude_code_title": "Claude Code Native Architecture",
+    "claude_code_desc": "JARFIS is built as a pure Claude Code workflow — no external servers, no API wrappers, no proprietary runtime. Everything runs through slash commands and CLAUDE.md conventions on your local CLI. The PreCompact hook preserves workflow state across context resets.",
+    "claude_code_bullets": [
       "Pure slash command interface — no external server required",
       "CLAUDE.md conventions for agent instructions",
       "PreCompact hook for context-reset resilience",
       "Works wherever Claude Code runs — local or CI"
     ],
-    "production_title": "11 Structured Artifacts",
-    "production_desc": "Every JARFIS workflow produces 11 documented artifacts: press-release, PRD, architecture doc, API spec, UX spec, task list, test strategy, deployment plan, code review, and retrospective. Every decision is captured, every handoff is traceable.",
-    "production_bullets": [
+    "artifacts_title": "11 Structured Artifacts",
+    "artifacts_desc": "Every JARFIS workflow produces 11 documented artifacts: press-release, PRD, architecture doc, API spec, UX spec, task list, test strategy, deployment plan, code review, and retrospective. Every decision is captured, every handoff is traceable.",
+    "artifacts_bullets": [
       "Press release → PRD → Architecture → API spec",
       "UX spec → Tasks → Test strategy → Deployment plan",
       "Code review + retrospective close every workflow",
       "Full audit trail from idea to deployment"
     ],
-    "multilang_title": "Continuous Learning System",
-    "multilang_desc": "JARFIS accumulates knowledge across runs. jarfis-learnings.md captures global lessons from every retrospective. context.md holds project-specific state. The .jarfis-state.json file tracks workflow progress so JARFIS picks up exactly where it left off.",
-    "multilang_bullets": [
+    "learning_title": "Continuous Learning System",
+    "learning_desc": "JARFIS accumulates knowledge across runs. jarfis-learnings.md captures global lessons from every retrospective. context.md holds project-specific state. The .jarfis-state.json file tracks workflow progress so JARFIS picks up exactly where it left off.",
+    "learning_bullets": [
       "jarfis-learnings.md: global lessons across all projects",
       "context.md: project-specific persistent state",
       ".jarfis-state.json: workflow progress tracking",
