@@ -1,143 +1,144 @@
 ---
 title: "Quick Start"
-description: "Get JARFIS running in under 5 minutes. Install the CLI, initialize your project, and run your first AI-powered workflow."
+description: "Get JARFIS running in under 5 minutes. Install Claude Code, run /jarfis, and let 9 expert AI agents ship your first feature."
 category: "getting-started"
 order: 1
 locale: "en"
-lastUpdated: 2026-03-04
+lastUpdated: 2026-03-05
 draft: false
 ---
 
 # Quick Start
 
-Get JARFIS running in under 5 minutes.
+Ship software with AI in under 5 minutes. One slash command — nine expert agents.
 
 ## Prerequisites
 
-Before you begin, ensure you have the following installed:
+Before you begin, ensure you have:
 
-- **Node.js** >= 18 ([nodejs.org](https://nodejs.org))
-- **Git** >= 2.x
-- An LLM API key (OpenAI, Anthropic, or compatible)
+- **Claude Code** (Anthropic) — JARFIS runs natively inside Claude Code
+- A Claude account with API access
+- **Git** >= 2.x (for project initialization)
 
-## Step 1 — Install the CLI
+> JARFIS is a Claude Code slash command workflow. No separate CLI installation required.
 
-```bash
-npm install -g @jarfis/cli
-```
+## Step 1 — Install JARFIS
 
-Estimated time: ~30 seconds.
-
-Verify the installation:
-
-```bash
-jarfis --version
-# JARFIS CLI v1.0.0
-```
-
-## Step 2 — Initialize Your Project
-
-```bash
-jarfis init my-project
-cd my-project
-```
-
-This creates a project structure with:
+JARFIS is distributed as a Claude Code slash command package. Inside Claude Code, run:
 
 ```
-my-project/
+/jarfis:install
+```
+
+This sets up the JARFIS workflow in your current project and creates:
+
+```
+your-project/
 ├── .jarfis/
-│   └── config.yaml      # JARFIS configuration
-├── jarfis.config.ts     # Workflow configuration
-└── README.md
+│   ├── CLAUDE.md              # JARFIS context & learning memory
+│   ├── context.md             # Project-specific AI context
+│   ├── jarfis-learnings.md    # Continuous learning log
+│   └── works/                 # Generated artifacts per session
+├── .jarfis-state.json         # Phase state tracking
+└── CLAUDE.md                  # Root Claude Code context
 ```
 
-## Step 3 — Configure Your LLM
+## Step 2 — Run Your First Workflow
 
-Open `.jarfis/config.yaml` and set your LLM provider:
-
-```yaml
-llm:
-  provider: openai          # openai | anthropic | ollama
-  model: gpt-4o
-  api_key: ${OPENAI_API_KEY}  # Use environment variables
-
-agents:
-  - po
-  - ux
-  - frontend
-  - qa
-```
-
-Set your API key as an environment variable:
-
-```bash
-export OPENAI_API_KEY=your-api-key-here
-```
-
-## Step 4 — Write Your First Task
-
-Create a file named `task.md` in your project:
-
-```markdown
-# Task: Build a Landing Page
-
-Create a simple landing page for a SaaS product called "Cloudify".
-
-## Requirements
-- Hero section with tagline and CTA
-- Features section with 3 key benefits
-- Pricing section with 3 tiers
-- Footer with links
-
-## Tech Stack
-- HTML, CSS (Tailwind), vanilla JavaScript
-- Responsive design, mobile-first
-```
-
-## Step 5 — Run JARFIS
-
-```bash
-jarfis run task.md
-```
-
-JARFIS will:
-1. **PO Agent** reads and refines requirements
-2. **UX Agent** creates wireframes and user flows
-3. **Frontend Agent** builds the actual components
-4. **QA Agent** reviews and verifies output
-
-Watch the agents collaborate in real-time in your terminal.
-
-## Step 6 — Review the Output
-
-When complete, your output will be in the `output/` directory:
+In your project directory, open Claude Code and type:
 
 ```
-output/
-├── index.html
-├── styles.css
-└── app.js
+/jarfis
 ```
 
-Open `output/index.html` in your browser to see the result.
+JARFIS will prompt you for a feature or task description. For example:
+
+```
+/jarfis Build a user authentication system with JWT tokens
+```
+
+## Step 3 — Watch 9 Agents Collaborate
+
+JARFIS orchestrates 9 specialized AI agents through 8+ structured phases:
+
+| Phase | Name | What Happens |
+|-------|------|--------------|
+| T | Kickoff | Requirements gathering, initial planning |
+| 0 | Foundation | Architecture decisions, tech stack |
+| 1 | Design | UX specs, API contracts |
+| 2 | Architecture | System design, data models |
+| 3 | Implementation | Backend + Frontend parallel development |
+| 4 | Integration | API wiring, component integration |
+| 4.5 | QA & Security | Testing, vulnerability review |
+| 5 | Deployment | Infrastructure, CI/CD, release notes |
+| 6 | Retrospective | Learnings capture, improvement planning |
+
+The 9 agents working on your behalf:
+
+| Agent | Role |
+|-------|------|
+| **PO** | Product Owner — requirements & user stories |
+| **Architect** | System design & technical decisions |
+| **Tech Lead** | Code standards, review, coordination |
+| **UX Designer** | User experience, wireframes, UX spec |
+| **BE Engineer** | Backend API implementation |
+| **FE Engineer** | Frontend UI implementation |
+| **DevOps/SRE** | Infrastructure, CI/CD, deployment |
+| **QA Engineer** | Testing strategy, test execution |
+| **Security Engineer** | Security review, vulnerability analysis |
+
+## Step 4 — Review Artifacts
+
+Each completed phase produces structured artifacts in `.jarfis/works/{date}/{feature}/`:
+
+```
+.jarfis/works/2026-03-05/feature/auth-system/
+├── press-release.md       # Feature announcement draft
+├── prd.md                 # Product requirements
+├── impact-analysis.md     # Technical impact assessment
+├── architecture.md        # System architecture
+├── api-spec.md            # API contracts
+├── tasks.md               # Development task breakdown
+├── test-strategy.md       # QA plan
+├── ux-spec.md             # UX specifications
+├── deployment-plan.md     # Release plan
+├── review.md              # Post-implementation review
+└── retrospective.md       # Learnings & improvements
+```
+
+## Step 5 — Continue or Hold a Meeting
+
+To continue work in a later session, Claude Code's PreCompact hook automatically restores your JARFIS state from `.jarfis-state.json`.
+
+To hold a cross-agent coordination meeting:
+
+```
+/jarfis:meeting
+```
+
+This convenes relevant agents to resolve blockers, align on decisions, or plan the next phase.
 
 ## Next Steps
 
-- Read [Concepts Overview](/jarfis-website/en/docs/concepts-overview) to understand JARFIS architecture
-- Explore [Guides](/jarfis-website/en/docs) for more complex workflows
+- Read [Concepts Overview](/en/docs/concepts-overview) to understand the full JARFIS architecture
+- Read [Guides & Customization](/en/docs/guides-customization) for advanced workflow patterns
+- Read [API Reference](/en/docs/api-reference) for all slash commands and configuration options
 - Join [GitHub Discussions](https://github.com/sana-lazystar/jarfis/discussions) for community support
 
 ## Troubleshooting
 
-**CLI not found after install?**
-```bash
-# Ensure npm global bin is in your PATH
-export PATH="$PATH:$(npm bin -g)"
-```
+**`/jarfis` command not found?**
 
-**LLM API errors?**
-Check that your API key is correctly set and has sufficient quota.
+Ensure JARFIS is installed in your project. Re-run `/jarfis:install` from Claude Code.
 
-**Agents taking too long?**
-Complex tasks may take several minutes. Use `jarfis run --verbose` to see detailed progress.
+**Agent taking too long?**
+
+Complex features may require multiple phases. Use `/jarfis:meeting` to check status or accelerate decision-making between agents.
+
+**State lost between sessions?**
+
+Check `.jarfis-state.json` in your project root. The PreCompact hook reads this file on each Claude Code session start to restore context.
+
+**Artifacts not appearing?**
+
+Ensure `.jarfis/works/` directory exists and that Claude Code has write permissions in your project directory.
