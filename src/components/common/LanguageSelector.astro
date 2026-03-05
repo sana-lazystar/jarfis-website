@@ -66,6 +66,8 @@ const alternates = getAlternateLocalePaths(currentPath);
 
 <script is:inline>
   (function () {
+    if (window.__langSelectorInit) return;
+    window.__langSelectorInit = true;
     // Bind each instance independently — supports multiple renders on the same page
     document.querySelectorAll('[data-language-selector]').forEach(function (selector) {
       var btn = selector.querySelector('[data-lang-btn]');

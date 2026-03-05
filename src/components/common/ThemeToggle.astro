@@ -52,6 +52,8 @@ const { class: className = '' } = Astro.props;
 
 <script is:inline>
   (function () {
+    if (window.__themeToggleInit) return;
+    window.__themeToggleInit = true;
     function applyTheme(theme) {
       if (theme === 'dark') {
         document.documentElement.classList.add('dark');
