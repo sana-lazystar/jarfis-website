@@ -10,33 +10,51 @@
   "hero": {
     "tagline": "用AI发布软件的<br/>绝妙方式",
     "subtitle": "100%开源。您的AI团队，您的规则。",
-    "description": "AI智能体作为团队协作，自主构建生产就绪的软件。无供应商锁定。无黑盒。",
-    "badge": "100%开源",
+    "description": "一个斜杠命令。九位专业智能体。从新闻稿到复盘 — 在Claude Code上编排的完整产品工作流。",
+    "badge": "Open Source · Claude Code",
     "cta_github": "在GitHub上查看",
     "cta_start": "开始使用"
   },
   "value": {
     "title": "为什么选择JARFIS？",
-    "agent_team_title": "AI智能体团队",
-    "agent_team_desc": "多个专业AI智能体（PO、UX、前端、QA）像真实团队一样自主协作。",
-    "claude_code_title": "100%开源",
-    "claude_code_desc": "MIT许可证。在自己的基础设施上自托管。无供应商锁定。您的基础设施，您的规则。",
-    "artifacts_title": "生产就绪",
-    "artifacts_desc": "真正可部署的输出，而不仅仅是原型。自主发布到生产环境的代码。",
-    "learning_title": "多语言支持",
-    "learning_desc": "内置i18n向全球团队发布。JARFIS用您的语言交流。"
+    "agent_team_title": "9位专业智能体",
+    "agent_team_desc": "PO、Architect、Tech Lead、Backend、Frontend、DevOps、QA、Security、UX — 九位专家凭借各自的领域知识和指令协同完成每项任务。",
+    "claude_code_title": "Claude Code原生",
+    "claude_code_desc": "作为纯粹的Claude Code工作流构建。无需外部服务器，无API包装器 — 只需斜杠命令、CLAUDE.md约定和本地CLI。在Claude Code运行的任何地方都可使用。",
+    "artifacts_title": "不只是代码，而是制品",
+    "artifacts_desc": "每个工作流生成11个结构化制品：新闻稿、PRD、架构文档、API规范、UX规范、任务清单、测试策略、部署计划、代码审查和复盘。每个决策都有据可查。",
+    "learning_title": "持续学习的系统",
+    "learning_desc": "全局学习内容（jarfis-learnings.md）和项目上下文（context.md）随每次运行不断积累。PreCompact钩子和.jarfis-state.json保存工作流状态，让JARFIS在每次迭代中都更加智能。"
   },
   "how_it_works": {
     "title": "JARFIS如何工作",
-    "subtitle": "您的想法 → 通过自主步骤生成生产就绪软件",
+    "subtitle": "一个命令启动完整的产品开发生命周期",
+    "phase1_title": "分诊",
+    "phase1_desc": "解析请求，确定范围，选择合适的工作流",
+    "phase2_title": "预检",
+    "phase2_desc": "加载项目上下文，恢复状态，验证前提条件",
+    "phase3_title": "探索",
+    "phase3_desc": "PO撰写新闻稿和PRD，进行影响分析",
+    "phase4_title": "架构",
+    "phase4_desc": "Architect设计系统结构、API规范和任务分解",
+    "phase5_title": "UX设计",
+    "phase5_desc": "UX智能体创建交互规范和视觉方向",
+    "phase6_title": "实施",
+    "phase6_desc": "FE/BE/DevOps智能体从任务列表执行任务",
+    "phase7_title": "运维就绪",
+    "phase7_desc": "DevOps准备部署计划和基础设施检查",
+    "phase8_title": "审查与QA",
+    "phase8_desc": "QA + Security智能体验证质量、运行测试、审计安全",
+    "phase9_title": "复盘",
+    "phase9_desc": "团队反思、收集学习内容、更新全局知识",
     "cta": "查看完整文档"
   },
   "social_proof": {
-    "title": "加入构建AI驱动软件未来的开发者",
-    "version_label": "GitHub星标",
-    "agents_label": "活跃贡献者",
-    "artifacts_label": "分叉",
-    "commands_label": "成长中的社区"
+    "title": "JARFIS数字一览",
+    "version_label": "最新版本",
+    "agents_label": "智能体",
+    "artifacts_label": "制品",
+    "commands_label": "命令"
   },
   "final_cta": {
     "title": "准备好以不同方式发布软件了吗？",
@@ -50,53 +68,60 @@
     "traditional": "传统AI编码工具",
     "jarfis": "JARFIS",
     "compare": {
-      "single_ai": "单一AI助手",
-      "team": "专业智能体团队",
-      "suggestion": "基于建议",
-      "autonomous": "自主执行",
-      "vendor": "依赖供应商API",
-      "selfhost": "可自托管，开源",
-      "completion": "代码补全为主",
-      "workflow": "完整工作流覆盖",
-      "blackbox": "黑盒行为",
-      "transparent": "透明且可审计"
+      "single_ai": "单一AI聊天助手",
+      "team": "拥有明确角色的9位领域专家智能体",
+      "suggestion": "需要手动应用的代码建议",
+      "autonomous": "从新闻稿到复盘的完整工作流",
+      "vendor": "需要供应商平台或API",
+      "selfhost": "纯粹的Claude Code — 在您的CLI上运行",
+      "completion": "仅有代码级别输出",
+      "workflow": "每个项目11个结构化制品",
+      "blackbox": "不透明的决策过程",
+      "transparent": "每个决策都记录在制品中"
     },
     "learn_more": "在文档中了解更多",
     "view_github": "在GitHub上查看",
-    "agent_team_title": "AI智能体团队协作",
-    "agent_team_desc": "JARFIS协调多个专业AI智能体——PO、UX、前端、QA——像真实开发团队一样协同工作。每个智能体在其领域拥有深厚专业知识，像真实队友一样相互交接工作。",
+    "agent_team_title": "9位专业智能体，一套工作流",
+    "agent_team_desc": "JARFIS编排PO、Architect、Tech Lead、Backend、Frontend、DevOps、QA、Security、UX九位专业智能体，每位都拥有专属的领域专业知识和角色专用CLAUDE.md指令。他们按顺序协作，在每个阶段交接制品。",
     "agent_team_bullets": [
-      "并行智能体执行以提高速度",
-      "智能体间共享上下文",
-      "自动交接和代码审查",
-      "每个智能体专注于其领域"
+      "9种角色：PO、Architect、Tech Lead、Backend、Frontend、DevOps、QA、Security、UX",
+      "每位智能体拥有特定领域的指令和专业知识",
+      "通过制品交接实现顺序协作",
+      "明确的角色消除歧义和重叠"
     ],
-    "claude_code_title": "100%开源",
-    "claude_code_desc": "MIT许可证。在自己的基础设施上自托管。无需向第三方发送API密钥。无供应商锁定。JARFIS可在任何地方运行——云端、本地部署或您的本地机器。",
+    "claude_code_title": "Claude Code原生架构",
+    "claude_code_desc": "JARFIS作为纯粹的Claude Code工作流构建 — 没有外部服务器、没有API包装器、没有专有运行时。一切都通过斜杠命令和本地CLI的CLAUDE.md约定运行。PreCompact钩子在上下文重置后保存工作流状态。",
     "claude_code_bullets": [
-      "完整源代码访问——阅读每一行",
-      "使用您自己的LLM（OpenAI、Anthropic、Ollama）",
-      "社区驱动的开发",
-      "透明且可审计的智能体行为"
+      "纯斜杠命令界面 — 无需外部服务器",
+      "用于智能体指令的CLAUDE.md约定",
+      "用于上下文重置恢复的PreCompact钩子",
+      "在Claude Code运行的任何地方都可使用 — 本地或CI"
     ],
-    "artifacts_title": "生产就绪输出",
-    "artifacts_desc": "JARFIS不仅仅是编写代码——它发布软件。QA智能体审查每个输出，检查边缘情况，确保结果可以投入生产，而不仅仅是需要更多工作的原型。",
+    "artifacts_title": "11个结构化制品",
+    "artifacts_desc": "每个JARFIS工作流生成11个有据可查的制品：新闻稿、PRD、架构文档、API规范、UX规范、任务清单、测试策略、部署计划、代码审查和复盘。每个决策都被记录，每次交接都可追溯。",
     "artifacts_bullets": [
-      "真正可部署的代码，而非代码片段",
-      "QA智能体自动验证质量",
-      "适当的错误处理和边缘情况",
-      "生产级架构决策"
+      "新闻稿 → PRD → 架构 → API规范",
+      "UX规范 → 任务 → 测试策略 → 部署计划",
+      "代码审查 + 复盘结束每个工作流",
+      "从创意到部署的完整审计追踪"
     ],
-    "learning_title": "多语言支持",
-    "learning_desc": "JARFIS从底层内置了国际化支持。以团队的母语向全球团队发布。UX智能体理解特定区域设计模式，输出默认支持多种语言。",
+    "learning_title": "持续学习系统",
+    "learning_desc": "JARFIS随每次运行积累知识。jarfis-learnings.md记录每次复盘的全局经验。context.md保存项目特定状态。.jarfis-state.json文件追踪工作流进度，使JARFIS能从上次中断的确切位置继续。",
     "learning_bullets": [
-      "开箱即用的i18n支持",
-      "区域感知的UX智能体决策",
-      "CJK字符支持（韩语、日语、中文）",
-      "RTL语言感知"
+      "jarfis-learnings.md：所有项目的全局经验",
+      "context.md：项目特定的持久状态",
+      ".jarfis-state.json：工作流进度追踪",
+      "每次迭代都让系统更加智能"
     ],
     "cta_heading": "准备好查看实际效果了吗？",
     "footnote": "* 基于一般类别模式的比较，而非针对特定产品。"
+  },
+  "seo": {
+    "home_description": "一个斜杠命令。9位专业智能体。JARFIS在Claude Code上编排您的整个产品工作流。",
+    "features_description": "探索JARFIS功能：9位专业智能体、11个结构化制品和持续学习系统。",
+    "docs_description": "JARFIS文档：入门指南、概念、教程和API参考。",
+    "blog_description": "来自JARFIS团队的更新、深度解析和发布说明。",
+    "showcase_description": "用JARFIS构建的项目 — AI编排产品开发的实际案例。"
   },
   "docs": {
     "page_title": "文档",

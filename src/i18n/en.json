@@ -51,10 +51,10 @@
   },
   "social_proof": {
     "title": "JARFIS by the Numbers",
-    "version_label": "v1.0.7",
-    "agents_label": "9 Agents",
-    "artifacts_label": "11 Artifacts",
-    "commands_label": "10 Commands"
+    "version_label": "Latest Version",
+    "agents_label": "Agents",
+    "artifacts_label": "Artifacts",
+    "commands_label": "Commands"
   },
   "final_cta": {
     "title": "Ready to ship software differently?",
@@ -115,6 +115,13 @@
     ],
     "cta_heading": "Ready to see it in action?",
     "footnote": "* Comparison based on general category patterns, not specific products."
+  },
+  "seo": {
+    "home_description": "One slash command. Nine expert agents. JARFIS orchestrates your entire product workflow on Claude Code.",
+    "features_description": "Explore JARFIS features: 9 expert agents, 11 structured artifacts, and a continuous learning system.",
+    "docs_description": "JARFIS documentation: getting started, concepts, guides, and API reference.",
+    "blog_description": "Updates, deep dives, and release notes from the JARFIS team.",
+    "showcase_description": "Projects built with JARFIS — AI-orchestrated product development in action."
   },
   "docs": {
     "page_title": "Documentation",

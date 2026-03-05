@@ -10,33 +10,51 @@
   "hero": {
     "tagline": "AIでソフトウェアを出荷する<br/>素晴らしい方法",
     "subtitle": "100%オープンソース。あなたのAIチーム、あなたのルール。",
-    "description": "AIエージェントがチームとして協働し、本番対応のソフトウェアを自律的に構築します。ベンダーロックインなし。ブラックボックスなし。",
-    "badge": "100%オープンソース",
+    "description": "ひとつのスラッシュコマンド。9人の専門エージェント。プレスリリースから振り返りまで — Claude Code上でオーケストレーションされる製品ワークフロー全体。",
+    "badge": "Open Source · Claude Code",
     "cta_github": "GitHubで見る",
     "cta_start": "はじめる"
   },
   "value": {
     "title": "なぜJARFIS？",
-    "agent_team_title": "AIエージェントチーム",
-    "agent_team_desc": "複数の専門AIエージェント（PO、UX、フロントエンド、QA）が実際のチームのように自律的に協働します。",
-    "claude_code_title": "100%オープンソース",
-    "claude_code_desc": "MITライセンス。自分のインフラでセルフホスト。ベンダーロックインなし。あなたのインフラ、あなたのルール。",
-    "artifacts_title": "本番対応",
-    "artifacts_desc": "プロトタイプではなく、実際にデプロイ可能なアウトプット。自律的に本番環境に出荷されるコード。",
-    "learning_title": "多言語サポート",
-    "learning_desc": "i18nが組み込まれたグローバルチームへの出荷。JARFISはあなたの言語で話します。"
+    "agent_team_title": "9人の専門エージェント",
+    "agent_team_desc": "PO、Architect、Tech Lead、Backend、Frontend、DevOps、QA、Security、UX — 9人の専門家がドメイン固有の専門知識と指示でタスクを協働します。",
+    "claude_code_title": "Claude Codeネイティブ",
+    "claude_code_desc": "純粋なClaude Codeワークフローとして構築されています。外部サーバーもAPIラッパーも不要 — スラッシュコマンド、CLAUDE.mdコンベンション、ローカルCLIだけで動作します。Claude Codeが動くどこでも使えます。",
+    "artifacts_title": "コードだけでなくアーティファクト",
+    "artifacts_desc": "ワークフローごとに11個の構造化されたアーティファクト: プレスリリース、PRD、アーキテクチャ、API仕様、UX仕様、タスク、テスト戦略、デプロイ計画、レビュー、振り返り。すべての意思決定が文書化されます。",
+    "learning_title": "学習するシステム",
+    "learning_desc": "グローバルな学習内容（jarfis-learnings.md）とプロジェクトコンテキスト（context.md）が実行を重ねるごとに蓄積されます。PreCompactフックと.jarfis-state.jsonがワークフロー状態を保持し、JARFISは反復するほどスマートになります。"
   },
   "how_it_works": {
     "title": "JARFISの仕組み",
-    "subtitle": "あなたのアイデア → 自律的なステップで本番対応ソフトウェアへ",
+    "subtitle": "ひとつのコマンドで製品開発ライフサイクル全体が始まります",
+    "phase1_title": "トリアージ",
+    "phase1_desc": "リクエストを解析し、スコープを決定し、適切なワークフローを選択します",
+    "phase2_title": "プリフライト",
+    "phase2_desc": "プロジェクトコンテキストを読み込み、状態を復元し、前提条件を確認します",
+    "phase3_title": "ディスカバリー",
+    "phase3_desc": "POがプレスリリースとPRDを作成し、影響分析を実施します",
+    "phase4_title": "アーキテクチャ",
+    "phase4_desc": "Architectがシステム構造、API仕様、タスク分解を設計します",
+    "phase5_title": "UXデザイン",
+    "phase5_desc": "UXエージェントがインタラクション仕様とビジュアル方向性を策定します",
+    "phase6_title": "実装",
+    "phase6_desc": "FE/BE/DevOpsエージェントがタスクリストからタスクを実行します",
+    "phase7_title": "運用準備",
+    "phase7_desc": "DevOpsがデプロイ計画とインフラ確認を準備します",
+    "phase8_title": "レビューとQA",
+    "phase8_desc": "QA + Securityエージェントが品質を検証し、テストを実行し、セキュリティを監査します",
+    "phase9_title": "振り返り",
+    "phase9_desc": "チームが振り返り、学習内容を収集し、グローバルな知識を更新します",
     "cta": "完全なドキュメントを見る"
   },
   "social_proof": {
-    "title": "AIパワードソフトウェアの未来を構築する開発者に加わりましょう",
-    "version_label": "GitHubスター",
-    "agents_label": "アクティブコントリビューター",
-    "artifacts_label": "フォーク",
-    "commands_label": "成長するコミュニティ"
+    "title": "JARFISの数字",
+    "version_label": "最新バージョン",
+    "agents_label": "エージェント",
+    "artifacts_label": "アーティファクト",
+    "commands_label": "コマンド"
   },
   "final_cta": {
     "title": "ソフトウェアを別の方法で出荷する準備はできていますか？",
@@ -50,53 +68,60 @@
     "traditional": "従来のAIコーディングツール",
     "jarfis": "JARFIS",
     "compare": {
-      "single_ai": "単一のAIアシスタント",
-      "team": "専門エージェントのチーム",
-      "suggestion": "提案ベース",
-      "autonomous": "自律実行",
-      "vendor": "ベンダーAPI依存",
-      "selfhost": "セルフホスタブル、オープンソース",
-      "completion": "コード補完フォーカス",
-      "workflow": "完全なワークフローカバレッジ",
-      "blackbox": "ブラックボックス動作",
-      "transparent": "透明で監査可能"
+      "single_ai": "単一のAIチャットアシスタント",
+      "team": "役割が定義された9人のドメイン専門エージェント",
+      "suggestion": "手動で適用するコード提案",
+      "autonomous": "プレスリリースから振り返りまでの完全なワークフロー",
+      "vendor": "ベンダープラットフォームまたはAPIが必要",
+      "selfhost": "純粋なClaude Code — CLIで実行",
+      "completion": "コードレベルの出力のみ",
+      "workflow": "プロジェクトごとに11個の構造化アーティファクト",
+      "blackbox": "不透明な意思決定プロセス",
+      "transparent": "アーティファクトにすべての意思決定が文書化"
     },
     "learn_more": "ドキュメントで詳しく学ぶ",
     "view_github": "GitHubで見る",
-    "agent_team_title": "AIエージェントチームコラボレーション",
-    "agent_team_desc": "JARFISは複数の専門AIエージェント（PO、UX、フロントエンド、QA）を調整し、実際の開発チームのように連携させます。各エージェントはそのドメインで深い専門知識を持ち、実際のチームメンバーのように作業を引き継ぎます。",
+    "agent_team_title": "9人の専門エージェント、ひとつのワークフロー",
+    "agent_team_desc": "JARFISはPO、Architect、Tech Lead、Backend、Frontend、DevOps、QA、Security、UXの9人の専門エージェントをオーケストレーションします。各エージェントは専用のドメイン専門知識と役割固有のCLAUDE.md指示を持ちます。彼らは順次協力し、すべてのフェーズでアーティファクトを引き継ぎます。",
     "agent_team_bullets": [
-      "速度のための並列エージェント実行",
-      "エージェント間のコンテキスト共有",
-      "自動ハンドオフ＆コードレビュー",
-      "各エージェントのドメイン特化"
+      "9つの役割: PO、Architect、Tech Lead、Backend、Frontend、DevOps、QA、Security、UX",
+      "各エージェントはドメイン固有の指示と専門知識を保有",
+      "アーティファクト引き継ぎによる順次協業",
+      "定義された役割で曖昧さと重複を排除"
     ],
-    "claude_code_title": "100%オープンソース",
-    "claude_code_desc": "MITライセンス。自分のインフラでセルフホスト。サードパーティへのAPIキー送信なし。ベンダーロックインなし。JARFISはクラウド、オンプレミス、ローカルマシンどこでも動作します。",
+    "claude_code_title": "Claude Codeネイティブアーキテクチャ",
+    "claude_code_desc": "JARFISは純粋なClaude Codeワークフローとして構築されています — 外部サーバーもAPIラッパーも独自ランタイムもありません。すべてがスラッシュコマンドとローカルCLIのCLAUDE.mdコンベンションを通じて実行されます。PreCompactフックがコンテキストリセット全体でワークフロー状態を保持します。",
     "claude_code_bullets": [
-      "完全なソースコードアクセス — すべての行を読める",
-      "自分のLLMを使用（OpenAI、Anthropic、Ollama）",
-      "コミュニティ主導の開発",
-      "透明で監査可能なエージェント動作"
+      "純粋なスラッシュコマンドインターフェース — 外部サーバー不要",
+      "エージェント指示のためのCLAUDE.mdコンベンション",
+      "コンテキストリセット耐性のためのPreCompactフック",
+      "Claude Codeが動くどこでも — ローカルまたはCI"
     ],
-    "artifacts_title": "本番対応アウトプット",
-    "artifacts_desc": "JARFISは単にコードを書くだけでなく、ソフトウェアを出荷します。QAエージェントはすべてのアウトプットをレビューし、エッジケースを確認し、さらなる作業が必要なプロトタイプではなく本番環境に対応した結果を保証します。",
+    "artifacts_title": "11個の構造化アーティファクト",
+    "artifacts_desc": "すべてのJARFISワークフローは11個の文書化されたアーティファクトを生成します: プレスリリース、PRD、アーキテクチャドキュメント、API仕様、UX仕様、タスクリスト、テスト戦略、デプロイ計画、コードレビュー、振り返り。すべての意思決定が記録され、すべての引き継ぎが追跡可能です。",
     "artifacts_bullets": [
-      "スニペットではなく実際にデプロイ可能なコード",
-      "QAエージェントが品質を自動検証",
-      "適切なエラー処理とエッジケース",
-      "本番グレードのアーキテクチャ決定"
+      "プレスリリース → PRD → アーキテクチャ → API仕様",
+      "UX仕様 → タスク → テスト戦略 → デプロイ計画",
+      "コードレビュー + 振り返りですべてのワークフローを締めくくる",
+      "アイデアからデプロイまでの完全な監査証跡"
     ],
-    "learning_title": "多言語サポート",
-    "learning_desc": "JARFISは最初から国際化が組み込まれています。グローバルチームに母国語で出荷しましょう。UXエージェントはロケール固有のデザインパターンを理解し、アウトプットはデフォルトで複数言語をサポートします。",
+    "learning_title": "継続的学習システム",
+    "learning_desc": "JARFISは実行を重ねるごとに知識を蓄積します。jarfis-learnings.mdはすべての振り返りからグローバルな教訓を記録します。context.mdはプロジェクト固有の状態を保持します。.jarfis-state.jsonファイルがワークフローの進捗を追跡し、JARFISが正確に中断した場所から再開できます。",
     "learning_bullets": [
-      "すぐに使えるi18nサポート",
-      "ロケール対応のUXエージェント判断",
-      "CJK文字サポート（韓国語、日本語、中国語）",
-      "RTL言語対応"
+      "jarfis-learnings.md: すべてのプロジェクトのグローバルな教訓",
+      "context.md: プロジェクト固有の永続状態",
+      ".jarfis-state.json: ワークフロー進捗の追跡",
+      "反復するたびにシステムがスマートになる"
     ],
     "cta_heading": "実際の動作を確認する準備はできましたか？",
     "footnote": "* 特定の製品ではなく、一般的なカテゴリパターンに基づく比較です。"
+  },
+  "seo": {
+    "home_description": "ひとつのスラッシュコマンド。9人の専門エージェント。JARFISがClaude Code上で製品ワークフロー全体をオーケストレーションします。",
+    "features_description": "JARFISの機能: 9人の専門エージェント、11個の構造化アーティファクト、継続的学習システム。",
+    "docs_description": "JARFISドキュメント: はじめに、コンセプト、ガイド、APIリファレンス。",
+    "blog_description": "JARFISチームからのアップデート、詳細解説、リリースノート。",
+    "showcase_description": "JARFISで構築されたプロジェクト — AIオーケストレーション製品開発の実例。"
   },
   "docs": {
     "page_title": "ドキュメント",
