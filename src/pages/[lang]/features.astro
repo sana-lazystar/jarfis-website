@@ -26,16 +26,17 @@ const multilangSvg = `<svg width="96" height="96" viewBox="0 0 24 24" fill="none
 ---
 <PageLayout
   title={t(locale, 'features.page_title')}
-  description={t(locale, 'features.page_subtitle')}
+  description={t(locale, 'seo.features_description')}
   locale={locale}
   pagePath="features"
 >
   <SEOHead
     slot="head"
     title={t(locale, 'features.page_title')}
-    description={t(locale, 'features.page_subtitle')}
+    description={t(locale, 'seo.features_description')}
     locale={locale}
     pagePath="features"
+    ogImage="/images/og/og-features.png"
   />
 
   <!-- Page hero -->
