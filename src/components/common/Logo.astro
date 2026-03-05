@@ -1,0 +1,86 @@
+---
+interface Props {
+  size?: number;
+  class?: string;
+  showText?: boolean;
+  textClass?: string;
+}
+
+const {
+  size = 32,
+  class: className = '',
+  showText = true,
+  textClass = 'text-lg tracking-tight',
+} = Astro.props;
+---
+<span class={`inline-flex items-center gap-2 ${className}`}>
+  <!--
+    JARFIS Logomark — Orchestration Hub simplified
+    viewBox: 0 0 32 32
+    - Outer dashed ring (r=13)
+    - 6 hub-to-node lines at 60° intervals (representing agent network)
+    - 6 node dots on the ring
+    - Central hexagon with "/" symbol
+    Uses currentColor for automatic dark mode support via Tailwind text-* classes.
+  -->
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 32 32"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+    class="text-cyan-500 dark:text-cyan-400 shrink-0"
+  >
+    <!-- Outer dashed ring -->
+    <circle
+      cx="16" cy="16" r="13"
+      stroke="currentColor"
+      stroke-width="1"
+      stroke-dasharray="2 2"
+      opacity="0.5"
+    />
+
+    <!-- 6 hub-to-node lines (60° intervals) -->
+    <!-- Nodes at: top(16,3), upper-right(27,10), lower-right(27,22),
+                   bottom(16,29), lower-left(5,22), upper-left(5,10) -->
+    <line x1="16" y1="16" x2="16" y2="3"  stroke="currentColor" stroke-width="0.75" opacity="0.35"/>
+    <line x1="16" y1="16" x2="27" y2="10" stroke="currentColor" stroke-width="0.75" opacity="0.35"/>
+    <line x1="16" y1="16" x2="27" y2="22" stroke="currentColor" stroke-width="0.75" opacity="0.35"/>
+    <line x1="16" y1="16" x2="16" y2="29" stroke="currentColor" stroke-width="0.75" opacity="0.35"/>
+    <line x1="16" y1="16" x2="5"  y2="22" stroke="currentColor" stroke-width="0.75" opacity="0.35"/>
+    <line x1="16" y1="16" x2="5"  y2="10" stroke="currentColor" stroke-width="0.75" opacity="0.35"/>
+
+    <!-- 6 node dots on the outer ring -->
+    <circle cx="16" cy="3"  r="1.5" fill="currentColor"/>
+    <circle cx="27" cy="10" r="1.5" fill="currentColor"/>
+    <circle cx="27" cy="22" r="1.5" fill="currentColor"/>
+    <circle cx="16" cy="29" r="1.5" fill="currentColor"/>
+    <circle cx="5"  cy="22" r="1.5" fill="currentColor"/>
+    <circle cx="5"  cy="10" r="1.5" fill="currentColor"/>
+
+    <!-- Central hexagon hub (flat-top, apothem=7, R=8) -->
+    <!-- Points: (24,16)(20,23)(12,23)(8,16)(12,9)(20,9) -->
+    <polygon
+      points="24,16 20,23 12,23 8,16 12,9 20,9"
+      fill="currentColor"
+    />
+
+    <!-- Hub symbol "/" -->
+    <text
+      x="16" y="17"
+      text-anchor="middle"
+      dominant-baseline="middle"
+      fill="white"
+      font-size="9"
+      font-weight="bold"
+      font-family="ui-monospace, monospace"
+    >/</text>
+  </svg>
+
+  {showText && (
+    <span class={`font-bold text-slate-900 dark:text-white ${textClass}`}>
+      JARFIS
+    </span>
+  )}
+</span>
