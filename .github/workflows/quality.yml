@@ -39,5 +39,8 @@ jobs:
       - name: Lint (ESLint)
         run: pnpm lint
 
+      - name: i18n sync check
+        run: pnpm i18n:check
+
       - name: Build verification
         run: pnpm build
