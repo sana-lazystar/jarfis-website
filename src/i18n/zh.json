@@ -4,14 +4,13 @@
     "features": "功能",
     "docs": "文档",
     "blog": "博客",
-    "showcase": "展示",
-    "github": "GitHub"
+    "showcase": "展示"
   },
   "hero": {
     "tagline": "用AI发布软件的<br/>绝妙方式",
     "subtitle": "100%开源。您的AI团队，您的规则。",
     "description": "一个斜杠命令。九位专业智能体。从新闻稿到复盘 — 在Claude Code上编排的完整产品工作流。",
-    "badge": "9个AI代理，一条斜杠命令",
+    "badge": "9个AI智能体，一条斜杠命令",
     "cta_github": "在GitHub上查看",
     "cta_start": "开始使用"
   },
@@ -64,7 +63,7 @@
   "features": {
     "page_title": "功能",
     "page_subtitle": "无需妥协，用AI构建所需的一切。",
-    "differentiator_title": "AI辅助开发的不同方法",
+    "differentiator_title": "AI辅助开发的不同方式",
     "traditional": "传统AI编码工具",
     "jarfis": "JARFIS",
     "compare": {
@@ -194,20 +193,16 @@
     "prev_page": "上一页",
     "next_page": "下一页",
     "on_this_page": "本页内容",
-    "not_translated": "此页面尚未翻译。显示英文版本。",
-    "copied": "已复制！",
-    "copy_code": "复制代码"
+    "not_translated": "此页面尚未翻译。显示英文版本。"
   },
   "blog": {
     "page_title": "博客",
     "page_subtitle": "更新、深度解析和发布说明",
-    "empty_title": "故事正在撰写中。",
+    "empty_title": "文章正在撰写中。",
     "empty_desc": "第一篇文章即将发布 — 在GitHub上关注我们，及时获取更新。",
     "follow_github": "在GitHub上关注",
     "watch_repo": "Watch仓库",
     "read_more": "阅读更多",
-    "min_read": "分钟阅读",
-    "back_to_blog": "返回博客",
     "prev_post": "上一篇",
     "next_post": "下一篇"
   },
@@ -215,23 +210,10 @@
     "page_title": "展示",
     "page_subtitle": "用JARFIS构建的项目",
     "empty_title": "成为第一个用JARFIS构建的人。",
-    "empty_desc": "这个网站本身就是由JARFIS智能体（UX、前端、QA）共同构建的。您的项目可以是下一个。",
+    "empty_desc": "这个网站本身就是由JARFIS智能体（UX、Frontend、QA）共同构建的。您的项目可以是下一个。",
     "submit": "提交您的项目",
     "view_project": "查看项目",
     "view_source": "查看源码"
-  },
-  "common": {
-    "coming_soon": "即将推出",
-    "stay_tuned": "敬请期待更新！",
-    "built_with": "用JARFIS构建",
-    "read_more": "阅读更多",
-    "last_updated": "最后更新",
-    "back_to_top": "返回顶部",
-    "loading": "加载中...",
-    "error": "发生错误",
-    "not_found": "页面未找到",
-    "home": "返回首页",
-    "external_link": "在新标签页中打开"
   },
   "footer": {
     "license": "MIT许可证",
@@ -253,17 +235,7 @@
   },
   "a11y": {
     "skip_to_content": "跳转到主要内容",
-    "toggle_dark_mode": "切换暗色模式",
     "toggle_menu": "切换导航菜单",
-    "switch_language": "切换语言",
-    "close_menu": "关闭菜单",
-    "open_menu": "打开菜单",
-    "current_page": "当前页面",
-    "external_link": "在新标签页中打开"
-  },
-  "404": {
-    "title": "页面未找到",
-    "description": "您要找的页面不存在或已被移动。",
-    "back_home": "返回首页"
+    "switch_language": "切换语言"
   }
 }

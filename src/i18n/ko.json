@@ -1,16 +1,10 @@
 {
-  "404": {
-    "title": "페이지를 찾을 수 없습니다",
-    "description": "찾고 계신 페이지가 없거나 이동되었습니다.",
-    "back_home": "홈으로 돌아가기"
-  },
   "nav": {
     "home": "홈",
     "features": "기능",
     "docs": "문서",
     "blog": "블로그",
-    "showcase": "쇼케이스",
-    "github": "GitHub"
+    "showcase": "쇼케이스"
   },
   "hero": {
     "tagline": "AI와 함께 소프트웨어를 출시하는<br/>환상적인 방법",
@@ -199,9 +193,7 @@
     "prev_page": "이전",
     "next_page": "다음",
     "on_this_page": "이 페이지에서",
-    "not_translated": "이 페이지는 아직 번역되지 않았습니다. 영어 버전을 표시합니다.",
-    "copied": "복사됨!",
-    "copy_code": "코드 복사"
+    "not_translated": "이 페이지는 아직 번역되지 않았습니다. 영어 버전을 표시합니다."
   },
   "blog": {
     "page_title": "블로그",
@@ -211,8 +203,6 @@
     "follow_github": "GitHub에서 팔로우",
     "watch_repo": "레포 Watch",
     "read_more": "더 읽기",
-    "min_read": "분 읽기",
-    "back_to_blog": "블로그로 돌아가기",
     "prev_post": "이전 글",
     "next_post": "다음 글"
   },
@@ -224,19 +214,6 @@
     "submit": "프로젝트 제출",
     "view_project": "프로젝트 보기",
     "view_source": "소스 보기"
-  },
-  "common": {
-    "coming_soon": "곧 출시",
-    "stay_tuned": "업데이트를 기대해 주세요!",
-    "built_with": "JARFIS로 구축",
-    "read_more": "더 읽기",
-    "last_updated": "마지막 업데이트",
-    "back_to_top": "맨 위로",
-    "loading": "로딩 중...",
-    "error": "오류가 발생했습니다",
-    "not_found": "페이지를 찾을 수 없습니다",
-    "home": "홈으로 돌아가기",
-    "external_link": "새 탭에서 열립니다"
   },
   "footer": {
     "license": "MIT 라이선스",
@@ -258,12 +235,7 @@
   },
   "a11y": {
     "skip_to_content": "주 콘텐츠로 건너뛰기",
-    "toggle_dark_mode": "다크 모드 전환",
     "toggle_menu": "내비게이션 메뉴 전환",
-    "switch_language": "언어 전환",
-    "close_menu": "메뉴 닫기",
-    "open_menu": "메뉴 열기",
-    "current_page": "현재 페이지",
-    "external_link": "새 탭에서 열립니다"
+    "switch_language": "언어 전환"
   }
 }
