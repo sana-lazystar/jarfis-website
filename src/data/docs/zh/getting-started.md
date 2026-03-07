@@ -1,139 +1,104 @@
 ---
 title: "快速开始"
-description: "5分钟内启动JARFIS。在Claude Code中运行/jarfis，让9位专业AI代理共同构建您的第一个功能。"
+description: "安装JARFIS，使用9个专业Agent和结构化Phase运行您的第一个AI驱动软件开发工作流。"
 category: "getting-started"
 order: 1
 locale: "zh"
-translationOf: "en/getting-started"
 lastUpdated: 2026-03-05
 draft: false
 ---
 
 # 快速开始
 
-一个斜杠命令，与9位专业AI代理一起，在5分钟内开始交付软件。
+与AI一起交付软件 — 一个斜杠命令，9个专业Agent，以及由Human Gate控制的结构化Phase。
 
 ## 前提条件
 
-开始之前，请确认以下准备就绪：
+开始之前，请确认以下准备就绪:
 
-- **Claude Code**（Anthropic）— JARFIS在Claude Code内原生运行
-- 具有Claude API访问权限的Claude账户
-- **Git** >= 2.x（用于项目初始化）
+- **Claude Code** (Anthropic) — JARFIS在Claude Code内以斜杠命令工作流的形式原生运行
+- 具有API访问权限的Claude账户
+- **Git** >= 2.x（Phase 0分支管理所需）
+- 已克隆或可访问 [JARFIS GitHub仓库](https://github.com/sana-lazystar/jarfis)
 
-> JARFIS是一个Claude Code斜杠命令工作流。无需单独安装CLI。
+## 安装
 
-## 第1步 — 安装JARFIS
+JARFIS通过GitHub仓库的 `install.sh` 脚本安装。在终端中运行以下命令:
 
-JARFIS以Claude Code斜杠命令包的形式分发。在Claude Code内运行：
-
+```bash
+bash install.sh
 ```
-/jarfis:install
-```
 
-这将在当前项目中设置JARFIS工作流，并创建：
+此命令将JARFIS斜杠命令注册到您的Claude Code环境。安装完成后，以下项目结构可供使用:
 
 ```
 your-project/
 ├── .jarfis/
-│   ├── CLAUDE.md              # JARFIS上下文和学习记忆
-│   ├── context.md             # 项目特定AI上下文
-│   ├── jarfis-learnings.md    # 持续学习日志
-│   └── works/                 # 每次会话生成的制品
-├── .jarfis-state.json         # 阶段状态跟踪
-└── CLAUDE.md                  # 根Claude Code上下文
+│   ├── context.md             # 项目专属上下文
+│   └── project-profile.md     # 项目配置文件
+├── .jarfis-state.json         # 工作流状态跟踪
+└── ~/.claude/
+    └── jarfis-learnings.md    # 全局学习文件（跨项目共享）
 ```
 
-## 第2步 — 运行第一个工作流
+> **注意**: 不存在 `/jarfis:install` 命令。安装必须且只能通过 `bash install.sh` 进行。
 
-在项目目录中打开Claude Code并输入：
+## 运行第一个工作流
 
-```
-/jarfis
-```
-
-JARFIS将提示您输入功能或任务描述。例如：
+在Claude Code中打开项目目录，启动工作流:
 
 ```
-/jarfis 构建使用JWT令牌的用户认证系统
+/jarfis:work Build a user authentication system with JWT tokens
 ```
 
-## 第3步 — 观察9个代理协作
+JARFIS将对请求进行分类（Phase T — Triage），然后引导您逐步完成由专业AI Agent负责的结构化Phase。
 
-JARFIS通过8个以上的结构化阶段协调9位专业AI代理：
+## 9个Phase
 
-| 阶段 | 名称 | 执行内容 |
+每个工作流最多经历9个Phase。不适用时可跳过某个Phase（例如：不需要UI时跳过Phase 3）:
+
+| Phase | 名称 | 执行内容 |
+|-------|------|---------|
+| T | Triage | 将请求分类为A/B/C类型 |
+| 0 | Pre-flight | Git同步、分支创建、学习文件加载 |
+| 1 | Discovery | PO反向提问、Working Backwards、PRD、可行性评估 |
+| 2 | Architecture & Planning | 影响分析、设计、API spec、任务分解、测试策略 |
+| 3 | UX Design | 界面设计（条件触发 — 仅在需要UI时） |
+| 4 | Implementation | BE/FE/DevOps并行实现 |
+| 4.5 | Operational Readiness | 部署策略、回滚计划、运营准备 |
+| 5 | Review & QA | API合约验证、Tech Lead + QA + Security评审 |
+| 6 | Retrospective | 学习积累（全局learnings + 项目context） |
+
+## 9个Agent
+
+JARFIS协调9个专业Agent，每个Agent仅在与当前Phase和项目需求相关时才会激活:
+
+| Agent | 角色 |
+|-------|------|
+| **Product Owner (PO)** | 反向提问、Working Backwards、PRD编写 |
+| **Architect** | 可行性评估、影响分析、架构设计、ADR |
+| **Tech Lead** | API spec审查、任务分解、代码评审、Retrospective |
+| **UX Designer** | 界面设计、交互设计 |
+| **Backend Engineer** | 后端实现 |
+| **Frontend Engineer** | 前端实现 |
+| **DevOps/SRE** | 基础设施及CI/CD实现 |
+| **QA Engineer** | 测试策略、QA验证 |
+| **Security Engineer** | 预先安全分析、安全评审 |
+
+## Human Gate
+
+JARFIS包含3个Gate，在进入下一阶段之前需要您的明确批准:
+
+| Gate | 时机 | 可选操作 |
 |------|------|---------|
-| T | 启动 | 需求收集、初始规划 |
-| 0 | 基础建设 | 架构决策、技术栈选择 |
-| 1 | 设计 | UX规范、API合约定义 |
-| 2 | 架构 | 系统设计、数据模型 |
-| 3 | 实现 | 后端+前端并行开发 |
-| 4 | 集成 | API对接、组件集成 |
-| 4.5 | QA与安全 | 测试执行、漏洞审查 |
-| 5 | 部署 | 基础设施、CI/CD、发布说明 |
-| 6 | 复盘 | 学习记录、改进计划 |
+| Gate 1 | Phase 1 (Discovery) 之后 | 批准 / 修订 / 终止 |
+| Gate 2 | Phase 2 & 3 (Architecture + UX) 之后 | 批准 / 修订 / 终止 |
+| Gate 3 | Phase 5 (Review & QA) 之后 | 批准 / 修订并重新评审 / 终止 / 重新审视设计 |
 
-为您工作的9个代理：
-
-| 代理 | 角色 |
-|------|------|
-| **PO（产品负责人）** | 需求定义、用户故事编写 |
-| **Architect（架构师）** | 系统设计、技术决策 |
-| **Tech Lead（技术负责人）** | 代码标准、评审、代理间协调 |
-| **UX Designer（UX设计师）** | 用户体验、线框图、UX规范 |
-| **BE Engineer（后端工程师）** | 后端API实现 |
-| **FE Engineer（前端工程师）** | 前端UI实现 |
-| **DevOps/SRE** | 基础设施、CI/CD、部署 |
-| **QA Engineer（QA工程师）** | 测试策略、测试执行 |
-| **Security Engineer（安全工程师）** | 安全审查、漏洞分析 |
-
-## 第4步 — 查看制品
-
-每个完成的阶段都会在`.jarfis/works/{日期}/{功能名}/`中生成结构化制品：
-
-```
-.jarfis/works/2026-03-05/feature/auth-system/
-├── press-release.md       # 功能公告草稿
-├── prd.md                 # 产品需求文档
-├── impact-analysis.md     # 技术影响分析
-├── architecture.md        # 系统架构
-├── api-spec.md            # API合约
-├── tasks.md               # 开发任务分解
-├── test-strategy.md       # QA计划
-├── ux-spec.md             # UX规范
-├── deployment-plan.md     # 发布计划
-├── review.md              # 实现后审查
-└── retrospective.md       # 学习与改进
-```
-
-## 第5步 — 继续工作或召开会议
-
-在后续会话中继续工作时，Claude Code的PreCompact钩子会自动从`.jarfis-state.json`恢复JARFIS状态。
-
-要召开代理间协调会议：
-
-```
-/jarfis:meeting
-```
-
-此命令召集相关代理，解决阻碍、对齐决策或规划下一阶段。
+这些Gate确保您在每个重要里程碑处始终掌控方向。
 
 ## 下一步
 
-- [架构与概念](/zh/docs/concepts-overview) — 了解完整的JARFIS架构
-- [GitHub Discussions](https://github.com/sana-lazystar/jarfis/discussions) — 社区支持
-
-## 故障排查
-
-**找不到`/jarfis`命令？**
-
-确认项目中已安装JARFIS。从Claude Code重新运行`/jarfis:install`。
-
-**代理运行太慢？**
-
-复杂功能可能需要多个阶段。使用`/jarfis:meeting`检查状态或加速代理间决策。
-
-**会话间状态丢失？**
-
-检查项目根目录中的`.jarfis-state.json`。PreCompact钩子读取此文件以恢复上下文。
+- 阅读 [Architecture & Concepts](/zh/docs/concepts-overview) 了解完整的JARFIS编排模型
+- 查阅 [API Reference](/zh/docs/api-reference) 获取所有可用命令和配置
+- 参考 [Guides & Customization](/zh/docs/guides-customization) 了解高级工作流模式
