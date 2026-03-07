@@ -132,40 +132,6 @@ const YELLOW = "\x1b[33m";
 const GREEN = "\x1b[32m";
 
 /**
- * @param {CheckResult} result
- * @returns {boolean} hasMissing
- */
-function printResult(result) {
-  const { filename, totalKeys, missing, extra, empty } = result;
-  const hasMissing = missing.length > 0;
-  const hasExtra = extra.length > 0;
-  const hasEmpty = empty.length > 0;
-
-  // 상태 아이콘: missing 있으면 ❌, 없으면 ✅
-  const icon = hasMissing ? "❌" : "✅";
-  const color = hasMissing ? RED : GREEN;
-
-  // 헤더 출력
-  // 예: ✅ ko.json: 155 keys, 0 missing, 0 extra
-  // 예: ❌ zh.json: 155 keys, 3 missing, 1 extra
-  const extraNote = hasExtra
-    ? ` ${YELLOW}(⚠ ${extra.length} extra)${RESET}`
-    : ` (${extra.length} extra)`;
-
-  console.log(
-    `${icon} ${color}${filename}${RESET}: ${totalKeys} keys, ` +
-      `${color}${missing.length} missing${RESET}, ` +
-      `0 extra${extraNote.replace("0 extra", "")}`.replace(
-        "0 extra",
-        `${extra.length} extra`,
-      ),
-  );
-
-  // 실제로 위 방식이 복잡해지므로 직접 구성
-  return hasMissing;
-}
-
-/**
  * 결과를 명확하게 출력한다 (printResult 대체).
  *
  * @param {CheckResult} result
