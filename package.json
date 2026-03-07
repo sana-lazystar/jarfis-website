@@ -14,7 +14,8 @@
     "check": "astro check",
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "i18n:check": "node scripts/check-i18n-sync.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.0.0",
