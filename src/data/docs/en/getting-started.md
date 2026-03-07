@@ -1,6 +1,6 @@
 ---
 title: "Quick Start"
-description: "Get JARFIS running in under 5 minutes. Install Claude Code, run /jarfis, and let 9 expert AI agents ship your first feature."
+description: "Install JARFIS and run your first AI-driven software development workflow with 9 specialized agents and structured phases."
 category: "getting-started"
 order: 1
 locale: "en"
@@ -10,135 +10,95 @@ draft: false
 
 # Quick Start
 
-Ship software with AI in under 5 minutes. One slash command — nine expert agents.
+Ship software with AI — one slash command, nine expert agents, structured phases with human gates.
 
 ## Prerequisites
 
 Before you begin, ensure you have:
 
-- **Claude Code** (Anthropic) — JARFIS runs natively inside Claude Code
+- **Claude Code** (Anthropic) — JARFIS runs natively inside Claude Code as a slash command workflow
 - A Claude account with API access
-- **Git** >= 2.x (for project initialization)
+- **Git** >= 2.x (for branch management in Phase 0)
+- The [JARFIS GitHub repository](https://github.com/sana-lazystar/jarfis) cloned or accessible
 
-> JARFIS is a Claude Code slash command workflow. No separate CLI installation required.
+## Installation
 
-## Step 1 — Install JARFIS
+JARFIS is installed via the `install.sh` script from the GitHub repository. Run the following in your terminal:
 
-JARFIS is distributed as a Claude Code slash command package. Inside Claude Code, run:
-
+```bash
+bash install.sh
 ```
-/jarfis:install
-```
 
-This sets up the JARFIS workflow in your current project and creates:
+This registers the JARFIS slash commands in your Claude Code environment. After installation, the following project structure is available:
 
 ```
 your-project/
 ├── .jarfis/
-│   ├── CLAUDE.md              # JARFIS context & learning memory
-│   ├── context.md             # Project-specific AI context
-│   ├── jarfis-learnings.md    # Continuous learning log
-│   └── works/                 # Generated artifacts per session
-├── .jarfis-state.json         # Phase state tracking
-└── CLAUDE.md                  # Root Claude Code context
+│   ├── context.md             # Project-specific context
+│   └── project-profile.md     # Project profile
+├── .jarfis-state.json         # Workflow state tracking
+└── ~/.claude/
+    └── jarfis-learnings.md    # Global learning file (cross-project)
 ```
 
-## Step 2 — Run Your First Workflow
+> **Note**: There is no `/jarfis:install` command. Installation is done exclusively through `bash install.sh`.
 
-In your project directory, open Claude Code and type:
+## Run Your First Workflow
 
-```
-/jarfis
-```
-
-JARFIS will prompt you for a feature or task description. For example:
+Open Claude Code in your project directory and start a workflow:
 
 ```
-/jarfis Build a user authentication system with JWT tokens
+/jarfis:work Build a user authentication system with JWT tokens
 ```
 
-## Step 3 — Watch 9 Agents Collaborate
+JARFIS will classify your request (Phase T — Triage) and then guide you through structured phases, each handled by specialized AI agents.
 
-JARFIS orchestrates 9 specialized AI agents through 8+ structured phases:
+## The 9 Phases
+
+Every workflow progresses through up to 9 phases. Phases may be skipped when not applicable (e.g., Phase 3 is skipped if no UI is needed):
 
 | Phase | Name | What Happens |
 |-------|------|--------------|
-| T | Kickoff | Requirements gathering, initial planning |
-| 0 | Foundation | Architecture decisions, tech stack |
-| 1 | Design | UX specs, API contracts |
-| 2 | Architecture | System design, data models |
-| 3 | Implementation | Backend + Frontend parallel development |
-| 4 | Integration | API wiring, component integration |
-| 4.5 | QA & Security | Testing, vulnerability review |
-| 5 | Deployment | Infrastructure, CI/CD, release notes |
-| 6 | Retrospective | Learnings capture, improvement planning |
+| T | Triage | Request classification into A/B/C types |
+| 0 | Pre-flight | Git sync, branch creation, learning files loaded |
+| 1 | Discovery | PO reverse-questions, Working Backwards, PRD, feasibility |
+| 2 | Architecture & Planning | Impact analysis, design, API spec, task breakdown, test strategy |
+| 3 | UX Design | Screen design (conditional — only when UI is needed) |
+| 4 | Implementation | BE/FE/DevOps parallel implementation |
+| 4.5 | Operational Readiness | Deployment strategy, rollback plan, ops readiness |
+| 5 | Review & QA | API contract verification, Tech Lead + QA + Security reviews |
+| 6 | Retrospective | Learning accumulation (global learnings + project context) |
 
-The 9 agents working on your behalf:
+## The 9 Agents
+
+JARFIS orchestrates 9 specialized agents, each activated only when relevant to the current phase and project requirements:
 
 | Agent | Role |
 |-------|------|
-| **PO** | Product Owner — requirements & user stories |
-| **Architect** | System design & technical decisions |
-| **Tech Lead** | Code standards, review, coordination |
-| **UX Designer** | User experience, wireframes, UX spec |
-| **BE Engineer** | Backend API implementation |
-| **FE Engineer** | Frontend UI implementation |
-| **DevOps/SRE** | Infrastructure, CI/CD, deployment |
-| **QA Engineer** | Testing strategy, test execution |
-| **Security Engineer** | Security review, vulnerability analysis |
+| **Product Owner (PO)** | Reverse-questions, Working Backwards, PRD authoring |
+| **Architect** | Feasibility evaluation, impact analysis, architecture design, ADR |
+| **Tech Lead** | API spec review, task breakdown, code review, retrospective |
+| **UX Designer** | Screen design, interaction design |
+| **Backend Engineer** | Backend implementation |
+| **Frontend Engineer** | Frontend implementation |
+| **DevOps/SRE** | Infrastructure and CI/CD implementation |
+| **QA Engineer** | Test strategy, QA verification |
+| **Security Engineer** | Pre-review security analysis, security review |
 
-## Step 4 — Review Artifacts
+## Human Gates
 
-Each completed phase produces structured artifacts in `.jarfis/works/{date}/{feature}/`:
+JARFIS includes 3 gates where your explicit approval is required before proceeding:
 
-```
-.jarfis/works/2026-03-05/feature/auth-system/
-├── press-release.md       # Feature announcement draft
-├── prd.md                 # Product requirements
-├── impact-analysis.md     # Technical impact assessment
-├── architecture.md        # System architecture
-├── api-spec.md            # API contracts
-├── tasks.md               # Development task breakdown
-├── test-strategy.md       # QA plan
-├── ux-spec.md             # UX specifications
-├── deployment-plan.md     # Release plan
-├── review.md              # Post-implementation review
-└── retrospective.md       # Learnings & improvements
-```
+| Gate | When | Your Options |
+|------|------|--------------|
+| Gate 1 | After Phase 1 (Discovery) | Approve / Revise / Abort |
+| Gate 2 | After Phase 2 & 3 (Architecture + UX) | Approve / Revise / Abort |
+| Gate 3 | After Phase 5 (Review & QA) | Approve / Revise & re-review / Abort / Revisit design |
 
-## Step 5 — Continue or Hold a Meeting
-
-To continue work in a later session, Claude Code's PreCompact hook automatically restores your JARFIS state from `.jarfis-state.json`.
-
-To hold a cross-agent coordination meeting:
-
-```
-/jarfis:meeting
-```
-
-This convenes relevant agents to resolve blockers, align on decisions, or plan the next phase.
+These gates ensure you stay in control of the direction at every major milestone.
 
 ## Next Steps
 
-- Read [Concepts Overview](/en/docs/concepts-overview) to understand the full JARFIS architecture
-- Read [Guides & Customization](/en/docs/guides-customization) for advanced workflow patterns
-- Read [API Reference](/en/docs/api-reference) for all slash commands and configuration options
-- Join [GitHub Discussions](https://github.com/sana-lazystar/jarfis/discussions) for community support
-
-## Troubleshooting
-
-**`/jarfis` command not found?**
-
-Ensure JARFIS is installed in your project. Re-run `/jarfis:install` from Claude Code.
-
-**Agent taking too long?**
-
-Complex features may require multiple phases. Use `/jarfis:meeting` to check status or accelerate decision-making between agents.
-
-**State lost between sessions?**
-
-Check `.jarfis-state.json` in your project root. The PreCompact hook reads this file on each Claude Code session start to restore context.
-
-**Artifacts not appearing?**
-
-Ensure `.jarfis/works/` directory exists and that Claude Code has write permissions in your project directory.
+- Read [Architecture & Concepts](/en/docs/concepts-overview) to understand the full JARFIS orchestration model
+- Explore the [API Reference](/en/docs/api-reference) for all available commands and configuration
+- Check [Guides & Customization](/en/docs/guides-customization) for advanced workflow patterns
