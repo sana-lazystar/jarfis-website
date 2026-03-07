@@ -20,7 +20,7 @@ const siteUrl = 'https://sana-lazystar.github.io';
 const canonicalUrl = `${siteUrl}${localePath(locale, pagePath)}`;
 const ogImageUrl = ogImage
   ? `${siteUrl}${base}${ogImage}`
-  : `${siteUrl}${base}/images/og/default.png`;
+  : `${siteUrl}${base}/images/og/og-default.png`;
 ---
 <title>{plainTitle} | JARFIS</title>
 <meta name="description" content={description} />
@@ -54,3 +54,4 @@ const ogImageUrl = ogImage
 <meta name="twitter:title" content={`${plainTitle} | JARFIS`} />
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={ogImageUrl} />
+<meta name="twitter:image:alt" content={`${plainTitle} | JARFIS`} />
