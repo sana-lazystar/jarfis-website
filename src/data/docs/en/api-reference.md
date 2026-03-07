@@ -1,6 +1,6 @@
 ---
 title: "API Reference"
-description: "Complete reference for JARFIS slash commands, configuration options, .jarfis-state.json schema, and artifact frontmatter specifications."
+description: "Complete reference for JARFIS slash commands, .jarfis-state.json schema, learning file structure, and phase specifications."
 category: "api-reference"
 order: 1
 locale: "en"
@@ -10,68 +10,42 @@ draft: false
 
 # API Reference
 
-Complete reference for all JARFIS commands, configuration files, and schemas.
+Complete reference for all JARFIS commands, state schema, and configuration files.
 
 ## Slash Commands
 
-### `/jarfis`
+### `/jarfis:work`
 
-Start a new JARFIS workflow for a feature or task.
+The primary command to start a JARFIS workflow. Initiates the full phase pipeline from Triage through Retrospective.
 
 **Syntax**:
 ```
-/jarfis [options] <description>
+/jarfis:work [description]
+/jarfis:work [description] --meeting [meeting-name]
 ```
 
-**Options**:
+**Parameters**:
 
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `--feature <name>` | string | auto-generated | Feature identifier for artifact storage |
-| `--skip-phases <list>` | string | none | Comma-separated phases to skip (e.g., `T,0`) |
-| `--start-phase <id>` | string | `T` | Phase to begin from (T, 0, 1, 2, 3, 4, 4.5, 5, 6) |
-| `--agents <list>` | string | all | Comma-separated agents to activate |
-| `--dry-run` | boolean | false | Plan phases without executing |
+| Parameter | Required | Description |
+|-----------|----------|-------------|
+| `description` | Yes | Natural language description of the feature or task to implement |
+| `--meeting` | No | Name of a previous `/jarfis:meeting` session to use as input context |
 
 **Examples**:
 
 ```
-/jarfis Build a user authentication system with OAuth2
+/jarfis:work Build a user authentication system with JWT tokens
 
-/jarfis --feature payment-v2 --start-phase 3 Implement Stripe checkout
+/jarfis:work Add Stripe subscription billing --meeting billing-kickoff
 
-/jarfis --skip-phases T,0,1 --agents be,fe,qa Fix broken cart calculation
+/jarfis:work Fix the broken cart calculation on checkout page
 ```
-
----
-
-### `/jarfis:install`
-
-Initialize JARFIS in the current project.
-
-**Syntax**:
-```
-/jarfis:install [--force]
-```
-
-**Creates**:
-- `.jarfis/CLAUDE.md` — JARFIS context file
-- `.jarfis/context.md` — Project context template
-- `.jarfis/jarfis-learnings.md` — Empty learnings log
-- `.jarfis/works/` — Artifact storage directory
-- `.jarfis-state.json` — State file (empty initial state)
-
-**Options**:
-
-| Option | Description |
-|--------|-------------|
-| `--force` | Overwrite existing installation |
 
 ---
 
 ### `/jarfis:meeting`
 
-Convene a structured multi-agent meeting.
+Initiates a structured kickoff meeting for planning and alignment. Meeting results are stored and can be referenced by subsequent `/jarfis:work` sessions.
 
 **Syntax**:
 ```
@@ -80,256 +54,200 @@ Convene a structured multi-agent meeting.
 
 **Parameters**:
 
-| Parameter | Description |
-|-----------|-------------|
-| `topic` | Optional. Description of the decision or conflict to resolve. |
+| Parameter | Required | Description |
+|-----------|----------|-------------|
+| `topic` | Yes | The subject or agenda for the meeting |
 
 **Examples**:
 
 ```
-/jarfis:meeting
+/jarfis:meeting Define the authentication strategy for the mobile app
 
-/jarfis:meeting decide on database schema for user permissions
-
-/jarfis:meeting resolve conflict: FE wants REST, BE prefers GraphQL
+/jarfis:meeting Decide on database schema for multi-tenant architecture
 ```
 
-**Output**: Decision summary appended to `review.md`. State updated in `.jarfis-state.json`.
+When a meeting is referenced via `--meeting`, the state file includes `meeting_ref` and `meeting_dir` fields linking to the meeting artifacts.
 
 ---
 
-### `/jarfis:status`
+### `/jarfis:project-init`
 
-Show current workflow state.
+Generates a project profile by analyzing the current codebase. Creates `.jarfis/project-profile.md` with information about the project structure, dependencies, and conventions.
 
 **Syntax**:
 ```
-/jarfis:status [--feature <name>]
+/jarfis:project-init
 ```
-
-**Output**: Displays active feature, current phase, completed phases, and generated artifacts.
 
 ---
 
-### `/jarfis:resume`
+### `/jarfis:project-update`
 
-Resume an interrupted workflow from the last saved phase.
+Updates an existing project profile to reflect changes in the codebase since the last initialization.
 
 **Syntax**:
 ```
-/jarfis:resume [--feature <name>]
+/jarfis:project-update
 ```
-
-Reads `.jarfis-state.json` and restores context for the active feature.
 
 ---
 
-### `/jarfis:retrospective`
+### `/jarfis:health`
 
-Run Phase 6 (Retrospective) for the current feature.
+Diagnoses zombie processes and other operational issues in the JARFIS environment.
 
 **Syntax**:
 ```
-/jarfis:retrospective [--feature <name>]
-```
-
-Generates `retrospective.md` and updates `jarfis-learnings.md`.
-
----
-
-## Configuration Files
-
-### `.jarfis/CLAUDE.md`
-
-Main JARFIS configuration file. Read by all agents at the start of every session.
-
-**Supported sections**:
-
-```markdown
-## Agent Customizations
-Per-agent instruction overrides (see Guides for syntax)
-
-## Phase Gates
-Human approval requirements before phase transitions
-
-## Artifact Templates
-Reference to custom template files
-
-## Global Rules
-Rules applied to all agents in all phases
+/jarfis:health
 ```
 
 ---
 
-### `.jarfis/context.md`
+### `/jarfis:upgrade`
 
-Project context injected into every agent prompt. Keep this accurate and up to date.
+Manages learning items — review, edit, and curate entries in the learning system.
 
-**Recommended sections**:
-
-```markdown
-## Tech Stack
-## Conventions
-## Business Domain
-## Integration Constraints
-## Team Preferences
+**Syntax**:
+```
+/jarfis:upgrade
 ```
 
 ---
 
-### `.jarfis/jarfis-learnings.md`
+### `/jarfis:version`
 
-Accumulated project knowledge from retrospectives and manual entries.
+Displays and manages JARFIS version information.
 
-**Format**:
-
-```markdown
-## YYYY-MM-DD — [Topic]
-
-### What worked
-### What to avoid
-### Patterns to reuse
+**Syntax**:
+```
+/jarfis:version
 ```
 
 ---
 
-## `.jarfis-state.json` Schema
+### `/jarfis:distill`
 
-```typescript
-interface JarfisState {
-  // Single-feature mode
-  feature?: string;
-  currentPhase?: Phase;
-  completedPhases?: Phase[];
-  agentContext?: Record<AgentId, string>;
-  artifactsGenerated?: ArtifactName[];
+Performs prompt distillation — optimizes and compresses prompt content for efficiency.
 
-  // Multi-feature mode
-  features?: Record<string, FeatureState>;
-  activeFeature?: string;
-}
+**Syntax**:
+```
+/jarfis:distill
+```
 
-type Phase = 'T' | '0' | '1' | '2' | '3' | '4' | '4.5' | '5' | '6';
+---
 
-type AgentId = 'po' | 'architect' | 'tech-lead' | 'ux' | 'be' | 'fe' | 'devops' | 'qa' | 'security';
+## State File: `.jarfis-state.json`
 
-type ArtifactName =
-  | 'press-release.md'
-  | 'prd.md'
-  | 'impact-analysis.md'
-  | 'architecture.md'
-  | 'api-spec.md'
-  | 'tasks.md'
-  | 'test-strategy.md'
-  | 'ux-spec.md'
-  | 'deployment-plan.md'
-  | 'review.md'
-  | 'retrospective.md';
+The state file tracks the current workflow progress. Located at the project root.
 
-interface FeatureState {
-  currentPhase: Phase;
-  completedPhases: Phase[];
-  agentContext: Record<AgentId, string>;
-  artifactsGenerated: ArtifactName[];
+### Schema
+
+```json
+{
+  "work_name": "string",
+  "docs_dir": "string (path to artifact directory)",
+  "branch": "string (Git branch name)",
+  "base_branch": "string (base branch for merge)",
+  "current_phase": "number | \"done\"",
+  "required_roles": {
+    "backend": "boolean",
+    "frontend": "boolean",
+    "ux": "boolean",
+    "devops": "boolean",
+    "security": "boolean"
+  },
+  "api_spec_required": "boolean",
+  "workspace": {
+    "type": "\"monorepo\" | \"multi-project\"",
+    "projects": ["string (project paths)"]
+  },
+  "phases": {
+    "T": { "status": "pending | in_progress | completed | skipped" },
+    "0": { "status": "..." },
+    "1": { "status": "..." },
+    "2": { "status": "..." },
+    "3": { "status": "..." },
+    "4": { "status": "..." },
+    "4.5": { "status": "..." },
+    "5": { "status": "..." },
+    "6": { "status": "..." }
+  },
+  "last_checkpoint": {
+    "timestamp": "ISO 8601 string",
+    "phase": "number",
+    "summary": "string"
+  },
+  "meeting_ref": "string (optional, meeting name)",
+  "meeting_dir": "string (optional, path to meeting artifacts)"
 }
 ```
 
+### Field Reference
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `work_name` | string | Identifier for the current workflow |
+| `docs_dir` | string | Path where artifacts are stored |
+| `branch` | string | Git branch created for this workflow |
+| `base_branch` | string | Branch to merge back into |
+| `current_phase` | number or `"done"` | Active phase number |
+| `required_roles` | object | Boolean flags for which agent roles are active |
+| `api_spec_required` | boolean | Whether API specification document is needed |
+| `workspace` | object | Project structure metadata |
+| `phases` | object | Per-phase status (pending / in_progress / completed / skipped) |
+| `last_checkpoint` | object | Timestamp and summary of last saved progress |
+| `meeting_ref` | string | Reference to a linked meeting (when `--meeting` was used) |
+| `meeting_dir` | string | Path to the linked meeting's artifacts |
+
 ---
 
-## Artifact Frontmatter
+## Learning Files
 
-Each artifact file in `.jarfis/works/` should include a YAML frontmatter block for proper indexing.
+### Global Learnings: `~/.claude/jarfis-learnings.md`
 
-### `tasks.md` Frontmatter
+Located in the user's home directory. Shared across all projects. Contains two main sections:
 
-```yaml
----
-document_type: tasks
-feature: auth-system
-phase: 3
-created: 2026-03-05
-last_updated: 2026-03-05
-agents: [tech-lead, be, fe]
-status: in-progress  # in-progress | complete | on-hold
----
-```
+- **Agent Hints** — Behavioral rules and guidelines accumulated from retrospectives
+- **Workflow Patterns** — Proven patterns for common scenarios
 
-### `prd.md` Frontmatter
+This file is loaded during Phase 0 (Pre-flight) of every workflow.
 
-```yaml
----
-document_type: prd
-feature: auth-system
-version: "1.0"
-status: approved  # draft | review | approved
-approver: po-agent
-created: 2026-03-05
----
-```
+### Project Context: `.jarfis/context.md`
 
-### `architecture.md` Frontmatter
+Project-specific context injected into agent prompts. Contains tech stack details, conventions, domain knowledge, and integration constraints.
 
-```yaml
----
-document_type: architecture
-feature: auth-system
-version: "1.2"
-status: final  # draft | review | final
-adrs:
-  - ADR-001: JWT over session cookies
-  - ADR-002: PostgreSQL for user data
-created: 2026-03-05
----
-```
+### Project Profile: `.jarfis/project-profile.md`
+
+Auto-generated by `/jarfis:project-init`. Describes the project's structure, dependencies, build tools, and configuration. Updated via `/jarfis:project-update`.
 
 ---
 
 ## Phase Reference
 
-### Phase IDs and Descriptions
+| Phase | Name | Description |
+|-------|------|-------------|
+| T | Triage | Request classification (A/B/C type determination) |
+| 0 | Pre-flight | Git synchronization, branch creation, learning file loading |
+| 1 | Discovery | PO reverse-questions, Working Backwards, PRD, feasibility assessment |
+| 2 | Architecture & Planning | Impact analysis, system design, API spec (conditional), task breakdown, test strategy |
+| 3 | UX Design | Screen design, interaction design (conditional: only when UI is needed) |
+| 4 | Implementation | BE/FE/DevOps parallel implementation (only parts with tasks) |
+| 4.5 | Operational Readiness | Deployment strategy, rollback plan, operational readiness check |
+| 5 | Review & QA | API contract verification, Tech Lead + QA + Security parallel reviews |
+| 6 | Retrospective | Learning accumulation (global learnings + project context) |
 
-| ID | Name | Description |
-|----|------|-------------|
-| `T` | Kickoff | Requirements gathering, press-release, initial PRD |
-| `0` | Foundation | Impact analysis, tech decisions, risk assessment |
-| `1` | Design | UX spec, API contract skeleton |
-| `2` | Architecture | Full system design, data models, service boundaries |
-| `3` | Implementation | Parallel BE + FE development |
-| `4` | Integration | API wiring, end-to-end integration |
-| `4.5` | QA & Security | Test execution, security audit |
-| `5` | Deployment | Infrastructure, CI/CD, release |
-| `6` | Retrospective | Learnings capture, retrospective |
+## Gate Reference
 
-### Phase Agent Matrix
-
-| Phase | PO | Arch | TL | UX | BE | FE | DevOps | QA | Sec |
-|-------|:--:|:----:|:--:|:--:|:--:|:--:|:------:|:--:|:---:|
-| T | ✓ | ✓ | | | | | | | |
-| 0 | | ✓ | ✓ | | | | | | |
-| 1 | | ✓ | | ✓ | ✓ | | | | |
-| 2 | | ✓ | ✓ | | ✓ | ✓ | | | |
-| 3 | | | ✓ | | ✓ | ✓ | | | |
-| 4 | | | ✓ | | ✓ | ✓ | | | |
-| 4.5 | | | | | | | | ✓ | ✓ |
-| 5 | | | ✓ | | | | ✓ | | |
-| 6 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-
----
-
-## Environment Variables
-
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `JARFIS_LOG_LEVEL` | Log verbosity: `debug`, `info`, `warn`, `error` | `info` |
-| `JARFIS_ARTIFACTS_DIR` | Override artifact storage path | `.jarfis/works` |
-| `JARFIS_STATE_FILE` | Override state file path | `.jarfis-state.json` |
-| `JARFIS_SKIP_GATES` | Skip all phase gate prompts | `false` |
+| Gate | Position | User Options |
+|------|----------|--------------|
+| Gate 1 | After Phase 1 | Approve / Revise / Abort |
+| Gate 2 | After Phases 2 & 3 | Approve / Revise / Abort |
+| Gate 3 | After Phase 5 | Approve / Revise & re-review / Abort / Revisit design (pathological pattern) |
 
 ---
 
 ## See Also
 
-- [Quick Start](/en/docs/getting-started) — Get running in 5 minutes
-- [Concepts Overview](/en/docs/concepts-overview) — Architecture deep dive
-- [Guides & Customization](/en/docs/guides-customization) — Advanced patterns
-- [GitHub](https://github.com/sana-lazystar/jarfis) — Source code and issues
+- [Quick Start](/en/docs/getting-started) — Install and run your first workflow
+- [Architecture & Concepts](/en/docs/concepts-overview) — Deep dive into the orchestration model
+- [Guides & Customization](/en/docs/guides-customization) — Advanced workflow patterns
