@@ -35,5 +35,10 @@
     "prettier": "^3.0.0",
     "prettier-plugin-astro": "^0.14.0",
     "typescript": "^5.0.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "svgo": ">=4.0.1"
+    }
   }
 }
