@@ -114,7 +114,65 @@
       "Every iteration makes the system smarter"
     ],
     "cta_heading": "Ready to see it in action?",
-    "footnote": "* Comparison based on general category patterns, not specific products."
+    "footnote": "* Comparison based on general category patterns, not specific products.",
+    "agents_section_title": "Meet the 9 Agents",
+    "agents_section_subtitle": "Each agent carries deep domain expertise and role-specific instructions. Together they cover the full product lifecycle — from the first user story to the final retrospective.",
+    "agents": {
+      "po": {
+        "name": "Product Owner",
+        "abbr": "PO",
+        "desc": "Clarifies requirements through reverse questioning. Writes Working Backwards documents and PRDs. Evaluates whether a feature is worth building before a single line of code is written.",
+        "tags": ["Requirements", "PRD", "Working Backwards"]
+      },
+      "architect": {
+        "name": "Architect",
+        "abbr": "ARCH",
+        "desc": "Assesses technical feasibility and long-term consequences. Produces the system architecture document, Impact Analysis, and Architecture Decision Records (ADRs) that the whole team relies on.",
+        "tags": ["Architecture", "ADR", "Impact Analysis"]
+      },
+      "tech_lead": {
+        "name": "Tech Lead",
+        "abbr": "TL",
+        "desc": "Reviews API specs, breaks down tasks into actionable units, conducts code reviews, owns the deployment strategy, and runs the retrospective that feeds lessons back into the system.",
+        "tags": ["Code Review", "Task Breakdown", "Retrospective"]
+      },
+      "ux": {
+        "name": "UX Designer",
+        "abbr": "UX",
+        "desc": "Defines information architecture, user flows, wireframes, and interaction patterns. Ensures the product is accessible and intuitive before implementation begins.",
+        "tags": ["Information Architecture", "Wireframes", "Accessibility"]
+      },
+      "backend": {
+        "name": "Backend Engineer",
+        "abbr": "BE",
+        "desc": "Implements server-side APIs, defines data models, and builds backend services following the architecture and API spec produced earlier in the workflow.",
+        "tags": ["API Implementation", "Data Models", "Backend Services"]
+      },
+      "frontend": {
+        "name": "Frontend Engineer",
+        "abbr": "FE",
+        "desc": "Builds UI components, manages client-side state, and integrates frontend with backend APIs — driven by the UX spec and task list generated upstream.",
+        "tags": ["UI Components", "State Management", "API Integration"]
+      },
+      "devops": {
+        "name": "DevOps / SRE",
+        "abbr": "OPS",
+        "desc": "Owns infrastructure configuration, CI/CD pipeline setup, automated deployment, and monitoring. Ensures every release is reproducible and observable.",
+        "tags": ["CI/CD", "Infrastructure", "Monitoring"]
+      },
+      "qa": {
+        "name": "QA Engineer",
+        "abbr": "QA",
+        "desc": "Designs the test strategy, builds the test pyramid, writes E2E scenarios, and verifies quality gates before any artifact is handed off to the next phase.",
+        "tags": ["Test Strategy", "Test Pyramid", "E2E Scenarios"]
+      },
+      "security": {
+        "name": "Security Engineer",
+        "abbr": "SEC",
+        "desc": "Reviews security posture before code ships. Covers OWASP Top 10, authentication and authorization models, and performs vulnerability analysis on every feature.",
+        "tags": ["OWASP Top 10", "Auth & AuthZ", "Vulnerability Analysis"]
+      }
+    }
   },
   "seo": {
     "home_description": "One slash command. Nine expert agents. JARFIS orchestrates your entire product workflow on Claude Code.",

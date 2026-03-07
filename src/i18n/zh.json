@@ -114,7 +114,65 @@
       "每次迭代都让系统更加智能"
     ],
     "cta_heading": "准备好查看实际效果了吗？",
-    "footnote": "* 基于一般类别模式的比较，而非针对特定产品。"
+    "footnote": "* 基于一般类别模式的比较，而非针对特定产品。",
+    "agents_section_title": "认识9位智能体",
+    "agents_section_subtitle": "每位智能体都拥有深厚的领域专业知识和角色专属指令。他们共同覆盖从第一个用户故事到最终复盘的完整产品生命周期。",
+    "agents": {
+      "po": {
+        "name": "Product Owner",
+        "abbr": "PO",
+        "desc": "通过反向提问明确需求。撰写Working Backwards文档和PRD，在编写任何代码之前评估功能的必要性。",
+        "tags": ["需求澄清", "PRD", "Working Backwards"]
+      },
+      "architect": {
+        "name": "Architect",
+        "abbr": "ARCH",
+        "desc": "评估技术可行性和长期影响。产出整个团队依赖的系统架构文档、影响分析和架构决策记录（ADR）。",
+        "tags": ["架构设计", "ADR", "影响分析"]
+      },
+      "tech_lead": {
+        "name": "Tech Lead",
+        "abbr": "TL",
+        "desc": "审查API规范，将任务分解为可执行单元，进行代码审查，负责部署策略，并主导将经验反馈到系统的复盘。",
+        "tags": ["代码审查", "任务分解", "复盘"]
+      },
+      "ux": {
+        "name": "UX Designer",
+        "abbr": "UX",
+        "desc": "定义信息架构、用户流程、线框图和交互模式。确保产品在实现之前具备可访问性和直观性。",
+        "tags": ["信息架构", "线框图", "可访问性"]
+      },
+      "backend": {
+        "name": "Backend Engineer",
+        "abbr": "BE",
+        "desc": "遵循工作流上游生成的架构和API规范，实现服务端API、定义数据模型并构建后端服务。",
+        "tags": ["API实现", "数据模型", "后端服务"]
+      },
+      "frontend": {
+        "name": "Frontend Engineer",
+        "abbr": "FE",
+        "desc": "基于UX规范和上游生成的任务清单，构建UI组件，管理客户端状态，集成前后端API。",
+        "tags": ["UI组件", "状态管理", "API集成"]
+      },
+      "devops": {
+        "name": "DevOps / SRE",
+        "abbr": "OPS",
+        "desc": "负责基础设施配置、CI/CD流水线搭建、自动化部署和监控。确保每次发布可复现且可观测。",
+        "tags": ["CI/CD", "基础设施", "监控"]
+      },
+      "qa": {
+        "name": "QA Engineer",
+        "abbr": "QA",
+        "desc": "制定测试策略，构建测试金字塔，编写E2E场景，在任何制品交付下一阶段前验证质量门控。",
+        "tags": ["测试策略", "测试金字塔", "E2E场景"]
+      },
+      "security": {
+        "name": "Security Engineer",
+        "abbr": "SEC",
+        "desc": "在代码发布前进行安全预审。覆盖OWASP Top 10、认证授权模型，并对每项功能进行漏洞分析。",
+        "tags": ["OWASP Top 10", "认证授权", "漏洞分析"]
+      }
+    }
   },
   "seo": {
     "home_description": "一个斜杠命令。9位专业智能体。JARFIS在Claude Code上编排您的整个产品工作流。",
