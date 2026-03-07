@@ -1,198 +1,260 @@
 ---
-title: "가이드 & 커스터마이징"
-description: "고급 JARFIS 패턴: 에이전트 프롬프트 커스터마이징, context.md 설정, 페이즈 건너뛰기, 미팅 진행, 학습 시스템 관리."
+title: "Guides & Customization"
+description: "JARFIS 고급 패턴: Meeting-to-Work 연결, role 설정, 프로젝트 프로파일, Gate 활용, 학습 시스템 관리."
 category: "guides"
 order: 1
 locale: "ko"
-translationOf: "en/guides-customization"
 lastUpdated: 2026-03-05
 draft: false
 ---
 
-# 가이드 & 커스터마이징
+# Guides & Customization
 
-실제 프로젝트에서 JARFIS를 최대한 활용하기 위한 고급 패턴.
+실제 프로젝트에서 JARFIS를 최대한 활용하기 위한 실용적인 패턴.
 
-## 프로젝트 컨텍스트 설정
+## Meeting-to-Work 연결
 
-가장 임팩트 있는 커스터마이징은 잘 작성된 `context.md`입니다. 모든 에이전트는 어떤 액션을 취하기 전에 이 파일을 읽습니다.
+JARFIS의 가장 강력한 패턴 중 하나는 킥오프 미팅을 워크 세션의 컨텍스트로 연결하는 것입니다. 계획 결정과 실제 구현 사이의 정렬이 보장됩니다.
 
-### `context.md` 구조
+### Step 1: 킥오프 미팅 진행
+
+```
+/jarfis:meeting Define the authentication strategy for the mobile app
+```
+
+미팅은 구조화된 결정 사항과 아티팩트를 미팅 디렉토리에 저장합니다.
+
+### Step 2: 미팅 참조와 함께 작업 시작
+
+```
+/jarfis:work Implement mobile auth with biometric login --meeting auth-strategy-meeting
+```
+
+`--meeting` 플래그는 미팅 출력물을 입력 컨텍스트로 연결합니다. 상태 파일에 `meeting_ref`와 `meeting_dir` 필드가 포함되고, Agent들은 워크플로우 전반에 걸쳐 미팅 결정 사항을 참조합니다.
+
+이 패턴은 구현 전에 여러 이해관계자의 정렬이 필요한 복잡한 기능에 특히 유용합니다.
+
+## `required_roles`로 Role 설정
+
+모든 프로젝트가 9개의 Agent를 전부 필요로 하지는 않습니다. JARFIS는 `.jarfis-state.json`의 `required_roles` 필드로 어떤 Agent를 활성화할지 제어합니다:
+
+```json
+{
+  "required_roles": {
+    "backend": true,
+    "frontend": true,
+    "ux": false,
+    "devops": false,
+    "security": true
+  }
+}
+```
+
+### 일반적인 Role 패턴
+
+**프론트엔드 전용 프로젝트** (예: 랜딩 페이지 리디자인):
+```json
+{
+  "required_roles": {
+    "backend": false,
+    "frontend": true,
+    "ux": true,
+    "devops": false,
+    "security": false
+  }
+}
+```
+Phase 3 (UX Design)이 활성화됩니다. Phase 4는 Frontend Engineer만 실행합니다. Backend와 DevOps Agent는 호출되지 않습니다.
+
+**보안 요건이 있는 풀스택 프로젝트**:
+```json
+{
+  "required_roles": {
+    "backend": true,
+    "frontend": true,
+    "ux": true,
+    "devops": true,
+    "security": true
+  }
+}
+```
+모든 Phase가 활성화됩니다. Phase 4에서 BE, FE, DevOps가 병렬로 실행됩니다. Phase 5에 Security Engineer 리뷰가 포함됩니다.
+
+**백엔드 API 전용 프로젝트**:
+```json
+{
+  "required_roles": {
+    "backend": true,
+    "frontend": false,
+    "ux": false,
+    "devops": true,
+    "security": true
+  }
+}
+```
+Phase 3 (UX Design)이 완전히 건너뜁니다. Phase 4에서 Backend와 DevOps만 실행됩니다.
+
+JARFIS는 Phase T (Triage)에서 이 role을 자동으로 결정하지만, 필요에 따라 조정할 수 있습니다.
+
+## 프로젝트 프로파일
+
+프로젝트 프로파일은 JARFIS가 코드베이스 구조와 컨벤션을 깊이 이해할 수 있게 해줍니다.
+
+### 프로파일 초기화
+
+```
+/jarfis:project-init
+```
+
+프로젝트를 분석하고 다음 내용이 담긴 `.jarfis/project-profile.md`를 생성합니다:
+- 저장소 구조와 조직
+- 의존성과 버전
+- 빌드 도구와 스크립트
+- 감지된 컨벤션과 패턴
+
+### 프로파일 최신 상태 유지
+
+프로젝트 구조가 크게 변경된 경우 (새 패키지 추가, 주요 의존성 업데이트 등):
+
+```
+/jarfis:project-update
+```
+
+수동으로 추가한 컨텍스트를 잃지 않으면서 프로파일을 갱신합니다.
+
+## Gate 활용
+
+Gate는 필수 사람 체크포인트입니다. 효과적으로 활용하는 방법을 소개합니다.
+
+### Gate 1 — Discovery 이후
+
+Gate 1에서 PRD와 타당성 평가를 검토합니다. 선택지:
+
+- **승인**: Architecture & Planning (Phase 2)으로 진행
+- **수정**: 구체적인 피드백 제공. PO와 Architect가 출력물을 수정하고 재제출
+- **중단**: 워크플로우 전체 취소
+
+**팁**: 방향을 바꾸기 가장 저렴한 지점입니다. Gate 1에서의 수정은 수 분이 걸리지만, Gate 3에서의 수정은 수 시간이 걸릴 수 있습니다.
+
+### Gate 2 — Architecture & UX 이후
+
+Gate 2에서 아키텍처 설계, 태스크 분해, (해당하는 경우) UX 명세를 검토합니다. 선택지:
+
+- **승인**: Implementation (Phase 4)으로 진행
+- **수정**: 아키텍처, 태스크 범위, UX 설계에 대한 변경 요청
+- **중단**: 워크플로우 취소
+
+**팁**: `tasks.md`를 꼼꼼히 확인하세요 — 여기서 구현될 내용이 정확히 정의됩니다. 여기서 누락된 태스크는 나중에 누락된 기능이 됩니다.
+
+### Gate 3 — Review & QA 이후
+
+Gate 3에서 완성된 구현, 테스트 결과, 보안 발견 사항을 검토합니다. 선택지:
+
+- **승인**: Retrospective (Phase 6)으로 진행하고 마무리
+- **수정 후 재검토**: 수정을 요청하고 또 다른 리뷰 사이클 실행
+- **중단**: 워크플로우 취소
+- **설계 재검토**: 리뷰 중 발견된 근본적인 설계 문제(병리적 패턴)에 대해 Phase 2로 복귀
+
+## 학습 시스템 관리
+
+JARFIS의 학습 시스템이 각 워크플로우를 이전보다 더 나아지게 만듭니다.
+
+### 전역 학습: `~/.claude/jarfis-learnings.md`
+
+홈 디렉토리에 위치하며 모든 프로젝트에서 공유됩니다. 다음 내용을 포함합니다:
+
+- **Agent Hints**: "새로운 미들웨어를 생성하기 전 기존 미들웨어를 먼저 확인하라" 또는 "unhandled rejection을 방지하기 위해 `mutateAsync`는 try-catch와 함께 사용하라" 같은 행동 규칙
+- **Workflow Patterns**: "monorepo 프로젝트는 패키지별로 영향 분석을 실행하라" 같은 검증된 접근 방식
+
+이 파일은 모든 워크플로우의 Phase 0에서 로드되고 Phase 6 (Retrospective)에서 업데이트됩니다.
+
+### 프로젝트 컨텍스트: `.jarfis/context.md`
+
+Agent들이 워크플로우 전반에 걸쳐 참조하는 프로젝트별 지식:
 
 ```markdown
-# 프로젝트 컨텍스트
+# Project Context
 
-## 기술 스택
-- 프론트엔드: Next.js 15 (App Router), TypeScript strict, Tailwind CSS 4
-- 백엔드: FastAPI (Python 3.12), PostgreSQL 16, Redis
-- 인프라: AWS ECS, Terraform, GitHub Actions
+## Tech Stack
+- Frontend: Next.js 15 (App Router), TypeScript strict, Tailwind CSS 4
+- Backend: FastAPI (Python 3.12), PostgreSQL 16, Redis
+- Infrastructure: AWS ECS, Terraform, GitHub Actions
 
-## 컨벤션
-- API 응답은 RFC 9457 Problem Details 형식 준수
-- 모든 데이터베이스 모델은 UUID 기본키 사용
-- 프론트엔드 컴포넌트는 아토믹 디자인 (atoms/molecules/organisms) 준수
-- 커밋 형식: conventional commits (feat/fix/chore/refactor)
+## Conventions
+- API responses follow RFC 9457 Problem Details format
+- All database models use UUID primary keys
+- Frontend components follow atomic design
+- Commit format: conventional commits (feat/fix/chore)
 
-## 비즈니스 도메인
-- 법률 문서 관리를 위한 SaaS B2B 플랫폼
-- 컴플라이언스 요구 사항: SOC 2 Type II, GDPR
-- 주요 사용자: 대기업 (500명 이상) 법무팀
+## Business Domain
+- SaaS B2B platform for legal document management
+- Compliance: SOC 2 Type II, GDPR
 
-## 통합 제약 사항
-- 기존 인증: Auth0 (변경 불가)
-- 결제: Stripe (웹훅 이미 설정됨)
-- 파일 스토리지: S3 presigned URL
+## Integration Constraints
+- Auth: Auth0 (cannot change)
+- Payment: Stripe (webhooks configured)
+- Storage: S3 with presigned URLs
 ```
 
-`context.md`가 구체적일수록 에이전트 산출물이 더 정확해집니다. JARFIS 워크플로우 시작 전 투자할 수 있는 가장 효과적인 30분입니다.
+`context.md`가 구체적일수록 Agent 출력이 더 정확해집니다. 워크플로우 시작 전 투자할 수 있는 가장 효과적인 단일 작업입니다.
 
-## 에이전트 동작 커스터마이징
+### `/jarfis:upgrade`로 학습 정리
 
-### 페이즈별 에이전트 오버라이드
-
-`.jarfis/CLAUDE.md`에서 에이전트별 지시 사항을 추가할 수 있습니다:
-
-```markdown
-## 에이전트 커스터마이징
-
-### PO 에이전트
-- 사용자 스토리는 항상 "나는 [역할]로서, [액션]을 원한다. 왜냐하면 [혜택]이기 때문이다" 형식으로 작성
-- 인수 기준은 테스트 가능해야 함 (Given/When/Then 형식)
-- 기술적 난이도가 아닌 비즈니스 가치 기준으로 우선순위 결정
-
-### Security Engineer
-- 모든 의존성을 먼저 내부 취약점 데이터베이스와 대조
-- 인증 관련 보안 노트에는 GDPR 조항 참조 필수
-- 모든 암호화 연산은 보안 정책에서 승인된 알고리즘 사용
-
-### DevOps/SRE
-- terraform-modules/의 Terraform 모듈 라이브러리 활용
-- 블루/그린 배포만 허용 가능한 배포 전략
-- 모든 모니터링 설정에 PagerDuty 통합 필수
-```
-
-### 페이즈 건너뛰기
-
-핫픽스나 소규모 변경의 경우 페이즈를 건너뛸 수 있습니다:
+시간이 지나면 `jarfis-learnings.md`에 오래되거나 중복된 항목이 쌓일 수 있습니다. upgrade 명령어로 검토하고 정리하세요:
 
 ```
-/jarfis --skip-phases T,0,1 --start-phase 3 로그인 리다이렉트 버그 수정
+/jarfis:upgrade
 ```
 
-주의하여 사용하세요 — 페이즈 건너뛰기는 해당 페이즈의 아티팩트가 생성되지 않음을 의미합니다.
+기존 학습 항목을 하나씩 검토하며 유지, 편집, 삭제를 선택할 수 있습니다.
 
-## 학습 시스템 활용
+## 컨텍스트 압축 이후 워크플로우 재개
 
-### 수동으로 학습 추가
+장기 실행 워크플로우에서 Claude Code 컨텍스트 압축이 발생할 수 있습니다. JARFIS는 이로부터 복구하도록 설계되어 있습니다:
 
-중요한 발견이 있을 때마다 `jarfis-learnings.md`에 추가하세요:
+1. `.jarfis-state.json` 파일이 정확한 Phase와 진행 상태를 유지합니다
+2. `last_checkpoint` 필드가 압축 전 진행 상황을 기록합니다
+3. 디스크의 학습 파일과 아티팩트는 컨텍스트 압축의 영향을 받지 않습니다
 
-```markdown
-## 2026-03-05 — 인증 통합
+컨텍스트 초기화 이후 재개하려면, 동일한 설명으로 `/jarfis:work`를 다시 실행하면 됩니다. JARFIS가 기존 `.jarfis-state.json`을 감지하고 처음부터 다시 시작하는 대신 마지막 체크포인트에서 재개합니다.
 
-### 잘 된 것
-- 첫 로그인 시 사용자 동기화에 Auth0 Management API 활용
-- JWT 검증 미들웨어를 공유 라이브러리로 추출하여 중복 제거
+## 실용 예시
 
-### 피해야 할 것
-- Auth0 레거시 `/oauth/token` 엔드포인트 절대 사용 금지 — PKCE 플로우만 사용
-- `useUser` 훅은 콜드 스타트 시 2초 지연 — 항상 스켈레톤 표시
-
-### 재사용할 패턴
-- `UserProfile` 컴포넌트의 에러 바운더리 + Suspense 패턴이 모든 인증 게이트 페이지에 적합
-```
-
-에이전트는 모든 관련 페이즈 시작 시 `jarfis-learnings.md`를 참조하므로, 프로젝트 1의 학습이 프로젝트 2에 직접 적용됩니다.
-
-### 학습 초기화
-
-프로젝트가 아카이브되어 학습 내용이 더 이상 적용되지 않는 경우:
-
-```bash
-# 초기화 전 학습 내용 아카이브
-cp .jarfis/jarfis-learnings.md .jarfis/archive/jarfis-learnings-2025.md
-echo "" > .jarfis/jarfis-learnings.md
-```
-
-## 미팅 진행
-
-### 미팅 소집 시기
-
-다음 상황에서 `/jarfis:meeting`을 사용하세요:
-- 두 에이전트가 서로 다른 접근 방식을 가질 때 (예: BE와 FE의 API 계약 충돌)
-- 중요한 아키텍처 결정에 다중 에이전트 입력이 필요할 때
-- 범위 명확화가 필요해 페이즈 산출물이 블로킹될 때
-- 페이즈 후 회고가 구조화된 토론을 통해 더 효과적일 때
-
-### 미팅 패턴
-
-**충돌 해결 미팅**:
-```
-/jarfis:meeting BE와 FE의 페이지네이션 API 설계 충돌 해결
-```
-
-**결정 미팅**:
-```
-/jarfis:meeting 상태 관리 방식 결정: Redux vs Zustand vs Jotai
-```
-
-**범위 명확화**:
-```
-/jarfis:meeting 범위 명확화: "사용자 프로필"에 조직 설정이 포함되는가?
-```
-
-미팅 결과는 `review.md`에 자동 기록되고 `.jarfis-state.json`이 업데이트됩니다.
-
-## 다중 기능 병렬 워크플로우
-
-여러 기능이 동시에 진행되는 대규모 프로젝트에서 JARFIS는 병렬 작업 트리를 지원합니다:
+### 예시 1: 프론트엔드 전용 기능
 
 ```
-.jarfis/works/
-├── 2026-03-05/
-│   ├── feature/auth-system/          # 기능 A: 페이즈 3
-│   └── feature/billing-integration/  # 기능 B: 페이즈 1
-└── 2026-03-01/
-    └── feature/dashboard-redesign/   # 기능 C: 완료
+/jarfis:work Redesign the dashboard with new chart components
 ```
 
-진행 중인 작업을 방해하지 않고 새 기능 시작:
+JARFIS가 `required_roles.backend`를 false로 설정하고 백엔드 관련 작업을 건너뜁니다. Phase 3 (UX Design)이 활성화되고, Phase 4에서는 Frontend Engineer만 호출됩니다.
+
+### 예시 2: 미팅 입력이 있는 풀스택
 
 ```
-/jarfis --feature billing-integration Stripe 구독 결제 추가
+/jarfis:meeting Plan the multi-tenant architecture migration
+/jarfis:work Implement multi-tenant data isolation --meeting tenant-architecture
 ```
 
-각 기능의 상태는 `.jarfis-state.json`에 독립적으로 추적됩니다.
+미팅 결정 사항(예: "PostgreSQL에서 row-level security 사용")이 워크 세션으로 전달되어, Architect와 Backend Engineer가 합의된 접근 방식을 따르도록 보장합니다.
 
-## 페이즈 게이트 리뷰
-
-페이즈 전환 전에 사람이 검토하는 체크포인트를 삽입할 수 있습니다:
-
-`.jarfis/CLAUDE.md`에서:
-```markdown
-## 페이즈 게이트
-
-- 페이즈 2 → 3: architecture.md에 대한 명시적인 사람의 승인 필요
-- 페이즈 4.5 → 5: 모든 HIGH/CRITICAL 발견에 대한 Security Engineer 사인오프 필요
-- 페이즈 5 → 6: 팀 리드의 배포 계획 검토 필요
-```
-
-게이트에 도달하면 JARFIS가 일시 중지하고 프롬프트를 표시합니다:
+### 예시 3: 최소 오버헤드의 빠른 수정
 
 ```
-페이즈 2 완료. 아키텍처 문서 검토 준비 완료.
-페이즈 3으로 진행하려면 'approve'를 입력하거나, 필요한 변경 사항을 설명하세요.
+/jarfis:work Fix the broken pagination on the orders list
 ```
 
-## 대규모 코드베이스를 위한 팁
+단순한 버그 수정의 경우, JARFIS의 Triage Phase (Phase T)가 이를 Type C(단순 수정)로 분류하고 Phase 파이프라인을 간소화하여 UX Design이나 Operational Readiness 같은 무거운 Phase를 건너뜁니다.
 
-1. **`context.md`를 최신 상태로 유지** — 오래된 컨텍스트는 에이전트가 기존 패턴과 충돌하는 코드를 생성하게 합니다
-2. **페이즈 건너뛰기를 신중하게 사용** — 건너뛴 아티팩트는 PreCompact 훅이 복원할 컨텍스트를 줄입니다
-3. **오래된 `.jarfis-state.json`을 정기적으로 아카이브** — 큰 상태 파일은 PreCompact 훅을 느리게 만듭니다
-4. **`jarfis-learnings.md`를 저장소에 커밋** — 이것은 AI 상태가 아닌 귀중한 프로젝트 지식입니다
-5. **승인 전 에이전트 아티팩트 검토** — JARFIS는 생성하고, 사람이 결정합니다
+### 예시 4: 문제 진단
+
+```
+/jarfis:health
+```
+
+워크플로우가 멈추거나 예상치 못한 동작을 보이면, health 명령어로 좀비 프로세스 및 기타 운영 문제를 진단합니다.
 
 ## 다음 단계
 
-- [API 레퍼런스](/ko/docs/api-reference) — 모든 `/jarfis` 커맨드와 설정 옵션
-- [아키텍처 & 개념](/ko/docs/concepts-overview) — 심층 아키텍처 분석
+- [API Reference](/ko/docs/api-reference) — 완전한 명령어 및 설정 참고서
+- [Architecture & Concepts](/ko/docs/concepts-overview) — 오케스트레이션 모델 심층 분석
+- [Quick Start](/ko/docs/getting-started) — 설치 및 첫 워크플로우
