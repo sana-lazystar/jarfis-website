@@ -4,8 +4,7 @@
     "features": "Features",
     "docs": "Documentation",
     "blog": "Blog",
-    "showcase": "Showcase",
-    "github": "GitHub"
+    "showcase": "Showcase"
   },
   "hero": {
     "tagline": "The Fantastic Way to<br/>Ship Software with AI",
@@ -194,9 +193,7 @@
     "prev_page": "Previous",
     "next_page": "Next",
     "on_this_page": "On this page",
-    "not_translated": "This page is not yet translated. Showing English version.",
-    "copied": "Copied!",
-    "copy_code": "Copy code"
+    "not_translated": "This page is not yet translated. Showing English version."
   },
   "blog": {
     "page_title": "Blog",
@@ -206,8 +203,6 @@
     "follow_github": "Follow on GitHub",
     "watch_repo": "Watch Repo",
     "read_more": "Read more",
-    "min_read": "min read",
-    "back_to_blog": "Back to Blog",
     "prev_post": "Previous",
     "next_post": "Next"
   },
@@ -219,19 +214,6 @@
     "submit": "Submit Your Project",
     "view_project": "View Project",
     "view_source": "View Source"
-  },
-  "common": {
-    "coming_soon": "Coming Soon",
-    "stay_tuned": "Stay tuned for updates!",
-    "built_with": "Built with JARFIS",
-    "read_more": "Read more",
-    "last_updated": "Last updated",
-    "back_to_top": "Back to top",
-    "loading": "Loading...",
-    "error": "An error occurred",
-    "not_found": "Page not found",
-    "home": "Go back home",
-    "external_link": "Opens in new tab"
   },
   "footer": {
     "license": "MIT License",
@@ -253,17 +235,7 @@
   },
   "a11y": {
     "skip_to_content": "Skip to main content",
-    "toggle_dark_mode": "Toggle dark mode",
     "toggle_menu": "Toggle navigation menu",
-    "switch_language": "Switch language",
-    "close_menu": "Close menu",
-    "open_menu": "Open menu",
-    "current_page": "Current page",
-    "external_link": "Opens in new tab"
-  },
-  "404": {
-    "title": "Page Not Found",
-    "description": "The page you're looking for doesn't exist or has been moved.",
-    "back_home": "Go back home"
+    "switch_language": "Switch language"
   }
 }
