@@ -1,139 +1,104 @@
 ---
 title: "クイックスタート"
-description: "5分でJARFISを始めましょう。Claude Codeで/jarfisを実行すれば、9人の専門AIエージェントが最初の機能を一緒に作ります。"
+description: "JARFISをインストールし、9つの専門Agentと構造化されたPhaseで最初のAI駆動ソフトウェア開発ワークフローを実行しましょう。"
 category: "getting-started"
 order: 1
 locale: "ja"
-translationOf: "en/getting-started"
 lastUpdated: 2026-03-05
 draft: false
 ---
 
 # クイックスタート
 
-1つのスラッシュコマンドで、9人の専門AIエージェントと共にソフトウェアを5分で開始しましょう。
+AIとともにソフトウェアを出荷しましょう — スラッシュコマンド1つ、9つの専門Agent、Human Gateで構成された構造化されたPhase。
 
 ## 前提条件
 
-始める前に、以下の準備ができているか確認してください：
+始める前に、以下の準備ができているか確認してください:
 
-- **Claude Code**（Anthropic）— JARFISはClaude Codeの中でネイティブに動作します
-- Claude APIアクセス権限を持つClaudeアカウント
-- **Git** >= 2.x（プロジェクト初期化用）
+- **Claude Code** (Anthropic) — JARFISはClaude Codeの中でスラッシュコマンドワークフローとしてネイティブに動作します
+- APIアクセス権限を持つClaudeアカウント
+- **Git** >= 2.x (Phase 0のブランチ管理に必要)
+- [JARFIS GitHubリポジトリ](https://github.com/sana-lazystar/jarfis)をクローンしたか、アクセス可能な状態
 
-> JARFISはClaude Codeスラッシュコマンドワークフローです。別途CLIのインストールは不要です。
+## インストール
 
-## Step 1 — JARFISのインストール
+JARFISはGitHubリポジトリの `install.sh` スクリプトでインストールします。ターミナルで以下のコマンドを実行してください:
 
-JARFISはClaude Codeスラッシュコマンドパッケージとして配布されています。Claude Code内で実行してください：
-
+```bash
+bash install.sh
 ```
-/jarfis:install
-```
 
-現在のプロジェクトにJARFISワークフローが設定され、以下のファイルが作成されます：
+このコマンドはClaude Code環境にJARFISスラッシュコマンドを登録します。インストール後、以下のプロジェクト構造が利用可能になります:
 
 ```
 your-project/
 ├── .jarfis/
-│   ├── CLAUDE.md              # JARFISコンテキスト＆学習メモリ
-│   ├── context.md             # プロジェクト固有AIコンテキスト
-│   ├── jarfis-learnings.md    # 継続的学習ログ
-│   └── works/                 # セッション別生成アーティファクト
-├── .jarfis-state.json         # フェーズ状態追跡
-└── CLAUDE.md                  # ルートClaude Codeコンテキスト
+│   ├── context.md             # プロジェクト固有コンテキスト
+│   └── project-profile.md     # プロジェクトプロファイル
+├── .jarfis-state.json         # ワークフロー状態追跡
+└── ~/.claude/
+    └── jarfis-learnings.md    # グローバル学習ファイル（プロジェクト横断）
 ```
 
-## Step 2 — 最初のワークフローを実行
+> **注意**: `/jarfis:install` コマンドは存在しません。インストールは必ず `bash install.sh` で行います。
 
-プロジェクトディレクトリでClaude Codeを開き、入力してください：
+## 最初のワークフローを実行する
 
-```
-/jarfis
-```
-
-JARFISが機能またはタスクの説明を求めます。例：
+Claude Codeでプロジェクトディレクトリを開き、ワークフローを開始します:
 
 ```
-/jarfis JWTトークンを使ったユーザー認証システムの構築
+/jarfis:work Build a user authentication system with JWT tokens
 ```
 
-## Step 3 — 9人のエージェントが協力する様子を確認
+JARFISはリクエストを分類(Phase T — Triage)した後、専門AIAgentが担当する構造化されたPhaseを順に案内します。
 
-JARFISは9人の専門AIエージェントを8以上の構造化されたフェーズを通じて調整します：
+## 9つのPhase
 
-| フェーズ | 名前 | 実行内容 |
-|---------|------|---------|
-| T | キックオフ | 要件収集、初期計画 |
-| 0 | 基盤整備 | アーキテクチャ決定、技術スタック選定 |
-| 1 | デザイン | UX仕様、API契約定義 |
-| 2 | アーキテクチャ | システム設計、データモデル |
-| 3 | 実装 | バックエンド＋フロントエンド並行開発 |
-| 4 | 統合 | API連携、コンポーネント統合 |
-| 4.5 | QA＆セキュリティ | テスト実行、脆弱性レビュー |
-| 5 | デプロイ | インフラ、CI/CD、リリースノート |
-| 6 | レトロスペクティブ | 学習記録、改善計画策定 |
+すべてのワークフローは最大9つのPhaseを経ます。該当しない場合はPhaseをスキップします(例: UIが不要な場合はPhase 3を省略):
 
-あなたの代わりに働く9人のエージェント：
+| Phase | 名前 | 実行内容 |
+|-------|------|---------|
+| T | Triage | リクエストをA/B/Cタイプに分類 |
+| 0 | Pre-flight | Git同期、ブランチ作成、学習ファイル読み込み |
+| 1 | Discovery | POの逆質問、Working Backwards、PRD、実現可能性評価 |
+| 2 | Architecture & Planning | 影響分析、設計、API spec、タスク分解、テスト戦略 |
+| 3 | UX Design | 画面設計（条件付き — UIが必要な場合のみ） |
+| 4 | Implementation | BE/FE/DevOps並行実装 |
+| 4.5 | Operational Readiness | デプロイ戦略、ロールバック計画、運用準備 |
+| 5 | Review & QA | API契約検証、Tech Lead + QA + Securityレビュー |
+| 6 | Retrospective | 学習蓄積（グローバルlearnings + プロジェクトcontext） |
 
-| エージェント | 役割 |
-|------------|------|
-| **PO（プロダクトオーナー）** | 要件定義、ユーザーストーリー作成 |
-| **Architect** | システム設計、技術的意思決定 |
-| **Tech Lead** | コード標準、レビュー、エージェント間調整 |
-| **UX Designer** | ユーザー体験、ワイヤーフレーム、UX仕様 |
-| **BE Engineer** | バックエンドAPI実装 |
-| **FE Engineer** | フロントエンドUI実装 |
-| **DevOps/SRE** | インフラ、CI/CD、デプロイ |
-| **QA Engineer** | テスト戦略、テスト実行 |
-| **Security Engineer** | セキュリティレビュー、脆弱性分析 |
+## 9つのAgent
 
-## Step 4 — アーティファクトの確認
+JARFISは9つの専門Agentを調整しており、各Agentは現在のPhaseとプロジェクト要件に関係する場合にのみ活性化されます:
 
-完了した各フェーズは`.jarfis/works/{日付}/{機能名}/`に構造化されたアーティファクトを生成します：
+| Agent | 役割 |
+|-------|------|
+| **Product Owner (PO)** | 逆質問、Working Backwards、PRD作成 |
+| **Architect** | 実現可能性評価、影響分析、アーキテクチャ設計、ADR |
+| **Tech Lead** | API spec検討、タスク分解、コードレビュー、Retrospective |
+| **UX Designer** | 画面設計、インタラクション設計 |
+| **Backend Engineer** | バックエンド実装 |
+| **Frontend Engineer** | フロントエンド実装 |
+| **DevOps/SRE** | インフラおよびCI/CD実装 |
+| **QA Engineer** | テスト戦略、QA検証 |
+| **Security Engineer** | 事前セキュリティ分析、セキュリティレビュー |
 
-```
-.jarfis/works/2026-03-05/feature/auth-system/
-├── press-release.md       # 機能発表文草案
-├── prd.md                 # プロダクト要件ドキュメント
-├── impact-analysis.md     # 技術影響分析
-├── architecture.md        # システムアーキテクチャ
-├── api-spec.md            # API契約書
-├── tasks.md               # 開発タスク分解
-├── test-strategy.md       # QAプラン
-├── ux-spec.md             # UX仕様書
-├── deployment-plan.md     # リリース計画
-├── review.md              # 実装後レビュー
-└── retrospective.md       # 学習＆改善点
-```
+## Human Gate
 
-## Step 5 — 作業の継続またはミーティングの開催
+JARFISは次のPhaseに進む前に明示的な承認が必要な3つのGateを含んでいます:
 
-以降のセッションで作業を継続する際、Claude CodeのPreCompactフックが`.jarfis-state.json`からJARFISの状態を自動的に復元します。
+| Gate | タイミング | 選択肢 |
+|------|-----------|--------|
+| Gate 1 | Phase 1 (Discovery) 後 | 承認 / 修正 / 中断 |
+| Gate 2 | Phase 2 & 3 (Architecture + UX) 後 | 承認 / 修正 / 中断 |
+| Gate 3 | Phase 5 (Review & QA) 後 | 承認 / 修正後再レビュー / 中断 / 設計再検討 |
 
-エージェント間の調整ミーティングを開催するには：
-
-```
-/jarfis:meeting
-```
-
-このコマンドで関連エージェントを集め、ブロッカーの解決、意思決定の調整、または次のフェーズの計画を行います。
+これらのGateにより、主要なマイルストーンごとに方向を自分でコントロールできます。
 
 ## 次のステップ
 
-- [アーキテクチャ＆概念](/ja/docs/concepts-overview) — JARFISの全体アーキテクチャを理解する
-- [GitHub Discussions](https://github.com/sana-lazystar/jarfis/discussions) — コミュニティサポート
-
-## トラブルシューティング
-
-**`/jarfis`コマンドが見つかりませんか？**
-
-プロジェクトにJARFISがインストールされているか確認してください。Claude Codeから`/jarfis:install`を再実行してください。
-
-**エージェントに時間がかかりすぎますか？**
-
-複雑な機能は複数のフェーズが必要な場合があります。`/jarfis:meeting`で状態を確認するか、エージェント間の意思決定を加速できます。
-
-**セッション間で状態が失われましたか？**
-
-プロジェクトルートの`.jarfis-state.json`を確認してください。PreCompactフックがこのファイルを読んでコンテキストを復元します。
+- [Architecture & Concepts](/ja/docs/concepts-overview) でJARFIS全体のオーケストレーションモデルを理解する
+- [API Reference](/ja/docs/api-reference) ですべてのコマンドと設定を確認する
+- [Guides & Customization](/ja/docs/guides-customization) で高度なワークフローパターンを参照する
