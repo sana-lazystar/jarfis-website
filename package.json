@@ -12,8 +12,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "lint": "eslint src --ext .js,.ts,.astro",
-    "lint:fix": "eslint src --ext .js,.ts,.astro --fix",
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix",
     "format": "prettier --write ."
   },
   "dependencies": {
@@ -28,6 +28,7 @@
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
     "eslint": "^9.0.0",
+    "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-astro": "^1.0.0",
     "eslint-plugin-jsx-a11y": "^6.0.0",
     "prettier": "^3.0.0",
