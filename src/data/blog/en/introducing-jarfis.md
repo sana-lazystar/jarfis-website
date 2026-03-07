@@ -1,18 +1,19 @@
 ---
 title: "Introducing JARFIS: 9 AI Agents, One Slash Command"
-description: "JARFIS orchestrates 9 specialized AI agents to deliver production-ready software — from requirements to deployment — with a single command."
+description: "JARFIS orchestrates 9 specialized AI agents to deliver production-ready software — from requirements to deployment — with a single Claude Code slash command."
 pubDate: 2026-03-05
 author: "JARFIS Team"
 tags: ["announcement", "architecture", "agents"]
 locale: "en"
 draft: false
+ogImage: "/images/og/og-blog.png"
 ---
 
 # Introducing JARFIS: 9 AI Agents, One Slash Command
 
 Software development teams spend enormous time coordinating work across disciplines — product, design, engineering, QA, DevOps. Every handoff introduces friction. Every context switch costs time. JARFIS is built on one idea: what if you could eliminate those handoffs entirely?
 
-JARFIS (Just Another Really Fantastic Intelligent System) is a 100% open-source AI agent framework. It orchestrates a team of 9 specialized agents that collaborate across every phase of the software development lifecycle — autonomously, on your own infrastructure, with no vendor lock-in.
+JARFIS (Just Another Really Fantastic Intelligent System) is a 100% open-source AI agent framework that runs natively inside **Claude Code** as a slash command workflow. It orchestrates a team of 9 specialized agents that collaborate across every phase of the software development lifecycle — with no external services, no vendor lock-in, and no separate CLI to install.
 
 ## The Problem with Single-Agent AI
 
@@ -26,76 +27,85 @@ JARFIS solves this with specialization. Each agent owns a specific domain and ha
 
 JARFIS ships with 9 purpose-built agents, each responsible for a distinct role:
 
-| Agent | Role |
-|-------|------|
-| **PO Agent** | Translates business requirements into structured tickets and acceptance criteria |
-| **UX Agent** | Produces wireframes, user flows, and interaction specifications |
-| **Design Agent** | Converts UX specs into a design system with tokens, components, and visual guidelines |
-| **Frontend Agent** | Implements UI components matching the design spec exactly |
-| **Backend Agent** | Builds API endpoints, data models, and business logic |
-| **DB Agent** | Designs schema, writes migrations, and optimizes queries |
-| **DevOps Agent** | Provisions infrastructure, configures CI/CD pipelines, and manages deployments |
-| **QA Agent** | Writes and executes tests, validates against acceptance criteria |
-| **Doc Agent** | Generates and maintains technical documentation |
+| Agent | Primary Responsibilities |
+|-------|--------------------------|
+| **Product Owner (PO)** | Conducts reverse-questions to clarify requirements, writes Working Backwards press release, authors PRD |
+| **Architect** | Evaluates feasibility, performs impact analysis, designs system architecture, writes ADRs |
+| **Tech Lead** | Reviews API specifications, breaks down tasks, conducts code reviews, leads retrospective |
+| **UX Designer** | Designs screens and interactions (activated only when UI work is required) |
+| **Backend Engineer** | Implements backend services, APIs, and data models |
+| **Frontend Engineer** | Implements UI components, frontend logic, and integration |
+| **DevOps/SRE** | Sets up infrastructure, CI/CD pipelines, and deployment configuration |
+| **QA Engineer** | Defines test strategy and executes QA verification |
+| **Security Engineer** | Performs pre-review security analysis and security review |
 
-These agents don't just run sequentially — they collaborate. The Frontend Agent reads the Design Agent's token system. The QA Agent tests against the PO Agent's acceptance criteria. The Doc Agent pulls context from every prior agent's output.
+These agents don't just run sequentially — they collaborate. The Frontend Engineer implements against the UX Designer's specifications. The QA Engineer tests against the PO's acceptance criteria. The Tech Lead reviews every engineer's output before it ships.
 
-## Phase-Based Workflow
+## The 9-Phase Pipeline
 
-JARFIS organizes work into Phases, each with a Gate that must pass before the next Phase begins. This structure gives you visibility and control without micromanaging individual agents.
+JARFIS organizes every workflow through 9 defined phases, each with specific inputs, outputs, and responsible agents. Three human Gates sit at critical checkpoints — no phase after a Gate proceeds without explicit user approval.
 
 ```
-Phase 0: Requirements     → Gate: Acceptance criteria approved
-Phase 1: Design           → Gate: Design system finalized
-Phase 2: Architecture     → Gate: Technical spec reviewed
-Phase 3: Implementation   → Gate: Code review passed
-Phase 4: QA               → Gate: All tests green
-Phase 5: Deployment       → Gate: Staging validated
+Phase T:   Triage               — classify request type
+Phase 0:   Pre-flight           — git sync, load learnings
+Phase 1:   Discovery            — PO + Architect
+           ↓ Gate 1: Approve / Revise / Abort
+Phase 2:   Architecture         — system design, task breakdown
+Phase 3:   UX Design            — screen & interaction specs (conditional)
+           ↓ Gate 2: Approve / Revise / Abort
+Phase 4:   Implementation       — parallel BE / FE / DevOps
+Phase 4.5: Operational Readiness — deployment & rollback plan
+Phase 5:   Review & QA          — parallel Tech Lead / QA / Security reviews
+           ↓ Gate 3: Approve / Revise & re-review / Abort
+Phase 6:   Retrospective        — learnings accumulated for future workflows
 ```
 
 Every Gate produces an artifact — a document, a test report, a signed-off spec — that feeds the next Phase. Nothing proceeds until the Gate clears. This means fewer surprises late in the cycle, and a clear audit trail of every decision.
 
 ## What This Looks Like in Practice
 
-Starting a new feature with JARFIS looks like this:
+JARFIS runs as a slash command inside Claude Code. Starting a new feature looks like this:
 
-```bash
-jarfis run --feature "User authentication with OAuth 2.0"
+```
+/jarfis:work Implement user authentication with OAuth 2.0
 ```
 
 JARFIS picks up from there:
 
-1. **PO Agent** breaks down the feature into tickets with acceptance criteria
-2. **UX Agent** generates user flows for the sign-in, callback, and error states
-3. **Design Agent** produces component specs for the auth UI
-4. **Frontend Agent** implements the components
-5. **Backend Agent** builds the OAuth callback handler and session management
-6. **DB Agent** creates the users and sessions schema
-7. **QA Agent** writes and runs integration tests
-8. **Doc Agent** documents the auth flow for your team
+1. **Phase T** classifies the request and determines which agents are needed
+2. **Phase 0** syncs Git state and loads project learnings
+3. **Phase 1** — the PO clarifies requirements, the Architect evaluates feasibility. You review and approve at Gate 1
+4. **Phase 2** — the Architect designs the system, the Tech Lead breaks down tasks
+5. **Phase 3** — if UI is involved, the UX Designer creates interaction specs. Gate 2 follows
+6. **Phase 4** — Backend Engineer, Frontend Engineer, and DevOps/SRE work in parallel
+7. **Phase 4.5** — deployment strategy and rollback plan are prepared
+8. **Phase 5** — Tech Lead, QA Engineer, and Security Engineer review in parallel. Gate 3 follows
+9. **Phase 6** — learnings are accumulated to improve the next workflow
 
-Each step produces structured output. Each Gate requires that output to meet defined quality criteria before the next agent runs. The result is production-ready code with tests, documentation, and a clean git history — not a prototype.
+The result is production-ready code with tests, documentation, and a clean git history — not a prototype.
 
-## Self-Hosted, Open Source, Your LLM
+## Claude Code Native, Open Source
 
-JARFIS connects to whatever LLM you choose — OpenAI, Anthropic, a locally running model via Ollama, or any OpenAI-compatible endpoint. Your code never leaves your infrastructure unless you choose to push it. There are no usage fees, no seat licenses, and no proprietary data pipelines.
-
-The framework itself is MIT licensed. Every agent prompt, every Gate criterion, every workflow configuration is inspectable and modifiable. If JARFIS does something you don't like, you can change it.
-
-## Getting Started
-
-JARFIS requires Node.js 20+ and a configured LLM endpoint.
+JARFIS runs entirely within your Claude Code environment. There is no separate server to run, no external API to call, and no account to create. Install it once with a single command:
 
 ```bash
-npm install -g @jarfis/cli
-jarfis init my-project
-cd my-project
-jarfis run
+bash install.sh
 ```
 
-The `jarfis init` command walks you through connecting your LLM, configuring your preferred agent set, and setting up your first project. The full setup takes under five minutes.
+From that point on, JARFIS is available as a slash command in any Claude Code session:
 
-For a complete walkthrough, see the [Getting Started guide](/en/docs/getting-started/quick-start).
+```
+/jarfis:work [description]
+/jarfis:meeting [topic]
+```
+
+The `meeting` command initiates a structured planning session. Meeting decisions can then be referenced in subsequent workflows:
+
+```
+/jarfis:work Implement auth system --meeting auth-strategy-meeting
+```
+
+The framework itself is MIT licensed. Every agent prompt, every Gate criterion, and every workflow configuration is inspectable and modifiable. If JARFIS does something you don't like, you can change it.
 
 ## What's Next
 
