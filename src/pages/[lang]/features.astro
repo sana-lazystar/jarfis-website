@@ -143,7 +143,7 @@ const agents: AgentData[] = agentKeys.map((key) => ({
       </div>
 
       <!-- Agent cards grid -->
-      <ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" role="list">
+      <ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {agents.map((agent) => (
           <li class="group relative flex flex-col rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-6 transition-shadow hover:shadow-md">
             <!-- Abbr badge -->
@@ -166,7 +166,7 @@ const agents: AgentData[] = agentKeys.map((key) => ({
 
             <!-- Responsibility tags -->
             {agent.tags.length > 0 && (
-              <ul class="flex flex-wrap gap-2" role="list" aria-label="Responsibilities">
+              <ul class="flex flex-wrap gap-2" aria-label="Responsibilities">
                 {agent.tags.map((tag) => (
                   <li class="px-2.5 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-xs text-slate-500 dark:text-slate-400">
                     {tag}
