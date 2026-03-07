@@ -44,15 +44,14 @@ const { locale } = Astro.props;
         </div>
 
         <!-- Tagline -->
-        {
-          /* eslint-disable-next-line jsx-a11y/heading-has-content -- set:html injects content dynamically; static analysis cannot detect it */
-        }
+        {/* eslint-disable jsx-a11y/heading-has-content */}
         <h1
           id="hero-heading"
           class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight text-slate-900 dark:text-white mb-4"
           style="font-size: clamp(2.5rem, 5vw, 4rem);"
           set:html={t(locale, 'hero.tagline')}
         />
+        {/* eslint-enable jsx-a11y/heading-has-content */}
 
         <!-- Subtitle -->
         <p class="text-lg font-medium text-slate-600 dark:text-slate-300 mb-3">
