@@ -23,6 +23,25 @@ const openSourceSvg = `<svg width="96" height="96" viewBox="0 0 24 24" fill="non
 const productionSvg = `<svg width="96" height="96" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`;
 
 const multilangSvg = `<svg width="96" height="96" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`;
+
+// 9 Agents data — key order matches the display order
+const agentKeys = ['po', 'architect', 'tech_lead', 'ux', 'backend', 'frontend', 'devops', 'qa', 'security'] as const;
+
+type AgentKey = (typeof agentKeys)[number];
+
+interface AgentData {
+  abbr: string;
+  name: string;
+  desc: string;
+  tags: string[];
+}
+
+const agents: AgentData[] = agentKeys.map((key) => ({
+  abbr: t(locale, `features.agents.${key}.abbr`),
+  name: t(locale, `features.agents.${key}.name`),
+  desc: t(locale, `features.agents.${key}.desc`),
+  tags: tArray(locale, `features.agents.${key}.tags`),
+}));
 ---
 <PageLayout
   title={t(locale, 'features.page_title')}
@@ -104,6 +123,60 @@ const multilangSvg = `<svg width="96" height="96" viewBox="0 0 24 24" fill="none
         reverse={true}
       />
 
+    </div>
+  </section>
+
+  <!-- 9 Agent Roster -->
+  <section class="py-20 lg:py-28 bg-slate-50 dark:bg-slate-800/20" aria-labelledby="agents-heading">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Section header -->
+      <div class="text-center mb-14">
+        <h2
+          id="agents-heading"
+          class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mb-4"
+        >
+          {t(locale, 'features.agents_section_title')}
+        </h2>
+        <p class="max-w-2xl mx-auto text-lg text-slate-500 dark:text-slate-400">
+          {t(locale, 'features.agents_section_subtitle')}
+        </p>
+      </div>
+
+      <!-- Agent cards grid -->
+      <ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" role="list">
+        {agents.map((agent) => (
+          <li class="group relative flex flex-col rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-6 transition-shadow hover:shadow-md">
+            <!-- Abbr badge -->
+            <div class="mb-4 flex items-center gap-3">
+              <span
+                class="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-cyan-50 dark:bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 font-bold text-sm shrink-0"
+                aria-hidden="true"
+              >
+                {agent.abbr}
+              </span>
+              <h3 class="font-semibold text-slate-900 dark:text-white leading-tight">
+                {agent.name}
+              </h3>
+            </div>
+
+            <!-- Description -->
+            <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed flex-1 mb-4">
+              {agent.desc}
+            </p>
+
+            <!-- Responsibility tags -->
+            {agent.tags.length > 0 && (
+              <ul class="flex flex-wrap gap-2" role="list" aria-label="Responsibilities">
+                {agent.tags.map((tag) => (
+                  <li class="px-2.5 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-xs text-slate-500 dark:text-slate-400">
+                    {tag}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+        ))}
+      </ul>
     </div>
   </section>
 
