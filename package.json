@@ -12,9 +12,10 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "lint": "eslint src --ext .js,.ts,.astro",
-    "lint:fix": "eslint src --ext .js,.ts,.astro --fix",
-    "format": "prettier --write ."
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix",
+    "format": "prettier --write .",
+    "i18n:check": "node scripts/check-i18n-sync.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.0.0",
@@ -28,10 +29,16 @@
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
     "eslint": "^9.0.0",
+    "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-astro": "^1.0.0",
     "eslint-plugin-jsx-a11y": "^6.0.0",
     "prettier": "^3.0.0",
     "prettier-plugin-astro": "^0.14.0",
     "typescript": "^5.0.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "svgo": ">=4.0.1"
+    }
   }
 }

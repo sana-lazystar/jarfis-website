@@ -1,219 +1,253 @@
 ---
-title: "API 레퍼런스"
-description: "JARFIS 슬래시 커맨드, 설정 옵션, .jarfis-state.json 스키마, 아티팩트 프론트매터 명세 완전 참고서."
+title: "API Reference"
+description: "JARFIS 슬래시 명령어, .jarfis-state.json 스키마, 학습 파일 구조, Phase 명세 완전 참고서."
 category: "api-reference"
 order: 1
 locale: "ko"
-translationOf: "en/api-reference"
 lastUpdated: 2026-03-05
 draft: false
 ---
 
-# API 레퍼런스
+# API Reference
 
-모든 JARFIS 커맨드, 설정 파일, 스키마에 대한 완전한 참고서.
+모든 JARFIS 명령어, 상태 스키마, 설정 파일에 대한 완전한 참고서.
 
-## 슬래시 커맨드
+## 슬래시 명령어
 
-### `/jarfis`
+### `/jarfis:work`
 
-기능 또는 태스크에 대한 새 JARFIS 워크플로우를 시작합니다.
+JARFIS 워크플로우를 시작하는 기본 명령어입니다. Triage부터 Retrospective까지 전체 Phase 파이프라인을 실행합니다.
 
 **구문**:
 ```
-/jarfis [옵션] <설명>
+/jarfis:work [description]
+/jarfis:work [description] --meeting [meeting-name]
 ```
 
-**옵션**:
+**파라미터**:
 
-| 옵션 | 타입 | 기본값 | 설명 |
-|------|------|--------|------|
-| `--feature <이름>` | string | 자동 생성 | 아티팩트 저장을 위한 기능 식별자 |
-| `--skip-phases <목록>` | string | 없음 | 건너뛸 페이즈 목록 (예: `T,0`) |
-| `--start-phase <ID>` | string | `T` | 시작할 페이즈 (T, 0, 1, 2, 3, 4, 4.5, 5, 6) |
-| `--agents <목록>` | string | 전체 | 활성화할 에이전트 목록 |
-| `--dry-run` | boolean | false | 실행 없이 페이즈만 계획 |
+| 파라미터 | 필수 | 설명 |
+|---------|------|------|
+| `description` | 예 | 구현할 기능 또는 태스크에 대한 자연어 설명 |
+| `--meeting` | 아니오 | 입력 컨텍스트로 사용할 이전 `/jarfis:meeting` 세션 이름 |
 
 **예시**:
 
 ```
-/jarfis OAuth2를 사용한 사용자 인증 시스템 구축
+/jarfis:work Build a user authentication system with JWT tokens
 
-/jarfis --feature payment-v2 --start-phase 3 Stripe 체크아웃 구현
+/jarfis:work Add Stripe subscription billing --meeting billing-kickoff
 
-/jarfis --skip-phases T,0,1 --agents be,fe,qa 장바구니 계산 버그 수정
+/jarfis:work Fix the broken cart calculation on checkout page
 ```
-
----
-
-### `/jarfis:install`
-
-현재 프로젝트에 JARFIS를 초기화합니다.
-
-**구문**:
-```
-/jarfis:install [--force]
-```
-
-**생성 파일**:
-- `.jarfis/CLAUDE.md` — JARFIS 컨텍스트 파일
-- `.jarfis/context.md` — 프로젝트 컨텍스트 템플릿
-- `.jarfis/jarfis-learnings.md` — 빈 학습 로그
-- `.jarfis/works/` — 아티팩트 저장 디렉토리
-- `.jarfis-state.json` — 상태 파일 (초기 빈 상태)
 
 ---
 
 ### `/jarfis:meeting`
 
-구조화된 다중 에이전트 미팅을 소집합니다.
+계획 및 정렬을 위한 구조화된 킥오프 미팅을 시작합니다. 미팅 결과는 저장되어 이후 `/jarfis:work` 세션에서 참조할 수 있습니다.
 
 **구문**:
 ```
-/jarfis:meeting [주제]
+/jarfis:meeting [topic]
 ```
+
+**파라미터**:
+
+| 파라미터 | 필수 | 설명 |
+|---------|------|------|
+| `topic` | 예 | 미팅의 주제 또는 안건 |
 
 **예시**:
 
 ```
-/jarfis:meeting
+/jarfis:meeting Define the authentication strategy for the mobile app
 
-/jarfis:meeting 사용자 권한 데이터베이스 스키마 결정
-
-/jarfis:meeting 충돌 해결: FE는 REST를 원하고 BE는 GraphQL을 선호
+/jarfis:meeting Decide on database schema for multi-tenant architecture
 ```
 
-**출력**: `review.md`에 결정 요약이 추가됩니다. `.jarfis-state.json`이 업데이트됩니다.
+`--meeting`으로 미팅을 참조하면, 상태 파일에 미팅 아티팩트를 연결하는 `meeting_ref`와 `meeting_dir` 필드가 포함됩니다.
 
 ---
 
-### `/jarfis:status`
+### `/jarfis:project-init`
 
-현재 워크플로우 상태를 표시합니다.
+현재 코드베이스를 분석해 프로젝트 프로파일을 생성합니다. 프로젝트 구조, 의존성, 컨벤션 정보가 담긴 `.jarfis/project-profile.md`를 생성합니다.
 
 **구문**:
 ```
-/jarfis:status [--feature <이름>]
+/jarfis:project-init
 ```
 
 ---
 
-### `/jarfis:resume`
+### `/jarfis:project-update`
 
-마지막으로 저장된 페이즈에서 중단된 워크플로우를 재개합니다.
+마지막 초기화 이후 코드베이스 변경 사항을 반영해 기존 프로젝트 프로파일을 업데이트합니다.
 
 **구문**:
 ```
-/jarfis:resume [--feature <이름>]
+/jarfis:project-update
 ```
 
 ---
 
-### `/jarfis:retrospective`
+### `/jarfis:health`
 
-현재 기능에 대한 페이즈 6(회고)을 실행합니다.
+JARFIS 환경의 좀비 프로세스 및 기타 운영 문제를 진단합니다.
 
 **구문**:
 ```
-/jarfis:retrospective [--feature <이름>]
-```
-
-`retrospective.md`를 생성하고 `jarfis-learnings.md`를 업데이트합니다.
-
----
-
-## 설정 파일
-
-### `.jarfis/CLAUDE.md`
-
-메인 JARFIS 설정 파일. 모든 에이전트가 모든 세션 시작 시 읽습니다.
-
-**지원 섹션**:
-
-```markdown
-## 에이전트 커스터마이징
-에이전트별 지시 오버라이드
-
-## 페이즈 게이트
-페이즈 전환 전 사람 승인 요구 사항
-
-## 아티팩트 템플릿
-커스텀 템플릿 파일 참조
-
-## 전역 규칙
-모든 페이즈의 모든 에이전트에 적용되는 규칙
+/jarfis:health
 ```
 
 ---
 
-### `.jarfis/context.md`
+### `/jarfis:upgrade`
 
-모든 에이전트 프롬프트에 주입되는 프로젝트 컨텍스트. 최신 상태를 유지하세요.
+학습 항목을 관리합니다 — 학습 시스템의 항목을 검토, 편집, 정리합니다.
 
-**권장 섹션**:
-
-```markdown
-## 기술 스택
-## 컨벤션
-## 비즈니스 도메인
-## 통합 제약 사항
-## 팀 선호도
+**구문**:
+```
+/jarfis:upgrade
 ```
 
 ---
 
-## `.jarfis-state.json` 스키마
+### `/jarfis:version`
 
-```typescript
-interface JarfisState {
-  // 단일 기능 모드
-  feature?: string;
-  currentPhase?: Phase;
-  completedPhases?: Phase[];
-  agentContext?: Record<AgentId, string>;
-  artifactsGenerated?: ArtifactName[];
+JARFIS 버전 정보를 표시하고 관리합니다.
 
-  // 다중 기능 모드
-  features?: Record<string, FeatureState>;
-  activeFeature?: string;
+**구문**:
+```
+/jarfis:version
+```
+
+---
+
+### `/jarfis:distill`
+
+프롬프트 증류를 수행합니다 — 프롬프트 내용을 최적화하고 압축합니다.
+
+**구문**:
+```
+/jarfis:distill
+```
+
+---
+
+## 상태 파일: `.jarfis-state.json`
+
+상태 파일은 현재 워크플로우 진행 상황을 추적합니다. 프로젝트 루트에 위치합니다.
+
+### 스키마
+
+```json
+{
+  "work_name": "string",
+  "docs_dir": "string (path to artifact directory)",
+  "branch": "string (Git branch name)",
+  "base_branch": "string (base branch for merge)",
+  "current_phase": "number | \"done\"",
+  "required_roles": {
+    "backend": "boolean",
+    "frontend": "boolean",
+    "ux": "boolean",
+    "devops": "boolean",
+    "security": "boolean"
+  },
+  "api_spec_required": "boolean",
+  "workspace": {
+    "type": "\"monorepo\" | \"multi-project\"",
+    "projects": ["string (project paths)"]
+  },
+  "phases": {
+    "T": { "status": "pending | in_progress | completed | skipped" },
+    "0": { "status": "..." },
+    "1": { "status": "..." },
+    "2": { "status": "..." },
+    "3": { "status": "..." },
+    "4": { "status": "..." },
+    "4.5": { "status": "..." },
+    "5": { "status": "..." },
+    "6": { "status": "..." }
+  },
+  "last_checkpoint": {
+    "timestamp": "ISO 8601 string",
+    "phase": "number",
+    "summary": "string"
+  },
+  "meeting_ref": "string (optional, meeting name)",
+  "meeting_dir": "string (optional, path to meeting artifacts)"
 }
-
-type Phase = 'T' | '0' | '1' | '2' | '3' | '4' | '4.5' | '5' | '6';
-
-type AgentId =
-  | 'po' | 'architect' | 'tech-lead' | 'ux'
-  | 'be' | 'fe' | 'devops' | 'qa' | 'security';
-
-type ArtifactName =
-  | 'press-release.md' | 'prd.md' | 'impact-analysis.md'
-  | 'architecture.md' | 'api-spec.md' | 'tasks.md'
-  | 'test-strategy.md' | 'ux-spec.md' | 'deployment-plan.md'
-  | 'review.md' | 'retrospective.md';
 ```
 
+### 필드 참고
+
+| 필드 | 타입 | 설명 |
+|------|------|------|
+| `work_name` | string | 현재 워크플로우 식별자 |
+| `docs_dir` | string | 아티팩트가 저장되는 경로 |
+| `branch` | string | 이 워크플로우를 위해 생성된 Git 브랜치 |
+| `base_branch` | string | 병합 대상 브랜치 |
+| `current_phase` | number 또는 `"done"` | 현재 활성 Phase 번호 |
+| `required_roles` | object | 어떤 Agent 역할이 활성화되는지 제어하는 boolean 플래그 |
+| `api_spec_required` | boolean | API specification 문서 필요 여부 |
+| `workspace` | object | 프로젝트 구조 메타데이터 |
+| `phases` | object | Phase별 상태 (pending / in_progress / completed / skipped) |
+| `last_checkpoint` | object | 마지막으로 저장된 진행 지점의 타임스탬프와 요약 |
+| `meeting_ref` | string | 연결된 미팅 참조 (`--meeting` 사용 시) |
+| `meeting_dir` | string | 연결된 미팅 아티팩트 경로 |
+
 ---
 
-## 페이즈 레퍼런스
+## 학습 파일
 
-### 페이즈 ID 및 설명
+### 전역 학습: `~/.claude/jarfis-learnings.md`
 
-| ID | 이름 | 설명 |
-|----|------|------|
-| `T` | 킥오프 | 요구 사항 수집, press-release, 초기 PRD |
-| `0` | 기반 정비 | 영향 분석, 기술 결정, 위험 평가 |
-| `1` | 디자인 | UX 명세, API 계약 스켈레톤 |
-| `2` | 아키텍처 | 전체 시스템 설계, 데이터 모델 |
-| `3` | 구현 | 병렬 BE + FE 개발 |
-| `4` | 통합 | API 연동, 엔드투엔드 통합 |
-| `4.5` | QA & 보안 | 테스트 실행, 보안 감사 |
-| `5` | 배포 | 인프라, CI/CD, 릴리즈 |
-| `6` | 회고 | 학습 기록, 회고 |
+사용자 홈 디렉토리에 위치하며, 모든 프로젝트에서 공유됩니다. 두 가지 주요 섹션을 포함합니다:
+
+- **Agent Hints** — Retrospective에서 축적된 행동 규칙 및 가이드라인
+- **Workflow Patterns** — 일반적인 시나리오에 대한 검증된 패턴
+
+이 파일은 모든 워크플로우의 Phase 0 (Pre-flight)에서 로드됩니다.
+
+### 프로젝트 컨텍스트: `.jarfis/context.md`
+
+Agent 프롬프트에 주입되는 프로젝트별 컨텍스트. 기술 스택 세부 사항, 컨벤션, 도메인 지식, 통합 제약 사항을 포함합니다.
+
+### 프로젝트 프로파일: `.jarfis/project-profile.md`
+
+`/jarfis:project-init`으로 자동 생성됩니다. 프로젝트 구조, 의존성, 빌드 도구, 설정을 설명합니다. `/jarfis:project-update`로 갱신합니다.
 
 ---
 
-## 다음 단계
+## Phase 참고
 
-- [빠른 시작](/ko/docs/getting-started) — 5분 만에 시작하기
-- [아키텍처 & 개념](/ko/docs/concepts-overview) — 아키텍처 심층 분석
-- [가이드 & 커스터마이징](/ko/docs/guides-customization) — 고급 패턴
-- [GitHub](https://github.com/sana-lazystar/jarfis) — 소스 코드 및 이슈
+| Phase | 이름 | 설명 |
+|-------|------|------|
+| T | Triage | 요청 분류 (A/B/C 유형 결정) |
+| 0 | Pre-flight | Git 동기화, 브랜치 생성, 학습 파일 로드 |
+| 1 | Discovery | PO 역질문, Working Backwards, PRD, 타당성 평가 |
+| 2 | Architecture & Planning | 영향 분석, 시스템 설계, API spec (조건부), 태스크 분해, 테스트 전략 |
+| 3 | UX Design | 화면 설계, 인터랙션 설계 (조건부: UI가 필요한 경우에만) |
+| 4 | Implementation | BE/FE/DevOps 병렬 구현 (태스크가 있는 부분만) |
+| 4.5 | Operational Readiness | 배포 전략, 롤백 계획, 운영 준비 점검 |
+| 5 | Review & QA | API 계약 검증, Tech Lead + QA + Security 병렬 리뷰 |
+| 6 | Retrospective | 학습 축적 (전역 learnings + 프로젝트 context) |
+
+## Gate 참고
+
+| Gate | 위치 | 사용자 선택지 |
+|------|------|--------------|
+| Gate 1 | Phase 1 이후 | 승인 / 수정 / 중단 |
+| Gate 2 | Phase 2 & 3 이후 | 승인 / 수정 / 중단 |
+| Gate 3 | Phase 5 이후 | 승인 / 수정 후 재검토 / 중단 / 설계 재검토 (근본 설계 문제 시) |
+
+---
+
+## 관련 문서
+
+- [Quick Start](/ko/docs/getting-started) — 설치 및 첫 워크플로우 실행
+- [Architecture & Concepts](/ko/docs/concepts-overview) — 오케스트레이션 모델 심층 분석
+- [Guides & Customization](/ko/docs/guides-customization) — 고급 워크플로우 패턴

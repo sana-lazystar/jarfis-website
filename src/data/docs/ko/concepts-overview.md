@@ -1,199 +1,217 @@
 ---
-title: "아키텍처 & 개념"
-description: "JARFIS 핵심 아키텍처: 9명의 전문 에이전트, 8개 이상의 구조화된 페이즈, 11개 아티팩트, PreCompact 상태 시스템을 이해하세요."
+title: "Architecture & Concepts"
+description: "JARFIS 핵심 아키텍처를 이해하세요: 오케스트레이션 모델, 9개 Agent, 9단계 Phase 파이프라인, 3개 Human Gate, 상태 관리, 학습 시스템."
 category: "concepts"
 order: 1
 locale: "ko"
-translationOf: "en/concepts-overview"
 lastUpdated: 2026-03-05
 draft: false
 ---
 
-# 아키텍처 & 개념
+# Architecture & Concepts
 
-JARFIS가 9명의 전문 AI 에이전트를 조율해 프로덕션 소프트웨어를 배포하는 방법.
+JARFIS가 9개의 전문 AI Agent를 구조화된 Phase 파이프라인으로 조율해 프로덕션 소프트웨어를 출시하는 방법.
 
 ## 오케스트레이션 모델
 
-JARFIS는 **Claude Code를 오케스트레이터**로 활용합니다. 단일 에이전트 시스템과 달리, JARFIS는 9명의 전문 에이전트를 — 각기 고유한 역할을 가진 — 구조화된 페이즈 파이프라인을 통해 조율합니다:
+JARFIS는 **Claude Code** 안에서 슬래시 명령어 워크플로우로 동작합니다. 별도 CLI 도구나 외부 서비스가 아니라, Claude Code 환경을 활용해 9개의 전문 Agent를 Phase 파이프라인으로 조율합니다:
 
 ```
-/jarfis 커맨드
-      │
-      ▼
-┌─────────────────────────────────────────────────────┐
-│              JARFIS 오케스트레이터                    │
-│  (페이즈 조율, 아티팩트 라우팅, 상태 관리)             │
-└─────────────────────────────────────────────────────┘
-      │
-      ├──► PO 에이전트          (요구 사항, 사용자 스토리)
-      ├──► Architect           (시스템 설계, ADR)
-      ├──► Tech Lead           (표준, 리뷰, 조율)
-      ├──► UX Designer         (와이어프레임, UX 명세)
-      ├──► BE Engineer         (백엔드 구현)
-      ├──► FE Engineer         (프론트엔드 구현)
-      ├──► DevOps/SRE          (인프라, CI/CD)
-      ├──► QA Engineer         (테스트, 품질 게이트)
-      └──► Security Engineer   (보안 검토, CVE 분석)
+/jarfis:work [description]
+      |
+      v
++---------------------------------------------------+
+|              JARFIS Orchestrator                   |
+|  (Phase pipeline, gate control, state management) |
++---------------------------------------------------+
+      |
+      |--- Phase T: Triage (classify request)
+      |--- Phase 0: Pre-flight (git sync, load learnings)
+      |--- Phase 1: Discovery (PO + Architect)
+      |       +-- Gate 1: User approval
+      |--- Phase 2: Architecture & Planning
+      |--- Phase 3: UX Design (conditional)
+      |       +-- Gate 2: User approval
+      |--- Phase 4: Implementation (parallel BE/FE/DevOps)
+      |--- Phase 4.5: Operational Readiness
+      |--- Phase 5: Review & QA (parallel reviews)
+      |       +-- Gate 3: User approval
+      +--- Phase 6: Retrospective
 ```
 
-## 9명의 에이전트 역할
+## 9개 Agent 역할
 
-| 에이전트 | 주요 책임 | 핵심 아티팩트 |
-|----------|-----------|--------------|
-| **Product Owner (PO)** | 요구 사항 정의, 사용자 스토리 작성, 백로그 우선순위 | `press-release.md`, `prd.md` |
-| **Architect** | 시스템 설계, 기술 결정, ADR 문서화 | `architecture.md`, `impact-analysis.md` |
-| **Tech Lead** | 코드 표준, PR 리뷰 기준, 에이전트 간 조율 | `tasks.md`, `review.md` |
-| **UX Designer** | 사용자 흐름, 와이어프레임, 컴포넌트 명세 | `ux-spec.md` |
-| **BE Engineer** | API 구현, 데이터 모델, 백엔드 서비스 | `api-spec.md`, 백엔드 코드 |
-| **FE Engineer** | UI 컴포넌트, 상태 관리, 프론트엔드 통합 | 프론트엔드 코드 |
-| **DevOps/SRE** | 인프라 코드, CI/CD 파이프라인, 배포 | `deployment-plan.md` |
-| **QA Engineer** | 테스트 전략, 테스트 케이스 작성, 품질 게이트 | `test-strategy.md` |
-| **Security Engineer** | 위협 모델링, 취약점 검토, 컴플라이언스 | `review.md` 내 보안 리뷰 |
+각 Agent는 명확하게 정의된 책임 범위를 가집니다. Agent는 역할이 필요한 경우에만 활성화되며, `.jarfis-state.json`의 `required_roles` 필드로 제어됩니다:
 
-## 페이즈 파이프라인 (8개 이상)
+| Agent | 주요 책임 |
+|-------|-----------|
+| **Product Owner (PO)** | 요구사항 명확화를 위한 역질문, Working Backwards 보도자료 작성, PRD 작성 |
+| **Architect** | 타당성 평가, 영향 분석, 시스템 아키텍처 설계, ADR 작성 |
+| **Tech Lead** | API spec 검토, 태스크 분해, 코드 리뷰, Retrospective 주도 |
+| **UX Designer** | 화면 및 인터랙션 설계 (`required_roles.ux`가 true인 경우에만 활성화) |
+| **Backend Engineer** | 백엔드 서비스, API, 데이터 모델 구현 |
+| **Frontend Engineer** | UI 컴포넌트, 프론트엔드 로직, 통합 구현 |
+| **DevOps/SRE** | 인프라, CI/CD 파이프라인, 배포 설정 구성 |
+| **QA Engineer** | 테스트 전략 정의, QA 검증 수행 |
+| **Security Engineer** | 사전 보안 분석 및 보안 리뷰 수행 |
 
-JARFIS는 모든 기능 개발을 정의된 페이즈를 통해 구조화합니다. 각 페이즈는 특정 에이전트, 입력값, 필수 출력물을 가집니다:
+## 9단계 Phase 파이프라인
 
-### 페이즈 T — 킥오프
-**목적**: 기능 범위를 확립하고 요구 사항을 수집합니다.
-**에이전트**: PO, Architect
-**산출물**: 초기 `press-release.md`, 초안 `prd.md`
+JARFIS는 모든 워크플로우를 9개의 정의된 Phase로 구조화합니다. 각 Phase는 특정 입력값, 출력물, 담당 Agent를 가집니다. Phase는 프로젝트 요건에 따라 조건부로 건너뛸 수 있습니다.
 
-### 페이즈 0 — 기반 정비
-**목적**: 기술 및 아키텍처 결정.
-**에이전트**: Architect, Tech Lead
-**산출물**: `impact-analysis.md`, 초기 `architecture.md`
+### Phase T — Triage
+들어온 요청을 A/B/C 유형으로 분류해 적절한 워크플로우 깊이와 필요한 Agent를 결정합니다.
 
-### 페이즈 1 — 디자인
-**목적**: UX 명세 및 API 계약 정의.
-**에이전트**: UX Designer, Architect, BE Engineer
-**산출물**: `ux-spec.md`, `api-spec.md` 스켈레톤
+### Phase 0 — Pre-flight
+Git 상태를 동기화하고, 작업 브랜치를 생성하며, 학습 파일(`jarfis-learnings.md`, `context.md`, `project-profile.md`)을 로드합니다.
 
-### 페이즈 2 — 아키텍처
-**목적**: 전체 시스템 설계, 데이터 모델, 서비스 경계.
-**에이전트**: Architect, BE Engineer, FE Engineer
-**산출물**: 최종 `architecture.md`, `api-spec.md`
+### Phase 1 — Discovery
+PO가 역질문으로 요구사항을 완전히 파악한 뒤, Working Backwards 문서와 PRD를 작성합니다. Architect가 타당성을 평가합니다. 이후 **Gate 1** — 사용자가 승인, 수정, 또는 중단을 선택합니다.
 
-### 페이즈 3 — 구현
-**목적**: 백엔드와 프론트엔드 병렬 개발.
-**에이전트**: BE Engineer, FE Engineer (병렬 실행)
-**산출물**: 소스 코드, `tasks.md` 진행 업데이트
+### Phase 2 — Architecture & Planning
+Architect가 영향 분석과 시스템 설계를 수행합니다. `api_spec_required`가 true이면 API spec을 작성합니다. Tech Lead가 태스크를 분해하고 QA Engineer가 테스트 전략을 정의합니다.
 
-### 페이즈 4 — 통합
-**목적**: API 연동, 엔드투엔드 통합.
-**에이전트**: BE Engineer, FE Engineer, Tech Lead
-**산출물**: 통합된 코드, 통합 `review.md`
+### Phase 3 — UX Design (조건부)
+프로젝트에 UI 작업이 필요한 경우(`required_roles.ux`가 true)에만 활성화됩니다. UX Designer가 화면 설계와 인터랙션 명세를 작성합니다. Phase 2와 3 이후 **Gate 2**가 따라옵니다.
 
-### 페이즈 4.5 — QA & 보안
-**목적**: 테스트 실행, 보안 감사.
-**에이전트**: QA Engineer, Security Engineer
-**산출물**: `test-strategy.md`, `review.md` 내 보안 결과
+### Phase 4 — Implementation
+Backend, Frontend, DevOps 엔지니어가 병렬로 작업하며, 각자의 역할에 해당하는 부분만 구현합니다. 진행 상황은 `tasks.md`로 추적합니다.
 
-### 페이즈 5 — 배포
-**목적**: 프로덕션 배포, 모니터링 설정.
-**에이전트**: DevOps/SRE, Tech Lead
-**산출물**: `deployment-plan.md`, 인프라 코드
+### Phase 4.5 — Operational Readiness
+Review Phase 전에 배포 전략, 롤백 계획, 운영 준비 상태를 점검합니다.
 
-### 페이즈 6 — 회고
-**목적**: 학습 기록, 향후 반복 개선.
-**에이전트**: 모든 에이전트 참여
-**산출물**: `retrospective.md`, `jarfis-learnings.md` 업데이트
+### Phase 5 — Review & QA
+API 계약 검증이 먼저 실행된 뒤, Tech Lead, QA Engineer, Security Engineer의 병렬 리뷰가 진행됩니다. **Gate 3** — 사용자가 승인, 수정 후 재검토 요청, 중단, 또는 근본적인 설계 문제 발견 시 설계 재검토를 선택합니다.
+
+### Phase 6 — Retrospective
+학습 내용이 전역 `jarfis-learnings.md`와 프로젝트별 `context.md`에 축적되어 향후 워크플로우를 개선합니다.
+
+## 3개의 Human Gate
+
+Gate는 사용자가 워크플로우 방향을 통제하는 필수 승인 체크포인트입니다:
+
+| Gate | 위치 | 선택지 |
+|------|------|--------|
+| **Gate 1** | Phase 1 이후 | 승인 / 수정 / 중단 |
+| **Gate 2** | Phase 2 & 3 이후 | 승인 / 수정 / 중단 |
+| **Gate 3** | Phase 5 이후 | 승인 / 수정 후 재검토 / 중단 / 설계 재검토 (근본 설계 문제 시) |
+
+Gate를 통과하기 전까지 어떤 Phase도 진행되지 않습니다.
 
 ## 11개 아티팩트
 
-모든 JARFIS 워크플로우는 `.jarfis/works/{날짜}/{기능명}/`에 최대 11개의 구조화된 아티팩트를 생성합니다:
+JARFIS 워크플로우는 작업 디렉토리에 최대 11개의 구조화된 문서를 생성합니다:
 
-| 아티팩트 | 목적 | 주요 작성자 |
-|---------|------|------------|
-| `press-release.md` | 고객 언어로 작성된 기능 발표문 | PO |
-| `prd.md` | 제품 요구 사항 문서 | PO |
-| `impact-analysis.md` | 기술적 위험 및 범위 분석 | Architect |
-| `architecture.md` | 시스템 설계, 컴포넌트 다이어그램, ADR | Architect |
-| `api-spec.md` | API 계약 (엔드포인트, 타입, 인증) | Architect / BE |
-| `tasks.md` | 페이즈별 개발 태스크 분해 | Tech Lead |
-| `test-strategy.md` | 테스트 계획, 커버리지 목표, 테스트 케이스 | QA Engineer |
-| `ux-spec.md` | 와이어프레임, 컴포넌트 명세, 인터랙션 디자인 | UX Designer |
-| `deployment-plan.md` | 릴리즈 계획, 롤백 전략, 모니터링 | DevOps/SRE |
-| `review.md` | 구현 후 코드 & 보안 리뷰 | Tech Lead / Security |
-| `retrospective.md` | 페이즈 학습 및 개선 액션 | 모든 에이전트 |
+| 아티팩트 | Phase | 작성자 |
+|---------|-------|--------|
+| Working Backwards (보도자료) | 1 | PO |
+| PRD | 1 | PO |
+| 타당성 평가 | 1 | Architect |
+| 영향 분석 | 2 | Architect |
+| Architecture / ADR | 2 | Architect |
+| API specification | 2 | Architect / Tech Lead |
+| 태스크 분해 (`tasks.md`) | 2 | Tech Lead |
+| 테스트 전략 | 2 | QA Engineer |
+| UX specification | 3 | UX Designer |
+| 배포 / 롤백 계획 | 4.5 | DevOps/SRE |
+| 리뷰 보고서 | 5 | Tech Lead / QA / Security |
 
-## 상태 관리: `.jarfis-state.json`
+## 상태 관리
 
-JARFIS는 프로젝트 루트의 `.jarfis-state.json`에 워크플로우 상태를 저장합니다:
+JARFIS는 프로젝트 루트의 `.jarfis-state.json`에 워크플로우 상태를 추적합니다. 실제 스키마는 다음과 같습니다:
 
 ```json
 {
-  "feature": "auth-system",
-  "currentPhase": "4",
-  "completedPhases": ["T", "0", "1", "2", "3"],
-  "agentContext": {
-    "po": "prd-approved",
-    "architect": "architecture-finalized",
-    "be": "api-implemented",
-    "fe": "components-built"
+  "work_name": "auth-system",
+  "docs_dir": ".jarfis/works/2026-03-05/auth-system",
+  "branch": "jarfis/auth-system",
+  "base_branch": "main",
+  "current_phase": 4,
+  "required_roles": {
+    "backend": true,
+    "frontend": true,
+    "ux": true,
+    "devops": false,
+    "security": true
   },
-  "artifactsGenerated": [
-    "prd.md", "architecture.md", "api-spec.md", "tasks.md", "ux-spec.md"
-  ]
+  "api_spec_required": true,
+  "workspace": {
+    "type": "monorepo",
+    "projects": ["packages/api", "packages/web"]
+  },
+  "phases": {
+    "T": { "status": "completed" },
+    "0": { "status": "completed" },
+    "1": { "status": "completed" },
+    "2": { "status": "completed" },
+    "3": { "status": "completed" },
+    "4": { "status": "in_progress" },
+    "4.5": { "status": "pending" },
+    "5": { "status": "pending" },
+    "6": { "status": "pending" }
+  },
+  "last_checkpoint": {
+    "timestamp": "2026-03-05T14:30:00Z",
+    "phase": 4,
+    "summary": "Backend API implementation in progress"
+  }
 }
 ```
 
-이 파일은 모든 Claude Code 세션 시작 시 **PreCompact 훅**에 의해 읽혀, 정확한 페이즈와 컨텍스트를 복원합니다. 여러 세션에 걸쳐 작업을 이어가도 상태가 유지됩니다.
-
-## PreCompact 훅
-
-PreCompact 훅은 컨텍스트 압축 전에 실행되는 Claude Code 생명주기 통합입니다:
-
-1. 현재 페이즈와 에이전트 상태를 `.jarfis-state.json`에서 **읽습니다**
-2. 관련 아티팩트 요약을 압축된 컨텍스트에 **주입합니다**
-3. `jarfis-learnings.md`의 중요한 결정 사항과 학습을 **보존합니다**
-4. 현재 페이즈에 맞는 활성 에이전트 관점을 **복원합니다**
-
-이를 통해 여러 세션에 걸쳐 진행되는 장기 기능 개발에서도 중요한 컨텍스트가 손실되지 않습니다.
+주요 필드:
+- **`current_phase`** — 현재 활성 Phase를 나타내는 숫자 또는 `"done"`
+- **`required_roles`** — 어떤 Agent를 활성화할지 제어하는 boolean 플래그
+- **`api_spec_required`** — API specification 문서 작성 필요 여부
+- **`workspace`** — 프로젝트 구조 메타데이터 (monorepo, multi-project 등)
+- **`phases`** — Phase별 상태 추적 (pending / in_progress / completed / skipped)
+- **`last_checkpoint`** — 마지막으로 저장된 진행 지점의 타임스탬프와 요약
 
 ## 학습 시스템
 
-JARFIS는 두 가지 학습 메커니즘을 통해 지속적으로 개선됩니다:
+JARFIS는 두 단계의 학습 시스템을 통해 워크플로우를 거듭할수록 발전합니다:
 
-### `jarfis-learnings.md`
-페이즈 6 회고 이후 업데이트되는 프로젝트 수준의 지식 베이스. 다음을 포함합니다:
-- 이 코드베이스에서 잘 작동하는 반복 패턴
-- 피해야 할 안티패턴
-- 팀 선호도와 컨벤션
+### 전역 학습: `~/.claude/jarfis-learnings.md`
+사용자 홈 디렉토리에 저장되어 모든 프로젝트에서 공유됩니다. 다음 내용을 포함합니다:
+- **Agent Hints** — Retrospective에서 축적된 행동 규칙
+- **Workflow Patterns** — 효과가 검증된 반복 패턴
 
-### `context.md`
-모든 에이전트 프롬프트에 주입되는 프로젝트별 컨텍스트:
-- 기술 스택 세부 사항
-- 기존 컨벤션
+### 프로젝트 컨텍스트: `.jarfis/context.md`
+Agent 프롬프트에 주입되는 프로젝트별 지식:
+- 기술 스택 세부 사항과 컨벤션
 - 비즈니스 도메인 지식
-- 통합 제약 조건
+- 통합 제약 사항과 기존 패턴
 
-## 미팅 시스템 (`/jarfis:meeting`)
+### 프로젝트 프로파일: `.jarfis/project-profile.md`
+`/jarfis:project-init`으로 생성되고 `/jarfis:project-update`로 갱신됩니다. 프로젝트 구조, 의존성, 설정을 설명합니다.
 
-에이전트들이 블로커를 해결하거나, 공동 결정을 내리거나, 범위를 정렬해야 할 때 구조화된 미팅을 소집할 수 있습니다:
+## 미팅 시스템
+
+`/jarfis:meeting` 명령어는 계획을 위한 구조화된 킥오프 미팅을 시작합니다:
 
 ```
-/jarfis:meeting
+/jarfis:meeting Define the authentication strategy for the mobile app
 ```
 
-미팅 시스템은:
-- 현재 블로커에 관련된 에이전트를 식별합니다
-- 에이전트 관점 간의 진행 토론을 구조화합니다
-- `review.md` 또는 관련 아티팩트에 결정 사항을 기록합니다
-- 해결된 항목으로 `.jarfis-state.json`을 업데이트합니다
+미팅 결과는 이후 워크플로우에서 `--meeting` 플래그로 참조할 수 있습니다:
+
+```
+/jarfis:work Implement auth system --meeting auth-strategy-meeting
+```
+
+이를 통해 미팅에서 결정된 사항이 워크플로우의 입력 컨텍스트로 연결되어, 계획과 실행 간 정렬이 보장됩니다.
 
 ## 설계 원칙
 
-1. **전문화** — 각 에이전트는 한 도메인에서 깊은 전문성을 가집니다. 모든 것을 하려는 에이전트는 없습니다
-2. **아티팩트 중심** — 모든 페이즈는 검토 가능한, 사람이 읽을 수 있는 산출물을 생성합니다
-3. **페이즈 게이트** — 이전 페이즈의 아티팩트 없이는 다음 페이즈가 시작되지 않습니다
-4. **상태 유지** — 작업은 `.jarfis-state.json`을 통해 세션 경계를 넘어 유지됩니다
-5. **학습** — 모든 프로젝트는 학습 시스템을 통해 다음 프로젝트를 더 빠르게 만듭니다
-6. **Claude Code 네이티브** — 외부 서비스 없이 개발 환경 내에서 완전히 실행됩니다
+1. **전문화** — 각 Agent는 하나의 도메인에서 깊은 전문성을 가집니다. 모든 것을 하려는 Agent는 없습니다
+2. **단계적 전달** — 구조화된 Phase는 완전성을 보장합니다. 어떤 단계도 실수로 건너뛰지 않습니다
+3. **Human Gate** — 중요한 결정은 3개의 정해진 체크포인트에서 명시적 사용자 승인을 요구합니다
+4. **조건부 활성화** — Agent와 Phase는 관련이 있을 때만 활성화됩니다 (예: CLI 도구에는 UX Phase 없음)
+5. **Stateful** — 작업은 `.jarfis-state.json`을 통해 세션 경계를 넘어 유지됩니다
+6. **지속적 학습** — 모든 Retrospective는 전역 및 프로젝트 학습을 통해 향후 워크플로우를 개선합니다
+7. **Claude Code 네이티브** — 외부 서비스 없이 개발 환경 내에서 완전히 실행됩니다
 
 ## 다음 단계
 
-- [빠른 시작](/ko/docs/getting-started) — 첫 `/jarfis` 워크플로우 실행
-- [가이드 & 커스터마이징](/ko/docs/guides-customization) — 고급 설정 패턴
-- [API 레퍼런스](/ko/docs/api-reference) — 모든 커맨드와 옵션
+- [Quick Start](/ko/docs/getting-started) — JARFIS 설치 및 첫 워크플로우 실행
+- [API Reference](/ko/docs/api-reference) — 모든 명령어와 설정 상세 정보
+- [Guides & Customization](/ko/docs/guides-customization) — 고급 워크플로우 패턴

@@ -1,6 +1,6 @@
 ---
 title: "Guides & Customization"
-description: "Advanced JARFIS patterns: custom agent prompts, context.md configuration, phase skipping, meeting facilitation, and learning system management."
+description: "Advanced JARFIS patterns: meeting-to-work linking, role configuration, project profiles, gate interactions, and learning system management."
 category: "guides"
 order: 1
 locale: "en"
@@ -10,13 +10,167 @@ draft: false
 
 # Guides & Customization
 
-Advanced patterns for getting the most out of JARFIS on real projects.
+Practical patterns for getting the most out of JARFIS on real projects.
 
-## Configuring Project Context
+## Meeting-to-Work Linkage
 
-The most impactful customization is a well-written `context.md`. Every agent reads this file before taking any action.
+One of JARFIS's most powerful patterns is using a kickoff meeting to feed context into a work session. This ensures alignment between planning decisions and implementation.
 
-### `context.md` Structure
+### Step 1: Hold a Kickoff Meeting
+
+```
+/jarfis:meeting Define the authentication strategy for the mobile app
+```
+
+The meeting produces structured decisions and artifacts stored in a meeting directory.
+
+### Step 2: Start Work with Meeting Reference
+
+```
+/jarfis:work Implement mobile auth with biometric login --meeting auth-strategy-meeting
+```
+
+The `--meeting` flag links the meeting output as input context. The state file will include `meeting_ref` and `meeting_dir` fields, and agents will reference the meeting decisions throughout the workflow.
+
+This pattern is especially valuable for complex features where multiple stakeholders need to align before implementation begins.
+
+## Role Configuration with `required_roles`
+
+Not every project needs all 9 agents. JARFIS uses the `required_roles` field in `.jarfis-state.json` to control which agents are activated:
+
+```json
+{
+  "required_roles": {
+    "backend": true,
+    "frontend": true,
+    "ux": false,
+    "devops": false,
+    "security": true
+  }
+}
+```
+
+### Common Role Patterns
+
+**Frontend-only project** (e.g., landing page redesign):
+```json
+{
+  "required_roles": {
+    "backend": false,
+    "frontend": true,
+    "ux": true,
+    "devops": false,
+    "security": false
+  }
+}
+```
+Phase 3 (UX Design) is active. Phase 4 runs only the Frontend Engineer. Backend and DevOps agents are not invoked.
+
+**Full-stack project with security requirements**:
+```json
+{
+  "required_roles": {
+    "backend": true,
+    "frontend": true,
+    "ux": true,
+    "devops": true,
+    "security": true
+  }
+}
+```
+All phases are active. Phase 4 runs BE, FE, and DevOps in parallel. Phase 5 includes Security Engineer review.
+
+**Backend API-only project**:
+```json
+{
+  "required_roles": {
+    "backend": true,
+    "frontend": false,
+    "ux": false,
+    "devops": true,
+    "security": true
+  }
+}
+```
+Phase 3 (UX Design) is skipped entirely. Phase 4 runs Backend and DevOps only.
+
+JARFIS determines these roles automatically during Phase T (Triage), but you can adjust them if needed.
+
+## Project Profiles
+
+Project profiles give JARFIS deep understanding of your codebase structure and conventions.
+
+### Initialize a Profile
+
+```
+/jarfis:project-init
+```
+
+This analyzes your project and generates `.jarfis/project-profile.md` containing:
+- Repository structure and organization
+- Dependencies and versions
+- Build tools and scripts
+- Detected conventions and patterns
+
+### Keep Profiles Updated
+
+When your project structure changes significantly (new packages, major dependency updates, etc.):
+
+```
+/jarfis:project-update
+```
+
+This refreshes the profile without losing manually added context.
+
+## Working with Gates
+
+Gates are mandatory human checkpoints. Here is how to use them effectively.
+
+### Gate 1 — After Discovery
+
+At Gate 1, you review the PRD and feasibility assessment. Your options:
+
+- **Approve**: Proceed to Architecture & Planning (Phase 2)
+- **Revise**: Provide specific feedback. The PO and Architect will revise their outputs and re-present
+- **Abort**: Cancel the workflow entirely
+
+**Tip**: This is the cheapest place to change direction. A revision at Gate 1 costs minutes; a revision at Gate 3 may cost hours.
+
+### Gate 2 — After Architecture & UX
+
+At Gate 2, you review the architecture design, task breakdown, and (if applicable) UX specifications. Your options:
+
+- **Approve**: Proceed to Implementation (Phase 4)
+- **Revise**: Request changes to architecture, task scope, or UX designs
+- **Abort**: Cancel the workflow
+
+**Tip**: Pay close attention to `tasks.md` — this defines exactly what will be implemented. Missing tasks here mean missing features later.
+
+### Gate 3 — After Review & QA
+
+At Gate 3, you review the completed implementation, test results, and security findings. Your options:
+
+- **Approve**: Proceed to Retrospective (Phase 6) and wrap up
+- **Revise & re-review**: Request fixes and trigger another review cycle
+- **Abort**: Cancel the workflow
+- **Revisit design**: For pathological patterns (fundamental design issues discovered during review), go back to Phase 2
+
+## Managing the Learning System
+
+JARFIS's learning system is what makes each workflow better than the last.
+
+### Global Learnings: `~/.claude/jarfis-learnings.md`
+
+This file lives in your home directory and is shared across all projects. It contains:
+
+- **Agent Hints**: Behavioral rules like "always check for existing middleware before creating new ones" or "use `mutateAsync` with try-catch to prevent unhandled rejections"
+- **Workflow Patterns**: Proven approaches like "for monorepo projects, run impact analysis per package"
+
+The file is loaded during Phase 0 of every workflow and updated during Phase 6 (Retrospective).
+
+### Project Context: `.jarfis/context.md`
+
+Project-specific knowledge that agents reference throughout the workflow:
 
 ```markdown
 # Project Context
@@ -29,193 +183,78 @@ The most impactful customization is a well-written `context.md`. Every agent rea
 ## Conventions
 - API responses follow RFC 9457 Problem Details format
 - All database models use UUID primary keys
-- Frontend components follow atomic design (atoms/molecules/organisms)
-- Commit format: conventional commits (feat/fix/chore/refactor)
+- Frontend components follow atomic design
+- Commit format: conventional commits (feat/fix/chore)
 
 ## Business Domain
 - SaaS B2B platform for legal document management
-- Compliance requirements: SOC 2 Type II, GDPR
-- Primary users: legal teams at enterprises (500+ employees)
+- Compliance: SOC 2 Type II, GDPR
 
 ## Integration Constraints
-- Existing auth: Auth0 (cannot change)
-- Payment: Stripe (webhooks already configured)
-- File storage: S3 with presigned URLs
+- Auth: Auth0 (cannot change)
+- Payment: Stripe (webhooks configured)
+- Storage: S3 with presigned URLs
 ```
 
-The more specific your `context.md`, the more accurate agent outputs will be. This is the highest-leverage 30 minutes you can invest before starting a JARFIS workflow.
+The more specific your `context.md`, the more accurate agent outputs will be. This is the single highest-leverage investment you can make before starting a workflow.
 
-## Customizing Agent Behavior
+### Curating Learnings with `/jarfis:upgrade`
 
-### Per-Phase Agent Overrides
-
-In `.jarfis/CLAUDE.md`, you can add agent-specific instructions:
-
-```markdown
-## Agent Customizations
-
-### PO Agent
-- Always write user stories in the format: "As a [role], I want [action] so that [benefit]"
-- Acceptance criteria must be testable (Given/When/Then format)
-- Prioritize by business value, not technical difficulty
-
-### Security Engineer
-- Check all dependencies against our internal vulnerability database first
-- GDPR article references are required in any auth-related security note
-- All cryptographic operations must use approved algorithms from our security policy
-
-### DevOps/SRE
-- Use our Terraform module library at terraform-modules/
-- Blue/green deployment is the only acceptable deployment strategy
-- PagerDuty integration required in all monitoring configurations
-```
-
-### Skipping Phases
-
-For hotfixes or minor changes, you can skip phases:
+Over time, `jarfis-learnings.md` may accumulate outdated or redundant entries. Use the upgrade command to review and curate:
 
 ```
-/jarfis --skip-phases T,0,1 --start-phase 3 Fix broken login redirect
+/jarfis:upgrade
 ```
 
-Use this carefully — phase skipping means those phase artifacts will not be generated.
+This walks you through existing learning items, allowing you to keep, edit, or remove them.
 
-## Working with the Learning System
+## Workflow Recovery After Context Compression
 
-### Adding Learnings Manually
+Long-running workflows may encounter Claude Code context compression. JARFIS is designed to recover from this:
 
-After any significant discovery, add to `jarfis-learnings.md`:
+1. The `.jarfis-state.json` file persists the exact phase and progress state
+2. The `last_checkpoint` field records what was happening before compression
+3. Learning files and artifacts on disk are not affected by context compression
 
-```markdown
-## 2026-03-05 — Auth Integration
+To resume after a context reset, simply run `/jarfis:work` again with the same description. JARFIS will detect the existing `.jarfis-state.json` and resume from the last checkpoint rather than starting over.
 
-### What worked
-- Using Auth0 Management API for user sync on first login
-- JWT validation middleware extracted to shared lib eliminates duplication
+## Practical Examples
 
-### What to avoid
-- Never use Auth0's legacy `/oauth/token` endpoint — use PKCE flow only
-- The `useUser` hook has a 2s delay on cold start — always show skeleton
-
-### Patterns to reuse
-- Error boundary + Suspense pattern from `UserProfile` component works for all auth-gated pages
-```
-
-Agents reference `jarfis-learnings.md` at the start of every relevant phase, so learnings from project 1 directly improve project 2.
-
-### Resetting Learnings
-
-If a project is archived and learnings no longer apply:
-
-```bash
-# Archive learnings before clearing
-cp .jarfis/jarfis-learnings.md .jarfis/archive/jarfis-learnings-2025.md
-echo "" > .jarfis/jarfis-learnings.md
-```
-
-## Meeting Facilitation
-
-### When to Call a Meeting
-
-Use `/jarfis:meeting` when:
-- Two agents have conflicting approaches (e.g., BE and FE disagree on API contract)
-- A critical architectural decision needs multi-agent input
-- A phase deliverable is blocked pending a scope clarification
-- Post-phase retrospective would benefit from structured discussion
-
-### Meeting Patterns
-
-**Conflict resolution meeting**:
-```
-/jarfis:meeting resolve conflict between BE and FE on pagination API design
-```
-
-**Decision meeting**:
-```
-/jarfis:meeting decide on state management approach: Redux vs Zustand vs Jotai
-```
-
-**Scope clarification**:
-```
-/jarfis:meeting clarify scope: does "user profile" include organization settings?
-```
-
-Meeting outcomes are automatically recorded in `review.md` and trigger an update to `.jarfis-state.json`.
-
-## Multi-Feature Parallel Workflows
-
-For large projects with multiple concurrent features, JARFIS supports parallel work trees:
+### Example 1: Frontend-Only Feature
 
 ```
-.jarfis/works/
-├── 2026-03-05/
-│   ├── feature/auth-system/          # Feature A: Phase 3
-│   └── feature/billing-integration/  # Feature B: Phase 1
-└── 2026-03-01/
-    └── feature/dashboard-redesign/   # Feature C: Completed
+/jarfis:work Redesign the dashboard with new chart components
 ```
 
-Start a new feature without disrupting in-progress work:
+JARFIS will set `required_roles.backend` to false and skip backend-related work. Phase 3 (UX Design) will be active, and Phase 4 will only invoke the Frontend Engineer.
+
+### Example 2: Full-Stack with Meeting Input
 
 ```
-/jarfis --feature billing-integration Add Stripe subscription billing
+/jarfis:meeting Plan the multi-tenant architecture migration
+/jarfis:work Implement multi-tenant data isolation --meeting tenant-architecture
 ```
 
-State for each feature is tracked independently in `.jarfis-state.json`:
+The meeting decisions (e.g., "use row-level security in PostgreSQL") flow into the work session, ensuring the Architect and Backend Engineer follow the agreed approach.
 
-```json
-{
-  "features": {
-    "auth-system": { "currentPhase": "3" },
-    "billing-integration": { "currentPhase": "1" }
-  },
-  "activeFeature": "billing-integration"
-}
-```
-
-## Phase Gate Reviews
-
-Insert a human review checkpoint before any phase transition:
-
-In `.jarfis/CLAUDE.md`:
-```markdown
-## Phase Gates
-
-- Phase 2 → 3: Require explicit human approval of architecture.md
-- Phase 4.5 → 5: Require security engineer sign-off on all HIGH/CRITICAL findings
-- Phase 5 → 6: Require deployment plan review by team lead
-```
-
-When a gate is reached, JARFIS pauses and prompts:
+### Example 3: Quick Fix with Minimal Overhead
 
 ```
-Phase 2 complete. Architecture document ready for review.
-Type 'approve' to proceed to Phase 3, or describe any changes needed.
+/jarfis:work Fix the broken pagination on the orders list
 ```
 
-## Artifact Templates
+For simple bug fixes, JARFIS's Triage phase (Phase T) will classify this as a Type C (simple fix) and streamline the phase pipeline accordingly, skipping heavyweight phases like UX Design and Operational Readiness.
 
-Standardize artifact format across your organization by adding templates to `.jarfis/`:
+### Example 4: Diagnosing Issues
 
 ```
-.jarfis/
-├── templates/
-│   ├── prd-template.md
-│   ├── architecture-template.md
-│   └── test-strategy-template.md
+/jarfis:health
 ```
 
-Agents will use these templates as the structural baseline for their artifacts.
-
-## Tips for Large Codebases
-
-1. **Keep `context.md` up to date** — stale context leads to agents generating code that conflicts with existing patterns
-2. **Use phase skipping sparingly** — skipped artifacts mean the PreCompact hook has less context to restore
-3. **Archive old `.jarfis-state.json` regularly** — large state files slow down the PreCompact hook
-4. **Commit `jarfis-learnings.md` to your repo** — this is valuable project knowledge, not just AI state
-5. **Review agent artifacts before approval** — JARFIS generates, humans decide
+If workflows seem stuck or behaving unexpectedly, the health command diagnoses zombie processes and other operational issues.
 
 ## Next Steps
 
-- [API Reference](/en/docs/api-reference) — All `/jarfis` commands and configuration options
-- [Concepts Overview](/en/docs/concepts-overview) — Deep dive into the architecture
+- [API Reference](/en/docs/api-reference) — Complete command and configuration reference
+- [Architecture & Concepts](/en/docs/concepts-overview) — Deep dive into the orchestration model
+- [Quick Start](/en/docs/getting-started) — Installation and first workflow

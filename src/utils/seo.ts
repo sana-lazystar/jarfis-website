@@ -31,7 +31,7 @@ export function generateSEO(options: {
   const canonicalUrl = `${SITE_URL}${localePath(locale, pagePath)}`;
   const resolvedOgImage = ogImage
     ? `${SITE_URL}${base}${ogImage}`
-    : `${SITE_URL}${base}/images/og/default.png`;
+    : `${SITE_URL}${base}/images/og/og-default.png`;
 
   return {
     title,

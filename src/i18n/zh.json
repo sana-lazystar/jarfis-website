@@ -4,14 +4,13 @@
     "features": "功能",
     "docs": "文档",
     "blog": "博客",
-    "showcase": "展示",
-    "github": "GitHub"
+    "showcase": "展示"
   },
   "hero": {
     "tagline": "用AI发布软件的<br/>绝妙方式",
     "subtitle": "100%开源。您的AI团队，您的规则。",
     "description": "一个斜杠命令。九位专业智能体。从新闻稿到复盘 — 在Claude Code上编排的完整产品工作流。",
-    "badge": "Open Source · Claude Code",
+    "badge": "9个AI智能体，一条斜杠命令",
     "cta_github": "在GitHub上查看",
     "cta_start": "开始使用"
   },
@@ -64,7 +63,7 @@
   "features": {
     "page_title": "功能",
     "page_subtitle": "无需妥协，用AI构建所需的一切。",
-    "differentiator_title": "AI辅助开发的不同方法",
+    "differentiator_title": "AI辅助开发的不同方式",
     "traditional": "传统AI编码工具",
     "jarfis": "JARFIS",
     "compare": {
@@ -114,7 +113,65 @@
       "每次迭代都让系统更加智能"
     ],
     "cta_heading": "准备好查看实际效果了吗？",
-    "footnote": "* 基于一般类别模式的比较，而非针对特定产品。"
+    "footnote": "* 基于一般类别模式的比较，而非针对特定产品。",
+    "agents_section_title": "认识9位智能体",
+    "agents_section_subtitle": "每位智能体都拥有深厚的领域专业知识和角色专属指令。他们共同覆盖从第一个用户故事到最终复盘的完整产品生命周期。",
+    "agents": {
+      "po": {
+        "name": "Product Owner",
+        "abbr": "PO",
+        "desc": "通过反向提问明确需求。撰写Working Backwards文档和PRD，在编写任何代码之前评估功能的必要性。",
+        "tags": ["需求澄清", "PRD", "Working Backwards"]
+      },
+      "architect": {
+        "name": "Architect",
+        "abbr": "ARCH",
+        "desc": "评估技术可行性和长期影响。产出整个团队依赖的系统架构文档、影响分析和架构决策记录（ADR）。",
+        "tags": ["架构设计", "ADR", "影响分析"]
+      },
+      "tech_lead": {
+        "name": "Tech Lead",
+        "abbr": "TL",
+        "desc": "审查API规范，将任务分解为可执行单元，进行代码审查，负责部署策略，并主导将经验反馈到系统的复盘。",
+        "tags": ["代码审查", "任务分解", "复盘"]
+      },
+      "ux": {
+        "name": "UX Designer",
+        "abbr": "UX",
+        "desc": "定义信息架构、用户流程、线框图和交互模式。确保产品在实现之前具备可访问性和直观性。",
+        "tags": ["信息架构", "线框图", "可访问性"]
+      },
+      "backend": {
+        "name": "Backend Engineer",
+        "abbr": "BE",
+        "desc": "遵循工作流上游生成的架构和API规范，实现服务端API、定义数据模型并构建后端服务。",
+        "tags": ["API实现", "数据模型", "后端服务"]
+      },
+      "frontend": {
+        "name": "Frontend Engineer",
+        "abbr": "FE",
+        "desc": "基于UX规范和上游生成的任务清单，构建UI组件，管理客户端状态，集成前后端API。",
+        "tags": ["UI组件", "状态管理", "API集成"]
+      },
+      "devops": {
+        "name": "DevOps / SRE",
+        "abbr": "OPS",
+        "desc": "负责基础设施配置、CI/CD流水线搭建、自动化部署和监控。确保每次发布可复现且可观测。",
+        "tags": ["CI/CD", "基础设施", "监控"]
+      },
+      "qa": {
+        "name": "QA Engineer",
+        "abbr": "QA",
+        "desc": "制定测试策略，构建测试金字塔，编写E2E场景，在任何制品交付下一阶段前验证质量门控。",
+        "tags": ["测试策略", "测试金字塔", "E2E场景"]
+      },
+      "security": {
+        "name": "Security Engineer",
+        "abbr": "SEC",
+        "desc": "在代码发布前进行安全预审。覆盖OWASP Top 10、认证授权模型，并对每项功能进行漏洞分析。",
+        "tags": ["OWASP Top 10", "认证授权", "漏洞分析"]
+      }
+    }
   },
   "seo": {
     "home_description": "一个斜杠命令。9位专业智能体。JARFIS在Claude Code上编排您的整个产品工作流。",
@@ -136,20 +193,16 @@
     "prev_page": "上一页",
     "next_page": "下一页",
     "on_this_page": "本页内容",
-    "not_translated": "此页面尚未翻译。显示英文版本。",
-    "copied": "已复制！",
-    "copy_code": "复制代码"
+    "not_translated": "此页面尚未翻译。显示英文版本。"
   },
   "blog": {
     "page_title": "博客",
     "page_subtitle": "更新、深度解析和发布说明",
-    "empty_title": "故事正在撰写中。",
+    "empty_title": "文章正在撰写中。",
     "empty_desc": "第一篇文章即将发布 — 在GitHub上关注我们，及时获取更新。",
     "follow_github": "在GitHub上关注",
     "watch_repo": "Watch仓库",
     "read_more": "阅读更多",
-    "min_read": "分钟阅读",
-    "back_to_blog": "返回博客",
     "prev_post": "上一篇",
     "next_post": "下一篇"
   },
@@ -157,23 +210,10 @@
     "page_title": "展示",
     "page_subtitle": "用JARFIS构建的项目",
     "empty_title": "成为第一个用JARFIS构建的人。",
-    "empty_desc": "这个网站本身就是由JARFIS智能体（UX、前端、QA）共同构建的。您的项目可以是下一个。",
+    "empty_desc": "这个网站本身就是由JARFIS智能体（UX、Frontend、QA）共同构建的。您的项目可以是下一个。",
     "submit": "提交您的项目",
     "view_project": "查看项目",
     "view_source": "查看源码"
-  },
-  "common": {
-    "coming_soon": "即将推出",
-    "stay_tuned": "敬请期待更新！",
-    "built_with": "用JARFIS构建",
-    "read_more": "阅读更多",
-    "last_updated": "最后更新",
-    "back_to_top": "返回顶部",
-    "loading": "加载中...",
-    "error": "发生错误",
-    "not_found": "页面未找到",
-    "home": "返回首页",
-    "external_link": "在新标签页中打开"
   },
   "footer": {
     "license": "MIT许可证",
@@ -195,17 +235,7 @@
   },
   "a11y": {
     "skip_to_content": "跳转到主要内容",
-    "toggle_dark_mode": "切换暗色模式",
     "toggle_menu": "切换导航菜单",
-    "switch_language": "切换语言",
-    "close_menu": "关闭菜单",
-    "open_menu": "打开菜单",
-    "current_page": "当前页面",
-    "external_link": "在新标签页中打开"
-  },
-  "404": {
-    "title": "页面未找到",
-    "description": "您要找的页面不存在或已被移动。",
-    "back_home": "返回首页"
+    "switch_language": "切换语言"
   }
 }
