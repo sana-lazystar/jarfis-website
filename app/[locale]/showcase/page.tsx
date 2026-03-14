@@ -32,11 +32,19 @@ export default async function ShowcasePage({ params }: ShowcasePageProps) {
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 py-16">
       <div className="mb-12">
-        <p className="font-mono text-green-500 text-sm mb-3">$ ls showcase/</p>
-        <h1 className="font-mono text-4xl font-bold text-zinc-50 tracking-tight">
+        <p
+          className="mb-3 text-sm font-semibold uppercase"
+          style={{ color: 'var(--color-accent-yellow)', letterSpacing: '0.08em', fontFamily: 'var(--font-mono)' }}
+        >
+          Showcase
+        </p>
+        <h1
+          className="text-4xl font-bold tracking-tight"
+          style={{ color: 'var(--color-text-primary)', fontFamily: 'var(--font-mono)' }}
+        >
           {t('page_title')}
         </h1>
-        <p className="mt-3 text-zinc-500">{t('page_subtitle')}</p>
+        <p className="mt-3" style={{ color: 'var(--color-text-muted)' }}>{t('page_subtitle')}</p>
       </div>
 
       {items.length === 0 ? (
@@ -64,15 +72,27 @@ export default async function ShowcasePage({ params }: ShowcasePageProps) {
       )}
 
       {/* Submit CTA */}
-      <div className="mt-16 text-center rounded-lg border border-dashed border-zinc-700 p-10">
-        <p className="font-mono text-sm text-zinc-500 mb-4">
-          <span className="text-zinc-600">$ </span>jarfis submit --project your-project
+      <div
+        className="mt-16 text-center p-10"
+        style={{
+          borderRadius: '16px',
+          border: '1px dashed var(--color-border)',
+        }}
+      >
+        <p className="mb-4 text-sm" style={{ fontFamily: 'var(--font-mono)', color: 'var(--color-text-muted)' }}>
+          jarfis submit --project your-project
         </p>
         <a
           href="https://github.com/sana-lazystar/jarfis-website/issues/new"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 rounded border border-green-500/30 px-5 py-2.5 font-mono text-sm text-green-500 hover:border-green-500 hover:bg-green-500/5 transition-colors"
+          className="inline-flex items-center gap-2 px-5 py-2.5 rounded text-sm transition-colors"
+          style={{
+            fontFamily: 'var(--font-mono)',
+            border: '1px solid rgba(13, 148, 136, 0.3)',
+            color: 'var(--color-primary-light)',
+            textDecoration: 'none',
+          }}
         >
           {t('submit')}
         </a>

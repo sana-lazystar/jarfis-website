@@ -15,24 +15,38 @@ export default function BlogCard({ post, locale, readMoreLabel }: BlogCardProps)
   });
 
   return (
-    <article className="rounded-lg border border-zinc-800 border-l-2 border-l-green-500/50 bg-zinc-900 p-6 hover:border-zinc-700 hover:border-l-green-500 transition-all">
+    <article
+      style={{
+        borderRadius: '16px',
+        border: '1px solid var(--color-border)',
+        borderLeft: '2px solid rgba(13, 148, 136, 0.4)',
+        background: 'linear-gradient(145deg, var(--color-surface), rgba(15, 29, 50, 0.4))',
+        padding: '1.5rem',
+        transition: 'border-color 0.2s ease',
+      }}
+    >
       <time
         dateTime={post.pubDate}
-        className="font-mono text-xs text-zinc-600"
+        style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--color-text-muted)' }}
       >
         {formattedDate}
       </time>
 
-      <h2 className="font-mono text-xl font-semibold text-zinc-100 mt-2 mb-3">
+      <h2
+        className="text-xl font-semibold mt-2 mb-3"
+        style={{ fontFamily: 'var(--font-mono)', color: 'var(--color-text-primary)' }}
+      >
         <Link
           href={`/${locale}/blog/${post.slug}/`}
-          className="hover:text-green-400 transition-colors"
+          style={{ color: 'inherit', textDecoration: 'none' }}
         >
           {post.title}
         </Link>
       </h2>
 
-      <p className="text-sm text-zinc-500 leading-relaxed mb-4">{post.description}</p>
+      <p className="text-sm leading-relaxed mb-4" style={{ color: 'var(--color-text-muted)' }}>
+        {post.description}
+      </p>
 
       <div className="flex items-center justify-between">
         <div className="flex flex-wrap gap-1.5" role="list" aria-label="Tags">
@@ -40,7 +54,13 @@ export default function BlogCard({ post, locale, readMoreLabel }: BlogCardProps)
             <span
               key={tag}
               role="listitem"
-              className="font-mono text-xs px-2 py-0.5 rounded bg-violet-500/10 text-violet-400 border border-violet-500/20"
+              className="text-xs px-2 py-0.5 rounded"
+              style={{
+                fontFamily: 'var(--font-mono)',
+                background: 'rgba(251, 113, 133, 0.08)',
+                color: 'var(--color-accent-coral)',
+                border: '1px solid rgba(251, 113, 133, 0.15)',
+              }}
             >
               #{tag}
             </span>
@@ -49,7 +69,8 @@ export default function BlogCard({ post, locale, readMoreLabel }: BlogCardProps)
 
         <Link
           href={`/${locale}/blog/${post.slug}/`}
-          className="font-mono text-sm text-green-500 hover:text-green-400 transition-colors"
+          className="text-sm"
+          style={{ fontFamily: 'var(--font-mono)', color: 'var(--color-primary-light)', textDecoration: 'none' }}
           aria-label={`Read more: ${post.title}`}
         >
           {readMoreLabel} →

@@ -4,16 +4,110 @@
     "features": "기능",
     "docs": "문서",
     "blog": "블로그",
-    "showcase": "쇼케이스"
+    "showcase": "쇼케이스",
+    "get_started": "시작하기"
   },
   "hero": {
-    "tagline": "AI와 함께 소프트웨어를 출시하는<br/>환상적인 방법",
-    "subtitle": "100% 오픈 소스. 나만의 AI 팀, 나만의 규칙.",
-    "description": "하나의 슬래시 커맨드. 아홉 명의 전문 에이전트. 프레스 릴리스부터 회고까지 — Claude Code에서 오케스트레이션되는 전체 제품 워크플로우.",
-    "badge": "9개의 AI 에이전트, 하나의 슬래시 커맨드",
-    "cta_github": "GitHub에서 보기",
+    "badge": "자기 진화형 AI 팀",
+    "title_prefix": "쓸수록",
+    "title_evolve": "진화",
+    "title_middle": "하는 당신의",
+    "title_team": "AI 개발팀",
+    "subtitle": "프로덕트 매니저부터 QA 엔지니어까지, 9명의 AI 전문가가 당신의 팀이 됩니다.",
     "cta_start": "시작하기",
+    "cta_github": "GitHub",
+    "tagline": "AI와 함께 소프트웨어를 출시하는<br/>환상적인 방법",
+    "description": "하나의 슬래시 커맨드. 아홉 명의 전문 에이전트. 프레스 릴리스부터 회고까지 — Claude Code에서 오케스트레이션되는 전체 제품 워크플로우.",
     "terminal_prompt": "$ jarfis start"
+  },
+  "features_home": {
+    "eyebrow": "핵심 가치",
+    "title": "함께 성장하는 AI 생태계",
+    "cards": [
+      {
+        "title": "자기 진화",
+        "description": "JARFIS는 모든 회고에서 학습합니다. 전역 교훈이 누적되어 프로젝트마다 더 똑똑해집니다."
+      },
+      {
+        "title": "모두를 위한 오케스트레이션",
+        "description": "PO, Architect, Tech Lead, Backend, Frontend, DevOps, QA, Security, UX — 9명의 도메인 전문 에이전트가 협력합니다."
+      },
+      {
+        "title": "회복 탄력적 연속성",
+        "description": "PreCompact 훅과 상태 파일이 컨텍스트 리셋 전반에 걸쳐 워크플로우를 보존합니다. 아무것도 잃지 않습니다."
+      },
+      {
+        "title": "AI 네이티브 아티팩트",
+        "description": "워크플로우마다 11개의 구조화된 아티팩트: 프레스 릴리스, PRD, 아키텍처, API 명세, UX 명세, 태스크 등."
+      }
+    ]
+  },
+  "philosophy": {
+    "eyebrow": "철학",
+    "title": "9가지 철학이 만드는 차이",
+    "items": [
+      {
+        "title": "모두를 위한 오케스트레이션",
+        "description": "9명의 도메인 전문 에이전트가 모든 작업에 협력합니다. 전문화는 항상 일반화를 이깁니다."
+      },
+      {
+        "title": "토큰 절약",
+        "description": "품질을 희생하지 않으면서 토큰 소비를 최소화합니다. 효율적인 AI가 책임 있는 AI입니다."
+      },
+      {
+        "title": "자기 진화",
+        "description": "모든 회고가 전역 학습에 기여합니다. JARFIS는 프로젝트 반복을 거듭할수록 더 스마트해집니다."
+      },
+      {
+        "title": "변증법적 품질",
+        "description": "QA와 Security 에이전트가 가정에 도전합니다. 대립적 리뷰가 더 나은 결과를 만듭니다."
+      },
+      {
+        "title": "AI 네이티브 아티팩트",
+        "description": "워크플로우마다 11개의 구조화된 문서. 모든 결정이 아이디어에서 배포까지 추적 가능합니다."
+      },
+      {
+        "title": "암기보다 추상화",
+        "description": "태스크 목록이 아닌 재사용 가능한 패턴과 원칙을 구축합니다. 지식이 프로젝트 전반에 걸쳐 복리로 쌓입니다."
+      },
+      {
+        "title": "결정론적 기반",
+        "description": "재현 가능한 워크플로우, 명시적 상태, 문서화된 결정이 모호함을 제거합니다."
+      },
+      {
+        "title": "인간이 승인, AI가 실행",
+        "description": "AI가 실행하고 인간이 결정합니다. 모든 중요한 게이트는 진행 전에 명시적 승인이 필요합니다."
+      },
+      {
+        "title": "회복 탄력적 연속성",
+        "description": "PreCompact 훅과 상태 파일이 컨텍스트 리셋 전반에 걸쳐 워크플로우 진행 상황을 보존합니다."
+      }
+    ]
+  },
+  "growth": {
+    "eyebrow": "성장",
+    "title": "사용할수록 강해지는 팀",
+    "stats": [
+      { "value": "9", "label": "AI 에이전트" },
+      { "value": "24/7", "label": "끊이지 않는 협업" },
+      { "value": "100%", "label": "오픈소스" }
+    ]
+  },
+  "quickstart": {
+    "eyebrow": "빠른 시작",
+    "title": "빠른 시작",
+    "steps": [
+      { "label": "문서 확인" },
+      { "label": "빠른 시작" },
+      { "label": "설치" },
+      { "label": "워크플로우 실행" }
+    ],
+    "terminal_prompt": "$ jarfis:work Build a user authentication system",
+    "terminal_output_1": "[Phase T] Triage -- classifying request...",
+    "terminal_output_2": "[Phase 0] Pre-flight -- loading...",
+    "terminal_output_3": "[PO] Product Owner agent — analyzing scope...",
+    "terminal_output_4": "[AR] Architect agent — designing system...",
+    "terminal_output_5": "[BE][FE][QA] agents — spawning..."
   },
   "value": {
     "title": "왜 JARFIS인가?",
@@ -50,7 +144,7 @@
     "cta": "전체 문서 보기"
   },
   "social_proof": {
-    "title": "JARFIS 수치로 보기",
+    "title": "숫자로 보는 JARFIS",
     "version_label": "최신 버전",
     "agents_label": "에이전트",
     "artifacts_label": "아티팩트",
@@ -63,85 +157,85 @@
   },
   "features": {
     "page_title": "기능",
-    "page_subtitle": "타협 없이 AI로 구축하는 데 필요한 모든 것.",
-    "differentiator_title": "AI 보조 개발에 대한 다른 접근 방식",
-    "traditional": "기존 AI 코딩 도구",
+    "page_subtitle": "트레이드오프 없이 AI로 구축하는 데 필요한 모든 것.",
+    "differentiator_title": "AI 지원 개발에 대한 다른 접근법",
+    "traditional": "일반적인 AI 코딩 도구",
     "jarfis": "JARFIS",
     "compare": {
       "single_ai": "단일 AI 채팅 어시스턴트",
-      "team": "역할이 정의된 9명의 도메인 전문 에이전트",
-      "suggestion": "직접 적용해야 하는 코드 제안",
+      "team": "정의된 역할을 가진 9개의 도메인 전문 에이전트",
+      "suggestion": "수동으로 적용하는 코드 제안",
       "autonomous": "프레스 릴리스부터 회고까지 전체 워크플로우",
       "vendor": "벤더 플랫폼 또는 API 필요",
       "selfhost": "순수 Claude Code — CLI에서 실행",
       "completion": "코드 수준 출력만",
-      "workflow": "프로젝트마다 11개의 구조화된 아티팩트",
-      "blackbox": "불투명한 의사결정 과정",
-      "transparent": "아티팩트에 모든 결정이 문서화됨"
+      "workflow": "프로젝트당 11개의 구조화된 아티팩트",
+      "blackbox": "불투명한 결정 프로세스",
+      "transparent": "아티팩트에 문서화된 모든 결정"
     },
-    "learn_more": "문서에서 자세히 보기",
+    "learn_more": "문서에서 더 알아보기",
     "view_github": "GitHub에서 보기",
     "agent_team_title": "9명의 전문 에이전트, 하나의 워크플로우",
-    "agent_team_desc": "JARFIS는 PO, Architect, Tech Lead, Backend, Frontend, DevOps, QA, Security, UX 등 9명의 전문화된 에이전트를 오케스트레이션합니다. 각 에이전트는 전용 도메인 전문 지식과 역할별 CLAUDE.md 지침을 보유합니다. 이들은 순차적으로 협업하며 매 단계마다 아티팩트를 인계합니다.",
+    "agent_team_desc": "JARFIS는 9개의 전문 에이전트 — PO, Architect, Tech Lead, Backend, Frontend, DevOps, QA, Security, UX — 를 오케스트레이션합니다. 각 에이전트는 전용 도메인 전문성과 역할별 CLAUDE.md 지침을 갖추고 있습니다.",
     "agent_team_bullets": [
       "9가지 역할: PO, Architect, Tech Lead, Backend, Frontend, DevOps, QA, Security, UX",
-      "각 에이전트는 도메인 특화 지침과 전문 지식을 보유",
-      "아티팩트 인계를 통한 순차적 협업",
-      "정의된 역할로 모호함과 중복 제거"
+      "각 에이전트는 도메인별 지침과 전문성 보유",
+      "아티팩트 핸드오프를 통한 순차적 협업",
+      "정의된 역할이 모호함과 중복을 제거"
     ],
     "claude_code_title": "Claude Code 네이티브 아키텍처",
-    "claude_code_desc": "JARFIS는 순수 Claude Code 워크플로우로 구축되었습니다 — 외부 서버도, API 래퍼도, 독점 런타임도 없습니다. 모든 것이 슬래시 커맨드와 로컬 CLI의 CLAUDE.md 컨벤션을 통해 실행됩니다. PreCompact 훅이 컨텍스트 리셋 전반에 걸쳐 워크플로우 상태를 보존합니다.",
+    "claude_code_desc": "JARFIS는 순수 Claude Code 워크플로우로 구축됩니다 — 외부 서버, API 래퍼, 독점 런타임 없음. 모든 것이 로컬 CLI의 슬래시 커맨드와 CLAUDE.md 컨벤션을 통해 실행됩니다.",
     "claude_code_bullets": [
       "순수 슬래시 커맨드 인터페이스 — 외부 서버 불필요",
       "에이전트 지침을 위한 CLAUDE.md 컨벤션",
-      "컨텍스트 리셋 복원력을 위한 PreCompact 훅",
-      "Claude Code가 실행되는 어디서든 동작 — 로컬 또는 CI"
+      "컨텍스트 리셋 탄력성을 위한 PreCompact 훅",
+      "Claude Code가 실행되는 어디서든 작동 — 로컬 또는 CI"
     ],
     "artifacts_title": "11개의 구조화된 아티팩트",
-    "artifacts_desc": "모든 JARFIS 워크플로우는 11개의 문서화된 아티팩트를 생성합니다: 프레스 릴리스, PRD, 아키텍처 문서, API 명세, UX 명세, 태스크 목록, 테스트 전략, 배포 계획, 코드 리뷰, 그리고 회고. 모든 결정이 캡처되고 모든 인계가 추적 가능합니다.",
+    "artifacts_desc": "모든 JARFIS 워크플로우는 11개의 문서화된 아티팩트를 생성합니다: 프레스 릴리스, PRD, 아키텍처 문서, API 명세, UX 명세, 태스크 목록, 테스트 전략, 배포 계획, 코드 리뷰, 회고.",
     "artifacts_bullets": [
       "프레스 릴리스 → PRD → 아키텍처 → API 명세",
       "UX 명세 → 태스크 → 테스트 전략 → 배포 계획",
       "코드 리뷰 + 회고로 모든 워크플로우 마무리",
-      "아이디어부터 배포까지 완전한 감사 추적"
+      "아이디어에서 배포까지 전체 감사 추적"
     ],
     "learning_title": "지속적 학습 시스템",
-    "learning_desc": "JARFIS는 실행을 거듭하며 지식을 축적합니다. jarfis-learnings.md는 모든 회고에서 전역 교훈을 캡처합니다. context.md는 프로젝트별 상태를 보유합니다. .jarfis-state.json 파일이 워크플로우 진행 상황을 추적하여 JARFIS가 정확히 중단된 지점부터 이어갈 수 있습니다.",
+    "learning_desc": "JARFIS는 실행 전반에 걸쳐 지식을 축적합니다. jarfis-learnings.md가 모든 회고의 전역 교훈을 캡처합니다.",
     "learning_bullets": [
       "jarfis-learnings.md: 모든 프로젝트의 전역 교훈",
-      "context.md: 프로젝트별 영속 상태",
-      ".jarfis-state.json: 워크플로우 진행 상황 추적",
-      "매 반복마다 시스템이 더 스마트해짐"
+      "context.md: 프로젝트별 영구 상태",
+      ".jarfis-state.json: 워크플로우 진행 추적",
+      "반복할수록 시스템이 더 스마트해짐"
     ],
-    "cta_heading": "실제 동작을 확인할 준비가 되셨나요?",
-    "footnote": "* 특정 제품이 아닌 일반적인 카테고리 패턴을 기반으로 한 비교입니다.",
-    "agents_section_title": "9명의 에이전트 소개",
-    "agents_section_subtitle": "각 에이전트는 깊은 도메인 전문성과 역할별 지침을 갖추고 있습니다. 함께 첫 번째 사용자 스토리부터 최종 회고까지 전체 제품 라이프사이클을 커버합니다.",
+    "cta_heading": "실제로 확인할 준비가 되셨나요?",
+    "footnote": "* 비교는 일반적인 카테고리 패턴 기반이며, 특정 제품에 대한 것이 아닙니다.",
+    "agents_section_title": "9명의 에이전트를 만나보세요",
+    "agents_section_subtitle": "각 에이전트는 깊은 도메인 전문성과 역할별 지침을 갖추고 있습니다. 함께 첫 번째 유저 스토리부터 최종 회고까지 전체 제품 생명주기를 커버합니다.",
     "agents": {
       "po": {
-        "name": "Product Owner",
+        "name": "프로덕트 오너",
         "abbr": "PO",
-        "desc": "역질문으로 요구사항을 구체화합니다. Working Backwards 문서와 PRD를 작성하고, 코드 한 줄도 작성되기 전에 해당 기능의 필요성을 평가합니다.",
+        "desc": "역질문을 통해 요구사항을 명확히 합니다. Working Backwards 문서와 PRD를 작성합니다. 코드 한 줄도 작성되기 전에 기능이 구축할 가치가 있는지 평가합니다.",
         "tags": [
-          "요구사항 구체화",
+          "요구사항",
           "PRD",
           "Working Backwards"
         ]
       },
       "architect": {
-        "name": "Architect",
+        "name": "아키텍트",
         "abbr": "ARCH",
-        "desc": "기술 실현가능성과 장기적 영향을 평가합니다. 팀 전체가 의존하는 시스템 아키텍처 문서, Impact Analysis, ADR(Architecture Decision Records)을 작성합니다.",
+        "desc": "기술적 실현가능성과 장기적 결과를 평가합니다. 팀 전체가 의존하는 시스템 아키텍처 문서, 영향 분석, Architecture Decision Records(ADR)를 생성합니다.",
         "tags": [
-          "아키텍처 설계",
+          "아키텍처",
           "ADR",
           "영향 분석"
         ]
       },
       "tech_lead": {
-        "name": "Tech Lead",
+        "name": "테크 리드",
         "abbr": "TL",
-        "desc": "API 명세를 리뷰하고 태스크를 실행 가능한 단위로 분해합니다. 코드 리뷰를 진행하고, 배포 전략을 담당하며, 시스템에 교훈을 환류하는 회고를 주도합니다.",
+        "desc": "API 명세를 검토하고, 태스크를 실행 가능한 단위로 분해하며, 코드 리뷰를 수행하고, 배포 전략을 소유하며, 교훈을 시스템에 피드백하는 회고를 진행합니다.",
         "tags": [
           "코드 리뷰",
           "태스크 분해",
@@ -149,19 +243,19 @@
         ]
       },
       "ux": {
-        "name": "UX Designer",
+        "name": "UX 디자이너",
         "abbr": "UX",
-        "desc": "정보 구조, 사용자 흐름, 와이어프레임, 인터랙션 패턴을 정의합니다. 구현 전에 제품이 접근 가능하고 직관적임을 보장합니다.",
+        "desc": "정보 아키텍처, 사용자 흐름, 와이어프레임, 인터랙션 패턴을 정의합니다. 구현 시작 전에 제품이 접근 가능하고 직관적인지 확인합니다.",
         "tags": [
-          "정보 구조",
+          "정보 아키텍처",
           "와이어프레임",
           "접근성"
         ]
       },
       "backend": {
-        "name": "Backend Engineer",
+        "name": "백엔드 엔지니어",
         "abbr": "BE",
-        "desc": "앞서 워크플로우에서 생성된 아키텍처와 API 명세에 따라 서버 API를 구현하고, 데이터 모델을 정의하며, 백엔드 서비스를 구축합니다.",
+        "desc": "서버 사이드 API를 구현하고, 데이터 모델을 정의하며, 워크플로우 앞부분에서 생성된 아키텍처와 API 명세에 따라 백엔드 서비스를 구축합니다.",
         "tags": [
           "API 구현",
           "데이터 모델",
@@ -169,9 +263,9 @@
         ]
       },
       "frontend": {
-        "name": "Frontend Engineer",
+        "name": "프론트엔드 엔지니어",
         "abbr": "FE",
-        "desc": "UX 명세와 업스트림에서 생성된 태스크 목록을 기반으로 UI 컴포넌트를 구축하고, 클라이언트 상태를 관리하며, 프론트엔드와 백엔드 API를 통합합니다.",
+        "desc": "UI 컴포넌트를 구축하고, 클라이언트 사이드 상태를 관리하며, UX 명세와 업스트림에서 생성된 태스크 목록에 따라 프론트엔드를 백엔드 API와 통합합니다.",
         "tags": [
           "UI 컴포넌트",
           "상태 관리",
@@ -181,7 +275,7 @@
       "devops": {
         "name": "DevOps / SRE",
         "abbr": "OPS",
-        "desc": "인프라 구성, CI/CD 파이프라인 설정, 자동화 배포, 모니터링을 담당합니다. 모든 릴리스가 재현 가능하고 관측 가능하도록 보장합니다.",
+        "desc": "인프라 구성, CI/CD 파이프라인 설정, 자동화된 배포, 모니터링을 소유합니다. 모든 릴리스가 재현 가능하고 관찰 가능하도록 보장합니다.",
         "tags": [
           "CI/CD",
           "인프라",
@@ -189,9 +283,9 @@
         ]
       },
       "qa": {
-        "name": "QA Engineer",
+        "name": "QA 엔지니어",
         "abbr": "QA",
-        "desc": "테스트 전략을 수립하고 테스트 피라미드를 구성하며 E2E 시나리오를 작성합니다. 아티팩트가 다음 단계로 넘어가기 전에 품질 기준을 검증합니다.",
+        "desc": "테스트 전략을 설계하고, 테스트 피라미드를 구축하며, E2E 시나리오를 작성하고, 아티팩트가 다음 단계로 넘어가기 전에 품질 게이트를 검증합니다.",
         "tags": [
           "테스트 전략",
           "테스트 피라미드",
@@ -199,23 +293,23 @@
         ]
       },
       "security": {
-        "name": "Security Engineer",
+        "name": "보안 엔지니어",
         "abbr": "SEC",
-        "desc": "코드 출시 전 보안을 사전 검토합니다. OWASP Top 10, 인증/인가 모델을 다루고 모든 기능에 대한 취약점 분석을 수행합니다.",
+        "desc": "코드 배포 전에 보안 태세를 검토합니다. OWASP Top 10, 인증 및 권한 부여 모델을 커버하고 모든 기능에 대해 취약점 분석을 수행합니다.",
         "tags": [
           "OWASP Top 10",
-          "인증/인가",
+          "인증 및 권한",
           "취약점 분석"
         ]
       }
     }
   },
   "seo": {
-    "home_description": "하나의 슬래시 커맨드. 9명의 전문 에이전트. JARFIS가 Claude Code에서 전체 제품 워크플로우를 오케스트레이션합니다.",
-    "features_description": "JARFIS 기능 탐색: 9명의 전문 에이전트, 11개의 구조화된 아티팩트, 지속적 학습 시스템.",
+    "home_description": "하나의 슬래시 커맨드. 아홉 명의 전문 에이전트. JARFIS가 Claude Code에서 전체 제품 워크플로우를 오케스트레이션합니다.",
+    "features_description": "JARFIS 기능 탐색: 9개의 전문 에이전트, 11개의 구조화된 아티팩트, 지속적 학습 시스템.",
     "docs_description": "JARFIS 문서: 시작하기, 개념, 가이드, API 레퍼런스.",
     "blog_description": "JARFIS 팀의 업데이트, 심층 분석, 릴리스 노트.",
-    "showcase_description": "JARFIS로 구축된 프로젝트 — AI 오케스트레이션 제품 개발의 실제 사례."
+    "showcase_description": "JARFIS로 구축된 프로젝트 — AI 오케스트레이션 제품 개발 실제 사례."
   },
   "docs": {
     "page_title": "문서",
@@ -226,7 +320,7 @@
       "guides": "가이드",
       "api_reference": "API 레퍼런스"
     },
-    "last_updated": "마지막 업데이트",
+    "last_updated": "최종 업데이트",
     "prev_page": "이전",
     "next_page": "다음",
     "on_this_page": "이 페이지에서",
@@ -234,53 +328,55 @@
   },
   "blog": {
     "page_title": "블로그",
-    "page_subtitle": "업데이트, 심층 분석 및 릴리스 노트",
-    "empty_title": "이야기가 작성되고 있습니다.",
-    "empty_desc": "첫 번째 게시물이 곧 올라옵니다 — GitHub에서 팔로우하여 최신 소식을 받아보세요.",
-    "follow_github": "GitHub에서 팔로우",
-    "watch_repo": "레포 Watch",
+    "page_subtitle": "업데이트, 심층 분석, 릴리스 노트",
+    "empty_title": "이야기가 작성 중입니다.",
+    "empty_desc": "첫 번째 포스트가 준비 중입니다 — GitHub를 팔로우하여 업데이트를 받아보세요.",
+    "follow_github": "GitHub 팔로우",
+    "watch_repo": "저장소 구독",
     "read_more": "더 읽기",
-    "prev_post": "이전 글",
-    "next_post": "다음 글"
+    "prev_post": "이전",
+    "next_post": "다음"
   },
   "showcase": {
     "page_title": "쇼케이스",
     "page_subtitle": "JARFIS로 구축된 프로젝트",
-    "empty_title": "JARFIS로 최초로 구축해 보세요.",
-    "empty_desc": "이 웹사이트 자체가 JARFIS 에이전트(UX, 프론트엔드, QA)가 함께 만들었습니다. 당신의 프로젝트가 다음이 될 수 있습니다.",
+    "empty_title": "JARFIS로 첫 번째로 구축해보세요.",
+    "empty_desc": "이 웹사이트 자체가 JARFIS 에이전트들이 구축했습니다 — UX, 프론트엔드, QA가 함께 작업했습니다. 당신의 프로젝트가 다음이 될 수 있습니다.",
     "submit": "프로젝트 제출",
     "view_project": "프로젝트 보기",
     "view_source": "소스 보기"
   },
   "footer": {
-    "license": "MIT 라이선스",
+    "copyright": "2026 Sana-Lazystar. 오픈 소스.",
+    "documentation": "문서",
+    "github_link": "GitHub",
+    "blog": "블로그",
     "community": "커뮤니티",
+    "license": "MIT 라이선스",
     "project": "프로젝트",
     "resources": "리소스",
-    "github_link": "GitHub",
     "changelog": "변경 로그",
     "releases": "릴리스",
-    "documentation": "문서",
     "quick_start": "빠른 시작",
     "features_link": "기능",
     "discussions": "GitHub 토론",
     "issues": "GitHub 이슈",
     "contributing": "기여 가이드",
-    "copyright": "JARFIS 기여자",
-    "built_with": "JARFIS로 구축",
-    "tagline": "AI와 함께 소프트웨어를 출시하는 환상적인 방법"
+    "built_with": "JARFIS로 구축됨",
+    "tagline": "함께 진화하는 AI 개발팀"
   },
   "a11y": {
-    "skip_to_content": "주 콘텐츠로 건너뛰기",
-    "toggle_menu": "내비게이션 메뉴 전환",
+    "skip_to_content": "메인 콘텐츠로 이동",
+    "toggle_menu": "내비게이션 메뉴 토글",
     "switch_language": "언어 전환",
     "view_github": "GitHub에서 JARFIS 보기",
     "close_nav": "내비게이션 메뉴 닫기",
-    "open_nav": "내비게이션 메뉴 열기"
+    "open_nav": "내비게이션 메뉴 열기",
+    "solar_system": "JARFIS AI 에이전트 생태계 — 9개의 에이전트가 중앙 JARFIS 코어를 공전합니다"
   },
   "common": {
     "read_more": "더 읽기",
-    "back_to_list": "목록으로",
+    "back_to_list": "목록으로 돌아가기",
     "language": "언어",
     "footer_rights": "모든 권리 보유.",
     "github": "GitHub",
@@ -293,75 +389,57 @@
     "items": [
       {
         "number": "01",
-        "title": "인간이 루프 안에",
-        "description": "AI가 실행하고, 인간이 결정합니다. 모든 중요한 게이트는 진행 전 명시적 승인이 필요합니다."
+        "title": "루프 안의 인간",
+        "description": "AI가 실행하고 인간이 결정합니다. 모든 중요한 게이트는 진행 전에 명시적 승인이 필요합니다."
       },
       {
         "number": "02",
-        "title": "전문화 우선",
-        "description": "9명의 전문 에이전트가 하나의 범용 어시스턴트보다 우수합니다. 도메인 전문성은 내장되어 있습니다."
+        "title": "일반화보다 전문화",
+        "description": "9개의 집중된 에이전트가 하나의 일반 어시스턴트보다 뛰어납니다. 도메인 전문성은 내장되어 있습니다."
       },
       {
         "number": "03",
         "title": "코드가 아닌 아티팩트",
-        "description": "워크플로우마다 11개의 구조화된 문서. 모든 결정이 아이디어부터 배포까지 추적 가능합니다."
+        "description": "워크플로우마다 11개의 구조화된 문서. 모든 결정이 아이디어에서 배포까지 추적 가능합니다."
       },
       {
         "number": "04",
-        "title": "컨텍스트 복원력",
-        "description": "PreCompact 훅과 상태 파일이 컨텍스트 리셋 전반에 걸쳐 워크플로우를 보존합니다."
+        "title": "컨텍스트 회복 탄력성",
+        "description": "PreCompact 훅과 상태 파일이 컨텍스트 리셋 전반에 걸쳐 워크플로우를 보존합니다. 아무것도 잃지 않습니다."
       },
       {
         "number": "05",
         "title": "지속적 학습",
-        "description": "모든 회고가 전역 학습에 반영됩니다. JARFIS는 프로젝트마다 더 스마트해집니다."
+        "description": "모든 회고가 전역 학습에 기여합니다. JARFIS는 프로젝트마다 더 스마트해집니다."
       },
       {
         "number": "06",
-        "title": "벤더 종속 없음",
-        "description": "순수 Claude Code, 순수 오픈 소스. 독점 런타임도, 외부 서버도, 별도 계정도 필요 없습니다."
+        "title": "제로 벤더 종속성",
+        "description": "순수 Claude Code, 순수 오픈 소스. 독점 런타임, 외부 서버, 계정 없음."
       },
       {
         "number": "07",
-        "title": "전체 라이프사이클 커버",
-        "description": "프레스 릴리스부터 회고까지 — 단순 구현이 아닙니다. 전체 제품 라이프사이클을 오케스트레이션합니다."
+        "title": "전체 생명주기 커버리지",
+        "description": "프레스 릴리스부터 회고까지 — 구현만이 아닙니다. 전체 제품 생명주기, 오케스트레이션됨."
       },
       {
         "number": "08",
         "title": "설계에 의한 투명성",
-        "description": "모든 에이전트의 결정이 문서화됩니다. 감사 추적은 부가적인 것이 아닌 핵심입니다."
+        "description": "모든 에이전트 결정이 문서화됩니다. 감사 추적이 제품이며, 사후 고려 사항이 아닙니다."
       },
       {
         "number": "09",
         "title": "사용을 통한 진화",
-        "description": "JARFIS를 많이 사용할수록 더 좋아집니다. 사용이 곧 피드백 루프입니다."
+        "description": "JARFIS를 더 많이 사용할수록 더 좋아집니다. 사용이 피드백 루프입니다."
       }
     ]
   },
   "terminal": {
     "loading": "터미널 로딩 중..."
   },
-  "growth": {
-    "title": "성장",
-    "subtitle": "JARFIS가 매 워크플로우와 함께 진화하는 방식",
-    "stats_title": "수치로 보기",
-    "latest": "최신",
-    "milestones": [
-      {
-        "version": "v1.0.0",
-        "title": "초기 릴리스",
-        "description": "9개 단계와 3개 인간 게이트를 갖춘 핵심 9에이전트 오케스트레이션."
-      },
-      {
-        "version": "v1.0.7",
-        "title": "프로덕션 준비 완료",
-        "description": "완전한 아티팩트 생성과 상태 지속성을 갖춘 안정적인 워크플로우 엔진."
-      }
-    ]
-  },
   "error": {
     "not_found_title": "404: 페이지를 찾을 수 없습니다",
-    "not_found_message": "$ cat page.txt\ncat: page.txt: 파일 또는 디렉토리가 없습니다",
+    "not_found_message": "$ cat page.txt\ncat: page.txt: 해당 파일이나 디렉토리가 없습니다",
     "go_home": "$ cd ~",
     "go_home_label": "홈으로 돌아가기"
   }

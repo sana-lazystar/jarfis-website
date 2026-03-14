@@ -29,17 +29,18 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
   return (
     <html lang={locale} className="dark">
       <head>
-        <meta httpEquiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; base-uri 'self'; form-action 'none';" />
+        <meta httpEquiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none';" />
         <meta name="color-scheme" content="dark" />
         <link rel="icon" href="/jarfis-website/favicon.ico" sizes="any" />
         <link rel="icon" href="/jarfis-website/favicon.svg" type="image/svg+xml" />
       </head>
       <body>
         <NextIntlClientProvider locale={locale as Locale} messages={messages}>
-          <div className="flex min-h-screen flex-col bg-zinc-950">
+          <div className="flex min-h-screen flex-col" style={{ background: 'var(--color-neutral-dark)' }}>
             <a
               href="#main-content"
-              className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-green-500 focus:px-4 focus:py-2 focus:text-black"
+              className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:px-4 focus:py-2"
+              style={{ background: 'var(--color-primary)', color: 'var(--color-text-primary)' }}
             >
               {t('skip_to_content')}
             </a>

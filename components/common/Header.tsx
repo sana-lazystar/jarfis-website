@@ -3,7 +3,6 @@ import { getTranslations } from 'next-intl/server';
 import Logo from './Logo';
 import LanguageSelector from './LanguageSelector';
 import MobileNav from './MobileNav';
-import GitHubIcon from '@/components/icons/GitHubIcon';
 
 interface HeaderProps {
   locale: string;
@@ -11,8 +10,6 @@ interface HeaderProps {
 
 export default async function Header({ locale }: HeaderProps) {
   const t = await getTranslations('nav');
-  const tA11y = await getTranslations('a11y');
-  const tCommon = await getTranslations('common');
 
   const navLinks = [
     { href: `/${locale}/features/`, label: t('features') },
@@ -22,42 +19,63 @@ export default async function Header({ locale }: HeaderProps) {
   ];
 
   return (
-    <header className="sticky top-0 z-40 border-b border-zinc-800 bg-zinc-950/80 backdrop-blur-md">
+    <header
+      className="fixed top-0 left-0 right-0 z-40 h-16"
+      style={{
+        background: 'rgba(10, 22, 40, 0.8)',
+        backdropFilter: 'blur(20px) saturate(1.4)',
+        WebkitBackdropFilter: 'blur(20px) saturate(1.4)',
+        borderBottom: '1px solid rgba(26, 44, 71, 0.6)',
+      }}
+    >
+      <style>{`
+        .nav-link {
+          color: var(--color-text-secondary);
+          transition: color 0.2s;
+        }
+        .nav-link:hover {
+          color: var(--color-primary-light);
+        }
+        .header-cta {
+          background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+          color: #0A1628;
+          transition: box-shadow 0.2s, transform 0.2s;
+        }
+        .header-cta:hover {
+          box-shadow: 0 4px 15px rgba(13, 148, 136, 0.3);
+          transform: translateY(-1px);
+        }
+      `}</style>
       <nav
-        className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6"
+        className="mx-auto flex h-full max-w-7xl items-center justify-between px-4 sm:px-6"
         aria-label="Main navigation"
       >
         {/* Logo */}
         <Logo locale={locale} />
 
-        {/* Desktop Navigation */}
-        <div className="hidden items-center gap-1 md:flex" role="list">
-          {navLinks.map((link, i) => (
+        {/* Desktop Navigation — hidden on mobile */}
+        <div className="hidden items-center gap-1 sm:flex" role="list">
+          {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               role="listitem"
-              className="px-3 py-1.5 font-mono text-sm text-zinc-400 hover:text-zinc-100 transition-colors rounded hover:bg-zinc-800"
+              className="nav-link px-3 py-1.5 text-sm rounded"
             >
-              {i > 0 && <span className="mr-2 text-zinc-700">|</span>}
               {link.label}
             </Link>
           ))}
         </div>
 
-        {/* Right side: Language + GitHub */}
-        <div className="hidden items-center gap-3 md:flex">
+        {/* Right side: Language + Get Started CTA */}
+        <div className="hidden items-center gap-3 sm:flex">
           <LanguageSelector currentLocale={locale} />
-          <a
-            href="https://github.com/sana-lazystar/jarfis"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 px-3 py-1.5 font-mono text-sm text-zinc-400 border border-zinc-700 rounded hover:border-green-500 hover:text-green-500 transition-colors"
-            aria-label={tA11y('view_github')}
+          <Link
+            href={`/${locale}/docs/getting-started/`}
+            className="header-cta inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 text-sm font-semibold"
           >
-            <GitHubIcon />
-            <span className="hidden lg:inline">{tCommon('github')}</span>
-          </a>
+            {t('get_started')}
+          </Link>
         </div>
 
         {/* Mobile Nav Toggle */}

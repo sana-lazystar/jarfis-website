@@ -5,28 +5,38 @@
 @import '@fontsource/jetbrains-mono/500.css';
 @import '@fontsource/jetbrains-mono/600.css';
 @import '@fontsource/jetbrains-mono/700.css';
-@import '@fontsource/inter/400.css';
-@import '@fontsource/inter/500.css';
-@import '@fontsource/inter/600.css';
+@import '@fontsource/dm-sans/400.css';
+@import '@fontsource/dm-sans/500.css';
+@import '@fontsource/dm-sans/600.css';
+@import '@fontsource/dm-sans/700.css';
+@import '@fontsource/dm-sans/800.css';
 
-/* Terminal Poetry Design Tokens */
+/* Living Ecosystem Design Tokens */
 @theme {
-  /* Colors */
-  --color-bg-primary: #09090b;
-  --color-bg-surface: #18181b;
-  --color-bg-elevated: #27272a;
-  --color-text-primary: #fafafa;
-  --color-text-secondary: #a1a1aa;
-  --color-text-muted: #71717a;
-  --color-accent-green: #22c55e;
-  --color-accent-violet: #8b5cf6;
-  --color-accent-amber: #f59e0b;
-  --color-border-default: #27272a;
-  --color-border-hover: #3f3f46;
+  /* Background */
+  --color-neutral-dark: #0A1628;
+  --color-neutral-darker: #070F1E;
+  --color-surface: #0F1D32;
+  --color-border: #1A2C47;
+
+  /* Primary (Teal) */
+  --color-primary: #0D9488;
+  --color-primary-light: #5EEAD4;
+
+  /* Accent (Coral) */
+  --color-accent-coral: #FB7185;
+
+  /* Secondary Accent (Yellow) */
+  --color-accent-yellow: #FBBF24;
+
+  /* Text */
+  --color-text-primary: #F0FDF4;
+  --color-text-secondary: #94A3B8;
+  --color-text-muted: #64748B;
 
   /* Fonts */
+  --font-sans: 'DM Sans', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', 'Courier New', monospace;
-  --font-sans: 'Inter', system-ui, sans-serif;
 }
 
 /* Base styles */
@@ -36,7 +46,7 @@ html {
 }
 
 body {
-  background-color: var(--color-bg-primary);
+  background-color: var(--color-neutral-dark);
   color: var(--color-text-primary);
   font-family: var(--font-sans);
   line-height: 1.75;
@@ -44,25 +54,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* CRT Scanline effect */
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    rgba(0, 0, 0, 0.03) 2px,
-    rgba(0, 0, 0, 0.03) 4px
-  );
-  pointer-events: none;
-  z-index: 9999;
-}
-
 /* Focus styles */
 :focus-visible {
-  outline: 2px solid #22c55e;
+  outline: 2px solid var(--color-primary-light);
   outline-offset: 2px;
 }
 
@@ -72,25 +66,25 @@ body::after {
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #18181b;
+  background: var(--color-neutral-darker);
 }
 ::-webkit-scrollbar-thumb {
-  background: #27272a;
+  background: var(--color-border);
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #3f3f46;
+  background: var(--color-primary);
 }
 
 /* Selection */
 ::selection {
-  background-color: rgba(34, 197, 94, 0.2);
-  color: #fafafa;
+  background-color: rgba(13, 148, 136, 0.25);
+  color: var(--color-text-primary);
 }
 
 /* Prose styles for MDX content */
 .prose {
-  color: #a1a1aa;
+  color: var(--color-text-secondary);
   max-width: 65ch;
 }
 
@@ -100,7 +94,7 @@ body::after {
 .prose h4,
 .prose h5,
 .prose h6 {
-  color: #fafafa;
+  color: var(--color-text-primary);
   font-family: 'JetBrains Mono', monospace;
   font-weight: 600;
   letter-spacing: -0.02em;
@@ -118,7 +112,7 @@ body::after {
   margin-top: 2.5rem;
   margin-bottom: 0.75rem;
   padding-bottom: 0.5rem;
-  border-bottom: 1px solid #27272a;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .prose h3 {
@@ -133,37 +127,37 @@ body::after {
 }
 
 .prose a {
-  color: #22c55e;
+  color: var(--color-primary-light);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
 .prose a:hover {
-  color: #4ade80;
+  color: var(--color-text-primary);
 }
 
 .prose strong {
-  color: #fafafa;
+  color: var(--color-text-primary);
   font-weight: 600;
 }
 
 .prose em {
-  color: #d4d4d8;
+  color: var(--color-text-secondary);
 }
 
 .prose code {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.875em;
-  background-color: #18181b;
-  border: 1px solid #27272a;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
   padding: 0.125rem 0.375rem;
   border-radius: 4px;
-  color: #22c55e;
+  color: var(--color-primary-light);
 }
 
 .prose pre {
-  background-color: #18181b;
-  border: 1px solid #27272a;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
   border-radius: 8px;
   padding: 1.25rem;
   overflow-x: auto;
@@ -174,7 +168,7 @@ body::after {
   background: transparent;
   border: none;
   padding: 0;
-  color: #d4d4d8;
+  color: var(--color-text-secondary);
   font-size: 0.875rem;
 }
 
@@ -189,18 +183,18 @@ body::after {
 }
 
 .prose ul li::marker {
-  color: #22c55e;
+  color: var(--color-primary);
 }
 
 .prose ol li::marker {
-  color: #22c55e;
+  color: var(--color-primary);
 }
 
 .prose blockquote {
-  border-left: 3px solid #22c55e;
+  border-left: 3px solid var(--color-primary);
   padding-left: 1rem;
   margin: 1.5rem 0;
-  color: #71717a;
+  color: var(--color-text-muted);
   font-style: italic;
 }
 
@@ -212,19 +206,19 @@ body::after {
 }
 
 .prose th {
-  background-color: #18181b;
-  color: #fafafa;
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
   font-family: 'JetBrains Mono', monospace;
   font-weight: 600;
   padding: 0.75rem 1rem;
   text-align: left;
-  border: 1px solid #27272a;
+  border: 1px solid var(--color-border);
 }
 
 .prose td {
   padding: 0.625rem 1rem;
-  border: 1px solid #27272a;
-  color: #a1a1aa;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
 }
 
 .prose tr:nth-child(even) td {
@@ -232,8 +226,89 @@ body::after {
 }
 
 .prose hr {
-  border-color: #27272a;
+  border-color: var(--color-border);
   margin: 2rem 0;
+}
+
+/* ========== ANIMATIONS ========== */
+
+/* Logo breathe */
+@keyframes breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* Coral dot pulse (Hero badge) */
+@keyframes coral-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.6; }
+}
+
+/* Cursor blink (Quickstart terminal) */
+@keyframes cursor-blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* Growth curve draw */
+@keyframes draw-curve {
+  from { stroke-dashoffset: 400; }
+  to { stroke-dashoffset: 0; }
+}
+
+/* Now-point pulse (Growth section) */
+@keyframes now-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.8); opacity: 0; }
+}
+
+/* ========== SOLAR SYSTEM ANIMATIONS ========== */
+
+/* Sun corona pulse */
+@keyframes corona-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.18); opacity: 1; }
+}
+
+/* Inner orbit planets */
+@keyframes orbitInner1 { from { transform: rotate(-50deg); } to { transform: rotate(310deg); } }
+@keyframes orbitInner2 { from { transform: rotate(-170deg); } to { transform: rotate(190deg); } }
+@keyframes orbitInner3 { from { transform: rotate(70deg); } to { transform: rotate(430deg); } }
+
+/* Mid orbit planets */
+@keyframes orbitMid1 { from { transform: rotate(-110deg); } to { transform: rotate(250deg); } }
+@keyframes orbitMid2 { from { transform: rotate(10deg); } to { transform: rotate(370deg); } }
+@keyframes orbitMid3 { from { transform: rotate(130deg); } to { transform: rotate(490deg); } }
+
+/* Outer orbit planets */
+@keyframes orbitOuter1 { from { transform: rotate(-30deg); } to { transform: rotate(330deg); } }
+@keyframes orbitOuter2 { from { transform: rotate(-150deg); } to { transform: rotate(210deg); } }
+@keyframes orbitOuter3 { from { transform: rotate(90deg); } to { transform: rotate(450deg); } }
+
+/* Counter-rotations (keep text upright) */
+@keyframes counterInner1 { from { transform: rotate(50deg); } to { transform: rotate(-310deg); } }
+@keyframes counterInner2 { from { transform: rotate(170deg); } to { transform: rotate(-190deg); } }
+@keyframes counterInner3 { from { transform: rotate(-70deg); } to { transform: rotate(-430deg); } }
+
+@keyframes counterMid1 { from { transform: rotate(110deg); } to { transform: rotate(-250deg); } }
+@keyframes counterMid2 { from { transform: rotate(-10deg); } to { transform: rotate(-370deg); } }
+@keyframes counterMid3 { from { transform: rotate(-130deg); } to { transform: rotate(-490deg); } }
+
+@keyframes counterOuter1 { from { transform: rotate(30deg); } to { transform: rotate(-330deg); } }
+@keyframes counterOuter2 { from { transform: rotate(150deg); } to { transform: rotate(-210deg); } }
+@keyframes counterOuter3 { from { transform: rotate(-90deg); } to { transform: rotate(-450deg); } }
+
+/* Particle twinkle */
+@keyframes twinkle {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+
+/* Background blob float */
+@keyframes blob-float {
+  0%, 100% { transform: translate(0, 0); }
+  33% { transform: translate(20px, -15px); }
+  66% { transform: translate(-10px, 10px); }
 }
 
 /* Reduced motion */
@@ -248,9 +323,5 @@ body::after {
 
   html {
     scroll-behavior: auto;
-  }
-
-  body::after {
-    display: none;
   }
 }

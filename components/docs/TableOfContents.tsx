@@ -57,7 +57,10 @@ export default function TableOfContents({ className = '' }: TableOfContentsProps
 
   return (
     <nav className={`${className}`} aria-label="Table of contents">
-      <p className="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-3">
+      <p
+        className="text-xs font-semibold uppercase tracking-wider mb-3"
+        style={{ fontFamily: 'var(--font-mono)', color: 'var(--color-text-muted)' }}
+      >
         {t('on_this_page')}
       </p>
       <ul className="space-y-1" role="list">
@@ -65,11 +68,12 @@ export default function TableOfContents({ className = '' }: TableOfContentsProps
           <li key={heading.id} style={{ paddingLeft: `${(heading.level - 2) * 12}px` }}>
             <a
               href={`#${heading.id}`}
-              className={`block font-mono text-xs py-0.5 transition-colors ${
-                activeId === heading.id
-                  ? 'text-green-500'
-                  : 'text-zinc-500 hover:text-zinc-300'
-              }`}
+              className="block text-xs py-0.5 transition-colors"
+              style={{
+                fontFamily: 'var(--font-mono)',
+                color: activeId === heading.id ? 'var(--color-primary-light)' : 'var(--color-text-muted)',
+                textDecoration: 'none',
+              }}
               aria-current={activeId === heading.id ? 'location' : undefined}
             >
               {heading.text}
