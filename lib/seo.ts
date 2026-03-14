@@ -23,7 +23,14 @@ export function generateSeoMetadata({
   ogImage,
   noIndex,
 }: SeoProps): Metadata {
-  const pageTitle = title === SITE_NAME ? title : `${title} | ${SITE_NAME}`;
+  // layout.tsx의 template '%s | JARFIS'가 <title> 태그에 자동 적용됨
+  // 홈 페이지(title === SITE_NAME)에서는 template 적용을 방지하기 위해 absolute title 사용
+  const pageTitle =
+    title === SITE_NAME
+      ? { absolute: 'JARFIS — The Fantastic Way to Ship Software with AI' }
+      : title;
+  // OG/Twitter에는 template이 적용 안 되므로 사이트명 포함한 풀 타이틀 별도 구성
+  const ogTitle = title === SITE_NAME ? title : `${title} | ${SITE_NAME}`;
   const canonicalUrl = `${BASE_URL}/${locale}${path}`;
   const ogImageUrl = `${BASE_URL}${ogImage || DEFAULT_OG_IMAGE}`;
 
@@ -42,7 +49,7 @@ export function generateSeoMetadata({
       languages: alternates as Record<string, string>,
     },
     openGraph: {
-      title: pageTitle,
+      title: ogTitle,
       description,
       url: canonicalUrl,
       siteName: SITE_NAME,
@@ -53,13 +60,13 @@ export function generateSeoMetadata({
           url: ogImageUrl,
           width: 1200,
           height: 630,
-          alt: pageTitle,
+          alt: ogTitle,
         },
       ],
     },
     twitter: {
       card: 'summary_large_image',
-      title: pageTitle,
+      title: ogTitle,
       description,
       images: [ogImageUrl],
     },
