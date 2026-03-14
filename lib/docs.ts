@@ -132,3 +132,26 @@ export function getAllDocStaticParams(): { locale: string; slug: string }[] {
 
   return params;
 }
+
+/**
+ * sitemap 전용: 각 locale에 실제 MDX 파일이 존재하는 경우만 반환.
+ * en fallback으로 렌더링되는 ja/zh 문서는 SEO상 포함하지 않는다.
+ */
+export function getNativeDocStaticParams(): { locale: string; slug: string }[] {
+  const params: { locale: string; slug: string }[] = [];
+
+  for (const locale of SUPPORTED_LOCALES) {
+    const localeDir = path.join(docsDir, locale);
+    if (!fs.existsSync(localeDir)) continue;
+
+    const files = fs.readdirSync(localeDir).filter((f) => f.endsWith('.mdx'));
+    for (const file of files) {
+      const slug = file.replace('.mdx', '');
+      const frontmatter = parseFrontmatter(path.join(localeDir, file));
+      if (!frontmatter || frontmatter.draft) continue;
+      params.push({ locale, slug });
+    }
+  }
+
+  return params;
+}

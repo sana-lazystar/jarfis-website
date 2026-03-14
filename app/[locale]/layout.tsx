@@ -36,7 +36,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
       </head>
       <body>
         <NextIntlClientProvider locale={locale as Locale} messages={messages}>
-          <div className="flex min-h-screen flex-col" style={{ backgroundColor: '#09090b' }}>
+          <div className="flex min-h-screen flex-col bg-zinc-950">
             <a
               href="#main-content"
               className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-green-500 focus:px-4 focus:py-2 focus:text-black"
