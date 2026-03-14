@@ -36,9 +36,9 @@ html {
 }
 
 body {
-  background-color: #09090b;
-  color: #fafafa;
-  font-family: 'Inter', system-ui, sans-serif;
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
   line-height: 1.75;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
