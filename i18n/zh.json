@@ -1,0 +1,361 @@
+{
+  "nav": {
+    "home": "首页",
+    "features": "功能",
+    "docs": "文档",
+    "blog": "博客",
+    "showcase": "展示"
+  },
+  "hero": {
+    "tagline": "用AI发布软件的<br/>绝妙方式",
+    "subtitle": "100%开源。您的AI团队，您的规则。",
+    "description": "一个斜杠命令。九位专业智能体。从新闻稿到复盘 — 在Claude Code上编排的完整产品工作流。",
+    "badge": "9个AI智能体，一条斜杠命令",
+    "cta_github": "在GitHub上查看",
+    "cta_start": "开始使用",
+    "terminal_prompt": "$ jarfis start"
+  },
+  "value": {
+    "title": "为什么选择JARFIS？",
+    "agent_team_title": "9位专业智能体",
+    "agent_team_desc": "PO、Architect、Tech Lead、Backend、Frontend、DevOps、QA、Security、UX — 九位专家凭借各自的领域知识和指令协同完成每项任务。",
+    "claude_code_title": "Claude Code原生",
+    "claude_code_desc": "作为纯粹的Claude Code工作流构建。无需外部服务器，无API包装器 — 只需斜杠命令、CLAUDE.md约定和本地CLI。在Claude Code运行的任何地方都可使用。",
+    "artifacts_title": "不只是代码，而是制品",
+    "artifacts_desc": "每个工作流生成11个结构化制品：新闻稿、PRD、架构文档、API规范、UX规范、任务清单、测试策略、部署计划、代码审查和复盘。每个决策都有据可查。",
+    "learning_title": "持续学习的系统",
+    "learning_desc": "全局学习内容（jarfis-learnings.md）和项目上下文（context.md）随每次运行不断积累。PreCompact钩子和.jarfis-state.json保存工作流状态，让JARFIS在每次迭代中都更加智能。"
+  },
+  "how_it_works": {
+    "title": "JARFIS如何工作",
+    "subtitle": "一个命令启动完整的产品开发生命周期",
+    "phase1_title": "分诊",
+    "phase1_desc": "解析请求，确定范围，选择合适的工作流",
+    "phase2_title": "预检",
+    "phase2_desc": "加载项目上下文，恢复状态，验证前提条件",
+    "phase3_title": "探索",
+    "phase3_desc": "PO撰写新闻稿和PRD，进行影响分析",
+    "phase4_title": "架构",
+    "phase4_desc": "Architect设计系统结构、API规范和任务分解",
+    "phase5_title": "UX设计",
+    "phase5_desc": "UX智能体创建交互规范和视觉方向",
+    "phase6_title": "实施",
+    "phase6_desc": "FE/BE/DevOps智能体从任务列表执行任务",
+    "phase7_title": "运维就绪",
+    "phase7_desc": "DevOps准备部署计划和基础设施检查",
+    "phase8_title": "审查与QA",
+    "phase8_desc": "QA + Security智能体验证质量、运行测试、审计安全",
+    "phase9_title": "复盘",
+    "phase9_desc": "团队反思、收集学习内容、更新全局知识",
+    "cta": "查看完整文档"
+  },
+  "social_proof": {
+    "title": "JARFIS数字一览",
+    "version_label": "最新版本",
+    "agents_label": "智能体",
+    "artifacts_label": "制品",
+    "commands_label": "命令"
+  },
+  "final_cta": {
+    "title": "准备好以不同方式发布软件了吗？",
+    "cta_github": "在GitHub上查看",
+    "cta_docs": "阅读文档"
+  },
+  "features": {
+    "page_title": "功能",
+    "page_subtitle": "无需妥协，用AI构建所需的一切。",
+    "differentiator_title": "AI辅助开发的不同方式",
+    "traditional": "传统AI编码工具",
+    "jarfis": "JARFIS",
+    "compare": {
+      "single_ai": "单一AI聊天助手",
+      "team": "拥有明确角色的9位领域专家智能体",
+      "suggestion": "需要手动应用的代码建议",
+      "autonomous": "从新闻稿到复盘的完整工作流",
+      "vendor": "需要供应商平台或API",
+      "selfhost": "纯粹的Claude Code — 在您的CLI上运行",
+      "completion": "仅有代码级别输出",
+      "workflow": "每个项目11个结构化制品",
+      "blackbox": "不透明的决策过程",
+      "transparent": "每个决策都记录在制品中"
+    },
+    "learn_more": "在文档中了解更多",
+    "view_github": "在GitHub上查看",
+    "agent_team_title": "9位专业智能体，一套工作流",
+    "agent_team_desc": "JARFIS编排PO、Architect、Tech Lead、Backend、Frontend、DevOps、QA、Security、UX九位专业智能体，每位都拥有专属的领域专业知识和角色专用CLAUDE.md指令。他们按顺序协作，在每个阶段交接制品。",
+    "agent_team_bullets": [
+      "9种角色：PO、Architect、Tech Lead、Backend、Frontend、DevOps、QA、Security、UX",
+      "每位智能体拥有特定领域的指令和专业知识",
+      "通过制品交接实现顺序协作",
+      "明确的角色消除歧义和重叠"
+    ],
+    "claude_code_title": "Claude Code原生架构",
+    "claude_code_desc": "JARFIS作为纯粹的Claude Code工作流构建 — 没有外部服务器、没有API包装器、没有专有运行时。一切都通过斜杠命令和本地CLI的CLAUDE.md约定运行。PreCompact钩子在上下文重置后保存工作流状态。",
+    "claude_code_bullets": [
+      "纯斜杠命令界面 — 无需外部服务器",
+      "用于智能体指令的CLAUDE.md约定",
+      "用于上下文重置恢复的PreCompact钩子",
+      "在Claude Code运行的任何地方都可使用 — 本地或CI"
+    ],
+    "artifacts_title": "11个结构化制品",
+    "artifacts_desc": "每个JARFIS工作流生成11个有据可查的制品：新闻稿、PRD、架构文档、API规范、UX规范、任务清单、测试策略、部署计划、代码审查和复盘。每个决策都被记录，每次交接都可追溯。",
+    "artifacts_bullets": [
+      "新闻稿 → PRD → 架构 → API规范",
+      "UX规范 → 任务 → 测试策略 → 部署计划",
+      "代码审查 + 复盘结束每个工作流",
+      "从创意到部署的完整审计追踪"
+    ],
+    "learning_title": "持续学习系统",
+    "learning_desc": "JARFIS随每次运行积累知识。jarfis-learnings.md记录每次复盘的全局经验。context.md保存项目特定状态。.jarfis-state.json文件追踪工作流进度，使JARFIS能从上次中断的确切位置继续。",
+    "learning_bullets": [
+      "jarfis-learnings.md：所有项目的全局经验",
+      "context.md：项目特定的持久状态",
+      ".jarfis-state.json：工作流进度追踪",
+      "每次迭代都让系统更加智能"
+    ],
+    "cta_heading": "准备好查看实际效果了吗？",
+    "footnote": "* 基于一般类别模式的比较，而非针对特定产品。",
+    "agents_section_title": "认识9位智能体",
+    "agents_section_subtitle": "每位智能体都拥有深厚的领域专业知识和角色专属指令。他们共同覆盖从第一个用户故事到最终复盘的完整产品生命周期。",
+    "agents": {
+      "po": {
+        "name": "Product Owner",
+        "abbr": "PO",
+        "desc": "通过反向提问明确需求。撰写Working Backwards文档和PRD，在编写任何代码之前评估功能的必要性。",
+        "tags": [
+          "需求澄清",
+          "PRD",
+          "Working Backwards"
+        ]
+      },
+      "architect": {
+        "name": "Architect",
+        "abbr": "ARCH",
+        "desc": "评估技术可行性和长期影响。产出整个团队依赖的系统架构文档、影响分析和架构决策记录（ADR）。",
+        "tags": [
+          "架构设计",
+          "ADR",
+          "影响分析"
+        ]
+      },
+      "tech_lead": {
+        "name": "Tech Lead",
+        "abbr": "TL",
+        "desc": "审查API规范，将任务分解为可执行单元，进行代码审查，负责部署策略，并主导将经验反馈到系统的复盘。",
+        "tags": [
+          "代码审查",
+          "任务分解",
+          "复盘"
+        ]
+      },
+      "ux": {
+        "name": "UX Designer",
+        "abbr": "UX",
+        "desc": "定义信息架构、用户流程、线框图和交互模式。确保产品在实现之前具备可访问性和直观性。",
+        "tags": [
+          "信息架构",
+          "线框图",
+          "可访问性"
+        ]
+      },
+      "backend": {
+        "name": "Backend Engineer",
+        "abbr": "BE",
+        "desc": "遵循工作流上游生成的架构和API规范，实现服务端API、定义数据模型并构建后端服务。",
+        "tags": [
+          "API实现",
+          "数据模型",
+          "后端服务"
+        ]
+      },
+      "frontend": {
+        "name": "Frontend Engineer",
+        "abbr": "FE",
+        "desc": "基于UX规范和上游生成的任务清单，构建UI组件，管理客户端状态，集成前后端API。",
+        "tags": [
+          "UI组件",
+          "状态管理",
+          "API集成"
+        ]
+      },
+      "devops": {
+        "name": "DevOps / SRE",
+        "abbr": "OPS",
+        "desc": "负责基础设施配置、CI/CD流水线搭建、自动化部署和监控。确保每次发布可复现且可观测。",
+        "tags": [
+          "CI/CD",
+          "基础设施",
+          "监控"
+        ]
+      },
+      "qa": {
+        "name": "QA Engineer",
+        "abbr": "QA",
+        "desc": "制定测试策略，构建测试金字塔，编写E2E场景，在任何制品交付下一阶段前验证质量门控。",
+        "tags": [
+          "测试策略",
+          "测试金字塔",
+          "E2E场景"
+        ]
+      },
+      "security": {
+        "name": "Security Engineer",
+        "abbr": "SEC",
+        "desc": "在代码发布前进行安全预审。覆盖OWASP Top 10、认证授权模型，并对每项功能进行漏洞分析。",
+        "tags": [
+          "OWASP Top 10",
+          "认证授权",
+          "漏洞分析"
+        ]
+      }
+    }
+  },
+  "seo": {
+    "home_description": "一个斜杠命令。9位专业智能体。JARFIS在Claude Code上编排您的整个产品工作流。",
+    "features_description": "探索JARFIS功能：9位专业智能体、11个结构化制品和持续学习系统。",
+    "docs_description": "JARFIS文档：入门指南、概念、教程和API参考。",
+    "blog_description": "来自JARFIS团队的更新、深度解析和发布说明。",
+    "showcase_description": "用JARFIS构建的项目 — AI编排产品开发的实际案例。"
+  },
+  "docs": {
+    "page_title": "文档",
+    "sidebar_title": "文档",
+    "categories": {
+      "getting_started": "快速开始",
+      "concepts": "概念",
+      "guides": "指南",
+      "api_reference": "API参考"
+    },
+    "last_updated": "最后更新",
+    "prev_page": "上一页",
+    "next_page": "下一页",
+    "on_this_page": "本页内容",
+    "not_translated": "此页面尚未翻译。显示英文版本。"
+  },
+  "blog": {
+    "page_title": "博客",
+    "page_subtitle": "更新、深度解析和发布说明",
+    "empty_title": "文章正在撰写中。",
+    "empty_desc": "第一篇文章即将发布 — 在GitHub上关注我们，及时获取更新。",
+    "follow_github": "在GitHub上关注",
+    "watch_repo": "Watch仓库",
+    "read_more": "阅读更多",
+    "prev_post": "上一篇",
+    "next_post": "下一篇"
+  },
+  "showcase": {
+    "page_title": "展示",
+    "page_subtitle": "用JARFIS构建的项目",
+    "empty_title": "成为第一个用JARFIS构建的人。",
+    "empty_desc": "这个网站本身就是由JARFIS智能体（UX、Frontend、QA）共同构建的。您的项目可以是下一个。",
+    "submit": "提交您的项目",
+    "view_project": "查看项目",
+    "view_source": "查看源码"
+  },
+  "footer": {
+    "license": "MIT许可证",
+    "community": "社区",
+    "project": "项目",
+    "resources": "资源",
+    "github_link": "GitHub",
+    "changelog": "变更日志",
+    "releases": "发布",
+    "documentation": "文档",
+    "quick_start": "快速开始",
+    "features_link": "功能",
+    "discussions": "GitHub讨论",
+    "issues": "GitHub问题",
+    "contributing": "贡献指南",
+    "copyright": "JARFIS贡献者",
+    "built_with": "用JARFIS构建",
+    "tagline": "用AI发布软件的绝妙方式"
+  },
+  "a11y": {
+    "skip_to_content": "跳转到主要内容",
+    "toggle_menu": "切换导航菜单",
+    "switch_language": "切换语言"
+  },
+  "common": {
+    "read_more": "阅读更多",
+    "back_to_list": "返回列表",
+    "language": "语言",
+    "footer_rights": "保留所有权利。",
+    "github": "GitHub",
+    "copy": "复制",
+    "copied": "已复制!"
+  },
+  "philosophies": {
+    "title": "9条哲学",
+    "subtitle": "$ cat PHILOSOPHY.md",
+    "items": [
+      {
+        "number": "01",
+        "title": "人类在环路中",
+        "description": "AI执行，人类决策。每个关键门控都需要明确批准才能继续。"
+      },
+      {
+        "number": "02",
+        "title": "专业化优于泛化",
+        "description": "9个专注的智能体优于一个通用助手。领域专业知识是内置的，而非临时提示的。"
+      },
+      {
+        "number": "03",
+        "title": "制品，而非仅仅是代码",
+        "description": "每个工作流11个结构化文档。每个决策从创意到部署都可追溯。"
+      },
+      {
+        "number": "04",
+        "title": "上下文弹性",
+        "description": "PreCompact钩子和状态文件在上下文重置时保留工作流。什么都不会丢失。"
+      },
+      {
+        "number": "05",
+        "title": "持续学习",
+        "description": "每次复盘都会反馈到全局学习中。JARFIS在每个项目中都变得更聪明。"
+      },
+      {
+        "number": "06",
+        "title": "零供应商锁定",
+        "description": "纯Claude Code，纯开源。无专有运行时，无外部服务器，无需账户。"
+      },
+      {
+        "number": "07",
+        "title": "全生命周期覆盖",
+        "description": "从新闻稿到复盘 — 不仅仅是实现。完整的产品生命周期，全部编排。"
+      },
+      {
+        "number": "08",
+        "title": "设计上的透明度",
+        "description": "每个智能体的决策都有记录。审计追踪是产品，而非事后想法。"
+      },
+      {
+        "number": "09",
+        "title": "通过使用进化",
+        "description": "使用JARFIS越多，它就越好。使用就是反馈循环。"
+      }
+    ]
+  },
+  "growth": {
+    "title": "成长",
+    "subtitle": "JARFIS如何随每个工作流进化",
+    "stats_title": "数字一览",
+    "milestones": [
+      {
+        "version": "v1.0.0",
+        "title": "初始发布",
+        "description": "具有9个阶段和3个人类门控的核心9智能体编排。"
+      },
+      {
+        "version": "v1.0.7",
+        "title": "生产就绪",
+        "description": "具有完整制品生成和状态持久性的稳定工作流引擎。"
+      }
+    ]
+  },
+  "error": {
+    "not_found_title": "404：页面未找到",
+    "not_found_message": "$ cat page.txt\ncat: page.txt: 没有这样的文件或目录",
+    "go_home": "$ cd ~",
+    "go_home_label": "返回主页"
+  }
+}

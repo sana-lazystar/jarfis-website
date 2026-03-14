@@ -15,7 +15,7 @@ import { fileURLToPath } from "url";
 import { join, dirname } from "path";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const I18N_DIR = join(__dirname, "..", "src", "i18n");
+const I18N_DIR = join(__dirname, "..", "i18n");
 
 // ---------------------------------------------------------------------------
 // Leaf key path 추출 (dot-notation)
