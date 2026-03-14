@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { getMdxContent } from '@/lib/mdx';
 import { getBlogPostByLocaleAndSlug, getAllBlogStaticParams } from '@/lib/blog';
 import { generateSeoMetadata } from '@/lib/seo';
@@ -32,6 +32,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { locale, slug } = await params;
+  setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: 'blog' });
 
   const result = getBlogPostByLocaleAndSlug(locale as Locale, slug);
@@ -50,63 +51,143 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   });
 
   return (
-    <div className="mx-auto max-w-4xl px-4 sm:px-6 py-16">
-      {/* Back link */}
-      <Link
-        href={`/${locale}/blog/`}
-        className="inline-flex items-center gap-2 text-sm mb-8"
-        style={{ fontFamily: 'var(--font-mono)', color: 'var(--color-text-muted)', textDecoration: 'none' }}
+    <>
+      <style>{`
+        .blog-detail-back {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.375rem;
+          color: var(--color-text-muted);
+          text-decoration: none;
+          font-size: 0.8125rem;
+          font-weight: 500;
+          margin-bottom: 2rem;
+          transition: color 0.3s ease;
+        }
+        .blog-detail-back:hover { color: var(--color-primary-light); }
+      `}</style>
+
+      <section
+        style={{
+          padding: '10rem 0 6rem',
+          background: 'var(--color-neutral-dark)',
+        }}
       >
-        ← {t('prev_post')}
-      </Link>
-
-      {/* Post header */}
-      <header className="mb-10">
-        <time dateTime={frontmatter.pubDate} style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
-          {formattedDate}
-        </time>
-        <h1
-          className="text-3xl font-bold tracking-tight mt-2 mb-4 leading-tight lg:text-4xl"
-          style={{ color: 'var(--color-text-primary)', fontFamily: 'var(--font-mono)' }}
+        <div
+          style={{
+            maxWidth: 720,
+            margin: '0 auto',
+            padding: '0 2rem',
+          }}
         >
-          {frontmatter.title}
-        </h1>
-        <p className="text-base leading-relaxed mb-4" style={{ color: 'var(--color-text-muted)' }}>
-          {frontmatter.description}
-        </p>
+          {/* Back link */}
+          <Link href={`/${locale}/blog/`} className="blog-detail-back">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              aria-hidden="true"
+            >
+              <path d="M19 12H5M12 19l-7-7 7-7" />
+            </svg>
+            {t('back_to_blog')}
+          </Link>
 
-        <div className="flex items-center gap-4">
-          <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
-            by {frontmatter.author}
-          </span>
-          {frontmatter.tags.length > 0 && (
-            <div className="flex flex-wrap gap-1.5" role="list" aria-label="Tags">
-              {frontmatter.tags.map((tag) => (
-                <span
-                  key={tag}
-                  role="listitem"
-                  className="text-xs px-2 py-0.5 rounded"
-                  style={{
-                    fontFamily: 'var(--font-mono)',
-                    background: 'rgba(251, 113, 133, 0.08)',
-                    color: 'var(--color-accent-coral)',
-                    border: '1px solid rgba(251, 113, 133, 0.15)',
-                  }}
-                >
-                  #{tag}
-                </span>
-              ))}
-            </div>
-          )}
+          {/* Meta: date + category */}
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.75rem',
+              marginBottom: '1.25rem',
+              flexWrap: 'wrap',
+            }}
+          >
+            <time
+              dateTime={frontmatter.pubDate}
+              style={{
+                fontSize: '0.75rem',
+                color: 'var(--color-text-muted)',
+                fontWeight: 500,
+              }}
+            >
+              {formattedDate}
+            </time>
+            {frontmatter.tags[0] && (
+              <span
+                style={{
+                  fontSize: '0.6875rem',
+                  fontWeight: 600,
+                  color: 'var(--color-primary-light)',
+                  background: 'rgba(13, 148, 136, 0.1)',
+                  padding: '0.125rem 0.5rem',
+                  borderRadius: 4,
+                  textTransform: 'uppercase' as const,
+                  letterSpacing: '0.04em',
+                }}
+              >
+                {frontmatter.tags[0]}
+              </span>
+            )}
+          </div>
+
+          {/* Title */}
+          <h1
+            style={{
+              fontSize: 'clamp(1.75rem, 3.5vw, 2.5rem)',
+              fontWeight: 800,
+              lineHeight: 1.25,
+              letterSpacing: '-0.02em',
+              color: 'var(--color-text-primary)',
+              marginBottom: '1.5rem',
+            }}
+          >
+            {frontmatter.title}
+          </h1>
+
+          {/* Tags row */}
+          <div
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              gap: '0.5rem',
+              marginBottom: '2.5rem',
+              paddingBottom: '2.5rem',
+              borderBottom: '1px solid var(--color-border)',
+            }}
+            role="list"
+            aria-label="Tags"
+          >
+            {frontmatter.tags.map((tag) => (
+              <span
+                key={tag}
+                role="listitem"
+                style={{
+                  fontFamily: 'var(--font-mono)',
+                  fontSize: '0.6875rem',
+                  fontWeight: 500,
+                  color: 'var(--color-text-muted)',
+                  background: 'rgba(100, 116, 139, 0.1)',
+                  border: '1px solid rgba(100, 116, 139, 0.15)',
+                  padding: '0.125rem 0.4375rem',
+                  borderRadius: 4,
+                }}
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+
+          {/* MDX content */}
+          <article className="prose prose-invert max-w-none">
+            {mdxContent.content}
+          </article>
         </div>
-      </header>
-
-      <hr style={{ borderColor: 'var(--color-border)', marginBottom: '2.5rem' }} />
-
-      {/* Post content */}
-      <article className="prose prose-invert max-w-none">
-        {mdxContent.content}
-      </article>
-    </div>
+      </section>
+    </>
   );
 }
