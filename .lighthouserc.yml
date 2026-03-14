@@ -34,7 +34,7 @@ ci:
       # Core Web Vitals
       first-contentful-paint:
         - warn
-        - maxNumericValue: 1800  # 1.8s
+        - maxNumericValue: 1500  # 1.5s (PRD 기준)
           aggregationMethod: optimistic
       largest-contentful-paint:
         - error

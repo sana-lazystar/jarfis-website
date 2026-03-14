@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { SUPPORTED_LOCALES } from '@/i18n/config';
-import { getAllDocStaticParams } from '@/lib/docs';
+import { getNativeDocStaticParams } from '@/lib/docs';
 import { getAllBlogStaticParams } from '@/lib/blog';
 
 export const dynamic = 'force-static';
@@ -11,7 +11,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const entries: MetadataRoute.Sitemap = [];
 
   // 정적 페이지들
-  const staticPages = ['', '/features/', '/blog/', '/showcase/', '/docs/'];
+  const staticPages = ['/', '/features/', '/blog/', '/showcase/', '/docs/'];
 
   for (const locale of SUPPORTED_LOCALES) {
     for (const page of staticPages) {
@@ -19,13 +19,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
         url: `${BASE_URL}/${locale}${page}`,
         lastModified: new Date(),
         changeFrequency: 'monthly',
-        priority: page === '' ? 1.0 : 0.8,
+        priority: page === '/' ? 1.0 : 0.8,
       });
     }
   }
 
-  // Docs 페이지
-  const docParams = getAllDocStaticParams();
+  // Docs 페이지 — 실제 locale별 MDX 파일이 존재하는 항목만 포함 (fallback URL 제외)
+  const docParams = getNativeDocStaticParams();
   for (const { locale, slug } of docParams) {
     entries.push({
       url: `${BASE_URL}/${locale}/docs/${slug}/`,
