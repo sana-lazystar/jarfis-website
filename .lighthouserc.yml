@@ -4,11 +4,11 @@ ci:
     staticDistDir: ./out
     # Audit all locale home pages + key pages
     url:
-      - http://localhost/jarfis-website/en/
-      - http://localhost/jarfis-website/en/features/
-      - http://localhost/jarfis-website/en/docs/getting-started/
-      - http://localhost/jarfis-website/en/blog/
-      - http://localhost/jarfis-website/en/showcase/
+      - http://localhost/en/
+      - http://localhost/en/features/
+      - http://localhost/en/docs/getting-started/
+      - http://localhost/en/blog/
+      - http://localhost/en/showcase/
     numberOfRuns: 3
 
   assert:
