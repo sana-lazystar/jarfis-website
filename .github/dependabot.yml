@@ -16,10 +16,6 @@ updates:
     commit-message:
       prefix: "chore(deps)"
     groups:
-      astro-ecosystem:
-        patterns:
-          - "astro"
-          - "@astrojs/*"
       tailwind-ecosystem:
         patterns:
           - "tailwindcss"
@@ -29,6 +25,11 @@ updates:
           - "eslint*"
           - "prettier*"
           - "typescript"
+    ignore:
+      # eslint-config-next가 eslint 10을 미지원 (eslint-plugin-react 호환성 문제)
+      # eslint-config-next 업데이트 시 이 제한 해제
+      - dependency-name: "eslint"
+        versions: [">=10.0.0"]
 
   # GitHub Actions
   - package-ecosystem: github-actions
