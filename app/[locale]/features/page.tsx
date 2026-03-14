@@ -36,6 +36,13 @@ const COMPARE_ROWS = [
   { traditional: 'blackbox', jarfis: 'transparent' },
 ] as const;
 
+const FEATURE_ICON_COLORS = [
+  'var(--color-primary-light)',
+  'var(--color-accent-coral)',
+  'var(--color-accent-yellow)',
+  'var(--color-primary-light)',
+];
+
 function FeaturesContent({ locale }: { locale: string }) {
   const t = useTranslations('features');
 
@@ -46,7 +53,6 @@ function FeaturesContent({ locale }: { locale: string }) {
       descKey: 'agent_team_desc' as const,
       bulletsKey: 'agent_team_bullets' as const,
       icon: '[>_]',
-      accent: 'text-green-500',
     },
     {
       key: 'claude_code',
@@ -54,7 +60,6 @@ function FeaturesContent({ locale }: { locale: string }) {
       descKey: 'claude_code_desc' as const,
       bulletsKey: 'claude_code_bullets' as const,
       icon: '{cc}',
-      accent: 'text-violet-400',
     },
     {
       key: 'artifacts',
@@ -62,7 +67,6 @@ function FeaturesContent({ locale }: { locale: string }) {
       descKey: 'artifacts_desc' as const,
       bulletsKey: 'artifacts_bullets' as const,
       icon: '[!!]',
-      accent: 'text-amber-400',
     },
     {
       key: 'learning',
@@ -70,53 +74,134 @@ function FeaturesContent({ locale }: { locale: string }) {
       descKey: 'learning_desc' as const,
       bulletsKey: 'learning_bullets' as const,
       icon: '[↻]',
-      accent: 'text-green-500',
     },
   ] as const;
 
   return (
     <>
-      {/* Hero */}
+      <style>{`
+        .features-agent-card {
+          border-radius: 12px;
+          border: 1px solid var(--color-border);
+          background: linear-gradient(145deg, var(--color-surface), rgba(15, 29, 50, 0.4));
+          padding: 1.25rem;
+          transition: border-color 0.2s ease;
+        }
+        .features-agent-card:hover {
+          border-color: rgba(13, 148, 136, 0.35);
+        }
+        .features-cta-primary {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          border-radius: 10px;
+          background: var(--color-primary);
+          padding: 0.75rem 1.5rem;
+          font-family: var(--font-mono);
+          font-size: 0.875rem;
+          font-weight: 600;
+          color: var(--color-text-primary);
+          text-decoration: none;
+          transition: background 0.2s ease;
+        }
+        .features-cta-primary:hover { background: #0F9F92; }
+        .features-cta-secondary {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          border-radius: 10px;
+          border: 1px solid var(--color-border);
+          padding: 0.75rem 1.5rem;
+          font-family: var(--font-mono);
+          font-size: 0.875rem;
+          color: var(--color-text-secondary);
+          text-decoration: none;
+          transition: border-color 0.2s ease, color 0.2s ease;
+        }
+        .features-cta-secondary:hover {
+          border-color: rgba(13, 148, 136, 0.5);
+          color: var(--color-primary-light);
+        }
+        .features-bullet-item {
+          display: flex;
+          align-items: flex-start;
+          gap: 0.75rem;
+          font-size: 0.875rem;
+          color: var(--color-text-secondary);
+        }
+      `}</style>
+
       <div className="mx-auto max-w-7xl px-4 sm:px-6 py-16">
+        {/* Page header */}
         <div className="mb-12">
-          <p className="font-mono text-green-500 text-sm mb-3">$ jarfis features --list</p>
-          <h1 className="font-mono text-4xl font-bold text-zinc-50 tracking-tight">
+          <p
+            className="mb-3 text-sm font-semibold uppercase"
+            style={{ color: 'var(--color-primary-light)', letterSpacing: '0.08em', fontFamily: 'var(--font-mono)' }}
+          >
+            Features
+          </p>
+          <h1
+            className="text-4xl font-bold tracking-tight"
+            style={{ color: 'var(--color-text-primary)', fontFamily: 'var(--font-mono)' }}
+          >
             {t('page_title')}
           </h1>
-          <p className="mt-3 text-zinc-500 text-lg">{t('page_subtitle')}</p>
+          <p className="mt-3 text-lg" style={{ color: 'var(--color-text-muted)' }}>
+            {t('page_subtitle')}
+          </p>
         </div>
 
         {/* Feature sections */}
         <div className="space-y-16 mb-20">
           {featureSections.map((section, index) => {
             const bullets = t.raw(section.bulletsKey) as string[];
+            const iconColor = FEATURE_ICON_COLORS[index % FEATURE_ICON_COLORS.length];
             return (
               <div
                 key={section.key}
-                className={`grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-center ${
-                  index % 2 === 1 ? 'lg:flex-row-reverse' : ''
-                }`}
+                className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-center"
               >
                 <div className={index % 2 === 1 ? 'lg:order-2' : ''}>
-                  <div className={`font-mono text-4xl ${section.accent} mb-4`} aria-hidden="true">
+                  <div
+                    className="text-4xl mb-4"
+                    style={{ fontFamily: 'var(--font-mono)', color: iconColor }}
+                    aria-hidden="true"
+                  >
                     {section.icon}
                   </div>
-                  <h2 className="font-mono text-2xl font-bold text-zinc-50 tracking-tight mb-3">
+                  <h2
+                    className="text-2xl font-bold tracking-tight mb-3"
+                    style={{ color: 'var(--color-text-primary)', fontFamily: 'var(--font-mono)' }}
+                  >
                     {t(section.titleKey)}
                   </h2>
-                  <p className="text-zinc-500 leading-relaxed mb-4">{t(section.descKey)}</p>
+                  <p className="leading-relaxed mb-4" style={{ color: 'var(--color-text-muted)' }}>
+                    {t(section.descKey)}
+                  </p>
                   <ul className="space-y-2" role="list">
                     {bullets.map((bullet, i) => (
-                      <li key={i} className="flex items-start gap-3 text-sm text-zinc-400">
-                        <span className="text-green-500 font-mono shrink-0 mt-0.5">›</span>
+                      <li key={i} className="features-bullet-item">
+                        <span style={{ color: 'var(--color-primary-light)', fontFamily: 'var(--font-mono)', flexShrink: 0, marginTop: '0.125rem' }}>›</span>
                         {bullet}
                       </li>
                     ))}
                   </ul>
                 </div>
                 <div className={index % 2 === 1 ? 'lg:order-1' : ''}>
-                  <div className="rounded-lg border border-zinc-800 bg-zinc-900 p-8">
-                    <div className={`font-mono text-8xl ${section.accent} text-center opacity-20`} aria-hidden="true">
+                  <div
+                    style={{
+                      borderRadius: '16px',
+                      border: '1px solid var(--color-border)',
+                      background: 'var(--color-surface)',
+                      padding: '2rem',
+                      textAlign: 'center',
+                    }}
+                  >
+                    <div
+                      className="text-8xl"
+                      style={{ fontFamily: 'var(--font-mono)', color: iconColor, opacity: 0.2 }}
+                      aria-hidden="true"
+                    >
                       {section.icon}
                     </div>
                   </div>
@@ -128,17 +213,36 @@ function FeaturesContent({ locale }: { locale: string }) {
 
         {/* Comparison Table */}
         <div className="mb-20">
-          <h2 className="font-mono text-2xl font-bold text-zinc-50 tracking-tight mb-8 text-center">
+          <h2
+            className="text-2xl font-bold tracking-tight mb-8 text-center"
+            style={{ color: 'var(--color-text-primary)', fontFamily: 'var(--font-mono)' }}
+          >
             {t('differentiator_title')}
           </h2>
           <div className="overflow-x-auto">
             <table className="w-full border-collapse">
               <thead>
                 <tr>
-                  <th className="border border-zinc-700 bg-zinc-800 px-6 py-3 font-mono text-sm text-zinc-400 text-left">
+                  <th
+                    className="px-6 py-3 text-left text-sm"
+                    style={{
+                      border: '1px solid var(--color-border)',
+                      background: 'var(--color-surface)',
+                      fontFamily: 'var(--font-mono)',
+                      color: 'var(--color-text-muted)',
+                    }}
+                  >
                     {t('traditional')}
                   </th>
-                  <th className="border border-zinc-700 bg-green-500/10 px-6 py-3 font-mono text-sm text-green-500 text-left">
+                  <th
+                    className="px-6 py-3 text-left text-sm"
+                    style={{
+                      border: '1px solid var(--color-border)',
+                      background: 'rgba(13, 148, 136, 0.08)',
+                      fontFamily: 'var(--font-mono)',
+                      color: 'var(--color-primary-light)',
+                    }}
+                  >
                     {t('jarfis')}
                   </th>
                 </tr>
@@ -146,12 +250,18 @@ function FeaturesContent({ locale }: { locale: string }) {
               <tbody>
                 {COMPARE_ROWS.map((row) => (
                   <tr key={row.traditional}>
-                    <td className="border border-zinc-800 px-6 py-4 text-sm text-zinc-500">
-                      <span className="text-red-400 mr-2">✗</span>
+                    <td
+                      className="px-6 py-4 text-sm"
+                      style={{ border: '1px solid var(--color-border)', color: 'var(--color-text-muted)' }}
+                    >
+                      <span style={{ color: 'var(--color-accent-coral)', marginRight: '0.5rem' }}>✗</span>
                       {t(`compare.${row.traditional}`)}
                     </td>
-                    <td className="border border-zinc-800 px-6 py-4 text-sm text-zinc-300">
-                      <span className="text-green-500 mr-2">✓</span>
+                    <td
+                      className="px-6 py-4 text-sm"
+                      style={{ border: '1px solid var(--color-border)', color: 'var(--color-text-secondary)' }}
+                    >
+                      <span style={{ color: 'var(--color-primary-light)', marginRight: '0.5rem' }}>✓</span>
                       {t(`compare.${row.jarfis}`)}
                     </td>
                   </tr>
@@ -159,16 +269,24 @@ function FeaturesContent({ locale }: { locale: string }) {
               </tbody>
             </table>
           </div>
-          <p className="font-mono text-xs text-zinc-600 mt-3 text-center">{t('footnote')}</p>
+          <p
+            className="text-xs mt-3 text-center"
+            style={{ fontFamily: 'var(--font-mono)', color: 'var(--color-text-muted)' }}
+          >
+            {t('footnote')}
+          </p>
         </div>
 
         {/* Agents Section */}
         <div className="mb-16">
           <div className="mb-10 text-center">
-            <h2 className="font-mono text-2xl font-bold text-zinc-50 tracking-tight">
+            <h2
+              className="text-2xl font-bold tracking-tight"
+              style={{ color: 'var(--color-text-primary)', fontFamily: 'var(--font-mono)' }}
+            >
               {t('agents_section_title')}
             </h2>
-            <p className="mt-3 text-zinc-500 text-sm max-w-2xl mx-auto">
+            <p className="mt-3 text-sm max-w-2xl mx-auto" style={{ color: 'var(--color-text-muted)' }}>
               {t('agents_section_subtitle')}
             </p>
           </div>
@@ -183,22 +301,40 @@ function FeaturesContent({ locale }: { locale: string }) {
               };
 
               return (
-                <div
-                  key={agentKey}
-                  className="rounded-lg border border-zinc-800 bg-zinc-900 p-5 hover:border-zinc-700 transition-all"
-                >
+                <div key={agentKey} className="features-agent-card">
                   <div className="flex items-center gap-3 mb-3">
-                    <span className="font-mono text-xs font-bold bg-green-500/10 text-green-500 border border-green-500/20 px-2 py-1 rounded">
+                    <span
+                      className="text-xs font-bold px-2 py-1 rounded"
+                      style={{
+                        fontFamily: 'var(--font-mono)',
+                        background: 'rgba(13, 148, 136, 0.12)',
+                        color: 'var(--color-primary-light)',
+                        border: '1px solid rgba(13, 148, 136, 0.2)',
+                      }}
+                    >
                       {agent.abbr}
                     </span>
-                    <h3 className="font-mono text-sm font-semibold text-zinc-200">{agent.name}</h3>
+                    <h3
+                      className="text-sm font-semibold"
+                      style={{ fontFamily: 'var(--font-mono)', color: 'var(--color-text-primary)' }}
+                    >
+                      {agent.name}
+                    </h3>
                   </div>
-                  <p className="text-xs text-zinc-500 leading-relaxed mb-3">{agent.desc}</p>
+                  <p className="text-xs leading-relaxed mb-3" style={{ color: 'var(--color-text-muted)' }}>
+                    {agent.desc}
+                  </p>
                   <div className="flex flex-wrap gap-1">
                     {agent.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="font-mono text-xs px-1.5 py-0.5 bg-violet-500/10 text-violet-400 border border-violet-500/20 rounded"
+                        className="text-xs px-1.5 py-0.5 rounded"
+                        style={{
+                          fontFamily: 'var(--font-mono)',
+                          background: 'rgba(251, 113, 133, 0.08)',
+                          color: 'var(--color-accent-coral)',
+                          border: '1px solid rgba(251, 113, 133, 0.15)',
+                        }}
                       >
                         {tag}
                       </span>
@@ -211,20 +347,29 @@ function FeaturesContent({ locale }: { locale: string }) {
         </div>
 
         {/* CTA */}
-        <div className="text-center rounded-lg border border-zinc-800 bg-zinc-900 p-12">
-          <h2 className="font-mono text-2xl font-bold text-zinc-50 mb-4">{t('cta_heading')}</h2>
-          <div className="flex items-center justify-center gap-4">
-            <Link
-              href={`/${locale}/docs/`}
-              className="inline-flex items-center gap-2 rounded bg-green-500 px-6 py-3 font-mono text-sm font-bold text-black hover:bg-green-400 transition-colors"
-            >
+        <div
+          className="text-center p-12"
+          style={{
+            borderRadius: '20px',
+            border: '1px solid var(--color-border)',
+            background: 'linear-gradient(145deg, var(--color-surface), rgba(15, 29, 50, 0.4))',
+          }}
+        >
+          <h2
+            className="text-2xl font-bold mb-4"
+            style={{ color: 'var(--color-text-primary)', fontFamily: 'var(--font-mono)' }}
+          >
+            {t('cta_heading')}
+          </h2>
+          <div className="flex items-center justify-center gap-4 flex-wrap">
+            <Link href={`/${locale}/docs/`} className="features-cta-primary">
               {t('learn_more')}
             </Link>
             <a
               href="https://github.com/sana-lazystar/jarfis"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded border border-zinc-600 px-6 py-3 font-mono text-sm text-zinc-300 hover:border-green-500 hover:text-green-500 transition-colors"
+              className="features-cta-secondary"
             >
               {t('view_github')}
             </a>

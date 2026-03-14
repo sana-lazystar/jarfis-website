@@ -39,8 +39,11 @@ export default function DocsSidebar({ docs, currentSlug, locale }: DocsSidebarPr
 
   return (
     <nav aria-label="Documentation navigation" className="sticky top-20 space-y-6">
-      <div className="font-mono text-sm font-semibold text-zinc-400">
-        <span className="text-green-500">$ </span>{t('sidebar_title')}
+      <div
+        className="text-sm font-semibold"
+        style={{ fontFamily: 'var(--font-mono)', color: 'var(--color-text-secondary)' }}
+      >
+        {t('sidebar_title')}
       </div>
 
       {categoryOrder.map((category) => {
@@ -49,7 +52,10 @@ export default function DocsSidebar({ docs, currentSlug, locale }: DocsSidebarPr
 
         return (
           <div key={category}>
-            <h3 className="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-2">
+            <h3
+              className="text-xs font-semibold uppercase tracking-wider mb-2"
+              style={{ fontFamily: 'var(--font-mono)', color: 'var(--color-text-muted)' }}
+            >
               {t(`categories.${CATEGORY_KEY_MAP[category]}`)}
             </h3>
             <ul className="space-y-1" role="list">
@@ -59,11 +65,14 @@ export default function DocsSidebar({ docs, currentSlug, locale }: DocsSidebarPr
                   <li key={doc.slug}>
                     <Link
                       href={`/${locale}/docs/${doc.slug}/`}
-                      className={`block px-3 py-1.5 rounded font-mono text-sm transition-colors ${
-                        isActive
-                          ? 'bg-green-500/10 text-green-500 border-l-2 border-green-500'
-                          : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800'
-                      }`}
+                      className="block px-3 py-1.5 rounded text-sm transition-colors"
+                      style={{
+                        fontFamily: 'var(--font-mono)',
+                        color: isActive ? 'var(--color-primary-light)' : 'var(--color-text-secondary)',
+                        background: isActive ? 'rgba(13, 148, 136, 0.1)' : 'transparent',
+                        borderLeft: isActive ? '2px solid var(--color-primary-light)' : '2px solid transparent',
+                        textDecoration: 'none',
+                      }}
                       aria-current={isActive ? 'page' : undefined}
                     >
                       {doc.title}

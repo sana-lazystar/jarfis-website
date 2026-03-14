@@ -18,10 +18,8 @@ export default function LanguageSelector({ currentLocale }: LanguageSelectorProp
   const dropdownRef = useRef<HTMLDivElement>(null);
   const optionRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
-  // pathname에서 locale 제거하고 나머지 경로 추출
   function getPathWithoutLocale(path: string): string {
     const segments = path.split('/');
-    // /jarfis-website/en/docs/... 형태에서 locale 제거
     const localeIndex = segments.findIndex((s) =>
       SUPPORTED_LOCALES.includes(s as Locale)
     );
@@ -39,7 +37,6 @@ export default function LanguageSelector({ currentLocale }: LanguageSelectorProp
     setFocusedIndex(-1);
   }
 
-  // 드롭다운 외부 클릭 시 닫기
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -51,7 +48,6 @@ export default function LanguageSelector({ currentLocale }: LanguageSelectorProp
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // 드롭다운 열릴 때 현재 locale 항목에 포커스
   useEffect(() => {
     if (isOpen) {
       const currentIndex = SUPPORTED_LOCALES.indexOf(currentLocale as Locale);
@@ -60,7 +56,6 @@ export default function LanguageSelector({ currentLocale }: LanguageSelectorProp
     }
   }, [isOpen, currentLocale]);
 
-  // focusedIndex 변경 시 해당 버튼에 포커스
   useEffect(() => {
     if (isOpen && focusedIndex >= 0 && optionRefs.current[focusedIndex]) {
       optionRefs.current[focusedIndex]?.focus();
@@ -105,7 +100,12 @@ export default function LanguageSelector({ currentLocale }: LanguageSelectorProp
       <button
         onClick={() => setIsOpen(!isOpen)}
         onKeyDown={handleTriggerKeyDown}
-        className="flex items-center gap-1 px-3 py-1.5 font-mono text-sm text-zinc-400 border border-zinc-700 rounded hover:border-zinc-500 hover:text-zinc-200 transition-colors"
+        className="flex items-center gap-1 rounded-full px-3 py-1.5 text-sm transition-colors"
+        style={{
+          border: '1px solid var(--color-border)',
+          color: 'var(--color-text-secondary)',
+          background: 'transparent',
+        }}
         aria-label={t('switch_language')}
         aria-expanded={isOpen}
         aria-haspopup="listbox"
@@ -116,7 +116,11 @@ export default function LanguageSelector({ currentLocale }: LanguageSelectorProp
 
       {isOpen && (
         <div
-          className="absolute right-0 top-full mt-1 w-36 rounded border border-zinc-700 bg-zinc-900 shadow-lg z-50"
+          className="absolute right-0 top-full mt-1 w-36 rounded-lg shadow-lg z-50"
+          style={{
+            border: '1px solid var(--color-border)',
+            background: 'var(--color-surface)',
+          }}
           role="listbox"
           aria-label="Language options"
         >
@@ -126,14 +130,18 @@ export default function LanguageSelector({ currentLocale }: LanguageSelectorProp
               ref={(el) => { optionRefs.current[index] = el; }}
               onClick={() => switchLocale(locale)}
               onKeyDown={(e) => handleOptionKeyDown(e, locale)}
-              className={`w-full flex items-center justify-between px-3 py-2 text-sm font-mono hover:bg-zinc-800 transition-colors text-left ${
-                locale === currentLocale ? 'text-green-500' : 'text-zinc-400'
+              className={`w-full flex items-center justify-between px-3 py-2 text-sm transition-colors text-left rounded-sm ${
+                locale === currentLocale ? '' : ''
               }`}
+              style={{
+                color: locale === currentLocale ? 'var(--color-primary-light)' : 'var(--color-text-secondary)',
+                background: 'transparent',
+              }}
               role="option"
               aria-selected={locale === currentLocale}
             >
               <span>{LOCALE_LABELS[locale]}</span>
-              <span className="text-xs text-zinc-600">{LOCALE_NATIVE_LABELS[locale]}</span>
+              <span className="text-xs" style={{ color: 'var(--color-text-muted)' }}>{LOCALE_NATIVE_LABELS[locale]}</span>
             </button>
           ))}
         </div>
