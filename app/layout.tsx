@@ -16,15 +16,5 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en" className="dark">
-      <head>
-        <meta httpEquiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; base-uri 'self'; form-action 'none';" />
-        <meta name="color-scheme" content="dark" />
-        <link rel="icon" href="/jarfis-website/favicon.ico" sizes="any" />
-        <link rel="icon" href="/jarfis-website/favicon.svg" type="image/svg+xml" />
-      </head>
-      <body>{children}</body>
-    </html>
-  );
+  return children;
 }

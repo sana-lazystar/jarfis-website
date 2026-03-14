@@ -1,7 +1,11 @@
 import { getTranslations } from 'next-intl/server';
 import Link from 'next/link';
 
-export default async function Footer() {
+interface FooterProps {
+  locale: string;
+}
+
+export default async function Footer({ locale }: FooterProps) {
   const t = await getTranslations('footer');
 
   return (
@@ -60,7 +64,7 @@ export default async function Footer() {
             <ul className="mt-3 space-y-2" role="list">
               <li>
                 <Link
-                  href="/en/docs/"
+                  href={`/${locale}/docs/`}
                   className="font-mono text-sm text-zinc-500 hover:text-green-500 transition-colors"
                 >
                   <span className="text-zinc-700">$ </span>{t('documentation')}
@@ -68,7 +72,7 @@ export default async function Footer() {
               </li>
               <li>
                 <Link
-                  href="/en/docs/getting-started/"
+                  href={`/${locale}/docs/getting-started/`}
                   className="font-mono text-sm text-zinc-500 hover:text-green-500 transition-colors"
                 >
                   <span className="text-zinc-700">$ </span>{t('quick_start')}
@@ -76,7 +80,7 @@ export default async function Footer() {
               </li>
               <li>
                 <Link
-                  href="/en/features/"
+                  href={`/${locale}/features/`}
                   className="font-mono text-sm text-zinc-500 hover:text-green-500 transition-colors"
                 >
                   <span className="text-zinc-700">$ </span>{t('features_link')}
