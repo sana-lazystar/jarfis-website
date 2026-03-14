@@ -85,8 +85,8 @@ export default async function GrowthSection() {
             })}
           </div>
 
-          {/* Right: Growth curve SVG */}
-          <div aria-hidden="true">
+          {/* Right: Growth curve SVG — 1024px 이하 모바일에서 숨김 */}
+          <div aria-hidden="true" className="hidden lg:block">
             <svg
               viewBox="0 0 480 280"
               fill="none"
