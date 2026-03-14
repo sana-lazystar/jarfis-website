@@ -1,5 +1,6 @@
-import Image from 'next/image';
 import type { ShowcaseItem } from '@/lib/showcase';
+
+const BASE_PATH = '/jarfis-website';
 
 interface ShowcaseCardProps {
   item: ShowcaseItem;
@@ -16,12 +17,11 @@ export default function ShowcaseCard({
     <article className="rounded-lg border border-zinc-800 bg-zinc-900 overflow-hidden hover:border-zinc-700 transition-all group">
       {/* Thumbnail */}
       <div className="relative aspect-video bg-zinc-800 overflow-hidden">
-        <Image
-          src={item.thumbnail}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={`${BASE_PATH}${item.thumbnail}`}
           alt={item.name}
-          fill
-          className="object-cover group-hover:scale-105 transition-transform duration-300"
-          unoptimized
+          className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
         />
         {item.featured && (
           <span className="absolute top-2 right-2 font-mono text-xs bg-green-500/90 text-black px-2 py-0.5 rounded">
