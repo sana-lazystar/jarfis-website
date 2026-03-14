@@ -54,23 +54,29 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       {/* Back link */}
       <Link
         href={`/${locale}/blog/`}
-        className="inline-flex items-center gap-2 font-mono text-sm text-zinc-500 hover:text-green-500 transition-colors mb-8"
+        className="inline-flex items-center gap-2 text-sm mb-8"
+        style={{ fontFamily: 'var(--font-mono)', color: 'var(--color-text-muted)', textDecoration: 'none' }}
       >
         ← {t('prev_post')}
       </Link>
 
       {/* Post header */}
       <header className="mb-10">
-        <time dateTime={frontmatter.pubDate} className="font-mono text-xs text-zinc-600">
+        <time dateTime={frontmatter.pubDate} style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
           {formattedDate}
         </time>
-        <h1 className="font-mono text-3xl font-bold text-zinc-50 tracking-tight mt-2 mb-4 leading-tight lg:text-4xl">
+        <h1
+          className="text-3xl font-bold tracking-tight mt-2 mb-4 leading-tight lg:text-4xl"
+          style={{ color: 'var(--color-text-primary)', fontFamily: 'var(--font-mono)' }}
+        >
           {frontmatter.title}
         </h1>
-        <p className="text-zinc-500 text-base leading-relaxed mb-4">{frontmatter.description}</p>
+        <p className="text-base leading-relaxed mb-4" style={{ color: 'var(--color-text-muted)' }}>
+          {frontmatter.description}
+        </p>
 
         <div className="flex items-center gap-4">
-          <span className="font-mono text-xs text-zinc-600">
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
             by {frontmatter.author}
           </span>
           {frontmatter.tags.length > 0 && (
@@ -79,7 +85,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 <span
                   key={tag}
                   role="listitem"
-                  className="font-mono text-xs px-2 py-0.5 rounded bg-violet-500/10 text-violet-400 border border-violet-500/20"
+                  className="text-xs px-2 py-0.5 rounded"
+                  style={{
+                    fontFamily: 'var(--font-mono)',
+                    background: 'rgba(251, 113, 133, 0.08)',
+                    color: 'var(--color-accent-coral)',
+                    border: '1px solid rgba(251, 113, 133, 0.15)',
+                  }}
                 >
                   #{tag}
                 </span>
@@ -89,7 +101,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         </div>
       </header>
 
-      <hr className="border-zinc-800 mb-10" />
+      <hr style={{ borderColor: 'var(--color-border)', marginBottom: '2.5rem' }} />
 
       {/* Post content */}
       <article className="prose prose-invert max-w-none">

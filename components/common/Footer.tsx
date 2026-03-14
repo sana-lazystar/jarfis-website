@@ -8,132 +8,66 @@ interface FooterProps {
 export default async function Footer({ locale }: FooterProps) {
   const t = await getTranslations('footer');
 
+  const externalLinks = [
+    { href: `/${locale}/docs/`, label: t('documentation') },
+    { href: 'https://github.com/sana-lazystar/jarfis', label: t('github_link'), external: true },
+    { href: `/${locale}/blog/`, label: t('blog') },
+    { href: 'https://github.com/sana-lazystar/jarfis/discussions', label: t('community'), external: true },
+  ];
+
   return (
-    <footer className="border-t border-zinc-800 bg-zinc-950 mt-20" role="contentinfo">
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          {/* Brand */}
-          <div className="lg:col-span-1">
-            <p className="font-mono text-xl font-bold text-green-500">
-              <span className="text-zinc-500">$ </span>jarfis
+    <footer
+      role="contentinfo"
+      style={{ borderTop: '1px solid var(--color-border)', background: 'var(--color-neutral-darker)' }}
+    >
+      <style>{`
+        .footer-link {
+          color: var(--color-text-muted);
+          transition: color 0.2s;
+          text-decoration: none;
+          font-size: 0.875rem;
+        }
+        .footer-link:hover {
+          color: var(--color-primary-light);
+        }
+      `}</style>
+      <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
+        <div className="flex flex-col items-center justify-between gap-6 sm:flex-row sm:items-start">
+          {/* Left: Logo + copyright */}
+          <div className="flex flex-col items-center gap-2 sm:items-start">
+            <span
+              style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, fontSize: '1rem', color: 'var(--color-text-primary)', letterSpacing: '0.05em' }}
+            >
+              JARFIS
+            </span>
+            <p style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem' }}>
+              &copy; {t('copyright')}
             </p>
-            <p className="mt-2 text-sm text-zinc-500">{t('tagline')}</p>
-            <p className="mt-4 font-mono text-xs text-zinc-600">{t('license')}</p>
           </div>
 
-          {/* Project */}
-          <div>
-            <h3 className="font-mono text-sm font-semibold text-zinc-300">{t('project')}</h3>
-            <ul className="mt-3 space-y-2" role="list">
-              <li>
-                <a
-                  href="https://github.com/sana-lazystar/jarfis"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-mono text-sm text-zinc-500 hover:text-green-500 transition-colors"
-                >
-                  <span className="text-zinc-700">$ </span>{t('github_link')}
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://github.com/sana-lazystar/jarfis/releases"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-mono text-sm text-zinc-500 hover:text-green-500 transition-colors"
-                >
-                  <span className="text-zinc-700">$ </span>{t('releases')}
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://github.com/sana-lazystar/jarfis/blob/main/CHANGELOG.md"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-mono text-sm text-zinc-500 hover:text-green-500 transition-colors"
-                >
-                  <span className="text-zinc-700">$ </span>{t('changelog')}
-                </a>
-              </li>
+          {/* Right: Links */}
+          <nav aria-label="Footer navigation">
+            <ul className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 sm:justify-end" role="list">
+              {externalLinks.map((link) => (
+                <li key={link.href}>
+                  {link.external ? (
+                    <a
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="footer-link"
+                    >
+                      {link.label}
+                    </a>
+                  ) : (
+                    <Link href={link.href} className="footer-link">
+                      {link.label}
+                    </Link>
+                  )}
+                </li>
+              ))}
             </ul>
-          </div>
-
-          {/* Resources */}
-          <div>
-            <h3 className="font-mono text-sm font-semibold text-zinc-300">{t('resources')}</h3>
-            <ul className="mt-3 space-y-2" role="list">
-              <li>
-                <Link
-                  href={`/${locale}/docs/`}
-                  className="font-mono text-sm text-zinc-500 hover:text-green-500 transition-colors"
-                >
-                  <span className="text-zinc-700">$ </span>{t('documentation')}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href={`/${locale}/docs/getting-started/`}
-                  className="font-mono text-sm text-zinc-500 hover:text-green-500 transition-colors"
-                >
-                  <span className="text-zinc-700">$ </span>{t('quick_start')}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href={`/${locale}/features/`}
-                  className="font-mono text-sm text-zinc-500 hover:text-green-500 transition-colors"
-                >
-                  <span className="text-zinc-700">$ </span>{t('features_link')}
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Community */}
-          <div>
-            <h3 className="font-mono text-sm font-semibold text-zinc-300">{t('community')}</h3>
-            <ul className="mt-3 space-y-2" role="list">
-              <li>
-                <a
-                  href="https://github.com/sana-lazystar/jarfis/discussions"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-mono text-sm text-zinc-500 hover:text-green-500 transition-colors"
-                >
-                  <span className="text-zinc-700">$ </span>{t('discussions')}
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://github.com/sana-lazystar/jarfis/issues"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-mono text-sm text-zinc-500 hover:text-green-500 transition-colors"
-                >
-                  <span className="text-zinc-700">$ </span>{t('issues')}
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://github.com/sana-lazystar/jarfis/blob/main/CONTRIBUTING.md"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-mono text-sm text-zinc-500 hover:text-green-500 transition-colors"
-                >
-                  <span className="text-zinc-700">$ </span>{t('contributing')}
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-zinc-800 pt-8 sm:flex-row">
-          <p className="font-mono text-xs text-zinc-600">
-            &copy; {new Date().getFullYear()} {t('copyright')}
-          </p>
-          <p className="font-mono text-xs text-zinc-700">
-            {t('built_with')}
-          </p>
+          </nav>
         </div>
       </div>
     </footer>

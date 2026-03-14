@@ -4,16 +4,110 @@
     "features": "Features",
     "docs": "Documentation",
     "blog": "Blog",
-    "showcase": "Showcase"
+    "showcase": "Showcase",
+    "get_started": "Get Started"
   },
   "hero": {
-    "tagline": "The Fantastic Way to<br/>Ship Software with AI",
-    "subtitle": "100% Open Source. Your AI team, your rules.",
-    "description": "One slash command. Nine expert agents. From press release to retrospective — your entire product workflow, orchestrated on Claude Code.",
-    "badge": "9 AI Agents, One Slash Command",
-    "cta_github": "View on GitHub",
+    "badge": "Self-Evolving AI Team",
+    "title_prefix": "The more you use it, the more it",
+    "title_evolve": "evolves",
+    "title_middle": "— your",
+    "title_team": "AI development team",
+    "subtitle": "From Product Manager to QA Engineer, 9 AI specialists become your team.",
     "cta_start": "Get Started",
+    "cta_github": "GitHub",
+    "tagline": "The Fantastic Way to<br/>Ship Software with AI",
+    "description": "One slash command. Nine expert agents. From press release to retrospective — your entire product workflow, orchestrated on Claude Code.",
     "terminal_prompt": "$ jarfis start"
+  },
+  "features_home": {
+    "eyebrow": "Core Values",
+    "title": "An AI Ecosystem That Grows Together",
+    "cards": [
+      {
+        "title": "Self-Evolution",
+        "description": "JARFIS learns from every retrospective. Global lessons accumulate so the system gets smarter with every project."
+      },
+      {
+        "title": "Orchestration for All",
+        "description": "9 domain-expert agents — PO, Architect, Tech Lead, Backend, Frontend, DevOps, QA, Security, UX — working together."
+      },
+      {
+        "title": "Resilient Continuity",
+        "description": "PreCompact hooks and state files preserve workflow across context resets. Nothing is ever lost."
+      },
+      {
+        "title": "AI-Native Artifacts",
+        "description": "11 structured artifacts per workflow: press release, PRD, architecture, API spec, UX spec, tasks, and more."
+      }
+    ]
+  },
+  "philosophy": {
+    "eyebrow": "Philosophy",
+    "title": "9 Philosophies That Make the Difference",
+    "items": [
+      {
+        "title": "Orchestration for All",
+        "description": "9 domain-expert agents collaborate on every task. Specialization beats generalization every time."
+      },
+      {
+        "title": "Token Austerity",
+        "description": "Minimize token consumption without sacrificing quality. Efficient AI is responsible AI."
+      },
+      {
+        "title": "Self-Evolution",
+        "description": "Every retrospective feeds global learnings. JARFIS gets smarter with every project iteration."
+      },
+      {
+        "title": "Dialectic Quality",
+        "description": "QA and Security agents challenge assumptions. Adversarial review produces better outcomes."
+      },
+      {
+        "title": "AI-Native Artifacts",
+        "description": "11 structured documents per workflow. Every decision is traceable from idea to deployment."
+      },
+      {
+        "title": "Abstraction over Memorization",
+        "description": "Build reusable patterns and principles, not just task lists. Knowledge compounds across projects."
+      },
+      {
+        "title": "Deterministic Foundation",
+        "description": "Reproducible workflows, explicit state, and documented decisions eliminate ambiguity."
+      },
+      {
+        "title": "Human Gate, AI Execute",
+        "description": "AI executes, humans decide. Every critical gate requires explicit approval before proceeding."
+      },
+      {
+        "title": "Resilient Continuity",
+        "description": "PreCompact hooks and state files ensure no workflow progress is ever lost, even across context resets."
+      }
+    ]
+  },
+  "growth": {
+    "eyebrow": "Growth",
+    "title": "A Team That Gets Stronger With Use",
+    "stats": [
+      { "value": "9", "label": "AI Agents" },
+      { "value": "24/7", "label": "Uninterrupted Collaboration" },
+      { "value": "100%", "label": "Open Source" }
+    ]
+  },
+  "quickstart": {
+    "eyebrow": "Quick Start",
+    "title": "Get Started Fast",
+    "steps": [
+      { "label": "Read the Docs" },
+      { "label": "Quick Start" },
+      { "label": "Install" },
+      { "label": "Run Workflow" }
+    ],
+    "terminal_prompt": "$ jarfis:work Build a user authentication system",
+    "terminal_output_1": "[Phase T] Triage -- classifying request...",
+    "terminal_output_2": "[Phase 0] Pre-flight -- loading...",
+    "terminal_output_3": "[PO] Product Owner agent — analyzing scope...",
+    "terminal_output_4": "[AR] Architect agent — designing system...",
+    "terminal_output_5": "[BE][FE][QA] agents — spawning..."
   },
   "value": {
     "title": "Why JARFIS?",
@@ -253,22 +347,23 @@
     "view_source": "View Source"
   },
   "footer": {
-    "license": "MIT License",
+    "copyright": "2026 Sana-Lazystar. Open Source.",
+    "documentation": "Documentation",
+    "github_link": "GitHub",
+    "blog": "Blog",
     "community": "Community",
+    "license": "MIT License",
     "project": "Project",
     "resources": "Resources",
-    "github_link": "GitHub",
     "changelog": "Changelog",
     "releases": "Releases",
-    "documentation": "Documentation",
     "quick_start": "Quick Start",
     "features_link": "Features",
     "discussions": "GitHub Discussions",
     "issues": "GitHub Issues",
     "contributing": "Contributing Guide",
-    "copyright": "JARFIS Contributors",
     "built_with": "Built with JARFIS",
-    "tagline": "The Fantastic Way to Ship Software with AI"
+    "tagline": "The AI development team that evolves with you"
   },
   "a11y": {
     "skip_to_content": "Skip to main content",
@@ -276,7 +371,8 @@
     "switch_language": "Switch language",
     "view_github": "View JARFIS on GitHub",
     "close_nav": "Close navigation menu",
-    "open_nav": "Open navigation menu"
+    "open_nav": "Open navigation menu",
+    "solar_system": "JARFIS AI agent ecosystem — 9 agents orbiting the central JARFIS core"
   },
   "common": {
     "read_more": "Read More",
@@ -340,24 +436,6 @@
   },
   "terminal": {
     "loading": "Loading terminal..."
-  },
-  "growth": {
-    "title": "Growth",
-    "subtitle": "How JARFIS evolves with every workflow",
-    "stats_title": "By the Numbers",
-    "latest": "latest",
-    "milestones": [
-      {
-        "version": "v1.0.0",
-        "title": "Initial Release",
-        "description": "Core 9-agent orchestration with 9 phases and 3 human gates."
-      },
-      {
-        "version": "v1.0.7",
-        "title": "Production Ready",
-        "description": "Stable workflow engine with full artifact generation and state persistence."
-      }
-    ]
   },
   "error": {
     "not_found_title": "404: Page Not Found",

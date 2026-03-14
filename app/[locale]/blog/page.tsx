@@ -32,11 +32,19 @@ export default async function BlogListPage({ params }: BlogListPageProps) {
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 py-16">
       <div className="mb-12">
-        <p className="font-mono text-green-500 text-sm mb-3">$ ls blog/</p>
-        <h1 className="font-mono text-4xl font-bold text-zinc-50 tracking-tight">
+        <p
+          className="mb-3 text-sm font-semibold uppercase"
+          style={{ color: 'var(--color-primary-light)', letterSpacing: '0.08em', fontFamily: 'var(--font-mono)' }}
+        >
+          Blog
+        </p>
+        <h1
+          className="text-4xl font-bold tracking-tight"
+          style={{ color: 'var(--color-text-primary)', fontFamily: 'var(--font-mono)' }}
+        >
           {t('page_title')}
         </h1>
-        <p className="mt-3 text-zinc-500">{t('page_subtitle')}</p>
+        <p className="mt-3" style={{ color: 'var(--color-text-muted)' }}>{t('page_subtitle')}</p>
       </div>
 
       {posts.length === 0 ? (

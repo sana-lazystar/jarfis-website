@@ -60,19 +60,32 @@ export default async function DocPage({ params }: DocPageProps) {
         {/* Main Content */}
         <div className="min-w-0 flex-1">
           {isFallback && (
-            <div className="mb-6 rounded border border-amber-500/30 bg-amber-500/5 px-4 py-3 font-mono text-xs text-amber-400">
+            <div
+              className="mb-6 rounded px-4 py-3 text-xs"
+              style={{
+                border: '1px solid rgba(251, 191, 36, 0.3)',
+                background: 'rgba(251, 191, 36, 0.05)',
+                fontFamily: 'var(--font-mono)',
+                color: 'var(--color-accent-yellow)',
+              }}
+            >
               {t('not_translated')}
             </div>
           )}
 
           <article className="prose prose-invert max-w-none">
             <div className="mb-8">
-              <h1 className="font-mono text-3xl font-bold text-zinc-50 tracking-tight mt-0">
+              <h1
+                className="text-3xl font-bold tracking-tight mt-0"
+                style={{ fontFamily: 'var(--font-mono)', color: 'var(--color-text-primary)' }}
+              >
                 {frontmatter.title}
               </h1>
-              <p className="text-zinc-500 mt-2 text-sm">{frontmatter.description}</p>
+              <p className="mt-2 text-sm" style={{ color: 'var(--color-text-muted)' }}>
+                {frontmatter.description}
+              </p>
               {frontmatter.lastUpdated && (
-                <p className="font-mono text-xs text-zinc-600 mt-2">
+                <p className="text-xs mt-2" style={{ fontFamily: 'var(--font-mono)', color: 'var(--color-text-muted)' }}>
                   {t('last_updated')}: {frontmatter.lastUpdated}
                 </p>
               )}

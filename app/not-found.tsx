@@ -1,44 +1,82 @@
 import Link from 'next/link';
-import TerminalWindow from '@/components/terminal/TerminalWindow';
 
 export default function NotFound() {
   return (
     <div
-      style={{ backgroundColor: '#09090b', minHeight: '100vh' }}
+      style={{ background: 'var(--color-neutral-darker)', minHeight: '100vh' }}
       className="flex items-center justify-center px-4"
     >
       <div className="w-full max-w-lg">
-        <TerminalWindow title="jarfis — zsh — error">
-          <div className="space-y-2 font-mono text-sm">
-            <p className="text-green-500">
-              <span className="text-green-700">$ </span>cat page.txt
+        {/* Terminal-style card */}
+        <div
+          style={{
+            background: 'var(--color-surface)',
+            border: '1px solid var(--color-border)',
+            borderRadius: '16px',
+            overflow: 'hidden',
+          }}
+          role="region"
+          aria-label="Error: Page not found"
+        >
+          {/* Title bar */}
+          <div
+            style={{
+              background: 'rgba(26, 44, 71, 0.6)',
+              borderBottom: '1px solid var(--color-border)',
+              padding: '0.75rem 1rem',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+            }}
+          >
+            <span style={{ width: 10, height: 10, borderRadius: '50%', background: '#FB7185', display: 'inline-block' }} aria-hidden="true"/>
+            <span style={{ width: 10, height: 10, borderRadius: '50%', background: '#FBBF24', display: 'inline-block' }} aria-hidden="true"/>
+            <span style={{ width: 10, height: 10, borderRadius: '50%', background: '#5EEAD4', display: 'inline-block' }} aria-hidden="true"/>
+            <span style={{ marginLeft: 'auto', fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
+              jarfis — zsh — error
+            </span>
+          </div>
+
+          {/* Body */}
+          <div style={{ padding: '1.5rem', fontFamily: 'var(--font-mono)', fontSize: '0.875rem', lineHeight: 1.7 }}>
+            <p>
+              <span style={{ color: 'var(--color-text-muted)' }}>$ </span>
+              <span style={{ color: 'var(--color-text-secondary)' }}>cat page.txt</span>
             </p>
-            <p className="text-red-400">
+            <p style={{ color: 'var(--color-accent-coral)', marginTop: '0.25rem' }}>
               cat: page.txt: No such file or directory
             </p>
-            <p className="text-zinc-600">&nbsp;</p>
-            <p className="text-amber-400 font-bold text-xl">404</p>
-            <p className="text-zinc-400">Page Not Found</p>
-            <p className="text-zinc-600">&nbsp;</p>
-            <p className="text-green-500">
-              <span className="text-green-700">$ </span>
+            <p style={{ marginTop: '1rem', color: 'var(--color-primary-light)', fontSize: '1.5rem', fontWeight: 700 }}>
+              404
+            </p>
+            <p style={{ color: 'var(--color-text-secondary)' }}>Page Not Found</p>
+            <p style={{ marginTop: '0.75rem' }}>
+              <span style={{ color: 'var(--color-text-muted)' }}>$ </span>
               <Link
                 href="/en/"
-                className="underline hover:text-green-300 transition-colors"
+                style={{ color: 'var(--color-primary-light)', textDecoration: 'underline' }}
               >
                 cd ~
               </Link>
             </p>
-            <p className="text-zinc-500 text-xs mt-2">
-              Press Enter to return home
-            </p>
           </div>
-        </TerminalWindow>
+        </div>
 
         <div className="mt-6 text-center">
           <Link
             href="/en/"
-            className="inline-flex items-center gap-2 rounded border border-zinc-700 px-5 py-2.5 font-mono text-sm text-zinc-400 hover:border-green-500 hover:text-green-500 transition-colors"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              border: '1px solid var(--color-border)',
+              borderRadius: '10px',
+              padding: '0.625rem 1.25rem',
+              fontFamily: 'var(--font-mono)',
+              fontSize: '0.875rem',
+              color: 'var(--color-text-secondary)',
+              textDecoration: 'none',
+            }}
           >
             <span>←</span>
             <span>Return to Home</span>

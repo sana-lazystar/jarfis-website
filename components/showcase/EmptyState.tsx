@@ -10,19 +10,43 @@ export default function ShowcaseEmptyState({
   submitLabel,
 }: ShowcaseEmptyStateProps) {
   return (
-    <div className="rounded-lg border border-zinc-800 bg-zinc-900 p-12 text-center">
-      <div className="font-mono text-4xl text-zinc-700 mb-4" aria-hidden="true">
+    <div
+      className="p-12 text-center"
+      style={{
+        borderRadius: '16px',
+        border: '1px solid var(--color-border)',
+        background: 'linear-gradient(145deg, var(--color-surface), rgba(15, 29, 50, 0.4))',
+      }}
+    >
+      <div
+        className="text-4xl mb-4"
+        style={{ fontFamily: 'var(--font-mono)', color: 'var(--color-border)' }}
+        aria-hidden="true"
+      >
         [showcase]
       </div>
-      <h2 className="font-mono text-lg font-semibold text-zinc-300 mb-2">{title}</h2>
-      <p className="text-sm text-zinc-500 mb-6 max-w-md mx-auto">{description}</p>
+      <h2
+        className="text-lg font-semibold mb-2"
+        style={{ fontFamily: 'var(--font-mono)', color: 'var(--color-text-primary)' }}
+      >
+        {title}
+      </h2>
+      <p className="text-sm mb-6 max-w-md mx-auto" style={{ color: 'var(--color-text-muted)' }}>
+        {description}
+      </p>
       <a
         href="https://github.com/sana-lazystar/jarfis-website/issues/new"
         target="_blank"
         rel="noopener noreferrer"
-        className="font-mono text-sm text-green-500 hover:text-green-400 border border-green-500/30 px-4 py-2 rounded hover:border-green-500 transition-colors"
+        className="text-sm px-4 py-2 rounded"
+        style={{
+          fontFamily: 'var(--font-mono)',
+          color: 'var(--color-primary-light)',
+          border: '1px solid rgba(13, 148, 136, 0.3)',
+          textDecoration: 'none',
+        }}
       >
-        <span className="text-zinc-600">$ </span>{submitLabel}
+        {submitLabel}
       </a>
     </div>
   );

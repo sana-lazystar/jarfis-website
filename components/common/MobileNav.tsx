@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import LanguageSelector from './LanguageSelector';
-import GitHubIcon from '@/components/icons/GitHubIcon';
 
 interface NavLink {
   href: string;
@@ -18,7 +17,6 @@ interface MobileNavProps {
 
 export default function MobileNav({ locale, navLinks }: MobileNavProps) {
   const tA11y = useTranslations('a11y');
-  const tCommon = useTranslations('common');
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -32,10 +30,14 @@ export default function MobileNav({ locale, navLinks }: MobileNavProps) {
   }, [isOpen]);
 
   return (
-    <div className="md:hidden">
+    <div className="sm:hidden">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex h-9 w-9 items-center justify-center rounded border border-zinc-700 text-zinc-400 hover:border-zinc-500 hover:text-zinc-200 transition-colors"
+        className="flex h-9 w-9 items-center justify-center rounded transition-colors"
+        style={{
+          border: '1px solid var(--color-border)',
+          color: 'var(--color-text-secondary)',
+        }}
         aria-label={isOpen ? tA11y('close_nav') : tA11y('open_nav')}
         aria-expanded={isOpen}
         aria-controls="mobile-nav-menu"
@@ -54,7 +56,12 @@ export default function MobileNav({ locale, navLinks }: MobileNavProps) {
       {isOpen && (
         <div
           id="mobile-nav-menu"
-          className="absolute left-0 right-0 top-full border-b border-zinc-800 bg-zinc-950 px-4 py-4 shadow-xl"
+          className="absolute left-0 right-0 top-16 px-4 py-4 shadow-xl"
+          style={{
+            background: 'rgba(7, 15, 30, 0.95)',
+            borderBottom: '1px solid var(--color-border)',
+            backdropFilter: 'blur(16px)',
+          }}
         >
           <nav className="flex flex-col gap-1">
             {navLinks.map((link) => (
@@ -62,24 +69,26 @@ export default function MobileNav({ locale, navLinks }: MobileNavProps) {
                 key={link.href}
                 href={link.href}
                 onClick={() => setIsOpen(false)}
-                className="px-3 py-2.5 font-mono text-sm text-zinc-400 hover:text-zinc-100 rounded hover:bg-zinc-800 transition-colors"
+                className="px-3 py-2.5 text-sm rounded transition-colors"
+                style={{ color: 'var(--color-text-secondary)' }}
               >
-                <span className="text-green-500 mr-2">$</span>
                 {link.label}
               </Link>
             ))}
 
-            <div className="mt-3 flex items-center justify-between border-t border-zinc-800 pt-3">
+            <div
+              className="mt-3 flex items-center justify-between pt-3"
+              style={{ borderTop: '1px solid var(--color-border)' }}
+            >
               <LanguageSelector currentLocale={locale} />
               <a
                 href="https://github.com/sana-lazystar/jarfis"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 font-mono text-sm text-zinc-400 hover:text-green-500 transition-colors"
-                aria-label={tA11y('view_github')}
+                className="text-sm transition-colors"
+                style={{ color: 'var(--color-text-secondary)', fontFamily: 'var(--font-sans)' }}
               >
-                <GitHubIcon />
-                {tCommon('github')}
+                GitHub
               </a>
             </div>
           </nav>
