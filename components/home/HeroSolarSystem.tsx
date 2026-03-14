@@ -114,29 +114,29 @@ export default function HeroSolarSystem() {
 
         <style>{`
           /* Sun corona */
-          #ss-corona { transform-origin: 220px 220px; transform-box: fill-box; animation: corona-pulse 5s ease-in-out infinite; }
+          #ss-corona { transform-origin: 220px 220px; animation: corona-pulse 5s ease-in-out infinite; }
 
           /* Orbit groups */
-          #orbit-po { transform-origin: 220px 220px; transform-box: fill-box; animation: orbitInner1 25s linear infinite; will-change: transform; }
-          #orbit-ar { transform-origin: 220px 220px; transform-box: fill-box; animation: orbitInner2 22s linear infinite; will-change: transform; }
-          #orbit-tl { transform-origin: 220px 220px; transform-box: fill-box; animation: orbitInner3 28s linear infinite; will-change: transform; }
-          #orbit-be { transform-origin: 220px 220px; transform-box: fill-box; animation: orbitMid1 35s linear infinite; will-change: transform; }
-          #orbit-fe { transform-origin: 220px 220px; transform-box: fill-box; animation: orbitMid2 30s linear infinite; will-change: transform; }
-          #orbit-qa { transform-origin: 220px 220px; transform-box: fill-box; animation: orbitMid3 38s linear infinite; will-change: transform; }
-          #orbit-do { transform-origin: 220px 220px; transform-box: fill-box; animation: orbitOuter1 18s linear infinite; will-change: transform; }
-          #orbit-se { transform-origin: 220px 220px; transform-box: fill-box; animation: orbitOuter2 22s linear infinite; will-change: transform; }
-          #orbit-ux { transform-origin: 220px 220px; transform-box: fill-box; animation: orbitOuter3 16s linear infinite; will-change: transform; }
+          #orbit-po { transform-origin: 220px 220px; animation: orbitInner1 25s linear infinite; will-change: transform; }
+          #orbit-ar { transform-origin: 220px 220px; animation: orbitInner2 22s linear infinite; will-change: transform; }
+          #orbit-tl { transform-origin: 220px 220px; animation: orbitInner3 28s linear infinite; will-change: transform; }
+          #orbit-be { transform-origin: 220px 220px; animation: orbitMid1 35s linear infinite; will-change: transform; }
+          #orbit-fe { transform-origin: 220px 220px; animation: orbitMid2 30s linear infinite; will-change: transform; }
+          #orbit-qa { transform-origin: 220px 220px; animation: orbitMid3 38s linear infinite; will-change: transform; }
+          #orbit-do { transform-origin: 220px 220px; animation: orbitOuter1 18s linear infinite; will-change: transform; }
+          #orbit-se { transform-origin: 220px 220px; animation: orbitOuter2 22s linear infinite; will-change: transform; }
+          #orbit-ux { transform-origin: 220px 220px; animation: orbitOuter3 16s linear infinite; will-change: transform; }
 
           /* Counter-rotation inner groups */
-          #planet-po-inner { transform-origin: 320px 220px; transform-box: fill-box; animation: counterInner1 25s linear infinite; }
-          #planet-ar-inner { transform-origin: 120px 220px; transform-box: fill-box; animation: counterInner2 22s linear infinite; }
-          #planet-tl-inner { transform-origin: 320px 220px; transform-box: fill-box; animation: counterInner3 28s linear infinite; }
-          #planet-be-inner { transform-origin: 372px 220px; transform-box: fill-box; animation: counterMid1 35s linear infinite; }
-          #planet-fe-inner { transform-origin: 372px 220px; transform-box: fill-box; animation: counterMid2 30s linear infinite; }
-          #planet-qa-inner { transform-origin: 372px 220px; transform-box: fill-box; animation: counterMid3 38s linear infinite; }
-          #planet-do-inner { transform-origin: 415px 220px; transform-box: fill-box; animation: counterOuter1 18s linear infinite; }
-          #planet-se-inner { transform-origin: 415px 220px; transform-box: fill-box; animation: counterOuter2 22s linear infinite; }
-          #planet-ux-inner { transform-origin: 415px 220px; transform-box: fill-box; animation: counterOuter3 16s linear infinite; }
+          #planet-po-inner { transform-origin: 320px 220px; animation: counterInner1 25s linear infinite; }
+          #planet-ar-inner { transform-origin: 120px 220px; animation: counterInner2 22s linear infinite; }
+          #planet-tl-inner { transform-origin: 320px 220px; animation: counterInner3 28s linear infinite; }
+          #planet-be-inner { transform-origin: 372px 220px; animation: counterMid1 35s linear infinite; }
+          #planet-fe-inner { transform-origin: 372px 220px; animation: counterMid2 30s linear infinite; }
+          #planet-qa-inner { transform-origin: 372px 220px; animation: counterMid3 38s linear infinite; }
+          #planet-do-inner { transform-origin: 415px 220px; animation: counterOuter1 18s linear infinite; }
+          #planet-se-inner { transform-origin: 415px 220px; animation: counterOuter2 22s linear infinite; }
+          #planet-ux-inner { transform-origin: 415px 220px; animation: counterOuter3 16s linear infinite; }
 
           /* Particle twinkle */
           #ss-particles circle:nth-child(odd) { animation: twinkle 3s ease-in-out infinite; }
@@ -169,6 +169,7 @@ export default function HeroSolarSystem() {
           <g id="planet-po-inner">
             <circle cx="320" cy="220" r="22" fill="url(#ss-coralPlanet)"/>
             <circle cx="320" cy="220" r="22" fill="url(#ss-planetShadow)"/>
+            <ellipse cx="320" cy="220" rx="22" ry="6" stroke="#FDA4AF" strokeWidth="0.8" fill="none" opacity="0.4" transform="rotate(-15, 320, 220)"/>
             <ellipse cx="315" cy="213" rx="7" ry="5" fill="white" opacity="0.2"/>
             <text x="320" y="224" textAnchor="middle" fontFamily="'DM Sans', sans-serif" fontWeight="700" fontSize="11" fill="#F0FDF4">PO</text>
           </g>
@@ -179,6 +180,7 @@ export default function HeroSolarSystem() {
           <g id="planet-ar-inner">
             <circle cx="120" cy="220" r="18" fill="url(#ss-tealPlanet)"/>
             <circle cx="120" cy="220" r="18" fill="url(#ss-planetShadow)"/>
+            <ellipse cx="120" cy="220" rx="18" ry="5" stroke="#5EEAD4" strokeWidth="0.6" fill="none" opacity="0.3" transform="rotate(10, 120, 220)"/>
             <ellipse cx="116" cy="215" rx="6" ry="4" fill="white" opacity="0.18"/>
             <text x="120" y="224" textAnchor="middle" fontFamily="'DM Sans', sans-serif" fontWeight="700" fontSize="10" fill="#F0FDF4">AR</text>
           </g>
@@ -189,6 +191,7 @@ export default function HeroSolarSystem() {
           <g id="planet-tl-inner">
             <circle cx="320" cy="220" r="18" fill="url(#ss-tealPlanet)"/>
             <circle cx="320" cy="220" r="18" fill="url(#ss-planetShadow)"/>
+            <ellipse cx="320" cy="220" rx="18" ry="5" stroke="#5EEAD4" strokeWidth="0.6" fill="none" opacity="0.3" transform="rotate(-20, 320, 220)"/>
             <ellipse cx="315" cy="214" rx="6" ry="4" fill="white" opacity="0.18"/>
             <text x="320" y="224" textAnchor="middle" fontFamily="'DM Sans', sans-serif" fontWeight="700" fontSize="10" fill="#F0FDF4">TL</text>
           </g>
@@ -200,6 +203,7 @@ export default function HeroSolarSystem() {
           <g id="planet-be-inner">
             <circle cx="372" cy="220" r="16" fill="url(#ss-tealPlanet)"/>
             <circle cx="372" cy="220" r="16" fill="url(#ss-planetShadow)"/>
+            <ellipse cx="372" cy="220" rx="16" ry="4.5" stroke="#5EEAD4" strokeWidth="0.5" fill="none" opacity="0.25" transform="rotate(25, 372, 220)"/>
             <ellipse cx="367" cy="215" rx="5" ry="3.5" fill="white" opacity="0.16"/>
             <text x="372" y="224" textAnchor="middle" fontFamily="'DM Sans', sans-serif" fontWeight="600" fontSize="9.5" fill="#F0FDF4">BE</text>
           </g>
@@ -210,6 +214,7 @@ export default function HeroSolarSystem() {
           <g id="planet-fe-inner">
             <circle cx="372" cy="220" r="16" fill="url(#ss-tealPlanet)"/>
             <circle cx="372" cy="220" r="16" fill="url(#ss-planetShadow)"/>
+            <ellipse cx="372" cy="220" rx="16" ry="4.5" stroke="#5EEAD4" strokeWidth="0.5" fill="none" opacity="0.25" transform="rotate(-5, 372, 220)"/>
             <ellipse cx="367" cy="215" rx="5" ry="3.5" fill="white" opacity="0.16"/>
             <text x="372" y="224" textAnchor="middle" fontFamily="'DM Sans', sans-serif" fontWeight="600" fontSize="9.5" fill="#F0FDF4">FE</text>
           </g>
@@ -220,6 +225,7 @@ export default function HeroSolarSystem() {
           <g id="planet-qa-inner">
             <circle cx="372" cy="220" r="16" fill="url(#ss-tealPlanet)"/>
             <circle cx="372" cy="220" r="16" fill="url(#ss-planetShadow)"/>
+            <ellipse cx="372" cy="220" rx="16" ry="4.5" stroke="#5EEAD4" strokeWidth="0.5" fill="none" opacity="0.25" transform="rotate(15, 372, 220)"/>
             <ellipse cx="367" cy="215" rx="5" ry="3.5" fill="white" opacity="0.16"/>
             <text x="372" y="224" textAnchor="middle" fontFamily="'DM Sans', sans-serif" fontWeight="600" fontSize="9.5" fill="#F0FDF4">QA</text>
           </g>
@@ -231,6 +237,7 @@ export default function HeroSolarSystem() {
           <g id="planet-do-inner">
             <circle cx="415" cy="220" r="14" fill="url(#ss-tealPlanet)"/>
             <circle cx="415" cy="220" r="14" fill="url(#ss-planetShadow)"/>
+            <ellipse cx="415" cy="220" rx="14" ry="4" stroke="#5EEAD4" strokeWidth="0.5" fill="none" opacity="0.2" transform="rotate(-10, 415, 220)"/>
             <ellipse cx="411" cy="215.5" rx="4.5" ry="3" fill="white" opacity="0.14"/>
             <text x="415" y="224" textAnchor="middle" fontFamily="'DM Sans', sans-serif" fontWeight="600" fontSize="9" fill="#F0FDF4">DO</text>
           </g>
@@ -241,6 +248,7 @@ export default function HeroSolarSystem() {
           <g id="planet-se-inner">
             <circle cx="415" cy="220" r="14" fill="url(#ss-coralAltPlanet)"/>
             <circle cx="415" cy="220" r="14" fill="url(#ss-planetShadow)"/>
+            <ellipse cx="415" cy="220" rx="14" ry="4" stroke="#FCA5A5" strokeWidth="0.5" fill="none" opacity="0.25" transform="rotate(12, 415, 220)"/>
             <ellipse cx="411" cy="215.5" rx="4.5" ry="3" fill="white" opacity="0.14"/>
             <text x="415" y="224" textAnchor="middle" fontFamily="'DM Sans', sans-serif" fontWeight="600" fontSize="9" fill="#F0FDF4">SE</text>
           </g>
@@ -251,6 +259,7 @@ export default function HeroSolarSystem() {
           <g id="planet-ux-inner">
             <circle cx="415" cy="220" r="14" fill="url(#ss-tealPlanet)"/>
             <circle cx="415" cy="220" r="14" fill="url(#ss-planetShadow)"/>
+            <ellipse cx="415" cy="220" rx="14" ry="4" stroke="#5EEAD4" strokeWidth="0.5" fill="none" opacity="0.2" transform="rotate(-8, 415, 220)"/>
             <ellipse cx="411" cy="215.5" rx="4.5" ry="3" fill="white" opacity="0.14"/>
             <text x="415" y="224" textAnchor="middle" fontFamily="'DM Sans', sans-serif" fontWeight="600" fontSize="9" fill="#F0FDF4">UX</text>
           </g>

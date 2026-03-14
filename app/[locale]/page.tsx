@@ -1,4 +1,4 @@
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import HeroSolarSystem from '@/components/home/HeroSolarSystem';
@@ -30,6 +30,7 @@ export async function generateMetadata({ params }: HomePageProps): Promise<Metad
 
 export default async function HomePage({ params }: HomePageProps) {
   const { locale } = await params;
+  setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: 'hero' });
 
   return (
@@ -64,7 +65,7 @@ export default async function HomePage({ params }: HomePageProps) {
             margin-bottom: 1.5rem;
           }
           .hero-title-gradient {
-            background: linear-gradient(135deg, #5EEAD4 0%, #0D9488 50%, #5EEAD4 100%);
+            background: linear-gradient(135deg, var(--color-accent-coral), #F472B6);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
