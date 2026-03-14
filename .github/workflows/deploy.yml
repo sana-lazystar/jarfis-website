@@ -42,13 +42,13 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build with Astro
+      - name: Build with Next.js
         run: pnpm build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
         with:
-          path: dist/
+          path: out/
 
   deploy:
     name: Deploy

@@ -1,24 +1,19 @@
-import eslintPluginAstro from 'eslint-plugin-astro';
-import jsxA11y from 'eslint-plugin-jsx-a11y';
-import tsParser from '@typescript-eslint/parser';
-import prettierConfig from 'eslint-config-prettier';
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+import { FlatCompat } from '@eslint/eslintrc';
 
-export default [
-  ...eslintPluginAstro.configs.recommended,
-  jsxA11y.flatConfigs.recommended,
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const compat = new FlatCompat({
+  baseDirectory: __dirname,
+});
+
+const eslintConfig = [
+  ...compat.extends('next/core-web-vitals', 'next/typescript', 'prettier'),
   {
-    files: ['**/*.ts', '**/*.tsx'],
-    languageOptions: {
-      parser: tsParser,
-      parserOptions: {
-        ecmaVersion: 'latest',
-        sourceType: 'module',
-      },
-    },
-  },
-  // Prettier 충돌 방지: 포맷 관련 ESLint 규칙 비활성화
-  prettierConfig,
-  {
-    ignores: ['dist/', '.astro/', 'node_modules/'],
+    ignores: ['out/', '.next/', 'node_modules/'],
   },
 ];
+
+export default eslintConfig;
