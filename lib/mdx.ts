@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import { compileMDX } from 'next-mdx-remote/rsc';
+import rehypePrettyCode from 'rehype-pretty-code';
 import type { ReactElement } from 'react';
 
 export interface MdxContent {
@@ -25,6 +26,17 @@ export async function getMdxContent(filePath: string): Promise<MdxContent | null
     source: content,
     options: {
       parseFrontmatter: false,
+      mdxOptions: {
+        rehypePlugins: [
+          [
+            rehypePrettyCode,
+            {
+              theme: 'github-dark',
+              keepBackground: true,
+            },
+          ],
+        ],
+      },
     },
   });
 

@@ -66,7 +66,7 @@ export default function GrowthSection() {
                 <p className="text-sm text-zinc-500">{milestone.description}</p>
               </div>
               {index === milestones.length - 1 && (
-                <span className="font-mono text-xs text-zinc-600 self-center">latest</span>
+                <span className="font-mono text-xs text-zinc-600 self-center">{t('latest')}</span>
               )}
             </div>
           ))}

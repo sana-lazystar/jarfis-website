@@ -6,6 +6,7 @@ import HeroTerminal from '@/components/home/HeroTerminal';
 import FeatureCards from '@/components/home/FeatureCards';
 import PhilosophyGrid from '@/components/home/PhilosophyGrid';
 import GrowthSection from '@/components/home/GrowthSection';
+import JsonLd, { ORGANIZATION_LD, WEBSITE_LD } from '@/components/seo/JsonLd';
 import { generateSeoMetadata } from '@/lib/seo';
 import type { Locale } from '@/i18n/config';
 
@@ -122,6 +123,8 @@ export default async function HomePage({ params }: HomePageProps) {
 
   return (
     <>
+      <JsonLd data={ORGANIZATION_LD} />
+      <JsonLd data={WEBSITE_LD} />
       <HeroSection locale={locale} />
       <FeatureCards />
       <HowItWorksSection />

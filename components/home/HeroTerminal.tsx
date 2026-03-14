@@ -1,6 +1,7 @@
 'use client';
 
 import { Suspense } from 'react';
+import { useTranslations } from 'next-intl';
 import TerminalWindow from '@/components/terminal/TerminalWindow';
 import TypingAnimation from '@/components/terminal/TypingAnimation';
 import CRTEffect from '@/components/terminal/CRTEffect';
@@ -29,13 +30,15 @@ const TERMINAL_LINES = [
 ];
 
 export default function HeroTerminal({ locale: _locale }: HeroTerminalProps) {
+  const t = useTranslations('terminal');
+
   return (
     <div className="relative">
       <TerminalWindow title="jarfis — zsh — 80x24" className="relative overflow-hidden">
         <CRTEffect />
         <Suspense
           fallback={
-            <div className="text-zinc-600 font-mono text-sm">Loading terminal...</div>
+            <div className="text-zinc-600 font-mono text-sm">{t('loading')}</div>
           }
         >
           <TypingAnimation

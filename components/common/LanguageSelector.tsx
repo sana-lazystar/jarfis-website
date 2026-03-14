@@ -2,6 +2,7 @@
 
 import { usePathname, useRouter } from 'next/navigation';
 import { useState, useRef, useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 import { SUPPORTED_LOCALES, LOCALE_NATIVE_LABELS, LOCALE_LABELS, type Locale } from '@/i18n/config';
 
 interface LanguageSelectorProps {
@@ -9,6 +10,7 @@ interface LanguageSelectorProps {
 }
 
 export default function LanguageSelector({ currentLocale }: LanguageSelectorProps) {
+  const t = useTranslations('a11y');
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
@@ -50,7 +52,7 @@ export default function LanguageSelector({ currentLocale }: LanguageSelectorProp
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-1 px-3 py-1.5 font-mono text-sm text-zinc-400 border border-zinc-700 rounded hover:border-zinc-500 hover:text-zinc-200 transition-colors"
-        aria-label="Switch language"
+        aria-label={t('switch_language')}
         aria-expanded={isOpen}
         aria-haspopup="listbox"
       >

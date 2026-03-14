@@ -273,7 +273,10 @@
   "a11y": {
     "skip_to_content": "跳转到主要内容",
     "toggle_menu": "切换导航菜单",
-    "switch_language": "切换语言"
+    "switch_language": "切换语言",
+    "view_github": "在GitHub上查看JARFIS",
+    "close_nav": "关闭导航菜单",
+    "open_nav": "打开导航菜单"
   },
   "common": {
     "read_more": "阅读更多",
@@ -335,10 +338,14 @@
       }
     ]
   },
+  "terminal": {
+    "loading": "终端加载中..."
+  },
   "growth": {
     "title": "成长",
     "subtitle": "JARFIS如何随每个工作流进化",
     "stats_title": "数字一览",
+    "latest": "最新",
     "milestones": [
       {
         "version": "v1.0.0",
