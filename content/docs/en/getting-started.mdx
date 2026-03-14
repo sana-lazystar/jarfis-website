@@ -1,0 +1,104 @@
+---
+title: "Quick Start"
+description: "Install JARFIS and run your first AI-driven software development workflow with 9 specialized agents and structured phases."
+category: "getting-started"
+order: 1
+locale: "en"
+lastUpdated: 2026-03-05
+draft: false
+---
+
+# Quick Start
+
+Ship software with AI — one slash command, nine expert agents, structured phases with human gates.
+
+## Prerequisites
+
+Before you begin, ensure you have:
+
+- **Claude Code** (Anthropic) — JARFIS runs natively inside Claude Code as a slash command workflow
+- A Claude account with API access
+- **Git** >= 2.x (for branch management in Phase 0)
+- The [JARFIS GitHub repository](https://github.com/sana-lazystar/jarfis) cloned or accessible
+
+## Installation
+
+JARFIS is installed via the `install.sh` script from the GitHub repository. Run the following in your terminal:
+
+```bash
+bash install.sh
+```
+
+This registers the JARFIS slash commands in your Claude Code environment. After installation, the following project structure is available:
+
+```
+your-project/
+├── .jarfis/
+│   ├── context.md             # Project-specific context
+│   └── project-profile.md     # Project profile
+├── .jarfis-state.json         # Workflow state tracking
+└── ~/.claude/
+    └── jarfis-learnings.md    # Global learning file (cross-project)
+```
+
+> **Note**: There is no `/jarfis:install` command. Installation is done exclusively through `bash install.sh`.
+
+## Run Your First Workflow
+
+Open Claude Code in your project directory and start a workflow:
+
+```
+/jarfis:work Build a user authentication system with JWT tokens
+```
+
+JARFIS will classify your request (Phase T — Triage) and then guide you through structured phases, each handled by specialized AI agents.
+
+## The 9 Phases
+
+Every workflow progresses through up to 9 phases. Phases may be skipped when not applicable (e.g., Phase 3 is skipped if no UI is needed):
+
+| Phase | Name | What Happens |
+|-------|------|--------------|
+| T | Triage | Request classification into A/B/C types |
+| 0 | Pre-flight | Git sync, branch creation, learning files loaded |
+| 1 | Discovery | PO reverse-questions, Working Backwards, PRD, feasibility |
+| 2 | Architecture & Planning | Impact analysis, design, API spec, task breakdown, test strategy |
+| 3 | UX Design | Screen design (conditional — only when UI is needed) |
+| 4 | Implementation | BE/FE/DevOps parallel implementation |
+| 4.5 | Operational Readiness | Deployment strategy, rollback plan, ops readiness |
+| 5 | Review & QA | API contract verification, Tech Lead + QA + Security reviews |
+| 6 | Retrospective | Learning accumulation (global learnings + project context) |
+
+## The 9 Agents
+
+JARFIS orchestrates 9 specialized agents, each activated only when relevant to the current phase and project requirements:
+
+| Agent | Role |
+|-------|------|
+| **Product Owner (PO)** | Reverse-questions, Working Backwards, PRD authoring |
+| **Architect** | Feasibility evaluation, impact analysis, architecture design, ADR |
+| **Tech Lead** | API spec review, task breakdown, code review, retrospective |
+| **UX Designer** | Screen design, interaction design |
+| **Backend Engineer** | Backend implementation |
+| **Frontend Engineer** | Frontend implementation |
+| **DevOps/SRE** | Infrastructure and CI/CD implementation |
+| **QA Engineer** | Test strategy, QA verification |
+| **Security Engineer** | Pre-review security analysis, security review |
+
+## Human Gates
+
+JARFIS includes 3 gates where your explicit approval is required before proceeding:
+
+| Gate | When | Your Options |
+|------|------|--------------|
+| Gate 1 | After Phase 1 (Discovery) | Approve / Revise / Abort |
+| Gate 2 | After Phase 2 & 3 (Architecture + UX) | Approve / Revise / Abort |
+| Gate 3 | After Phase 5 (Review & QA) | Approve / Revise & re-review / Abort / Revisit design |
+
+These gates ensure you stay in control of the direction at every major milestone.
+
+## Next Steps
+
+- Read [Architecture & Concepts](/en/docs/concepts-overview) to understand the full JARFIS orchestration model
+- Explore the [API Reference](/en/docs/api-reference) for all available commands and configuration
+- Check [Guides & Customization](/en/docs/guides-customization) for advanced workflow patterns
