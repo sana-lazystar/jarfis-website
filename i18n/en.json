@@ -1,0 +1,368 @@
+{
+  "nav": {
+    "home": "Home",
+    "features": "Features",
+    "docs": "Documentation",
+    "blog": "Blog",
+    "showcase": "Showcase"
+  },
+  "hero": {
+    "tagline": "The Fantastic Way to<br/>Ship Software with AI",
+    "subtitle": "100% Open Source. Your AI team, your rules.",
+    "description": "One slash command. Nine expert agents. From press release to retrospective — your entire product workflow, orchestrated on Claude Code.",
+    "badge": "9 AI Agents, One Slash Command",
+    "cta_github": "View on GitHub",
+    "cta_start": "Get Started",
+    "terminal_prompt": "$ jarfis start"
+  },
+  "value": {
+    "title": "Why JARFIS?",
+    "agent_team_title": "9 Expert Agents",
+    "agent_team_desc": "PO, Architect, Tech Lead, Backend, Frontend, DevOps, QA, Security, UX — nine specialists collaborate on every task, each with domain-specific expertise and instructions.",
+    "claude_code_title": "Claude Code Native",
+    "claude_code_desc": "Built as a pure Claude Code workflow. No external servers, no API wrappers — just slash commands, CLAUDE.md conventions, and your local CLI. Works wherever Claude Code runs.",
+    "artifacts_title": "Artifacts, Not Just Code",
+    "artifacts_desc": "11 structured artifacts per workflow: press-release, PRD, architecture, API spec, UX spec, tasks, test strategy, deployment plan, review, and retrospective. Every decision documented.",
+    "learning_title": "A System That Learns",
+    "learning_desc": "Global learnings (jarfis-learnings.md) and project context (context.md) accumulate across runs. The PreCompact hook and .jarfis-state.json preserve workflow state, so JARFIS gets smarter with every iteration."
+  },
+  "how_it_works": {
+    "title": "How JARFIS Works",
+    "subtitle": "One command triggers the full product development lifecycle",
+    "phase1_title": "Triage",
+    "phase1_desc": "Parse the request, determine scope, select the right workflow",
+    "phase2_title": "Pre-flight",
+    "phase2_desc": "Load project context, restore state, verify prerequisites",
+    "phase3_title": "Discovery",
+    "phase3_desc": "PO writes press release and PRD, runs impact analysis",
+    "phase4_title": "Architecture",
+    "phase4_desc": "Architect designs system structure, API spec, and task breakdown",
+    "phase5_title": "UX Design",
+    "phase5_desc": "UX agent creates interaction spec and visual direction",
+    "phase6_title": "Implementation",
+    "phase6_desc": "FE/BE/DevOps agents execute tasks from the task list",
+    "phase7_title": "Ops Readiness",
+    "phase7_desc": "DevOps prepares deployment plan and infrastructure checks",
+    "phase8_title": "Review & QA",
+    "phase8_desc": "QA + Security agents verify quality, run tests, audit security",
+    "phase9_title": "Retrospective",
+    "phase9_desc": "Team reflects, captures learnings, updates global knowledge",
+    "cta": "View Full Documentation"
+  },
+  "social_proof": {
+    "title": "JARFIS by the Numbers",
+    "version_label": "Latest Version",
+    "agents_label": "Agents",
+    "artifacts_label": "Artifacts",
+    "commands_label": "Commands"
+  },
+  "final_cta": {
+    "title": "Ready to ship software differently?",
+    "cta_github": "View on GitHub",
+    "cta_docs": "Read the Docs"
+  },
+  "features": {
+    "page_title": "Features",
+    "page_subtitle": "Everything you need to build with AI — without the trade-offs.",
+    "differentiator_title": "A different approach to AI-assisted development",
+    "traditional": "Traditional AI Coding Tools",
+    "jarfis": "JARFIS",
+    "compare": {
+      "single_ai": "Single AI chat assistant",
+      "team": "9 domain-expert agents with defined roles",
+      "suggestion": "Code suggestions you apply manually",
+      "autonomous": "Full workflow from press release to retrospective",
+      "vendor": "Requires vendor platform or API",
+      "selfhost": "Pure Claude Code — runs on your CLI",
+      "completion": "Code-level output only",
+      "workflow": "11 structured artifacts per project",
+      "blackbox": "Opaque decision process",
+      "transparent": "Every decision documented in artifacts"
+    },
+    "learn_more": "Learn more in Docs",
+    "view_github": "View on GitHub",
+    "agent_team_title": "9 Expert Agents, One Workflow",
+    "agent_team_desc": "JARFIS orchestrates nine specialized agents — PO, Architect, Tech Lead, Backend, Frontend, DevOps, QA, Security, and UX — each with dedicated domain expertise and role-specific CLAUDE.md instructions. They collaborate sequentially, handing off artifacts at every phase.",
+    "agent_team_bullets": [
+      "9 roles: PO, Architect, Tech Lead, Backend, Frontend, DevOps, QA, Security, UX",
+      "Each agent has domain-specific instructions and expertise",
+      "Sequential collaboration with artifact handoffs",
+      "Defined roles eliminate ambiguity and overlap"
+    ],
+    "claude_code_title": "Claude Code Native Architecture",
+    "claude_code_desc": "JARFIS is built as a pure Claude Code workflow — no external servers, no API wrappers, no proprietary runtime. Everything runs through slash commands and CLAUDE.md conventions on your local CLI. The PreCompact hook preserves workflow state across context resets.",
+    "claude_code_bullets": [
+      "Pure slash command interface — no external server required",
+      "CLAUDE.md conventions for agent instructions",
+      "PreCompact hook for context-reset resilience",
+      "Works wherever Claude Code runs — local or CI"
+    ],
+    "artifacts_title": "11 Structured Artifacts",
+    "artifacts_desc": "Every JARFIS workflow produces 11 documented artifacts: press-release, PRD, architecture doc, API spec, UX spec, task list, test strategy, deployment plan, code review, and retrospective. Every decision is captured, every handoff is traceable.",
+    "artifacts_bullets": [
+      "Press release → PRD → Architecture → API spec",
+      "UX spec → Tasks → Test strategy → Deployment plan",
+      "Code review + retrospective close every workflow",
+      "Full audit trail from idea to deployment"
+    ],
+    "learning_title": "Continuous Learning System",
+    "learning_desc": "JARFIS accumulates knowledge across runs. jarfis-learnings.md captures global lessons from every retrospective. context.md holds project-specific state. The .jarfis-state.json file tracks workflow progress so JARFIS picks up exactly where it left off.",
+    "learning_bullets": [
+      "jarfis-learnings.md: global lessons across all projects",
+      "context.md: project-specific persistent state",
+      ".jarfis-state.json: workflow progress tracking",
+      "Every iteration makes the system smarter"
+    ],
+    "cta_heading": "Ready to see it in action?",
+    "footnote": "* Comparison based on general category patterns, not specific products.",
+    "agents_section_title": "Meet the 9 Agents",
+    "agents_section_subtitle": "Each agent carries deep domain expertise and role-specific instructions. Together they cover the full product lifecycle — from the first user story to the final retrospective.",
+    "agents": {
+      "po": {
+        "name": "Product Owner",
+        "abbr": "PO",
+        "desc": "Clarifies requirements through reverse questioning. Writes Working Backwards documents and PRDs. Evaluates whether a feature is worth building before a single line of code is written.",
+        "tags": [
+          "Requirements",
+          "PRD",
+          "Working Backwards"
+        ]
+      },
+      "architect": {
+        "name": "Architect",
+        "abbr": "ARCH",
+        "desc": "Assesses technical feasibility and long-term consequences. Produces the system architecture document, Impact Analysis, and Architecture Decision Records (ADRs) that the whole team relies on.",
+        "tags": [
+          "Architecture",
+          "ADR",
+          "Impact Analysis"
+        ]
+      },
+      "tech_lead": {
+        "name": "Tech Lead",
+        "abbr": "TL",
+        "desc": "Reviews API specs, breaks down tasks into actionable units, conducts code reviews, owns the deployment strategy, and runs the retrospective that feeds lessons back into the system.",
+        "tags": [
+          "Code Review",
+          "Task Breakdown",
+          "Retrospective"
+        ]
+      },
+      "ux": {
+        "name": "UX Designer",
+        "abbr": "UX",
+        "desc": "Defines information architecture, user flows, wireframes, and interaction patterns. Ensures the product is accessible and intuitive before implementation begins.",
+        "tags": [
+          "Information Architecture",
+          "Wireframes",
+          "Accessibility"
+        ]
+      },
+      "backend": {
+        "name": "Backend Engineer",
+        "abbr": "BE",
+        "desc": "Implements server-side APIs, defines data models, and builds backend services following the architecture and API spec produced earlier in the workflow.",
+        "tags": [
+          "API Implementation",
+          "Data Models",
+          "Backend Services"
+        ]
+      },
+      "frontend": {
+        "name": "Frontend Engineer",
+        "abbr": "FE",
+        "desc": "Builds UI components, manages client-side state, and integrates frontend with backend APIs — driven by the UX spec and task list generated upstream.",
+        "tags": [
+          "UI Components",
+          "State Management",
+          "API Integration"
+        ]
+      },
+      "devops": {
+        "name": "DevOps / SRE",
+        "abbr": "OPS",
+        "desc": "Owns infrastructure configuration, CI/CD pipeline setup, automated deployment, and monitoring. Ensures every release is reproducible and observable.",
+        "tags": [
+          "CI/CD",
+          "Infrastructure",
+          "Monitoring"
+        ]
+      },
+      "qa": {
+        "name": "QA Engineer",
+        "abbr": "QA",
+        "desc": "Designs the test strategy, builds the test pyramid, writes E2E scenarios, and verifies quality gates before any artifact is handed off to the next phase.",
+        "tags": [
+          "Test Strategy",
+          "Test Pyramid",
+          "E2E Scenarios"
+        ]
+      },
+      "security": {
+        "name": "Security Engineer",
+        "abbr": "SEC",
+        "desc": "Reviews security posture before code ships. Covers OWASP Top 10, authentication and authorization models, and performs vulnerability analysis on every feature.",
+        "tags": [
+          "OWASP Top 10",
+          "Auth & AuthZ",
+          "Vulnerability Analysis"
+        ]
+      }
+    }
+  },
+  "seo": {
+    "home_description": "One slash command. Nine expert agents. JARFIS orchestrates your entire product workflow on Claude Code.",
+    "features_description": "Explore JARFIS features: 9 expert agents, 11 structured artifacts, and a continuous learning system.",
+    "docs_description": "JARFIS documentation: getting started, concepts, guides, and API reference.",
+    "blog_description": "Updates, deep dives, and release notes from the JARFIS team.",
+    "showcase_description": "Projects built with JARFIS — AI-orchestrated product development in action."
+  },
+  "docs": {
+    "page_title": "Documentation",
+    "sidebar_title": "Docs",
+    "categories": {
+      "getting_started": "Getting Started",
+      "concepts": "Concepts",
+      "guides": "Guides",
+      "api_reference": "API Reference"
+    },
+    "last_updated": "Last updated",
+    "prev_page": "Previous",
+    "next_page": "Next",
+    "on_this_page": "On this page",
+    "not_translated": "This page is not yet translated. Showing English version."
+  },
+  "blog": {
+    "page_title": "Blog",
+    "page_subtitle": "Updates, deep dives, and release notes",
+    "empty_title": "Stories are being written.",
+    "empty_desc": "The first post is on its way — follow us on GitHub to stay updated when it drops.",
+    "follow_github": "Follow on GitHub",
+    "watch_repo": "Watch Repo",
+    "read_more": "Read more",
+    "prev_post": "Previous",
+    "next_post": "Next"
+  },
+  "showcase": {
+    "page_title": "Showcase",
+    "page_subtitle": "Projects built with JARFIS",
+    "empty_title": "Be the first to build with JARFIS.",
+    "empty_desc": "This very website was built by JARFIS agents — UX, Frontend, and QA working together. Your project could be next.",
+    "submit": "Submit Your Project",
+    "view_project": "View Project",
+    "view_source": "View Source"
+  },
+  "footer": {
+    "license": "MIT License",
+    "community": "Community",
+    "project": "Project",
+    "resources": "Resources",
+    "github_link": "GitHub",
+    "changelog": "Changelog",
+    "releases": "Releases",
+    "documentation": "Documentation",
+    "quick_start": "Quick Start",
+    "features_link": "Features",
+    "discussions": "GitHub Discussions",
+    "issues": "GitHub Issues",
+    "contributing": "Contributing Guide",
+    "copyright": "JARFIS Contributors",
+    "built_with": "Built with JARFIS",
+    "tagline": "The Fantastic Way to Ship Software with AI"
+  },
+  "a11y": {
+    "skip_to_content": "Skip to main content",
+    "toggle_menu": "Toggle navigation menu",
+    "switch_language": "Switch language",
+    "view_github": "View JARFIS on GitHub",
+    "close_nav": "Close navigation menu",
+    "open_nav": "Open navigation menu"
+  },
+  "common": {
+    "read_more": "Read More",
+    "back_to_list": "Back to List",
+    "language": "Language",
+    "footer_rights": "All rights reserved.",
+    "github": "GitHub",
+    "copy": "Copy",
+    "copied": "Copied!"
+  },
+  "philosophies": {
+    "title": "9 Philosophies",
+    "subtitle": "$ cat PHILOSOPHY.md",
+    "items": [
+      {
+        "number": "01",
+        "title": "Human in the Loop",
+        "description": "AI executes, humans decide. Every critical gate requires explicit approval before proceeding."
+      },
+      {
+        "number": "02",
+        "title": "Specialization over Generalization",
+        "description": "9 focused agents outperform one general assistant. Domain expertise is built in, not prompted in."
+      },
+      {
+        "number": "03",
+        "title": "Artifacts, Not Just Code",
+        "description": "11 structured documents per workflow. Every decision is traceable from idea to deployment."
+      },
+      {
+        "number": "04",
+        "title": "Context Resilience",
+        "description": "PreCompact hooks and state files preserve workflow across context resets. Nothing is lost."
+      },
+      {
+        "number": "05",
+        "title": "Continuous Learning",
+        "description": "Every retrospective feeds global learnings. JARFIS gets smarter with every project."
+      },
+      {
+        "number": "06",
+        "title": "Zero Vendor Lock-in",
+        "description": "Pure Claude Code, pure open source. No proprietary runtime, no external server, no account required."
+      },
+      {
+        "number": "07",
+        "title": "Full Lifecycle Coverage",
+        "description": "From press release to retrospective — not just implementation. The full product lifecycle, orchestrated."
+      },
+      {
+        "number": "08",
+        "title": "Transparency by Design",
+        "description": "Every agent decision is documented. The audit trail is the product, not an afterthought."
+      },
+      {
+        "number": "09",
+        "title": "Evolution through Use",
+        "description": "The more you use JARFIS, the better it gets. Usage is the feedback loop."
+      }
+    ]
+  },
+  "terminal": {
+    "loading": "Loading terminal..."
+  },
+  "growth": {
+    "title": "Growth",
+    "subtitle": "How JARFIS evolves with every workflow",
+    "stats_title": "By the Numbers",
+    "latest": "latest",
+    "milestones": [
+      {
+        "version": "v1.0.0",
+        "title": "Initial Release",
+        "description": "Core 9-agent orchestration with 9 phases and 3 human gates."
+      },
+      {
+        "version": "v1.0.7",
+        "title": "Production Ready",
+        "description": "Stable workflow engine with full artifact generation and state persistence."
+      }
+    ]
+  },
+  "error": {
+    "not_found_title": "404: Page Not Found",
+    "not_found_message": "$ cat page.txt\ncat: page.txt: No such file or directory",
+    "go_home": "$ cd ~",
+    "go_home_label": "Return to Home"
+  }
+}

@@ -1,7 +1,7 @@
 ci:
   collect:
     # Serve the built static output (./dist) with a local server
-    staticDistDir: ./dist
+    staticDistDir: ./out
     # Audit all locale home pages + key pages
     url:
       - http://localhost/jarfis-website/en/

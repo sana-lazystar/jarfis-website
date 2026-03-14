@@ -1,0 +1,13 @@
+[
+  {
+    "id": "jarfis-website",
+    "name": "JARFIS Website",
+    "description": "The official JARFIS website, built with JARFIS workflow — UX, Frontend, and QA agents working together autonomously.",
+    "url": "https://sana-lazystar.github.io/jarfis-website/",
+    "repoUrl": "https://github.com/sana-lazystar/jarfis-website",
+    "thumbnail": "/images/showcase/jarfis-website.png",
+    "tags": ["astro", "tailwind", "jarfis", "website"],
+    "featured": true,
+    "addedDate": "2026-03-04"
+  }
+]
