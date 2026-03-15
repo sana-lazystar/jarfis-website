@@ -1,0 +1,261 @@
+---
+title: "API参考"
+description: "JARFIS斜杠命令、.jarfis-state.json架构、学习文件结构和Phase规范的完整参考。"
+category: "api-reference"
+order: 1
+locale: "zh"
+translationOf: "en"
+lastUpdated: 2026-03-15
+draft: false
+---
+
+# API参考
+
+所有JARFIS命令、状态架构和配置文件的完整参考。
+
+## 斜杠命令
+
+<CommandCard command={{
+  name: "/jarfis:work",
+  description: "启动JARFIS工作流的主要命令。从Triage到Retrospective执行完整的Phase流水线。",
+  syntax: [
+    "/jarfis:work [description]",
+    "/jarfis:work [description] --meeting [meeting-name]"
+  ],
+  params: [
+    { name: "description", required: true, description: "要实现的功能或任务的自然语言描述" },
+    { name: "--meeting", required: false, description: "用作输入上下文的之前/jarfis:meeting会话名称" }
+  ],
+  examples: [
+    "/jarfis:work Build a user authentication system with JWT tokens",
+    "/jarfis:work Add Stripe subscription billing --meeting billing-kickoff",
+    "/jarfis:work Fix the broken cart calculation on checkout page"
+  ]
+}} />
+
+<CommandCard command={{
+  name: "/jarfis:meeting",
+  description: "启动用于规划和对齐的结构化启动会议。会议结果会被存储，可以在后续/jarfis:work会话中引用。",
+  syntax: ["/jarfis:meeting [topic]"],
+  params: [
+    { name: "topic", required: true, description: "会议的主题或议程" }
+  ],
+  examples: [
+    "/jarfis:meeting Define the authentication strategy for the mobile app",
+    "/jarfis:meeting Decide on database schema for multi-tenant architecture"
+  ]
+}} />
+
+<CommandCard command={{
+  name: "/jarfis:continue",
+  description: "继续已完成工作流的后续任务。重用上一个工作流的分支和artifact，高效执行后续工作。",
+  syntax: [
+    "/jarfis:continue [description]",
+    "/jarfis:continue [description] --workflow [path]",
+    "/jarfis:continue [description] --mode fix|extend"
+  ],
+  params: [
+    { name: "description", required: true, description: "后续任务的自然语言描述" },
+    { name: "--workflow", required: false, description: "直接指定工作流目录路径" },
+    { name: "--mode", required: false, description: "明确指定模式：fix（修复bug）或extend（功能扩展）" }
+  ],
+  examples: [
+    "/jarfis:continue Add unit tests for the authentication module",
+    "/jarfis:continue Fix the token refresh edge case --mode fix",
+    "/jarfis:continue Add OAuth support --workflow .jarfis/works/2026-03-10/auth-system"
+  ]
+}} />
+
+<CommandCard command={{
+  name: "/jarfis:implement",
+  description: "修改或添加JARFIS系统本身的专用命令。用于修改命令、agent和内部结构。",
+  syntax: ["/jarfis:implement [description]"],
+  params: [
+    { name: "description", required: true, description: "JARFIS系统修改或添加的描述" }
+  ],
+  examples: [
+    "/jarfis:implement Add a new /jarfis:standup command for daily status reports",
+    "/jarfis:implement Modify the QA agent to include performance testing"
+  ]
+}} />
+
+<CommandCard command={{
+  name: "/jarfis:project-init",
+  description: "通过分析当前代码库生成项目概要。创建包含项目结构、依赖关系和convention信息的.jarfis/project-profile.md。",
+  syntax: ["/jarfis:project-init"],
+  params: [],
+  examples: ["/jarfis:project-init"]
+}} />
+
+<CommandCard command={{
+  name: "/jarfis:project-update",
+  description: "更新现有项目概要以反映自上次初始化以来代码库的变化。",
+  syntax: ["/jarfis:project-update"],
+  params: [],
+  examples: ["/jarfis:project-update"]
+}} />
+
+<CommandCard command={{
+  name: "/jarfis:health",
+  description: "诊断JARFIS环境中的僵尸进程和其他运营问题。",
+  syntax: ["/jarfis:health"],
+  params: [],
+  examples: ["/jarfis:health"]
+}} />
+
+<CommandCard command={{
+  name: "/jarfis:upgrade",
+  description: "管理学习条目 — 审查、编辑和整理学习系统中的条目。",
+  syntax: ["/jarfis:upgrade"],
+  params: [],
+  examples: ["/jarfis:upgrade"]
+}} />
+
+<CommandCard command={{
+  name: "/jarfis:version",
+  description: "显示和管理JARFIS版本信息。",
+  syntax: ["/jarfis:version"],
+  params: [],
+  examples: ["/jarfis:version"]
+}} />
+
+<CommandCard command={{
+  name: "/jarfis:distill",
+  description: "执行提示词蒸馏 — 优化和压缩提示词内容以提高效率。",
+  syntax: ["/jarfis:distill"],
+  params: [],
+  examples: ["/jarfis:distill"]
+}} />
+
+---
+
+## 状态文件：`.jarfis-state.json`
+
+状态文件跟踪当前工作流进度。位于项目根目录。
+
+### 架构
+
+```json
+{
+  "work_name": "string",
+  "docs_dir": "string（artifact目录路径）",
+  "branch": "string（Git分支名称）",
+  "base_branch": "string（合并目标基础分支）",
+  "current_phase": "number | \"done\"",
+  "required_roles": {
+    "backend": "boolean",
+    "frontend": "boolean",
+    "ux": "boolean",
+    "devops": "boolean",
+    "security": "boolean"
+  },
+  "api_spec_required": "boolean",
+  "phases": {
+    "T": { "status": "pending | in_progress | completed | skipped" },
+    "0": { "status": "..." },
+    "6": { "status": "..." }
+  },
+  "last_checkpoint": {
+    "timestamp": "ISO 8601字符串",
+    "phase": "number",
+    "summary": "string"
+  },
+  "meeting_ref": "string（可选，会议名称）",
+  "meeting_dir": "string（可选，会议artifact路径）"
+}
+```
+
+### 字段参考
+
+<StateFieldTable fields={[
+  { field: "work_name", type: "string", description: "当前工作流的标识符" },
+  { field: "docs_dir", type: "string", description: "artifact存储路径" },
+  { field: "branch", type: "string", description: "为此工作流创建的Git分支" },
+  { field: "base_branch", type: "string", description: "合并回的目标分支" },
+  { field: "current_phase", type: "number | \"done\"", description: "活跃Phase编号" },
+  { field: "required_roles", type: "object", description: "指示哪些Agent角色处于活跃状态的布尔标志" },
+  { field: "api_spec_required", type: "boolean", description: "是否需要API规范文档" },
+  { field: "workspace", type: "object", description: "项目结构元数据" },
+  { field: "phases", type: "object", description: "各Phase状态（pending / in_progress / completed / skipped）" },
+  { field: "last_checkpoint", type: "object", description: "最后保存进度的时间戳和摘要" },
+  { field: "meeting_ref", type: "string?", description: "关联会议的引用（使用--meeting时）" },
+  { field: "meeting_dir", type: "string?", description: "关联会议artifact的路径" }
+]} caption=".jarfis-state.json 字段参考" />
+
+---
+
+## 学习文件
+
+### 全局学习：`~/.claude/jarfis-learnings.md`
+
+位于用户主目录，所有项目共享。包含两个主要部分：
+
+- **Agent Hints** — 从Retrospective积累的行为规则和指南
+- **Workflow Patterns** — 常见场景的经过验证的模式
+
+此文件在每个工作流的Phase 0（Pre-flight）期间加载。
+
+### 项目上下文：`.jarfis/context.md`
+
+注入Agent提示词的项目特定上下文。包含技术栈详情、convention、领域知识和集成约束。
+
+### 项目概要：`.jarfis/project-profile.md`
+
+由`/jarfis:project-init`自动生成。描述项目的结构、依赖关系、构建工具和配置。通过`/jarfis:project-update`更新。
+
+---
+
+## Phase参考
+
+<PhasePipeline phases={[
+  { id: "T", name: "Triage", description: "请求分类（A/B/C类型确定）" },
+  { id: "0", name: "Pre-flight", description: "Git同步、分支创建、学习文件加载" },
+  { id: "1", name: "Discovery", description: "PO逆向提问、Working Backwards、PRD、可行性评估" },
+  { id: "2", name: "Architecture & Planning", description: "影响分析、系统设计、API规范（条件触发）、任务分解、测试策略" },
+  { id: "3", name: "UX Design", description: "界面设计、交互设计、SVG资产、设计令牌（条件触发：仅在需要UI时）" },
+  { id: "4", name: "Implementation", description: "BE/FE/DevOps并行实现（仅有任务的部分）" },
+  { id: "4.5", name: "Operational Readiness", description: "部署策略、回滚计划、运维就绪检查" },
+  { id: "5", name: "Review & QA", description: "API契约验证、Tech Lead + QA + Security并行审查" },
+  { id: "6", name: "Retrospective", description: "学习积累（全局learnings + 项目context）" }
+]} />
+
+## Gate参考
+
+<GateCard gate={{
+  number: 1,
+  position: "Phase 1之后",
+  options: [
+    { label: "批准", description: "进入Phase 2" },
+    { label: "修改", description: "请求更改并重新呈现" },
+    { label: "中止", description: "取消工作流" }
+  ]
+}} />
+
+<GateCard gate={{
+  number: 2,
+  position: "Phase 2 & 3之后",
+  options: [
+    { label: "批准", description: "进入Phase 4" },
+    { label: "修改", description: "请求更改并重新呈现" },
+    { label: "中止", description: "取消工作流" }
+  ]
+}} />
+
+<GateCard gate={{
+  number: 3,
+  position: "Phase 5之后",
+  options: [
+    { label: "批准", description: "进入Phase 6" },
+    { label: "修改后重审", description: "请求修复并触发另一个审查周期" },
+    { label: "中止", description: "取消工作流" },
+    { label: "重新审视设计", description: "返回Phase 2进行根本性重新设计" }
+  ]
+}} />
+
+---
+
+## 另请参阅
+
+- [快速开始](/zh/docs/getting-started) — 安装并运行第一个工作流
+- [架构与概念](/zh/docs/concepts-overview) — 深入了解编排模型
+- [指南与定制](/zh/docs/guides-customization) — 高级工作流模式

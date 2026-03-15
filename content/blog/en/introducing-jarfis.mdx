@@ -1,6 +1,6 @@
 ---
-title: "Introducing JARFIS: 9 AI Agents, One Slash Command"
-description: "JARFIS orchestrates 9 specialized AI agents to deliver production-ready software — from requirements to deployment — with a single Claude Code slash command."
+title: "Introducing JARFIS: 11 AI Agents, One Slash Command"
+description: "JARFIS orchestrates 11 specialized AI agents to deliver production-ready software — from requirements to deployment — with a single Claude Code slash command."
 pubDate: 2026-03-05
 author: "JARFIS Team"
 tags: ["announcement", "architecture", "agents"]
@@ -9,11 +9,11 @@ draft: false
 ogImage: "/images/og/og-blog.png"
 ---
 
-# Introducing JARFIS: 9 AI Agents, One Slash Command
+# Introducing JARFIS: 11 AI Agents, One Slash Command
 
 Software development teams spend enormous time coordinating work across disciplines — product, design, engineering, QA, DevOps. Every handoff introduces friction. Every context switch costs time. JARFIS is built on one idea: what if you could eliminate those handoffs entirely?
 
-JARFIS (Just Another Really Fantastic Intelligent System) is a 100% open-source AI agent framework that runs natively inside **Claude Code** as a slash command workflow. It orchestrates a team of 9 specialized agents that collaborate across every phase of the software development lifecycle — with no external services, no vendor lock-in, and no separate CLI to install.
+JARFIS (Just A Rather Foolish Integration System) is a 100% open-source AI agent framework that runs natively inside **Claude Code** as a slash command workflow. It orchestrates a team of 11 specialized agents that collaborate across every phase of the software development lifecycle — with no external services, no vendor lock-in, and no separate CLI to install.
 
 ## The Problem with Single-Agent AI
 
@@ -23,27 +23,29 @@ The real bottleneck in software delivery is never "can someone write this code."
 
 JARFIS solves this with specialization. Each agent owns a specific domain and hands off to the next with structured, validated output.
 
-## The 9 Agents
+## The 11 Agents
 
-JARFIS ships with 9 purpose-built agents, each responsible for a distinct role:
+JARFIS ships with 11 purpose-built agents, each responsible for a distinct role:
 
 | Agent | Primary Responsibilities |
 |-------|--------------------------|
 | **Product Owner (PO)** | Conducts reverse-questions to clarify requirements, writes Working Backwards press release, authors PRD |
 | **Architect** | Evaluates feasibility, performs impact analysis, designs system architecture, writes ADRs |
 | **Tech Lead** | Reviews API specifications, breaks down tasks, conducts code reviews, leads retrospective |
-| **UX Designer** | Designs screens and interactions (activated only when UI work is required) |
+| **UX Designer** | Directly produces SVG assets and design token systems; designs screens and interactions (activated only when UI work is required) |
 | **Backend Engineer** | Implements backend services, APIs, and data models |
 | **Frontend Engineer** | Implements UI components, frontend logic, and integration |
 | **DevOps/SRE** | Sets up infrastructure, CI/CD pipelines, and deployment configuration |
 | **QA Engineer** | Defines test strategy and executes QA verification |
 | **Security Engineer** | Performs pre-review security analysis and security review |
+| **Advocate** | Champions proposed changes by analyzing their merits and user value in dialectic reviews |
+| **Critic** | Critically examines proposed changes to identify risks, side effects, and design inconsistencies |
 
 These agents don't just run sequentially — they collaborate. The Frontend Engineer implements against the UX Designer's specifications. The QA Engineer tests against the PO's acceptance criteria. The Tech Lead reviews every engineer's output before it ships.
 
 ## The 9-Phase Pipeline
 
-JARFIS organizes every workflow through 9 defined phases, each with specific inputs, outputs, and responsible agents. Three human Gates sit at critical checkpoints — no phase after a Gate proceeds without explicit user approval.
+JARFIS organizes every workflow through 9 defined phases, each with specific inputs, outputs, and responsible agents. Three Human Gates sit at critical checkpoints — no phase after a Gate proceeds without explicit user approval.
 
 ```
 Phase T:   Triage               — classify request type

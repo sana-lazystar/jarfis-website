@@ -230,6 +230,18 @@ body {
   margin: 2rem 0;
 }
 
+/* ========== DOCS COMPONENTS ========== */
+
+.docs-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.docs-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(13, 148, 136, 0.3) !important;
+  box-shadow: 0 12px 40px rgba(13, 148, 136, 0.08);
+}
+
 /* ========== ANIMATIONS ========== */
 
 /* Logo breathe */
