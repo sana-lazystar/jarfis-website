@@ -1,0 +1,295 @@
+---
+title: "指南与自定义"
+description: "高级 JARFIS 使用模式：会议与工作流联动、角色配置、项目档案、Gate 交互、学习系统管理与工作流恢复。"
+category: "guides"
+order: 1
+locale: "zh"
+translationOf: "en"
+lastUpdated: 2026-03-15
+draft: false
+---
+
+# 指南与自定义
+
+在真实项目中充分发挥 JARFIS 潜力的实用模式。
+
+## 会议与工作流联动
+
+JARFIS 最强大的模式之一是将启动会议的内容作为工作会话的上下文输入，确保规划决策与实施之间的一致性。
+
+### 第一步：召开启动会议
+
+```
+/jarfis:meeting Define the authentication strategy for the mobile app
+```
+
+会议将产出结构化的决策与产物，存储在会议目录中。
+
+### 第二步：引用会议启动工作
+
+```
+/jarfis:work Implement mobile auth with biometric login --meeting auth-strategy-meeting
+```
+
+`--meeting` 标志将会议输出作为输入上下文关联进来。状态文件中将包含 `meeting_ref` 和 `meeting_dir` 字段，各 Agent 在整个工作流中都会引用会议决策。
+
+此模式对于需要多方利益相关者在实施前达成一致的复杂功能尤为有价值。
+
+## 通过 `required_roles` 配置角色
+
+并非每个项目都需要全部 11 个 Agent。JARFIS 使用 `.jarfis-state.json` 中的 `required_roles` 字段来控制哪些 Agent 被激活：
+
+```json
+{
+  "required_roles": {
+    "backend": true,
+    "frontend": true,
+    "ux": false,
+    "devops": false,
+    "security": true
+  }
+}
+```
+
+### 常见角色配置模式
+
+**纯前端项目**（例如落地页重设计）：
+```json
+{
+  "required_roles": {
+    "backend": false,
+    "frontend": true,
+    "ux": true,
+    "devops": false,
+    "security": false
+  }
+}
+```
+Phase 3（UX 设计）处于激活状态。Phase 4 仅运行前端工程师，不调用后端和 DevOps Agent。
+
+**需要安全审查的全栈项目**：
+```json
+{
+  "required_roles": {
+    "backend": true,
+    "frontend": true,
+    "ux": true,
+    "devops": true,
+    "security": true
+  }
+}
+```
+所有 Phase 均激活。Phase 4 并行运行后端、前端和 DevOps。Phase 5 包含安全工程师审查。
+
+**仅后端 API 项目**：
+```json
+{
+  "required_roles": {
+    "backend": true,
+    "frontend": false,
+    "ux": false,
+    "devops": true,
+    "security": true
+  }
+}
+```
+Phase 3（UX 设计）完全跳过。Phase 4 仅运行后端和 DevOps。
+
+JARFIS 在 Phase T（Triage）期间自动确定这些角色，但您也可以根据需要手动调整。
+
+## 继续已完成的工作流
+
+当需要对已完成的工作流进行补充或修复时，使用 `/jarfis:continue` 而非重新开始，这样可以复用现有分支和产物：
+
+```
+/jarfis:continue Add unit tests for the auth module
+```
+
+使用 `--mode` 标志跳过自动分类：
+
+```
+/jarfis:continue Fix the token refresh edge case --mode fix
+```
+
+对于后续任务，这比 `/jarfis:work` 更高效，因为在不必要的情况下会跳过 Triage/Discovery 阶段。
+
+## 项目档案
+
+项目档案让 JARFIS 深入了解您的代码库结构和规范。
+
+### 初始化档案
+
+```
+/jarfis:project-init
+```
+
+这会分析您的项目并生成 `.jarfis/project-profile.md`，包含：
+- 仓库结构与组织方式
+- 依赖项及版本
+- 构建工具与脚本
+- 检测到的规范和模式
+
+### 保持档案更新
+
+当项目结构发生重大变化时（新增包、主要依赖更新等）：
+
+```
+/jarfis:project-update
+```
+
+这会刷新档案，同时保留手动添加的上下文内容。
+
+## 使用 Gate
+
+Gate 是强制性的人工检查节点。以下是有效使用它们的方法。
+
+### Gate 1 — Discovery 之后
+
+在 Gate 1，您审查 PRD 和可行性评估。可选操作：
+
+- **批准**：进入架构与规划阶段（Phase 2）
+- **修改**：提供具体反馈，PO 和架构师将修改输出后重新呈现
+- **中止**：完全取消工作流
+
+**提示**：这是调整方向成本最低的节点。Gate 1 的修改只需数分钟，而 Gate 3 的修改可能耗费数小时。
+
+### Gate 2 — 架构与 UX 之后
+
+在 Gate 2，您审查架构设计、任务分解以及（如适用）UX 规格。可选操作：
+
+- **批准**：进入实施阶段（Phase 4）
+- **修改**：请求对架构、任务范围或 UX 设计进行更改
+- **中止**：取消工作流
+
+**提示**：请仔细审阅 `tasks.md`——这定义了将要实施的确切内容。此处遗漏的任务意味着后续功能的缺失。
+
+### Gate 3 — 审查与 QA 之后
+
+在 Gate 3，您审查已完成的实施、测试结果和安全发现。可选操作：
+
+- **批准**：进入回顾阶段（Phase 6）并完结
+- **修改并重新审查**：请求修复并触发新一轮审查周期
+- **中止**：取消工作流
+- **重新审视设计**：针对根本性设计问题，返回 Phase 2 进行重新设计
+
+## 管理学习系统
+
+JARFIS 的学习系统让每次工作流都比上一次更高效。
+
+### 全局学习：`~/.claude/jarfis-learnings.md`
+
+此文件位于您的主目录，跨所有项目共享。包含：
+
+- **Agent 提示**：行为规则，例如"在创建新中间件之前始终检查现有中间件"或"使用 `mutateAsync` 配合 try-catch 防止未处理的 rejection"
+- **工作流模式**：经过验证的方法，例如"对于 monorepo 项目，按包进行影响分析"
+
+该文件在每次工作流的 Phase 0 期间加载，并在 Phase 6（回顾）期间更新。
+
+### 项目上下文：`.jarfis/context.md`
+
+Agent 在整个工作流中引用的项目特定知识：
+
+```markdown
+# Project Context
+
+## Tech Stack
+- Frontend: Next.js 15 (App Router), TypeScript strict, Tailwind CSS 4
+- Backend: FastAPI (Python 3.12), PostgreSQL 16, Redis
+- Infrastructure: AWS ECS, Terraform, GitHub Actions
+
+## Conventions
+- API responses follow RFC 9457 Problem Details format
+- All database models use UUID primary keys
+- Frontend components follow atomic design
+- Commit format: conventional commits (feat/fix/chore)
+
+## Business Domain
+- SaaS B2B platform for legal document management
+- Compliance: SOC 2 Type II, GDPR
+
+## Integration Constraints
+- Auth: Auth0 (cannot change)
+- Payment: Stripe (webhooks configured)
+- Storage: S3 with presigned URLs
+```
+
+`context.md` 越具体，Agent 的输出就越准确。这是开始工作流前性价比最高的投入。
+
+### 通过 `/jarfis:upgrade` 整理学习内容
+
+随着时间推移，`jarfis-learnings.md` 可能积累过时或冗余的条目。使用升级命令进行审查和整理：
+
+```
+/jarfis:upgrade
+```
+
+这会引导您逐条审阅现有学习项，允许您保留、编辑或删除。
+
+## 上下文压缩后的工作流恢复
+
+长时间运行的工作流可能会遇到 Claude Code 上下文压缩。JARFIS 专为从中恢复而设计：
+
+1. `.jarfis-state.json` 文件持久化精确的阶段和进度状态
+2. `last_checkpoint` 字段记录压缩前的工作内容
+3. 磁盘上的学习文件和产物不受上下文压缩影响
+
+在上下文重置后恢复，只需以相同描述再次运行 `/jarfis:work`。JARFIS 将检测到现有的 `.jarfis-state.json` 并从最后一个检查点恢复，而不是重新开始。
+
+## 修改 JARFIS 本身
+
+当您需要自定义 JARFIS 的行为——添加新命令、修改 Agent 提示或扩展工作流——使用专用的自我修改命令：
+
+```
+/jarfis:implement Add a /jarfis:standup command for daily status reports
+```
+
+此命令理解 JARFIS 系统结构，确保更改正确应用于所有受影响的文件。
+
+## 实用示例
+
+### 示例 1：纯前端功能
+
+```
+/jarfis:work Redesign the dashboard with new chart components
+```
+
+JARFIS 将 `required_roles.backend` 设为 false 并跳过后端相关工作。Phase 3（UX 设计）将激活，Phase 4 仅调用前端工程师。
+
+### 示例 2：包含会议输入的全栈项目
+
+```
+/jarfis:meeting Plan the multi-tenant architecture migration
+/jarfis:work Implement multi-tenant data isolation --meeting tenant-architecture
+```
+
+会议决策（例如"在 PostgreSQL 中使用行级安全"）流入工作会话，确保架构师和后端工程师遵循商定的方案。
+
+### 示例 3：最小开销的快速修复
+
+```
+/jarfis:work Fix the broken pagination on the orders list
+```
+
+对于简单的 Bug 修复，JARFIS 的 Triage 阶段（Phase T）将其归类为 C 类（简单修复），相应地简化 Phase 流程，跳过 UX 设计和运营就绪等重量级阶段。
+
+### 示例 4：完成后的后续工作
+
+```
+/jarfis:continue Add internationalization support to the auth module
+```
+
+继续上一个 auth 工作流，复用分支并引用现有产物。对于密切相关的后续工作，比新建工作流更高效。
+
+### 示例 5：诊断问题
+
+```
+/jarfis:health
+```
+
+如果工作流看起来卡住或行为异常，健康检查命令可诊断僵尸进程和其他运营问题。
+
+## 下一步
+
+- [API Reference](/zh/docs/api-reference) — 完整的命令与配置参考
+- [Architecture & Concepts](/zh/docs/concepts-overview) — 深入了解编排模型
+- [Quick Start](/zh/docs/getting-started) — 安装与首次工作流
