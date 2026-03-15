@@ -48,10 +48,11 @@ test.describe('사이드바 네비게이션', () => {
     const sidebarLink = page.locator('aside nav a[href*="/docs/"]').nth(1);
     const href = await sidebarLink.getAttribute('href');
 
-    if (href) {
-      await sidebarLink.click();
-      await expect(page).toHaveURL(/\/en\/docs\//);
-    }
+    // href가 반드시 존재해야 함 (vacuous pass 방지)
+    expect(href).toBeTruthy();
+
+    await sidebarLink.click();
+    await expect(page).toHaveURL(/\/en\/docs\//);
   });
 
   test('docs prev/next 네비게이션 링크 정상 동작', async ({ page }) => {
