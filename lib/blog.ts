@@ -111,16 +111,12 @@ export function getAllBlogStaticParams(): { locale: string; slug: string }[] {
   const params: { locale: string; slug: string }[] = [];
 
   for (const locale of SUPPORTED_LOCALES) {
-    const localeDir = path.join(blogDir, locale);
-    if (!fs.existsSync(localeDir)) continue;
-
-    const files = fs.readdirSync(localeDir).filter((f) => f.endsWith('.mdx'));
-    for (const file of files) {
-      const slug = file.replace('.mdx', '');
-      const filePath = path.join(localeDir, file);
-      const frontmatter = parseFrontmatter(filePath);
-      if (!frontmatter || frontmatter.draft) continue;
-      params.push({ locale, slug });
+    // getBlogPostsByLocale()은 이미 DEFAULT_LOCALE fallback을 내장하고 있다.
+    // locale별 MDX 파일이 없는 경우 en 콘텐츠를 fallback으로 사용하므로,
+    // 4개 locale 모두에 대해 static params를 생성하여 HTML이 빌드 시 생성된다.
+    const posts = getBlogPostsByLocale(locale);
+    for (const post of posts) {
+      params.push({ locale, slug: post.slug });
     }
   }
 
