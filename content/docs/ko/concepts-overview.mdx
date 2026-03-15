@@ -1,120 +1,133 @@
 ---
 title: "Architecture & Concepts"
-description: "JARFIS 핵심 아키텍처를 이해하세요: 오케스트레이션 모델, 9개 Agent, 9단계 Phase 파이프라인, 3개 Human Gate, 상태 관리, 학습 시스템."
+description: "JARFIS 핵심 아키텍처를 이해하세요: 오케스트레이션 모델, 11개 Agent, 9단계 Phase 파이프라인, 3개 Human Gate, 상태 관리, 학습 시스템."
 category: "concepts"
 order: 1
 locale: "ko"
-lastUpdated: 2026-03-05
+lastUpdated: 2026-03-15
 draft: false
 ---
 
 # Architecture & Concepts
 
-JARFIS가 9개의 전문 AI Agent를 구조화된 Phase 파이프라인으로 조율해 프로덕션 소프트웨어를 출시하는 방법.
+JARFIS(Just A Rather Foolish Integration System)가 11개의 전문 AI Agent를 구조화된 Phase 파이프라인으로 조율해 프로덕션 소프트웨어를 출시하는 방법.
 
 ## 오케스트레이션 모델
 
-JARFIS는 **Claude Code** 안에서 슬래시 명령어 워크플로우로 동작합니다. 별도 CLI 도구나 외부 서비스가 아니라, Claude Code 환경을 활용해 9개의 전문 Agent를 Phase 파이프라인으로 조율합니다:
+JARFIS는 **Claude Code** 안에서 슬래시 명령어 워크플로우로 동작합니다. 별도 CLI 도구나 외부 서비스가 아니라, Claude Code 환경을 활용해 11개의 전문 Agent를 Phase 파이프라인으로 조율합니다.
 
-```
-/jarfis:work [description]
-      |
-      v
-+---------------------------------------------------+
-|              JARFIS Orchestrator                   |
-|  (Phase pipeline, gate control, state management) |
-+---------------------------------------------------+
-      |
-      |--- Phase T: Triage (classify request)
-      |--- Phase 0: Pre-flight (git sync, load learnings)
-      |--- Phase 1: Discovery (PO + Architect)
-      |       +-- Gate 1: User approval
-      |--- Phase 2: Architecture & Planning
-      |--- Phase 3: UX Design (conditional)
-      |       +-- Gate 2: User approval
-      |--- Phase 4: Implementation (parallel BE/FE/DevOps)
-      |--- Phase 4.5: Operational Readiness
-      |--- Phase 5: Review & QA (parallel reviews)
-      |       +-- Gate 3: User approval
-      +--- Phase 6: Retrospective
-```
+<PhasePipeline phases={[
+  { id: "T", name: "Triage", description: "들어온 요청을 A/B/C 유형으로 분류해 적절한 워크플로우 깊이와 필요한 Agent를 결정합니다.", agents: ["PO"] },
+  { id: "0", name: "Pre-flight", description: "Git 상태를 동기화하고, 작업 브랜치를 생성하며, 학습 파일(jarfis-learnings.md, context.md, project-profile.md)을 로드합니다." },
+  { id: "1", name: "Discovery", description: "PO가 역질문으로 요구사항을 완전히 파악한 뒤, Working Backwards 문서와 PRD를 작성합니다. Architect가 타당성을 평가합니다.", agents: ["PO", "Architect"] },
+  { id: "gate1", name: "Gate 1", description: "사용자 승인 체크포인트", isGate: true, gate: { label: "GATE 1 — 사용자 승인", options: ["승인", "수정", "중단"] } },
+  { id: "2", name: "Architecture & Planning", description: "Architect가 영향 분석과 시스템 설계를 수행합니다. api_spec_required가 true이면 API spec을 작성합니다. Tech Lead가 태스크를 분해하고 QA Engineer가 테스트 전략을 정의합니다.", agents: ["Architect", "Tech Lead", "QA"] },
+  { id: "3", name: "UX Design", description: "프로젝트에 UI 작업이 필요한 경우(required_roles.ux가 true)에만 활성화됩니다. UX Designer가 화면 설계, 인터랙션 명세, SVG 에셋, 디자인 토큰을 작성합니다.", agents: ["UX Designer"] },
+  { id: "gate2", name: "Gate 2", description: "사용자 승인 체크포인트", isGate: true, gate: { label: "GATE 2 — 사용자 승인", options: ["승인", "수정", "중단"] } },
+  { id: "4", name: "Implementation", description: "Backend, Frontend, DevOps 엔지니어가 병렬로 작업하며, 각자의 역할에 해당하는 부분만 구현합니다. 진행 상황은 tasks.md로 추적합니다.", agents: ["BE", "FE", "DevOps"] },
+  { id: "4.5", name: "Operational Readiness", description: "Review Phase 전에 배포 전략, 롤백 계획, 운영 준비 상태를 점검합니다.", agents: ["DevOps"] },
+  { id: "5", name: "Review & QA", description: "API 계약 검증이 먼저 실행된 뒤, Tech Lead, QA Engineer, Security Engineer의 병렬 리뷰가 진행됩니다.", agents: ["Tech Lead", "QA", "Security"] },
+  { id: "gate3", name: "Gate 3", description: "사용자 승인 체크포인트", isGate: true, gate: { label: "GATE 3 — 사용자 승인", options: ["승인", "수정 후 재검토", "중단", "설계 재검토"] } },
+  { id: "6", name: "Retrospective", description: "학습 내용이 전역 jarfis-learnings.md와 프로젝트별 context.md에 축적되어 향후 워크플로우를 개선합니다.", agents: ["Tech Lead"] }
+]} />
 
-## 9개 Agent 역할
+## 11개 Agent 역할
 
 각 Agent는 명확하게 정의된 책임 범위를 가집니다. Agent는 역할이 필요한 경우에만 활성화되며, `.jarfis-state.json`의 `required_roles` 필드로 제어됩니다:
 
-| Agent | 주요 책임 |
-|-------|-----------|
-| **Product Owner (PO)** | 요구사항 명확화를 위한 역질문, Working Backwards 보도자료 작성, PRD 작성 |
-| **Architect** | 타당성 평가, 영향 분석, 시스템 아키텍처 설계, ADR 작성 |
-| **Tech Lead** | API spec 검토, 태스크 분해, 코드 리뷰, Retrospective 주도 |
-| **UX Designer** | 화면 및 인터랙션 설계 (`required_roles.ux`가 true인 경우에만 활성화) |
-| **Backend Engineer** | 백엔드 서비스, API, 데이터 모델 구현 |
-| **Frontend Engineer** | UI 컴포넌트, 프론트엔드 로직, 통합 구현 |
-| **DevOps/SRE** | 인프라, CI/CD 파이프라인, 배포 설정 구성 |
-| **QA Engineer** | 테스트 전략 정의, QA 검증 수행 |
-| **Security Engineer** | 사전 보안 분석 및 보안 리뷰 수행 |
-
-## 9단계 Phase 파이프라인
-
-JARFIS는 모든 워크플로우를 9개의 정의된 Phase로 구조화합니다. 각 Phase는 특정 입력값, 출력물, 담당 Agent를 가집니다. Phase는 프로젝트 요건에 따라 조건부로 건너뛸 수 있습니다.
-
-### Phase T — Triage
-들어온 요청을 A/B/C 유형으로 분류해 적절한 워크플로우 깊이와 필요한 Agent를 결정합니다.
-
-### Phase 0 — Pre-flight
-Git 상태를 동기화하고, 작업 브랜치를 생성하며, 학습 파일(`jarfis-learnings.md`, `context.md`, `project-profile.md`)을 로드합니다.
-
-### Phase 1 — Discovery
-PO가 역질문으로 요구사항을 완전히 파악한 뒤, Working Backwards 문서와 PRD를 작성합니다. Architect가 타당성을 평가합니다. 이후 **Gate 1** — 사용자가 승인, 수정, 또는 중단을 선택합니다.
-
-### Phase 2 — Architecture & Planning
-Architect가 영향 분석과 시스템 설계를 수행합니다. `api_spec_required`가 true이면 API spec을 작성합니다. Tech Lead가 태스크를 분해하고 QA Engineer가 테스트 전략을 정의합니다.
-
-### Phase 3 — UX Design (조건부)
-프로젝트에 UI 작업이 필요한 경우(`required_roles.ux`가 true)에만 활성화됩니다. UX Designer가 화면 설계와 인터랙션 명세를 작성합니다. Phase 2와 3 이후 **Gate 2**가 따라옵니다.
-
-### Phase 4 — Implementation
-Backend, Frontend, DevOps 엔지니어가 병렬로 작업하며, 각자의 역할에 해당하는 부분만 구현합니다. 진행 상황은 `tasks.md`로 추적합니다.
-
-### Phase 4.5 — Operational Readiness
-Review Phase 전에 배포 전략, 롤백 계획, 운영 준비 상태를 점검합니다.
-
-### Phase 5 — Review & QA
-API 계약 검증이 먼저 실행된 뒤, Tech Lead, QA Engineer, Security Engineer의 병렬 리뷰가 진행됩니다. **Gate 3** — 사용자가 승인, 수정 후 재검토 요청, 중단, 또는 근본적인 설계 문제 발견 시 설계 재검토를 선택합니다.
-
-### Phase 6 — Retrospective
-학습 내용이 전역 `jarfis-learnings.md`와 프로젝트별 `context.md`에 축적되어 향후 워크플로우를 개선합니다.
+<AgentGrid agents={[
+  { name: "Product Owner", abbr: "PO", description: "요구사항 명확화를 위한 역질문, Working Backwards 보도자료 작성, PRD 작성.", phases: ["1"], iconBg: "rgba(13, 148, 136, 0.15)", iconColor: "#0D9488" },
+  { name: "Architect", abbr: "AR", description: "타당성 평가, 영향 분석, 시스템 아키텍처 설계, ADR 작성.", phases: ["1", "2"], iconBg: "rgba(251, 191, 36, 0.12)", iconColor: "#FBBF24" },
+  { name: "Tech Lead", abbr: "TL", description: "API spec 검토, 태스크 분해, 코드 리뷰, Retrospective 주도.", phases: ["2", "5", "6"], iconBg: "rgba(94, 234, 212, 0.10)", iconColor: "#5EEAD4" },
+  { name: "UX Designer", abbr: "UX", description: "화면 및 인터랙션 설계, SVG 에셋 직접 제작, 디자인 토큰 시스템 구축, 브랜드 디자인 담당. UI 작업이 필요한 경우에만 활성화됩니다.", phases: ["3"], iconBg: "rgba(251, 113, 133, 0.12)", iconColor: "#FB7185" },
+  { name: "Backend Engineer", abbr: "BE", description: "백엔드 서비스, API, 데이터 모델 구현.", phases: ["4"], iconBg: "rgba(13, 148, 136, 0.15)", iconColor: "#0D9488" },
+  { name: "Frontend Engineer", abbr: "FE", description: "UI 컴포넌트, 프론트엔드 로직, 통합 구현.", phases: ["4"], iconBg: "rgba(251, 191, 36, 0.12)", iconColor: "#FBBF24" },
+  { name: "DevOps/SRE", abbr: "DO", description: "인프라, CI/CD 파이프라인, 배포 설정 구성. 배포 및 롤백 계획 수립.", phases: ["4", "4.5"], iconBg: "rgba(94, 234, 212, 0.10)", iconColor: "#5EEAD4" },
+  { name: "QA Engineer", abbr: "QA", description: "테스트 전략 정의, QA 검증 수행.", phases: ["2", "5"], iconBg: "rgba(251, 113, 133, 0.12)", iconColor: "#FB7185" },
+  { name: "Security Engineer", abbr: "SE", description: "사전 보안 분석 및 보안 리뷰 수행.", phases: ["5"], iconBg: "rgba(13, 148, 136, 0.15)", iconColor: "#0D9488" },
+  { name: "Advocate", abbr: "ADV", description: "제안된 솔루션의 장점을 옹호하고, 트레이드오프 결정을 방어하며, 이해관계자 간 합의를 도출합니다. Dialectic Review 시스템에서 활성화됩니다.", phases: ["2", "5"], iconBg: "rgba(251, 191, 36, 0.12)", iconColor: "#FBBF24" },
+  { name: "Critic", abbr: "CRT", description: "가정에 의문을 제기하고, 약점과 리스크를 식별하며, 시스템 일관성을 수호합니다. Dialectic Review 시스템에서 활성화됩니다.", phases: ["2", "5"], iconBg: "rgba(94, 234, 212, 0.10)", iconColor: "#5EEAD4" }
+]} />
 
 ## 3개의 Human Gate
 
 Gate는 사용자가 워크플로우 방향을 통제하는 필수 승인 체크포인트입니다:
 
-| Gate | 위치 | 선택지 |
-|------|------|--------|
-| **Gate 1** | Phase 1 이후 | 승인 / 수정 / 중단 |
-| **Gate 2** | Phase 2 & 3 이후 | 승인 / 수정 / 중단 |
-| **Gate 3** | Phase 5 이후 | 승인 / 수정 후 재검토 / 중단 / 설계 재검토 (근본 설계 문제 시) |
+<GateCard gate={{
+  number: 1,
+  position: "Phase 1 (Discovery) 이후",
+  options: [
+    { label: "승인", description: "Architecture & Planning (Phase 2)으로 진행" },
+    { label: "수정", description: "피드백 제공 — PO와 Architect가 수정 후 재발표" },
+    { label: "중단", description: "워크플로우 전체 취소" }
+  ]
+}} />
+
+<GateCard gate={{
+  number: 2,
+  position: "Phase 2 & 3 (Architecture + UX) 이후",
+  options: [
+    { label: "승인", description: "Implementation (Phase 4)으로 진행" },
+    { label: "수정", description: "아키텍처, 태스크 범위, UX 디자인 변경 요청" },
+    { label: "중단", description: "워크플로우 취소" }
+  ]
+}} />
+
+<GateCard gate={{
+  number: 3,
+  position: "Phase 5 (Review & QA) 이후",
+  options: [
+    { label: "승인", description: "Retrospective (Phase 6)으로 진행 후 마무리" },
+    { label: "수정 후 재검토", description: "수정 요청 후 리뷰 사이클 재시작" },
+    { label: "중단", description: "워크플로우 취소" },
+    { label: "설계 재검토", description: "리뷰 중 발견된 근본적인 설계 문제 시 Phase 2로 복귀" }
+  ]
+}} />
 
 Gate를 통과하기 전까지 어떤 Phase도 진행되지 않습니다.
 
-## 11개 아티팩트
+## 워크플로우 산출물
 
 JARFIS 워크플로우는 작업 디렉토리에 최대 11개의 구조화된 문서를 생성합니다:
 
-| 아티팩트 | Phase | 작성자 |
-|---------|-------|--------|
-| Working Backwards (보도자료) | 1 | PO |
-| PRD | 1 | PO |
-| 타당성 평가 | 1 | Architect |
-| 영향 분석 | 2 | Architect |
-| Architecture / ADR | 2 | Architect |
-| API specification | 2 | Architect / Tech Lead |
-| 태스크 분해 (`tasks.md`) | 2 | Tech Lead |
-| 테스트 전략 | 2 | QA Engineer |
-| UX specification | 3 | UX Designer |
-| 배포 / 롤백 계획 | 4.5 | DevOps/SRE |
-| 리뷰 보고서 | 5 | Tech Lead / QA / Security |
+<ArtifactList groups={[
+  {
+    phase: "Phase 1 — Discovery",
+    artifacts: [
+      { name: "Working Backwards (보도자료)", author: "PO" },
+      { name: "PRD", author: "PO" },
+      { name: "타당성 평가", author: "Architect" }
+    ]
+  },
+  {
+    phase: "Phase 2 — Architecture & Planning",
+    artifacts: [
+      { name: "영향 분석", author: "Architect" },
+      { name: "Architecture / ADR", author: "Architect" },
+      { name: "API specification", author: "Architect / Tech Lead" },
+      { name: "태스크 분해 (tasks.md)", author: "Tech Lead" },
+      { name: "테스트 전략", author: "QA Engineer" }
+    ]
+  },
+  {
+    phase: "Phase 3 — UX Design",
+    artifacts: [
+      { name: "UX specification", author: "UX Designer" }
+    ]
+  },
+  {
+    phase: "Phase 4.5 — Operational Readiness",
+    artifacts: [
+      { name: "배포 / 롤백 계획", author: "DevOps/SRE" }
+    ]
+  },
+  {
+    phase: "Phase 5 — Review & QA",
+    artifacts: [
+      { name: "리뷰 보고서", author: "Tech Lead / QA / Security" }
+    ]
+  }
+]} />
 
 ## 상태 관리
 

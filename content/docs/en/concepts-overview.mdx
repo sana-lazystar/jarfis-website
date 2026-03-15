@@ -1,120 +1,133 @@
 ---
 title: "Architecture & Concepts"
-description: "Understand JARFIS core architecture: orchestration model, 9 agents, 9-phase pipeline, 3 human gates, state management, and the learning system."
+description: "Understand JARFIS core architecture: orchestration model, 11 agents, 9-phase pipeline, 3 human gates, state management, and the learning system."
 category: "concepts"
 order: 1
 locale: "en"
-lastUpdated: 2026-03-05
+lastUpdated: 2026-03-15
 draft: false
 ---
 
 # Architecture & Concepts
 
-How JARFIS orchestrates 9 expert AI agents through a structured phase pipeline to ship production software.
+How JARFIS (Just A Rather Foolish Integration System) orchestrates 11 expert AI agents through a structured phase pipeline to ship production software.
 
 ## The Orchestration Model
 
-JARFIS runs natively inside **Claude Code** as a slash command workflow. It is not a separate CLI tool or external service — it leverages Claude Code's environment to coordinate 9 specialized agents through a phased pipeline:
+JARFIS runs natively inside **Claude Code** as a slash command workflow. It is not a separate CLI tool or external service — it leverages Claude Code's environment to coordinate 11 specialized agents through a phased pipeline.
 
-```
-/jarfis:work [description]
-      |
-      v
-+---------------------------------------------------+
-|              JARFIS Orchestrator                   |
-|  (Phase pipeline, gate control, state management) |
-+---------------------------------------------------+
-      |
-      |--- Phase T: Triage (classify request)
-      |--- Phase 0: Pre-flight (git sync, load learnings)
-      |--- Phase 1: Discovery (PO + Architect)
-      |       +-- Gate 1: User approval
-      |--- Phase 2: Architecture & Planning
-      |--- Phase 3: UX Design (conditional)
-      |       +-- Gate 2: User approval
-      |--- Phase 4: Implementation (parallel BE/FE/DevOps)
-      |--- Phase 4.5: Operational Readiness
-      |--- Phase 5: Review & QA (parallel reviews)
-      |       +-- Gate 3: User approval
-      +--- Phase 6: Retrospective
-```
+<PhasePipeline phases={[
+  { id: "T", name: "Triage", description: "Classifies the incoming request into A/B/C types to determine the appropriate workflow depth and which agents are needed.", agents: ["PO"] },
+  { id: "0", name: "Pre-flight", description: "Synchronizes Git state, creates a working branch, and loads learning files (jarfis-learnings.md, context.md, project-profile.md)." },
+  { id: "1", name: "Discovery", description: "The PO conducts reverse-questions to fully understand requirements, then writes a Working Backwards document and PRD. The Architect evaluates feasibility.", agents: ["PO", "Architect"] },
+  { id: "gate1", name: "Gate 1", description: "User approval checkpoint", isGate: true, gate: { label: "GATE 1 — User Approval", options: ["Approve", "Revise", "Abort"] } },
+  { id: "2", name: "Architecture & Planning", description: "The Architect performs impact analysis and system design. If api_spec_required is true, API specifications are written. The Tech Lead breaks down tasks. The QA Engineer defines the test strategy.", agents: ["Architect", "Tech Lead", "QA"] },
+  { id: "3", name: "UX Design", description: "Activated only when the project requires UI work (required_roles.ux is true). The UX Designer creates screen designs, interaction specifications, SVG assets, and design tokens.", agents: ["UX Designer"] },
+  { id: "gate2", name: "Gate 2", description: "User approval checkpoint", isGate: true, gate: { label: "GATE 2 — User Approval", options: ["Approve", "Revise", "Abort"] } },
+  { id: "4", name: "Implementation", description: "Backend, Frontend, and DevOps engineers work in parallel, implementing only the parts relevant to their role. Progress is tracked through tasks.md.", agents: ["BE", "FE", "DevOps"] },
+  { id: "4.5", name: "Operational Readiness", description: "Deployment strategy, rollback plan, and operational readiness are prepared before the review phase.", agents: ["DevOps"] },
+  { id: "5", name: "Review & QA", description: "API contract verification runs first, followed by parallel reviews from the Tech Lead, QA Engineer, and Security Engineer.", agents: ["Tech Lead", "QA", "Security"] },
+  { id: "gate3", name: "Gate 3", description: "User approval checkpoint", isGate: true, gate: { label: "GATE 3 — User Approval", options: ["Approve", "Revise & re-review", "Abort", "Revisit design"] } },
+  { id: "6", name: "Retrospective", description: "Learnings are accumulated into the global jarfis-learnings.md and project-specific context.md, improving future workflows.", agents: ["Tech Lead"] }
+]} />
 
-## The 9 Agent Roles
+## The 11 Agent Roles
 
 Each agent has a clearly defined responsibility boundary. Agents are activated only when their role is needed — controlled by the `required_roles` field in `.jarfis-state.json`:
 
-| Agent | Primary Responsibilities |
-|-------|--------------------------|
-| **Product Owner (PO)** | Conducts reverse-questions to clarify requirements, writes Working Backwards press release, authors PRD |
-| **Architect** | Evaluates feasibility, performs impact analysis, designs system architecture, writes ADRs |
-| **Tech Lead** | Reviews API specifications, breaks down tasks, conducts code reviews, leads retrospective |
-| **UX Designer** | Designs screens and interactions (activated only when `required_roles.ux` is true) |
-| **Backend Engineer** | Implements backend services, APIs, data models |
-| **Frontend Engineer** | Implements UI components, frontend logic, integration |
-| **DevOps/SRE** | Sets up infrastructure, CI/CD pipelines, deployment configuration |
-| **QA Engineer** | Defines test strategy, executes QA verification |
-| **Security Engineer** | Performs pre-review security analysis and security review |
-
-## The 9-Phase Pipeline
-
-JARFIS structures every workflow through 9 defined phases. Each phase has specific inputs, outputs, and responsible agents. Phases can be conditionally skipped based on project needs.
-
-### Phase T — Triage
-Classifies the incoming request into A/B/C types to determine the appropriate workflow depth and which agents are needed.
-
-### Phase 0 — Pre-flight
-Synchronizes Git state, creates a working branch, and loads learning files (`jarfis-learnings.md`, `context.md`, `project-profile.md`).
-
-### Phase 1 — Discovery
-The PO conducts reverse-questions to fully understand requirements, then writes a Working Backwards document and PRD. The Architect evaluates feasibility. **Gate 1** follows — user must approve, revise, or abort.
-
-### Phase 2 — Architecture & Planning
-The Architect performs impact analysis and system design. If `api_spec_required` is true, API specifications are written. The Tech Lead breaks down tasks. The QA Engineer defines the test strategy.
-
-### Phase 3 — UX Design (Conditional)
-Activated only when the project requires UI work (`required_roles.ux` is true). The UX Designer creates screen designs and interaction specifications. **Gate 2** follows after Phases 2 and 3.
-
-### Phase 4 — Implementation
-Backend, Frontend, and DevOps engineers work in parallel, implementing only the parts relevant to their role. Progress is tracked through `tasks.md`.
-
-### Phase 4.5 — Operational Readiness
-Deployment strategy, rollback plan, and operational readiness are prepared before the review phase.
-
-### Phase 5 — Review & QA
-API contract verification runs first, followed by parallel reviews from the Tech Lead, QA Engineer, and Security Engineer. **Gate 3** follows — user can approve, request revisions with re-review, abort, or trigger a design revisit for pathological patterns.
-
-### Phase 6 — Retrospective
-Learnings are accumulated into the global `jarfis-learnings.md` and project-specific `context.md`, improving future workflows.
+<AgentGrid agents={[
+  { name: "Product Owner", abbr: "PO", description: "Conducts reverse-questions to clarify requirements, writes Working Backwards press release, authors PRD.", phases: ["1"], iconBg: "rgba(13, 148, 136, 0.15)", iconColor: "#0D9488" },
+  { name: "Architect", abbr: "AR", description: "Evaluates feasibility, performs impact analysis, designs system architecture, writes ADRs.", phases: ["1", "2"], iconBg: "rgba(251, 191, 36, 0.12)", iconColor: "#FBBF24" },
+  { name: "Tech Lead", abbr: "TL", description: "Reviews API specifications, breaks down tasks, conducts code reviews, leads retrospective.", phases: ["2", "5", "6"], iconBg: "rgba(94, 234, 212, 0.10)", iconColor: "#5EEAD4" },
+  { name: "UX Designer", abbr: "UX", description: "Designs screens and interactions, creates SVG assets directly, establishes design token systems, and owns brand design. Activated only when UI work is required.", phases: ["3"], iconBg: "rgba(251, 113, 133, 0.12)", iconColor: "#FB7185" },
+  { name: "Backend Engineer", abbr: "BE", description: "Implements backend services, APIs, data models.", phases: ["4"], iconBg: "rgba(13, 148, 136, 0.15)", iconColor: "#0D9488" },
+  { name: "Frontend Engineer", abbr: "FE", description: "Implements UI components, frontend logic, integration.", phases: ["4"], iconBg: "rgba(251, 191, 36, 0.12)", iconColor: "#FBBF24" },
+  { name: "DevOps/SRE", abbr: "DO", description: "Sets up infrastructure, CI/CD pipelines, deployment configuration. Prepares deployment and rollback plans.", phases: ["4", "4.5"], iconBg: "rgba(94, 234, 212, 0.10)", iconColor: "#5EEAD4" },
+  { name: "QA Engineer", abbr: "QA", description: "Defines test strategy, executes QA verification.", phases: ["2", "5"], iconBg: "rgba(251, 113, 133, 0.12)", iconColor: "#FB7185" },
+  { name: "Security Engineer", abbr: "SE", description: "Performs pre-review security analysis and security review.", phases: ["5"], iconBg: "rgba(13, 148, 136, 0.15)", iconColor: "#0D9488" },
+  { name: "Advocate", abbr: "ADV", description: "Argues in favor of proposed solutions, defends trade-off decisions, and ensures stakeholder alignment. Activated during the Dialectic Review system.", phases: ["2", "5"], iconBg: "rgba(251, 191, 36, 0.12)", iconColor: "#FBBF24" },
+  { name: "Critic", abbr: "CRT", description: "Challenges assumptions, identifies weaknesses and risks, and guards system consistency. Activated during the Dialectic Review system.", phases: ["2", "5"], iconBg: "rgba(94, 234, 212, 0.10)", iconColor: "#5EEAD4" }
+]} />
 
 ## The 3 Human Gates
 
 Gates are mandatory approval checkpoints where the user controls the workflow direction:
 
-| Gate | Position | Options |
-|------|----------|---------|
-| **Gate 1** | After Phase 1 | Approve / Revise / Abort |
-| **Gate 2** | After Phases 2 & 3 | Approve / Revise / Abort |
-| **Gate 3** | After Phase 5 | Approve / Revise & re-review / Abort / Revisit design (pathological pattern) |
+<GateCard gate={{
+  number: 1,
+  position: "After Phase 1 (Discovery)",
+  options: [
+    { label: "Approve", description: "Proceed to Architecture & Planning (Phase 2)" },
+    { label: "Revise", description: "Provide feedback — PO and Architect will revise and re-present" },
+    { label: "Abort", description: "Cancel the workflow entirely" }
+  ]
+}} />
+
+<GateCard gate={{
+  number: 2,
+  position: "After Phases 2 & 3 (Architecture + UX)",
+  options: [
+    { label: "Approve", description: "Proceed to Implementation (Phase 4)" },
+    { label: "Revise", description: "Request changes to architecture, task scope, or UX designs" },
+    { label: "Abort", description: "Cancel the workflow" }
+  ]
+}} />
+
+<GateCard gate={{
+  number: 3,
+  position: "After Phase 5 (Review & QA)",
+  options: [
+    { label: "Approve", description: "Proceed to Retrospective (Phase 6) and wrap up" },
+    { label: "Revise & re-review", description: "Request fixes and trigger another review cycle" },
+    { label: "Abort", description: "Cancel the workflow" },
+    { label: "Revisit design", description: "For pathological patterns — fundamental design issues discovered during review" }
+  ]
+}} />
 
 No phase after a gate proceeds without explicit user approval.
 
-## 11 Artifacts
+## Workflow Artifacts
 
 JARFIS workflows produce up to 11 structured documents stored in the work directory:
 
-| Artifact | Phase | Author |
-|----------|-------|--------|
-| Working Backwards (press release) | 1 | PO |
-| PRD | 1 | PO |
-| Feasibility assessment | 1 | Architect |
-| Impact analysis | 2 | Architect |
-| Architecture / ADR | 2 | Architect |
-| API specification | 2 | Architect / Tech Lead |
-| Task breakdown (`tasks.md`) | 2 | Tech Lead |
-| Test strategy | 2 | QA Engineer |
-| UX specification | 3 | UX Designer |
-| Deployment / rollback plan | 4.5 | DevOps/SRE |
-| Review report | 5 | Tech Lead / QA / Security |
+<ArtifactList groups={[
+  {
+    phase: "Phase 1 — Discovery",
+    artifacts: [
+      { name: "Working Backwards (press release)", author: "PO" },
+      { name: "PRD", author: "PO" },
+      { name: "Feasibility assessment", author: "Architect" }
+    ]
+  },
+  {
+    phase: "Phase 2 — Architecture & Planning",
+    artifacts: [
+      { name: "Impact analysis", author: "Architect" },
+      { name: "Architecture / ADR", author: "Architect" },
+      { name: "API specification", author: "Architect / Tech Lead" },
+      { name: "Task breakdown (tasks.md)", author: "Tech Lead" },
+      { name: "Test strategy", author: "QA Engineer" }
+    ]
+  },
+  {
+    phase: "Phase 3 — UX Design",
+    artifacts: [
+      { name: "UX specification", author: "UX Designer" }
+    ]
+  },
+  {
+    phase: "Phase 4.5 — Operational Readiness",
+    artifacts: [
+      { name: "Deployment / rollback plan", author: "DevOps/SRE" }
+    ]
+  },
+  {
+    phase: "Phase 5 — Review & QA",
+    artifacts: [
+      { name: "Review report", author: "Tech Lead / QA / Security" }
+    ]
+  }
+]} />
 
 ## State Management
 
