@@ -2,10 +2,9 @@ import type { MetadataRoute } from 'next';
 import { SUPPORTED_LOCALES } from '@/i18n/config';
 import { getNativeDocStaticParams } from '@/lib/docs';
 import { getAllBlogStaticParams } from '@/lib/blog';
+import { BASE_URL } from '@/lib/paths';
 
 export const dynamic = 'force-static';
-
-const BASE_URL = 'https://sana-lazystar.github.io/jarfis-website';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const entries: MetadataRoute.Sitemap = [];

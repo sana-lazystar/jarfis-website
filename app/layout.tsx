@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { BASE_URL } from '@/lib/paths';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
   },
   description:
     'One slash command. Nine expert agents. JARFIS orchestrates your entire product workflow on Claude Code.',
-  metadataBase: new URL('https://sana-lazystar.github.io/jarfis-website'),
+  metadataBase: new URL(BASE_URL),
 };
 
 export default function RootLayout({

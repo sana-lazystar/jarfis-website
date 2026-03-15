@@ -1,3 +1,5 @@
+import { BASE_URL } from '@/lib/paths';
+
 interface JsonLdProps {
   data: Record<string, unknown>;
 }
@@ -15,8 +17,8 @@ export const ORGANIZATION_LD = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
   name: 'JARFIS',
-  url: 'https://sana-lazystar.github.io/jarfis-website',
-  logo: 'https://sana-lazystar.github.io/jarfis-website/favicon.svg',
+  url: BASE_URL,
+  logo: `${BASE_URL}/favicon.svg`,
   sameAs: ['https://github.com/sana-lazystar/jarfis'],
 };
 
@@ -24,5 +26,5 @@ export const WEBSITE_LD = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
   name: 'JARFIS',
-  url: 'https://sana-lazystar.github.io/jarfis-website',
+  url: BASE_URL,
 };
