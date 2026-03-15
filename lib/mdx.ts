@@ -4,6 +4,21 @@ import matter from 'gray-matter';
 import { compileMDX } from 'next-mdx-remote/rsc';
 import rehypePrettyCode from 'rehype-pretty-code';
 import type { ReactElement } from 'react';
+import PhasePipeline from '@/components/docs/PhasePipeline';
+import AgentGrid from '@/components/docs/AgentGrid';
+import GateCard from '@/components/docs/GateCard';
+import ArtifactList from '@/components/docs/ArtifactList';
+import CommandCard from '@/components/docs/CommandCard';
+import StateFieldTable from '@/components/docs/StateFieldTable';
+
+const mdxComponents = {
+  PhasePipeline,
+  AgentGrid,
+  GateCard,
+  ArtifactList,
+  CommandCard,
+  StateFieldTable,
+};
 
 export interface MdxContent {
   content: ReactElement;
@@ -38,6 +53,7 @@ export async function getMdxContent(filePath: string): Promise<MdxContent | null
         ],
       },
     },
+    components: mdxComponents,
   });
 
   return {
