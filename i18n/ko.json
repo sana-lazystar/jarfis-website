@@ -13,7 +13,7 @@
     "title_evolve": "진화",
     "title_middle": "하는 당신의",
     "title_team": "AI 개발팀",
-    "subtitle": "프로덕트 매니저부터 QA 엔지니어까지, 9명의 AI 전문가가 당신의 팀이 됩니다.",
+    "subtitle": "프로덕트 매니저부터 QA 엔지니어까지, 11명의 AI 전문가가 당신의 팀이 됩니다.",
     "cta_start": "시작하기",
     "cta_github": "GitHub"
   },
@@ -27,7 +27,7 @@
       },
       {
         "title": "모두를 위한 오케스트레이션",
-        "description": "PO, Architect, Tech Lead, Backend, Frontend, DevOps, QA, Security, UX — 9명의 도메인 전문 에이전트가 협력합니다."
+        "description": "PO, Architect, Tech Lead, Backend, Frontend, DevOps, QA, Security, UX, Advocate, Critic — 11명의 도메인 전문 에이전트가 협력합니다."
       },
       {
         "title": "회복 탄력적 연속성",
@@ -45,7 +45,7 @@
     "items": [
       {
         "title": "모두를 위한 오케스트레이션",
-        "description": "9명의 도메인 전문 에이전트가 모든 작업에 협력합니다. 전문화는 항상 일반화를 이깁니다."
+        "description": "11명의 도메인 전문 에이전트가 모든 작업에 협력합니다. 전문화는 항상 일반화를 이깁니다."
       },
       {
         "title": "토큰 절약",
@@ -86,7 +86,7 @@
     "title": "사용할수록 강해지는 팀",
     "stats": [
       {
-        "value": "9",
+        "value": "11",
         "label": "AI 에이전트"
       },
       {
@@ -126,18 +126,18 @@
   "features": {
     "page_title": "기능",
     "page_subtitle": "트레이드오프 없이 AI로 구축하는 데 필요한 모든 것.",
-    "eyebrow": "Features",
+    "eyebrow": "기능",
     "hero_badge": "올인원 AI 개발팀",
-    "hero_title_teal": "9명의 AI 전문가",
+    "hero_title_teal": "11명의 AI 전문가",
     "hero_title_mid": "가 만드는",
     "hero_title_coral": "완벽한 워크플로우",
     "hero_subtitle": "프로덕트 매니저부터 보안 엔지니어까지. JARFIS의 에이전트 파이프라인이 아이디어를 프로덕션 코드로 만들어 가는 전체 과정을 살펴보세요.",
-    "capabilities_eyebrow": "Core Capabilities",
+    "capabilities_eyebrow": "핵심 기능",
     "capabilities_title": "JARFIS를 특별하게 만드는 것",
     "capabilities_subtitle": "단순한 AI 코딩 도구를 넘어, 완전한 AI 개발팀의 경험을 제공합니다.",
-    "capability_agents_title": "9 Expert Agents",
-    "capability_agents_desc": "PO, Architect, TL, UX, Backend, Frontend, DevOps, QA, Security — 실제 팀 구성과 동일한 9명의 전문 에이전트",
-    "capability_agents_stat": "9 roles / 1 team",
+    "capability_agents_title": "11개의 전문 에이전트",
+    "capability_agents_desc": "PO, Architect, TL, UX, Backend, Frontend, DevOps, QA, Security, Advocate, Critic — 실제 팀 구성과 동일한 11명의 전문 에이전트",
+    "capability_agents_stat": "11 roles / 1 team",
     "capability_claude_title": "Claude Code Native",
     "capability_claude_desc": "외부 서버나 API 없이 순수 Claude Code 위에서 동작. 설치 후 바로 사용 가능한 zero-dependency 설계",
     "capability_claude_stat": "0 dependencies",
@@ -173,25 +173,26 @@
         ]
       },
       "1": {
-        "name": "Blueprint",
-        "role": "PO — PRD 작성, 기능 요구사항 정의",
+        "name": "Discovery",
+        "role": "PO + Architect — 요구사항, Working Backwards, PRD, 실현가능성",
         "artifacts": [
-          "PRD"
+          "PRD",
+          "working-backwards"
         ]
       },
       "2": {
-        "name": "Architecture",
-        "role": "Architect — 시스템 아키텍처 설계",
+        "name": "Architecture & Planning",
+        "role": "Architect + TL — 시스템 아키텍처, 태스크 분해, QA 테스트 전략",
         "artifacts": [
-          "architecture"
+          "architecture",
+          "tasks"
         ]
       },
       "3": {
-        "name": "Task Planning",
-        "role": "TL — 태스크 분해 및 의존성 정의",
+        "name": "UX Design",
+        "role": "UX — 조건부 실행, 화면 및 인터랙션 설계",
         "artifacts": [
-          "tasks",
-          "dependencies"
+          "ux-spec"
         ]
       },
       "4": {
@@ -203,32 +204,32 @@
         ]
       },
       "4_5": {
-        "name": "Review",
-        "role": "TL/QA — 코드 리뷰, 품질 검증",
+        "name": "Operational Readiness",
+        "role": "DevOps — 배포 전략, 롤백 계획",
         "artifacts": [
-          "review",
-          "feedback"
+          "deployment-plan",
+          "rollback"
         ]
       },
       "5": {
-        "name": "QA & Security",
-        "role": "QA/SE — 통합 테스트, 보안 감사",
+        "name": "Review & QA",
+        "role": "TL/QA/SE — API 계약 검증, 병렬 리뷰",
         "artifacts": [
           "test-report",
           "security-audit"
         ]
       },
       "6": {
-        "name": "Wrap-up",
-        "role": "TL/DO — 배포 준비, 문서화, 학습 기록",
+        "name": "Retrospective",
+        "role": "TL — 학습 축적, 회고",
         "artifacts": [
           "changelog",
           "learning"
         ]
       }
     },
-    "agents_eyebrow": "Meet the Team",
-    "agents_title": "9명의 AI 전문가",
+    "agents_eyebrow": "팀 소개",
+    "agents_title": "11명의 AI 전문가",
     "agents_subtitle": "각자의 전문성을 가진 에이전트가 유기적으로 협업합니다.",
     "why_eyebrow": "Why JARFIS",
     "differentiator_title": "기존 AI 도구와 무엇이 다른가",
@@ -239,7 +240,7 @@
     "compare": {
       "category_team": "팀 구성",
       "single_ai": "단일 AI 어시스턴트",
-      "team": "9명 전문 에이전트 팀",
+      "team": "11명 전문 에이전트 팀",
       "category_workflow": "워크플로우",
       "suggestion": "코드 생성에 집중",
       "autonomous": "기획-설계-구현-검증 전체",
@@ -261,10 +262,10 @@
     },
     "learn_more": "문서에서 더 알아보기",
     "view_github": "GitHub에서 보기",
-    "agent_team_title": "9명의 전문 에이전트, 하나의 워크플로우",
-    "agent_team_desc": "JARFIS는 9개의 전문 에이전트 — PO, Architect, Tech Lead, Backend, Frontend, DevOps, QA, Security, UX — 를 오케스트레이션합니다. 각 에이전트는 전용 도메인 전문성과 역할별 CLAUDE.md 지침을 갖추고 있습니다.",
+    "agent_team_title": "11명의 전문 에이전트, 하나의 워크플로우",
+    "agent_team_desc": "JARFIS는 11개의 전문 에이전트 — PO, Architect, Tech Lead, Backend, Frontend, DevOps, QA, Security, UX, Advocate, Critic — 를 오케스트레이션합니다. 각 에이전트는 전용 도메인 전문성과 역할별 CLAUDE.md 지침을 갖추고 있습니다.",
     "agent_team_bullets": [
-      "9가지 역할: PO, Architect, Tech Lead, Backend, Frontend, DevOps, QA, Security, UX",
+      "11가지 역할: PO, Architect, Tech Lead, Backend, Frontend, DevOps, QA, Security, UX, Advocate, Critic",
       "각 에이전트는 도메인별 지침과 전문성 보유",
       "아티팩트 핸드오프를 통한 순차적 협업",
       "정의된 역할이 모호함과 중복을 제거"
@@ -295,9 +296,9 @@
     ],
     "cta_heading": "지금 JARFIS와 함께 시작하세요",
     "cta_subtitle": "오픈소스 AI 개발팀 오케스트레이터. 설치는 5분, 효과는 영구적입니다.",
-    "cta_docs": "Documentation",
+    "cta_docs": "문서",
     "footnote": "* 비교는 일반적인 카테고리 패턴 기반이며, 특정 제품에 대한 것이 아닙니다.",
-    "agents_section_title": "9명의 에이전트를 만나보세요",
+    "agents_section_title": "11명의 에이전트를 만나보세요",
     "agents_section_subtitle": "각 에이전트는 깊은 도메인 전문성과 역할별 지침을 갖추고 있습니다. 함께 첫 번째 유저 스토리부터 최종 회고까지 전체 제품 생명주기를 커버합니다.",
     "agents": {
       "po": {
@@ -333,11 +334,11 @@
       "ux": {
         "name": "UX 디자이너",
         "abbr": "UX",
-        "desc": "정보 아키텍처, 사용자 흐름, 와이어프레임, 인터랙션 패턴을 정의합니다. 구현 시작 전에 제품이 접근 가능하고 직관적인지 확인합니다.",
+        "desc": "SVG 에셋과 디자인 토큰 시스템을 직접 제작하고 브랜드 아이덴티티를 정의합니다. 정보 아키텍처, 사용자 흐름, 와이어프레임, 인터랙션 패턴을 설계합니다. 구현 시작 전에 제품이 접근 가능하고 시각적으로 일관된지 확인합니다.",
         "tags": [
-          "정보 아키텍처",
-          "와이어프레임",
-          "접근성"
+          "SVG 에셋",
+          "디자인 토큰",
+          "브랜드 디자인"
         ]
       },
       "backend": {
@@ -389,12 +390,32 @@
           "인증 및 권한",
           "취약점 분석"
         ]
+      },
+      "advocate": {
+        "name": "Advocate",
+        "abbr": "ADV",
+        "desc": "JARFIS 시스템 변경 토론에서 제안의 장점과 가능성을 옹호합니다. 변경이 가져올 사용자 가치를 구체적 시나리오로 논증하며, 리스크를 인정하면서도 진행이 필요한 이유를 제시합니다.",
+        "tags": [
+          "변증법적 리뷰",
+          "변경 옹호",
+          "사용자 가치"
+        ]
+      },
+      "critic": {
+        "name": "Critic",
+        "abbr": "CRT",
+        "desc": "JARFIS 시스템 변경 토론에서 약점과 리스크를 비판적으로 검증합니다. 시스템 일관성과 토큰 경제를 수호하며, 구체적 실패 시나리오를 제시하고 건설적인 대안을 제안합니다.",
+        "tags": [
+          "변증법적 리뷰",
+          "리스크 분석",
+          "시스템 일관성"
+        ]
       }
     }
   },
   "seo": {
-    "home_description": "하나의 슬래시 커맨드. 아홉 명의 전문 에이전트. JARFIS가 Claude Code에서 전체 제품 워크플로우를 오케스트레이션합니다.",
-    "features_description": "JARFIS 기능 탐색: 9개의 전문 에이전트, 11개의 구조화된 아티팩트, 지속적 학습 시스템.",
+    "home_description": "하나의 슬래시 커맨드. 열한 명의 전문 에이전트. JARFIS가 Claude Code에서 전체 제품 워크플로우를 오케스트레이션합니다.",
+    "features_description": "JARFIS 기능 탐색: 11개의 전문 에이전트, 11개의 구조화된 아티팩트, 지속적 학습 시스템.",
     "docs_description": "JARFIS 문서: 시작하기, 개념, 가이드, API 레퍼런스.",
     "blog_description": "JARFIS 팀의 업데이트, 심층 분석, 릴리스 노트.",
     "showcase_description": "JARFIS로 구축된 프로젝트 — AI 오케스트레이션 제품 개발 실제 사례."
@@ -446,6 +467,7 @@
     "popular_configuration": "설정 가이드"
   },
   "blog": {
+    "eyebrow": "블로그",
     "page_title": "인사이트 & 업데이트",
     "page_subtitle": "AI 개발팀 오케스트레이션의 최신 소식, 기술 인사이트, 그리고 JARFIS 생태계 이야기.",
     "empty_title": "이야기가 작성 중입니다.",
@@ -453,25 +475,24 @@
     "follow_github": "GitHub 팔로우",
     "watch_repo": "저장소 구독",
     "read_more": "더 읽기",
+    "back_to_blog": "블로그로 돌아가기",
     "prev_post": "이전",
-    "next_post": "다음",
-    "eyebrow": "블로그",
-    "back_to_blog": "블로그로 돌아가기"
+    "next_post": "다음"
   },
   "showcase": {
+    "eyebrow": "커뮤니티",
     "page_title": "JARFIS로 만든 것들",
     "page_subtitle": "커뮤니티가 만들어가는 프로젝트들을 살펴보세요. 살아있는 생태계입니다.",
-    "empty_title": "JARFIS로 첫 번째로 구축해보세요.",
-    "empty_desc": "이 웹사이트 자체가 JARFIS 에이전트들이 구축했습니다 — UX, 프론트엔드, QA가 함께 작업했습니다. 당신의 프로젝트가 다음이 될 수 있습니다.",
-    "submit": "프로젝트 제출",
-    "view_project": "프로젝트 보기",
-    "view_source": "소스 보기",
-    "eyebrow": "커뮤니티",
     "cta_title": "프로젝트를 공유하세요",
     "cta_desc": "JARFIS로 만든 프로젝트가 있나요? GitHub Issue를 통해 제출하면 이곳에 소개됩니다.",
     "cta_submit": "GitHub Issue로 제출",
     "cta_guide": "제출 가이드",
-    "featured_badge": "추천"
+    "featured_badge": "추천",
+    "empty_title": "JARFIS로 첫 번째로 구축해보세요.",
+    "empty_desc": "이 웹사이트 자체가 JARFIS 에이전트들이 구축했습니다 — UX, 프론트엔드, QA가 함께 작업했습니다. 당신의 프로젝트가 다음이 될 수 있습니다.",
+    "submit": "프로젝트 제출",
+    "view_project": "프로젝트 보기",
+    "view_source": "소스 보기"
   },
   "footer": {
     "copyright": "2026 Sana-Lazystar. 오픈 소스.",
@@ -487,7 +508,7 @@
     "view_github": "GitHub에서 JARFIS 보기",
     "close_nav": "내비게이션 메뉴 닫기",
     "open_nav": "내비게이션 메뉴 열기",
-    "solar_system": "JARFIS AI 에이전트 생태계 — 9개의 에이전트가 중앙 JARFIS 코어를 공전합니다"
+    "solar_system": "JARFIS AI 에이전트 생태계 — 11개의 에이전트가 중앙 JARFIS 코어를 공전합니다"
   },
   "common": {
     "read_more": "더 읽기",

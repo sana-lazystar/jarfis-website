@@ -4,7 +4,7 @@ description: "Complete reference for JARFIS slash commands, .jarfis-state.json s
 category: "api-reference"
 order: 1
 locale: "en"
-lastUpdated: 2026-03-05
+lastUpdated: 2026-03-15
 draft: false
 ---
 
@@ -14,125 +14,118 @@ Complete reference for all JARFIS commands, state schema, and configuration file
 
 ## Slash Commands
 
-### `/jarfis:work`
+<CommandCard command={{
+  name: "/jarfis:work",
+  description: "The primary command to start a JARFIS workflow. Initiates the full phase pipeline from Triage through Retrospective.",
+  syntax: [
+    "/jarfis:work [description]",
+    "/jarfis:work [description] --meeting [meeting-name]"
+  ],
+  params: [
+    { name: "description", required: true, description: "Natural language description of the feature or task to implement" },
+    { name: "--meeting", required: false, description: "Name of a previous /jarfis:meeting session to use as input context" }
+  ],
+  examples: [
+    "/jarfis:work Build a user authentication system with JWT tokens",
+    "/jarfis:work Add Stripe subscription billing --meeting billing-kickoff",
+    "/jarfis:work Fix the broken cart calculation on checkout page"
+  ]
+}} />
 
-The primary command to start a JARFIS workflow. Initiates the full phase pipeline from Triage through Retrospective.
+<CommandCard command={{
+  name: "/jarfis:meeting",
+  description: "Initiates a structured kickoff meeting for planning and alignment. Meeting results are stored and can be referenced by subsequent /jarfis:work sessions.",
+  syntax: ["/jarfis:meeting [topic]"],
+  params: [
+    { name: "topic", required: true, description: "The subject or agenda for the meeting" }
+  ],
+  examples: [
+    "/jarfis:meeting Define the authentication strategy for the mobile app",
+    "/jarfis:meeting Decide on database schema for multi-tenant architecture"
+  ]
+}} />
 
-**Syntax**:
-```
-/jarfis:work [description]
-/jarfis:work [description] --meeting [meeting-name]
-```
+<CommandCard command={{
+  name: "/jarfis:continue",
+  description: "Continues a completed workflow with a follow-up task. Reuses the existing branch and artifacts from the previous workflow for efficient follow-up work.",
+  syntax: [
+    "/jarfis:continue [description]",
+    "/jarfis:continue [description] --workflow [path]",
+    "/jarfis:continue [description] --mode fix|extend"
+  ],
+  params: [
+    { name: "description", required: true, description: "Natural language description of the follow-up task" },
+    { name: "--workflow", required: false, description: "Directly specify the workflow directory path" },
+    { name: "--mode", required: false, description: "Explicitly specify mode: fix (bug fix) or extend (feature extension)" }
+  ],
+  examples: [
+    "/jarfis:continue Add unit tests for the authentication module",
+    "/jarfis:continue Fix the edge case in cart validation --mode fix",
+    "/jarfis:continue Add OAuth support --workflow .jarfis/works/2026-03-10/auth-system"
+  ]
+}} />
 
-**Parameters**:
+<CommandCard command={{
+  name: "/jarfis:implement",
+  description: "Modifies or adds to the JARFIS system itself — commands, agents, and internal structure. The dedicated command for JARFIS self-improvement.",
+  syntax: ["/jarfis:implement [description]"],
+  params: [
+    { name: "description", required: true, description: "Description of the JARFIS system modification or addition" }
+  ],
+  examples: [
+    "/jarfis:implement Add a new /jarfis:standup command for daily status reports",
+    "/jarfis:implement Modify the QA agent to include performance testing",
+    "/jarfis:implement Update the Retrospective phase to output a structured JSON summary"
+  ]
+}} />
 
-| Parameter | Required | Description |
-|-----------|----------|-------------|
-| `description` | Yes | Natural language description of the feature or task to implement |
-| `--meeting` | No | Name of a previous `/jarfis:meeting` session to use as input context |
+<CommandCard command={{
+  name: "/jarfis:project-init",
+  description: "Generates a project profile by analyzing the current codebase. Creates .jarfis/project-profile.md with information about the project structure, dependencies, and conventions.",
+  syntax: ["/jarfis:project-init"],
+  params: [],
+  examples: ["/jarfis:project-init"]
+}} />
 
-**Examples**:
+<CommandCard command={{
+  name: "/jarfis:project-update",
+  description: "Updates an existing project profile to reflect changes in the codebase since the last initialization.",
+  syntax: ["/jarfis:project-update"],
+  params: [],
+  examples: ["/jarfis:project-update"]
+}} />
 
-```
-/jarfis:work Build a user authentication system with JWT tokens
+<CommandCard command={{
+  name: "/jarfis:health",
+  description: "Diagnoses zombie processes and other operational issues in the JARFIS environment.",
+  syntax: ["/jarfis:health"],
+  params: [],
+  examples: ["/jarfis:health"]
+}} />
 
-/jarfis:work Add Stripe subscription billing --meeting billing-kickoff
+<CommandCard command={{
+  name: "/jarfis:upgrade",
+  description: "Manages learning items — review, edit, and curate entries in the learning system.",
+  syntax: ["/jarfis:upgrade"],
+  params: [],
+  examples: ["/jarfis:upgrade"]
+}} />
 
-/jarfis:work Fix the broken cart calculation on checkout page
-```
+<CommandCard command={{
+  name: "/jarfis:version",
+  description: "Displays and manages JARFIS version information.",
+  syntax: ["/jarfis:version"],
+  params: [],
+  examples: ["/jarfis:version"]
+}} />
 
----
-
-### `/jarfis:meeting`
-
-Initiates a structured kickoff meeting for planning and alignment. Meeting results are stored and can be referenced by subsequent `/jarfis:work` sessions.
-
-**Syntax**:
-```
-/jarfis:meeting [topic]
-```
-
-**Parameters**:
-
-| Parameter | Required | Description |
-|-----------|----------|-------------|
-| `topic` | Yes | The subject or agenda for the meeting |
-
-**Examples**:
-
-```
-/jarfis:meeting Define the authentication strategy for the mobile app
-
-/jarfis:meeting Decide on database schema for multi-tenant architecture
-```
-
-When a meeting is referenced via `--meeting`, the state file includes `meeting_ref` and `meeting_dir` fields linking to the meeting artifacts.
-
----
-
-### `/jarfis:project-init`
-
-Generates a project profile by analyzing the current codebase. Creates `.jarfis/project-profile.md` with information about the project structure, dependencies, and conventions.
-
-**Syntax**:
-```
-/jarfis:project-init
-```
-
----
-
-### `/jarfis:project-update`
-
-Updates an existing project profile to reflect changes in the codebase since the last initialization.
-
-**Syntax**:
-```
-/jarfis:project-update
-```
-
----
-
-### `/jarfis:health`
-
-Diagnoses zombie processes and other operational issues in the JARFIS environment.
-
-**Syntax**:
-```
-/jarfis:health
-```
-
----
-
-### `/jarfis:upgrade`
-
-Manages learning items — review, edit, and curate entries in the learning system.
-
-**Syntax**:
-```
-/jarfis:upgrade
-```
-
----
-
-### `/jarfis:version`
-
-Displays and manages JARFIS version information.
-
-**Syntax**:
-```
-/jarfis:version
-```
-
----
-
-### `/jarfis:distill`
-
-Performs prompt distillation — optimizes and compresses prompt content for efficiency.
-
-**Syntax**:
-```
-/jarfis:distill
-```
+<CommandCard command={{
+  name: "/jarfis:distill",
+  description: "Performs prompt distillation — optimizes and compresses prompt content for efficiency.",
+  syntax: ["/jarfis:distill"],
+  params: [],
+  examples: ["/jarfis:distill"]
+}} />
 
 ---
 
@@ -184,20 +177,20 @@ The state file tracks the current workflow progress. Located at the project root
 
 ### Field Reference
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `work_name` | string | Identifier for the current workflow |
-| `docs_dir` | string | Path where artifacts are stored |
-| `branch` | string | Git branch created for this workflow |
-| `base_branch` | string | Branch to merge back into |
-| `current_phase` | number or `"done"` | Active phase number |
-| `required_roles` | object | Boolean flags for which agent roles are active |
-| `api_spec_required` | boolean | Whether API specification document is needed |
-| `workspace` | object | Project structure metadata |
-| `phases` | object | Per-phase status (pending / in_progress / completed / skipped) |
-| `last_checkpoint` | object | Timestamp and summary of last saved progress |
-| `meeting_ref` | string | Reference to a linked meeting (when `--meeting` was used) |
-| `meeting_dir` | string | Path to the linked meeting's artifacts |
+<StateFieldTable fields={[
+  { field: "work_name", type: "string", description: "Identifier for the current workflow" },
+  { field: "docs_dir", type: "string", description: "Path where artifacts are stored" },
+  { field: "branch", type: "string", description: "Git branch created for this workflow" },
+  { field: "base_branch", type: "string", description: "Branch to merge back into" },
+  { field: "current_phase", type: "number | \"done\"", description: "Active phase number" },
+  { field: "required_roles", type: "object", description: "Boolean flags for which agent roles are active" },
+  { field: "api_spec_required", type: "boolean", description: "Whether API specification document is needed" },
+  { field: "workspace", type: "object", description: "Project structure metadata" },
+  { field: "phases", type: "object", description: "Per-phase status (pending / in_progress / completed / skipped)" },
+  { field: "last_checkpoint", type: "object", description: "Timestamp and summary of last saved progress" },
+  { field: "meeting_ref", type: "string?", description: "Reference to a linked meeting (when --meeting was used)" },
+  { field: "meeting_dir", type: "string?", description: "Path to the linked meeting's artifacts" }
+]} caption=".jarfis-state.json field reference" />
 
 ---
 
@@ -224,25 +217,50 @@ Auto-generated by `/jarfis:project-init`. Describes the project's structure, dep
 
 ## Phase Reference
 
-| Phase | Name | Description |
-|-------|------|-------------|
-| T | Triage | Request classification (A/B/C type determination) |
-| 0 | Pre-flight | Git synchronization, branch creation, learning file loading |
-| 1 | Discovery | PO reverse-questions, Working Backwards, PRD, feasibility assessment |
-| 2 | Architecture & Planning | Impact analysis, system design, API spec (conditional), task breakdown, test strategy |
-| 3 | UX Design | Screen design, interaction design (conditional: only when UI is needed) |
-| 4 | Implementation | BE/FE/DevOps parallel implementation (only parts with tasks) |
-| 4.5 | Operational Readiness | Deployment strategy, rollback plan, operational readiness check |
-| 5 | Review & QA | API contract verification, Tech Lead + QA + Security parallel reviews |
-| 6 | Retrospective | Learning accumulation (global learnings + project context) |
+<PhasePipeline phases={[
+  { id: "T", name: "Triage", description: "Request classification (A/B/C type determination)" },
+  { id: "0", name: "Pre-flight", description: "Git synchronization, branch creation, learning file loading" },
+  { id: "1", name: "Discovery", description: "PO reverse-questions, Working Backwards, PRD, feasibility assessment" },
+  { id: "2", name: "Architecture & Planning", description: "Impact analysis, system design, API spec (conditional), task breakdown, test strategy" },
+  { id: "3", name: "UX Design", description: "Screen design, interaction design, SVG assets, design tokens (conditional: only when UI is needed)" },
+  { id: "4", name: "Implementation", description: "BE/FE/DevOps parallel implementation (only parts with tasks)" },
+  { id: "4.5", name: "Operational Readiness", description: "Deployment strategy, rollback plan, operational readiness check" },
+  { id: "5", name: "Review & QA", description: "API contract verification, Tech Lead + QA + Security parallel reviews" },
+  { id: "6", name: "Retrospective", description: "Learning accumulation (global learnings + project context)" }
+]} />
 
 ## Gate Reference
 
-| Gate | Position | User Options |
-|------|----------|--------------|
-| Gate 1 | After Phase 1 | Approve / Revise / Abort |
-| Gate 2 | After Phases 2 & 3 | Approve / Revise / Abort |
-| Gate 3 | After Phase 5 | Approve / Revise & re-review / Abort / Revisit design (pathological pattern) |
+<GateCard gate={{
+  number: 1,
+  position: "After Phase 1",
+  options: [
+    { label: "Approve", description: "Proceed to Phase 2" },
+    { label: "Revise", description: "Request changes and re-present" },
+    { label: "Abort", description: "Cancel workflow" }
+  ]
+}} />
+
+<GateCard gate={{
+  number: 2,
+  position: "After Phases 2 & 3",
+  options: [
+    { label: "Approve", description: "Proceed to Phase 4" },
+    { label: "Revise", description: "Request changes and re-present" },
+    { label: "Abort", description: "Cancel workflow" }
+  ]
+}} />
+
+<GateCard gate={{
+  number: 3,
+  position: "After Phase 5",
+  options: [
+    { label: "Approve", description: "Proceed to Phase 6" },
+    { label: "Revise & re-review", description: "Request fixes and trigger another review cycle" },
+    { label: "Abort", description: "Cancel workflow" },
+    { label: "Revisit design", description: "Return to Phase 2 for fundamental redesign" }
+  ]
+}} />
 
 ---
 

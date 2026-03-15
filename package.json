@@ -20,6 +20,7 @@
   "dependencies": {
     "@fontsource/dm-sans": "^5.2.8",
     "@fontsource/jetbrains-mono": "^5.0.0",
+    "@mdx-js/mdx": "^3.1.1",
     "@tailwindcss/postcss": "^4.2.1",
     "gray-matter": "^4.0.3",
     "next": "^16.1.6",

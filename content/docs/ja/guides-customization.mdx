@@ -1,0 +1,245 @@
+---
+title: "ガイドとカスタマイズ"
+description: "JARFISの高度なパターン: Meeting-to-Work連携、role設定、プロジェクトプロファイル、Gate活用、学習システム管理、ワークフロー復旧。"
+category: "guides"
+order: 1
+locale: "ja"
+translationOf: "en"
+lastUpdated: 2026-03-15
+draft: false
+---
+
+# ガイドとカスタマイズ
+
+実際のプロジェクトでJARFISを最大限に活用するための実践的なパターン集。
+
+## Meeting-to-Work連携
+
+キックオフミーティングをワークセッションの入力コンテキストとして活用することは、JARFISの最も強力なパターンの一つです。計画段階の決定が実装段階まで一貫して流れます。
+
+### Step 1: キックオフミーティングを実施する
+
+```
+/jarfis:meeting Define the authentication strategy for the mobile app
+```
+
+ミーティングは構造化された決定とartifactをミーティングディレクトリに保存します。
+
+### Step 2: ミーティング参照と共に作業を開始する
+
+```
+/jarfis:work Implement mobile auth with biometric login --meeting auth-strategy-meeting
+```
+
+`--meeting`フラグはミーティングの出力を入力コンテキストとして連携します。Agentはワークフロー全体を通じてミーティングの決定を参照します。
+
+## `required_roles`によるrole設定
+
+すべてのプロジェクトに11のAgent全てが必要なわけではありません。JARFISは`.jarfis-state.json`の`required_roles`フィールドでどのAgentを活性化するかを制御します:
+
+```json
+{
+  "required_roles": {
+    "backend": true,
+    "frontend": true,
+    "ux": false,
+    "devops": false,
+    "security": true
+  }
+}
+```
+
+### 一般的なroleパターン
+
+**フロントエンド専用プロジェクト** (例: ランディングページのリデザイン):
+```json
+{
+  "required_roles": {
+    "backend": false,
+    "frontend": true,
+    "ux": true,
+    "devops": false,
+    "security": false
+  }
+}
+```
+Phase 3 (UX Design)が活性化されます。Phase 4はFrontend Engineerのみ実行します。
+
+**セキュリティ要件があるフルスタックプロジェクト**:
+```json
+{
+  "required_roles": {
+    "backend": true,
+    "frontend": true,
+    "ux": true,
+    "devops": true,
+    "security": true
+  }
+}
+```
+すべてのPhaseが活性化されます。Phase 4はBE、FE、DevOpsが並行して実行されます。
+
+**バックエンドAPI専用プロジェクト**:
+```json
+{
+  "required_roles": {
+    "backend": true,
+    "frontend": false,
+    "ux": false,
+    "devops": true,
+    "security": true
+  }
+}
+```
+Phase 3 (UX Design)は完全にスキップされます。
+
+## 完了したワークフローの継続
+
+完了したワークフローに追加作業や修正が必要な場合は、最初からやり直す代わりに`/jarfis:continue`を使用してください:
+
+```
+/jarfis:continue Add unit tests for the auth module
+```
+
+`--mode`フラグで自動分類をスキップできます:
+
+```
+/jarfis:continue Fix the token refresh edge case --mode fix
+```
+
+## プロジェクトプロファイル
+
+プロジェクトプロファイルはJARFISがコードベースの構造とconventionを深く理解するのに役立ちます。
+
+### プロファイルの初期化
+
+```
+/jarfis:project-init
+```
+
+プロジェクトを分析して`.jarfis/project-profile.md`を生成します:
+- リポジトリ構造と組織
+- 依存関係とバージョン
+- ビルドツールとスクリプト
+- 検出されたconventionとパターン
+
+### プロファイルを最新状態に保つ
+
+```
+/jarfis:project-update
+```
+
+## Gateの活用
+
+Gateは必須の人間チェックポイントです。効果的な活用方法を紹介します。
+
+### Gate 1 — Discovery後
+
+Gate 1ではPRDと実現可能性評価を確認します。選択肢:
+
+- **承認**: Architecture & Planning (Phase 2)に進む
+- **修正**: 具体的なフィードバックを提供。POとArchitectが出力を修正して再発表します
+- **中断**: ワークフロー全体をキャンセル
+
+**ヒント**: 方向を変えるコストが最も低い地点です。Gate 1での修正は数分で済みますが、Gate 3での修正は数時間かかる場合があります。
+
+### Gate 2 — Architecture & UX後
+
+Gate 2ではアーキテクチャ設計、タスク分解、(該当する場合は)UX仕様を確認します:
+
+- **承認**: Implementation (Phase 4)に進む
+- **修正**: アーキテクチャ、タスクスコープ、UXデザインの変更を要求
+- **中断**: ワークフローをキャンセル
+
+**ヒント**: `tasks.md`を丁寧に確認してください — これが正確に何を実装するかを定義します。
+
+### Gate 3 — Review & QA後
+
+Gate 3では完成した実装、テスト結果、セキュリティの発見事項を確認します:
+
+- **承認**: Retrospective (Phase 6)に進み、ラップアップ
+- **修正後再レビュー**: 修正を要求し、別のレビューサイクルを開始
+- **中断**: ワークフローをキャンセル
+- **設計再検討**: レビュー中に発見された根本的な設計問題に対してPhase 2に戻る
+
+## 学習システムの管理
+
+JARFISの学習システムは各ワークフローを前回より改善するための核心です。
+
+### グローバル学習: `~/.claude/jarfis-learnings.md`
+
+ホームディレクトリに存在し、すべてのプロジェクトで共有されます:
+
+- **Agent Hints**: 「新しいmiddlewareを作成する前に既存のものを確認する」や「mutateAsyncはtry-catchで囲みunhandled rejectionを防ぐ」などの行動ルール
+- **Workflow Patterns**: 「モノレポプロジェクトではパッケージ別に影響分析を実行する」などの実証済みアプローチ
+
+### プロジェクトコンテキスト: `.jarfis/context.md`
+
+```markdown
+# Project Context
+
+## Tech Stack
+- Frontend: Next.js 15 (App Router), TypeScript strict, Tailwind CSS 4
+- Backend: FastAPI (Python 3.12), PostgreSQL 16, Redis
+
+## Conventions
+- API responses follow RFC 9457 Problem Details format
+- Commit format: conventional commits (feat/fix/chore)
+```
+
+### `/jarfis:upgrade`による学習の整理
+
+```
+/jarfis:upgrade
+```
+
+## コンテキスト圧縮後のワークフロー復旧
+
+長期実行ワークフローではClaude Codeのコンテキスト圧縮が発生することがあります。JARFISはこれから復旧するよう設計されています:
+
+1. `.jarfis-state.json`ファイルが正確なPhaseと進行状態を保持します
+2. `last_checkpoint`フィールドに圧縮前の状況が記録されます
+3. ディスク上の学習ファイルとartifactはコンテキスト圧縮の影響を受けません
+
+コンテキストリセット後に再開するには、同じ説明で`/jarfis:work`を再実行してください。JARFISが既存の`.jarfis-state.json`を検出し、最後のcheckpointから再開します。
+
+## 実践例
+
+### 例1: フロントエンド専用機能
+
+```
+/jarfis:work Redesign the dashboard with new chart components
+```
+
+JARFISが`required_roles.backend`をfalseに設定し、バックエンド関連作業をスキップします。
+
+### 例2: ミーティング入力を活用したフルスタック作業
+
+```
+/jarfis:meeting Plan the multi-tenant architecture migration
+/jarfis:work Implement multi-tenant data isolation --meeting tenant-architecture
+```
+
+### 例3: 最小限のオーバーヘッドで素早い修正
+
+```
+/jarfis:work Fix the broken pagination on the orders list
+```
+
+### 例4: 完了した作業の継続
+
+```
+/jarfis:continue Add internationalization support to the auth module
+```
+
+### 例5: 問題の診断
+
+```
+/jarfis:health
+```
+
+## 次のステップ
+
+- [API Reference](/ja/docs/api-reference) — 完全なcommandおよび設定リファレンス
+- [Architecture & Concepts](/ja/docs/concepts-overview) — オーケストレーションモデルの詳細
+- [Quick Start](/ja/docs/getting-started) — インストールと最初のワークフロー

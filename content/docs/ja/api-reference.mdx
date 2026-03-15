@@ -1,0 +1,267 @@
+---
+title: "APIリファレンス"
+description: "JARFISのスラッシュcommand、.jarfis-state.jsonスキーマ、学習ファイル構造、Phase仕様の完全リファレンス。"
+category: "api-reference"
+order: 1
+locale: "ja"
+translationOf: "en"
+lastUpdated: 2026-03-15
+draft: false
+---
+
+# APIリファレンス
+
+すべてのJARFIS command、状態スキーマ、設定ファイルの完全リファレンス。
+
+## スラッシュcommand
+
+<CommandCard command={{
+  name: "/jarfis:work",
+  description: "JARFISワークフローを開始する基本commandです。TriageからRetrospectiveまで全体のPhaseパイプラインを実行します。",
+  syntax: [
+    "/jarfis:work [description]",
+    "/jarfis:work [description] --meeting [meeting-name]"
+  ],
+  params: [
+    { name: "description", required: true, description: "実装する機能またはタスクの自然言語による説明" },
+    { name: "--meeting", required: false, description: "入力コンテキストとして使用する以前の /jarfis:meeting セッション名" }
+  ],
+  examples: [
+    "/jarfis:work Build a user authentication system with JWT tokens",
+    "/jarfis:work Add Stripe subscription billing --meeting billing-kickoff",
+    "/jarfis:work Fix the broken cart calculation on checkout page"
+  ]
+}} />
+
+<CommandCard command={{
+  name: "/jarfis:meeting",
+  description: "計画と整合のための構造化されたキックオフミーティングを開始します。ミーティング結果は保存され、以降の /jarfis:work セッションで参照できます。",
+  syntax: ["/jarfis:meeting [topic]"],
+  params: [
+    { name: "topic", required: true, description: "ミーティングの主題またはアジェンダ" }
+  ],
+  examples: [
+    "/jarfis:meeting Define the authentication strategy for the mobile app",
+    "/jarfis:meeting Decide on database schema for multi-tenant architecture"
+  ]
+}} />
+
+<CommandCard command={{
+  name: "/jarfis:continue",
+  description: "完了したワークフローを後続タスクで引き続き進行します。以前のワークフローのブランチとartifactを再利用して効率的に後続作業を行います。",
+  syntax: [
+    "/jarfis:continue [description]",
+    "/jarfis:continue [description] --workflow [path]",
+    "/jarfis:continue [description] --mode fix|extend"
+  ],
+  params: [
+    { name: "description", required: true, description: "後続タスクの自然言語による説明" },
+    { name: "--workflow", required: false, description: "ワークフローディレクトリのパスを直接指定" },
+    { name: "--mode", required: false, description: "モードを明示的に指定: fix（バグ修正）またはextend（機能拡張）" }
+  ],
+  examples: [
+    "/jarfis:continue Add unit tests for the authentication module",
+    "/jarfis:continue Fix the token refresh edge case --mode fix",
+    "/jarfis:continue Add OAuth support --workflow .jarfis/works/2026-03-10/auth-system"
+  ]
+}} />
+
+<CommandCard command={{
+  name: "/jarfis:implement",
+  description: "JARFISシステム自体を修正または追加する専用commandです。command、agent、内部構造を変更する際に使用します。",
+  syntax: ["/jarfis:implement [description]"],
+  params: [
+    { name: "description", required: true, description: "JARFISシステムの修正または追加に関する説明" }
+  ],
+  examples: [
+    "/jarfis:implement Add a new /jarfis:standup command for daily status reports",
+    "/jarfis:implement Modify the QA agent to include performance testing"
+  ]
+}} />
+
+<CommandCard command={{
+  name: "/jarfis:project-init",
+  description: "現在のコードベースを分析してプロジェクトプロファイルを生成します。プロジェクト構造、依存関係、conventionの情報が含まれた .jarfis/project-profile.md を作成します。",
+  syntax: ["/jarfis:project-init"],
+  params: [],
+  examples: ["/jarfis:project-init"]
+}} />
+
+<CommandCard command={{
+  name: "/jarfis:project-update",
+  description: "最後の初期化以降のコードベース変更を反映して既存のプロジェクトプロファイルを更新します。",
+  syntax: ["/jarfis:project-update"],
+  params: [],
+  examples: ["/jarfis:project-update"]
+}} />
+
+<CommandCard command={{
+  name: "/jarfis:health",
+  description: "JARFIS環境でゾンビプロセスなどの運用上の問題を診断します。",
+  syntax: ["/jarfis:health"],
+  params: [],
+  examples: ["/jarfis:health"]
+}} />
+
+<CommandCard command={{
+  name: "/jarfis:upgrade",
+  description: "学習アイテムを管理します — 学習システムのエントリを確認、編集、整理します。",
+  syntax: ["/jarfis:upgrade"],
+  params: [],
+  examples: ["/jarfis:upgrade"]
+}} />
+
+<CommandCard command={{
+  name: "/jarfis:version",
+  description: "JARFISのバージョン情報を表示・管理します。",
+  syntax: ["/jarfis:version"],
+  params: [],
+  examples: ["/jarfis:version"]
+}} />
+
+<CommandCard command={{
+  name: "/jarfis:distill",
+  description: "プロンプト蒸留を実行します — プロンプトコンテンツを最適化・圧縮します。",
+  syntax: ["/jarfis:distill"],
+  params: [],
+  examples: ["/jarfis:distill"]
+}} />
+
+---
+
+## 状態ファイル: `.jarfis-state.json`
+
+状態ファイルは現在のワークフローの進行状況を追跡します。プロジェクトルートに配置されます。
+
+### スキーマ
+
+```json
+{
+  "work_name": "string",
+  "docs_dir": "string (artifactディレクトリのパス)",
+  "branch": "string (Gitブランチ名)",
+  "base_branch": "string (マージ先のベースブランチ)",
+  "current_phase": "number | \"done\"",
+  "required_roles": {
+    "backend": "boolean",
+    "frontend": "boolean",
+    "ux": "boolean",
+    "devops": "boolean",
+    "security": "boolean"
+  },
+  "api_spec_required": "boolean",
+  "phases": {
+    "T": { "status": "pending | in_progress | completed | skipped" },
+    "0": { "status": "..." },
+    "1": { "status": "..." },
+    "2": { "status": "..." },
+    "3": { "status": "..." },
+    "4": { "status": "..." },
+    "4.5": { "status": "..." },
+    "5": { "status": "..." },
+    "6": { "status": "..." }
+  },
+  "last_checkpoint": {
+    "timestamp": "ISO 8601 文字列",
+    "phase": "number",
+    "summary": "string"
+  },
+  "meeting_ref": "string (任意, ミーティング名)",
+  "meeting_dir": "string (任意, ミーティングartifactのパス)"
+}
+```
+
+### フィールドリファレンス
+
+<StateFieldTable fields={[
+  { field: "work_name", type: "string", description: "現在のワークフローの識別子" },
+  { field: "docs_dir", type: "string", description: "artifactが保存されるパス" },
+  { field: "branch", type: "string", description: "このワークフローのために作成されたGitブランチ" },
+  { field: "base_branch", type: "string", description: "マージ先のベースブランチ" },
+  { field: "current_phase", type: "number | \"done\"", description: "アクティブなPhase番号" },
+  { field: "required_roles", type: "object", description: "どのAgentの役割が有効かを示すbooleanフラグ" },
+  { field: "api_spec_required", type: "boolean", description: "API specificationドキュメントが必要かどうか" },
+  { field: "workspace", type: "object", description: "プロジェクト構造のメタデータ" },
+  { field: "phases", type: "object", description: "Phase別の状態(pending / in_progress / completed / skipped)" },
+  { field: "last_checkpoint", type: "object", description: "最後に保存された進行地点のタイムスタンプと要約" },
+  { field: "meeting_ref", type: "string?", description: "リンクされたミーティングへの参照(--meeting使用時)" },
+  { field: "meeting_dir", type: "string?", description: "リンクされたミーティングのartifactへのパス" }
+]} caption=".jarfis-state.json フィールドリファレンス" />
+
+---
+
+## 学習ファイル
+
+### グローバル学習: `~/.claude/jarfis-learnings.md`
+
+ユーザーのホームディレクトリに配置されます。すべてのプロジェクトで共有されます。主に2つのセクションを含みます:
+
+- **Agent Hints** — Retrospectiveから蓄積された行動ルールとガイドライン
+- **Workflow Patterns** — 一般的なシナリオに対する実証済みのパターン
+
+このファイルは各ワークフローのPhase 0 (Pre-flight)に読み込まれます。
+
+### プロジェクトコンテキスト: `.jarfis/context.md`
+
+Agentプロンプトに注入されるプロジェクト固有のコンテキストです。技術スタックの詳細、convention、ドメイン知識、統合制約を含みます。
+
+### プロジェクトプロファイル: `.jarfis/project-profile.md`
+
+`/jarfis:project-init`によって自動生成されます。プロジェクトの構造、依存関係、ビルドツール、設定を説明します。`/jarfis:project-update`で更新されます。
+
+---
+
+## Phaseリファレンス
+
+<PhasePipeline phases={[
+  { id: "T", name: "Triage", description: "リクエスト分類 (A/B/Cタイプ決定)" },
+  { id: "0", name: "Pre-flight", description: "Git同期、ブランチ作成、学習ファイル読み込み" },
+  { id: "1", name: "Discovery", description: "POの逆質問、Working Backwards、PRD、実現可能性評価" },
+  { id: "2", name: "Architecture & Planning", description: "影響分析、システム設計、API spec（条件付き）、タスク分解、テスト戦略" },
+  { id: "3", name: "UX Design", description: "画面設計、インタラクション設計、SVG asset、デザイントークン（条件付き: UIが必要な場合のみ）" },
+  { id: "4", name: "Implementation", description: "BE/FE/DevOps並行実装（タスクがある部分のみ）" },
+  { id: "4.5", name: "Operational Readiness", description: "デプロイ戦略、ロールバック計画、運用準備チェック" },
+  { id: "5", name: "Review & QA", description: "API契約検証、Tech Lead + QA + Security並行レビュー" },
+  { id: "6", name: "Retrospective", description: "学習蓄積（グローバルlearnings + プロジェクトcontext）" }
+]} />
+
+## Gateリファレンス
+
+<GateCard gate={{
+  number: 1,
+  position: "Phase 1後",
+  options: [
+    { label: "承認", description: "Phase 2に進む" },
+    { label: "修正", description: "変更を要求して再発表" },
+    { label: "中断", description: "ワークフローをキャンセル" }
+  ]
+}} />
+
+<GateCard gate={{
+  number: 2,
+  position: "Phase 2 & 3後",
+  options: [
+    { label: "承認", description: "Phase 4に進む" },
+    { label: "修正", description: "変更を要求して再発表" },
+    { label: "中断", description: "ワークフローをキャンセル" }
+  ]
+}} />
+
+<GateCard gate={{
+  number: 3,
+  position: "Phase 5後",
+  options: [
+    { label: "承認", description: "Phase 6に進む" },
+    { label: "修正後再レビュー", description: "修正を要求し、別のレビューサイクルを開始" },
+    { label: "中断", description: "ワークフローをキャンセル" },
+    { label: "設計再検討", description: "Phase 2に戻り根本的な再設計を行う" }
+  ]
+}} />
+
+---
+
+## 参照
+
+- [Quick Start](/ja/docs/getting-started) — インストールと最初のワークフロー実行
+- [Architecture & Concepts](/ja/docs/concepts-overview) — オーケストレーションモデルの詳細
+- [Guides & Customization](/ja/docs/guides-customization) — 高度なワークフローパターン

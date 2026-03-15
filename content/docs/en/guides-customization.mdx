@@ -1,10 +1,10 @@
 ---
 title: "Guides & Customization"
-description: "Advanced JARFIS patterns: meeting-to-work linking, role configuration, project profiles, gate interactions, and learning system management."
+description: "Advanced JARFIS patterns: meeting-to-work linking, role configuration, project profiles, gate interactions, learning system management, and workflow recovery."
 category: "guides"
 order: 1
 locale: "en"
-lastUpdated: 2026-03-05
+lastUpdated: 2026-03-15
 draft: false
 ---
 
@@ -36,7 +36,7 @@ This pattern is especially valuable for complex features where multiple stakehol
 
 ## Role Configuration with `required_roles`
 
-Not every project needs all 9 agents. JARFIS uses the `required_roles` field in `.jarfis-state.json` to control which agents are activated:
+Not every project needs all 11 agents. JARFIS uses the `required_roles` field in `.jarfis-state.json` to control which agents are activated:
 
 ```json
 {
@@ -95,6 +95,22 @@ All phases are active. Phase 4 runs BE, FE, and DevOps in parallel. Phase 5 incl
 Phase 3 (UX Design) is skipped entirely. Phase 4 runs Backend and DevOps only.
 
 JARFIS determines these roles automatically during Phase T (Triage), but you can adjust them if needed.
+
+## Continuing a Completed Workflow
+
+When you need to add to or fix a completed workflow, use `/jarfis:continue` instead of starting fresh. This reuses the existing branch and artifacts:
+
+```
+/jarfis:continue Add unit tests for the auth module
+```
+
+Use the `--mode` flag to skip automatic classification:
+
+```
+/jarfis:continue Fix the token refresh edge case --mode fix
+```
+
+This is faster than `/jarfis:work` for follow-up tasks because it skips the Triage/Discovery phases when unnecessary.
 
 ## Project Profiles
 
@@ -218,6 +234,16 @@ Long-running workflows may encounter Claude Code context compression. JARFIS is 
 
 To resume after a context reset, simply run `/jarfis:work` again with the same description. JARFIS will detect the existing `.jarfis-state.json` and resume from the last checkpoint rather than starting over.
 
+## Modifying JARFIS Itself
+
+When you need to customize JARFIS's behavior — add a new command, modify an agent prompt, or extend the workflow — use the dedicated self-modification command:
+
+```
+/jarfis:implement Add a /jarfis:standup command for daily status reports
+```
+
+This command understands the JARFIS system structure and ensures changes are applied correctly across all affected files.
+
 ## Practical Examples
 
 ### Example 1: Frontend-Only Feature
@@ -245,7 +271,15 @@ The meeting decisions (e.g., "use row-level security in PostgreSQL") flow into t
 
 For simple bug fixes, JARFIS's Triage phase (Phase T) will classify this as a Type C (simple fix) and streamline the phase pipeline accordingly, skipping heavyweight phases like UX Design and Operational Readiness.
 
-### Example 4: Diagnosing Issues
+### Example 4: Follow-Up After Completion
+
+```
+/jarfis:continue Add internationalization support to the auth module
+```
+
+Continues the previous auth workflow, reusing the branch and referencing existing artifacts. Faster than starting a new workflow for closely related work.
+
+### Example 5: Diagnosing Issues
 
 ```
 /jarfis:health
