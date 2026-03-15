@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import type { Locale } from '@/i18n/config';
 import { SUPPORTED_LOCALES } from '@/i18n/config';
+import { BASE_URL } from '@/lib/paths';
 
-const BASE_URL = 'https://sana-lazystar.github.io/jarfis-website';
 const SITE_NAME = 'JARFIS';
 const DEFAULT_OG_IMAGE = '/images/og/og-default.png';
 

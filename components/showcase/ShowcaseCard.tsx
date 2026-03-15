@@ -1,6 +1,5 @@
 import type { ShowcaseItem } from '@/lib/showcase';
-
-const BASE_PATH = '/jarfis-website';
+import { withBasePath } from '@/lib/paths';
 
 interface ShowcaseCardProps {
   item: ShowcaseItem;
@@ -27,7 +26,7 @@ export default function ShowcaseCard({
       <div className="relative aspect-video overflow-hidden" style={{ background: 'var(--color-neutral-darker)' }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={`${BASE_PATH}${item.thumbnail}`}
+          src={withBasePath(item.thumbnail)}
           alt={item.name}
           className="absolute inset-0 w-full h-full object-cover transition-transform duration-300"
           style={{ transition: 'transform 0.3s ease' }}
