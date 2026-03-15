@@ -53,7 +53,7 @@ components/
 │   ├── Logo.tsx            # JARFIS 로고
 │   └── MobileNav.tsx       # 모바일 드로워 네비게이션
 ├── home/                   # Home 페이지 전용 섹션 컴포넌트
-│   ├── HeroSolarSystem.tsx # SVG 태양계 애니메이션 (9개 행성 궤도)
+│   ├── HeroSolarSystem.tsx # SVG 태양계 애니메이션 (대표 9개 행성 궤도, 전체 11 에이전트는 features 페이지)
 │   ├── FeatureCards.tsx    # 핵심 가치 카드 그리드
 │   ├── PhilosophyGrid.tsx  # 9가지 철학 그리드
 │   ├── GrowthSection.tsx   # 통계 수치 섹션

@@ -102,9 +102,8 @@ export default function AgentCard({ agent }: AgentCardProps): ReactNode {
   const iconColor = agent.iconColor ?? '#0D9488';
 
   return (
-    <article
+    <div
       role="listitem"
-      aria-label={agent.name}
       className="docs-card"
       style={{
         background: 'linear-gradient(145deg, var(--color-surface), rgba(15,29,50,0.5))',
@@ -189,6 +188,6 @@ export default function AgentCard({ agent }: AgentCardProps): ReactNode {
           ))}
         </div>
       )}
-    </article>
+    </div>
   );
 }

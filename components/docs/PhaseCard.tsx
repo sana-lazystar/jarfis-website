@@ -32,7 +32,6 @@ const PHASE_ACCENTS: Record<string, { bg: string; color: string }> = {
 function GateIndicator({ gate }: { gate: NonNullable<PhaseData['gate']> }) {
   return (
     <li
-      role="separator"
       aria-label={`${gate.label}: User approval checkpoint`}
       className="my-3"
     >
