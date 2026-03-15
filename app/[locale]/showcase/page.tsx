@@ -3,6 +3,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { getShowcaseItems } from '@/lib/showcase';
 import { generateSeoMetadata } from '@/lib/seo';
 import type { Locale } from '@/i18n/config';
+import { withBasePath } from '@/lib/paths';
 
 interface ShowcasePageProps {
   params: Promise<{ locale: string }>;
@@ -334,7 +335,7 @@ export default async function ShowcasePage({ params }: ShowcasePageProps) {
                     >
                       {item.thumbnail ? (
                         <img
-                          src={`/jarfis-website${item.thumbnail}`}
+                          src={withBasePath(item.thumbnail)}
                           alt={item.name}
                           style={{
                             width: '100%',

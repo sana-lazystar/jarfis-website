@@ -5,6 +5,7 @@ import { routing } from '@/i18n/routing';
 import Header from '@/components/common/Header';
 import Footer from '@/components/common/Footer';
 import type { Locale } from '@/i18n/config';
+import { withBasePath } from '@/lib/paths';
 
 interface LocaleLayoutProps {
   children: React.ReactNode;
@@ -31,8 +32,8 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
       <head>
         <meta httpEquiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none';" />
         <meta name="color-scheme" content="dark" />
-        <link rel="icon" href="/jarfis-website/favicon.ico" sizes="any" />
-        <link rel="icon" href="/jarfis-website/favicon.svg" type="image/svg+xml" />
+        <link rel="icon" href={withBasePath('/favicon.ico')} sizes="any" />
+        <link rel="icon" href={withBasePath('/favicon.svg')} type="image/svg+xml" />
       </head>
       <body>
         <NextIntlClientProvider locale={locale as Locale} messages={messages}>
