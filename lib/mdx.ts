@@ -1,11 +1,29 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import { compile } from '@mdx-js/mdx';
+import { evaluate } from '@mdx-js/mdx';
+import * as runtime from 'react/jsx-runtime';
+import { createElement } from 'react';
 import rehypePrettyCode from 'rehype-pretty-code';
+import type { ReactElement } from 'react';
+import PhasePipeline from '@/components/docs/PhasePipeline';
+import AgentGrid from '@/components/docs/AgentGrid';
+import GateCard from '@/components/docs/GateCard';
+import ArtifactList from '@/components/docs/ArtifactList';
+import CommandCard from '@/components/docs/CommandCard';
+import StateFieldTable from '@/components/docs/StateFieldTable';
+
+const mdxComponents = {
+  PhasePipeline,
+  AgentGrid,
+  GateCard,
+  ArtifactList,
+  CommandCard,
+  StateFieldTable,
+};
 
 export interface MdxContent {
-  compiledSource: string;
+  content: ReactElement;
   frontmatter: Record<string, unknown>;
 }
 
@@ -21,10 +39,9 @@ export async function getMdxContent(filePath: string): Promise<MdxContent | null
   const fileContent = fs.readFileSync(fullPath, 'utf-8');
   const { content, data } = matter(fileContent);
 
-  const compiled = await compile(content, {
-    outputFormat: 'function-body',
-    development: false,
-    // No providerImportSource — components passed via props
+  // evaluate()는 서버에서 MDX를 컴파일+실행 → new Function() 미사용 → CSP unsafe-eval 불필요
+  const { default: MDXContent } = await evaluate(content, {
+    ...runtime,
     rehypePlugins: [
       [
         rehypePrettyCode as never,
@@ -36,8 +53,11 @@ export async function getMdxContent(filePath: string): Promise<MdxContent | null
     ],
   });
 
+  // 서버에서 커스텀 컴포넌트를 주입하여 ReactElement 생성
+  const element = createElement(MDXContent, { components: mdxComponents });
+
   return {
-    compiledSource: String(compiled),
+    content: element,
     frontmatter: data,
   };
 }
