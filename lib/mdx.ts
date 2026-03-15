@@ -1,27 +1,11 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import { compileMDX } from 'next-mdx-remote/rsc';
+import { compile } from '@mdx-js/mdx';
 import rehypePrettyCode from 'rehype-pretty-code';
-import type { ReactElement } from 'react';
-import PhasePipeline from '@/components/docs/PhasePipeline';
-import AgentGrid from '@/components/docs/AgentGrid';
-import GateCard from '@/components/docs/GateCard';
-import ArtifactList from '@/components/docs/ArtifactList';
-import CommandCard from '@/components/docs/CommandCard';
-import StateFieldTable from '@/components/docs/StateFieldTable';
-
-const mdxComponents = {
-  PhasePipeline,
-  AgentGrid,
-  GateCard,
-  ArtifactList,
-  CommandCard,
-  StateFieldTable,
-};
 
 export interface MdxContent {
-  content: ReactElement;
+  compiledSource: string;
   frontmatter: Record<string, unknown>;
 }
 
@@ -37,27 +21,23 @@ export async function getMdxContent(filePath: string): Promise<MdxContent | null
   const fileContent = fs.readFileSync(fullPath, 'utf-8');
   const { content, data } = matter(fileContent);
 
-  const { content: compiledContent } = await compileMDX({
-    source: content,
-    options: {
-      parseFrontmatter: false,
-      mdxOptions: {
-        rehypePlugins: [
-          [
-            rehypePrettyCode,
-            {
-              theme: 'github-dark',
-              keepBackground: true,
-            },
-          ],
-        ],
-      },
-    },
-    components: mdxComponents,
+  const compiled = await compile(content, {
+    outputFormat: 'function-body',
+    development: false,
+    // No providerImportSource — components passed via props
+    rehypePlugins: [
+      [
+        rehypePrettyCode as never,
+        {
+          theme: 'github-dark',
+          keepBackground: true,
+        },
+      ],
+    ],
   });
 
   return {
-    content: compiledContent,
+    compiledSource: String(compiled),
     frontmatter: data,
   };
 }
