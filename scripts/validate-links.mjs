@@ -8,6 +8,18 @@
  *
  * 사용법: node scripts/validate-links.mjs
  * 종료 코드: 0 (성공), 1 (실패)
+ *
+ * 환경변수:
+ *   VALIDATE_BASE_PATH  — basePath를 명시적으로 지정한다 (예: /jarfis-website).
+ *                         설정 시 HTML 휴리스틱 감지를 우선하지 않고 이 값을 사용한다.
+ *
+ * Known Limitations:
+ *   - 정규식 기반 파싱이므로 HTML entity 인코딩된 속성값을 처리하지 못한다.
+ *     예: href="&quot;/path&quot;" 또는 href="&#x2F;path" 형태의 값은
+ *     올바르게 추출되지 않아 누락되거나 잘못된 경로로 평가될 수 있다.
+ *     완전한 해결을 위해서는 HTML 파서(예: parse5, cheerio)를 도입해야 한다.
+ *   - href/src 외 다른 속성(예: action, data-href)에 사용된 내부 링크는
+ *     LINK_PATTERNS에 추가하지 않는 한 검증 대상에서 제외된다.
  */
 
 import fs from 'fs';
@@ -17,7 +29,15 @@ const OUT_DIR = path.join(process.cwd(), 'out');
 
 // ─── basePath 동적 감지 ─────────────────────────────────────────────────────
 
+/** 이 프로젝트에서 기대되는 basePath 기본값. */
+const EXPECTED_BASE_PATH = '/jarfis-website';
+
 /**
+ * basePath를 결정한다.
+ * 1. 환경변수 VALIDATE_BASE_PATH가 설정된 경우 해당 값을 사용한다.
+ * 2. 미설정 시 HTML href 패턴 휴리스틱으로 감지하고,
+ *    감지 결과가 EXPECTED_BASE_PATH와 다를 경우 경고를 출력한다.
+ *
  * out/ 하위 최상위 디렉토리 중 HTML 파일이 포함된 첫 번째를 basePath로 감지한다.
  * 예: out/jarfis-website/en/index.html -> basePath = '/jarfis-website'
  * 단, 이 프로젝트의 next.config.mjs basePath='/jarfis-website' 설정에서
@@ -25,8 +45,15 @@ const OUT_DIR = path.join(process.cwd(), 'out');
  * (out/en/, out/ko/ 등)
  * basePath는 HTML 내부 링크에서 감지한다.
  */
-function detectBasePathFromHtml() {
-  // out/ 내 최초 발견 HTML에서 href 패턴으로 basePath 추론
+function detectBasePath() {
+  // 환경변수 명시 지정 우선
+  if (process.env.VALIDATE_BASE_PATH !== undefined) {
+    const explicit = process.env.VALIDATE_BASE_PATH;
+    console.log(`basePath (환경변수 VALIDATE_BASE_PATH): "${explicit || '(없음)'}"`);
+    return explicit;
+  }
+
+  // HTML 휴리스틱 감지
   const htmlFiles = getAllHtmlFiles(OUT_DIR);
   if (htmlFiles.length === 0) return '';
 
@@ -53,15 +80,23 @@ function detectBasePathFromHtml() {
 
   // 가장 많이 등장하는 segment를 basePath로 간주
   let maxCount = 0;
-  let basePath = '';
+  let detectedBasePath = '';
   for (const [segment, count] of prefixCandidates) {
     if (count > maxCount) {
       maxCount = count;
-      basePath = segment;
+      detectedBasePath = segment;
     }
   }
 
-  return basePath;
+  // 감지된 basePath가 예상값과 다를 경우 경고 출력
+  if (detectedBasePath !== EXPECTED_BASE_PATH) {
+    console.warn(
+      `WARNING: 감지된 basePath("${detectedBasePath}")가 예상값("${EXPECTED_BASE_PATH}")과 다릅니다.` +
+      ` 오판 가능성이 있으면 VALIDATE_BASE_PATH 환경변수로 명시적으로 지정하세요.`
+    );
+  }
+
+  return detectedBasePath;
 }
 
 // ─── HTML 파일 탐색 ─────────────────────────────────────────────────────────
@@ -130,39 +165,6 @@ function isInternalLink(href, basePath) {
   return href.startsWith('/');
 }
 
-// ─── 경로 해소 ───────────────────────────────────────────────────────────────
-
-function resolveToFilePath(link) {
-  // 앵커, 쿼리스트링 제거
-  const pathOnly = link.split('#')[0].split('?')[0];
-
-  // basePath를 out/ 경로로 변환
-  // 예: /jarfis-website/en/ -> out/en/index.html
-  //     /en/ -> out/en/index.html
-  // next.config.mjs basePath='/jarfis-website' + SSG output='export' 조합에서
-  // out 디렉토리에는 basePath가 prefix로 붙지 않는다.
-  // 따라서 /jarfis-website/en/ -> out/en/ 로 변환해야 한다.
-  // detectBasePathFromHtml()로 감지된 basePath를 제거한 후 경로를 구성한다.
-  return path.join(OUT_DIR, pathOnly);
-}
-
-function checkFileExists(fsPath) {
-  if (fs.existsSync(fsPath)) {
-    const stat = fs.statSync(fsPath);
-    if (stat.isDirectory()) {
-      // 디렉토리면 index.html 확인
-      return fs.existsSync(path.join(fsPath, 'index.html'));
-    }
-    return true;
-  }
-
-  // trailing slash 없는 경우: 디렉토리/index.html 시도
-  const withIndex = path.join(fsPath, 'index.html');
-  if (fs.existsSync(withIndex)) return true;
-
-  return false;
-}
-
 // ─── 메인 검증 로직 ─────────────────────────────────────────────────────────
 
 function validateLinks() {
@@ -175,9 +177,11 @@ function validateLinks() {
     process.exit(1);
   }
 
-  // basePath 감지
-  const basePath = detectBasePathFromHtml();
-  console.log(`감지된 basePath: "${basePath || '(없음)'}"`);
+  // basePath 결정 (환경변수 우선, 없으면 HTML 휴리스틱 감지)
+  const basePath = detectBasePath();
+  if (process.env.VALIDATE_BASE_PATH === undefined) {
+    console.log(`감지된 basePath: "${basePath || '(없음)'}"`);
+  }
 
   const htmlFiles = getAllHtmlFiles(OUT_DIR);
   console.log(`검증 대상 HTML 파일: ${htmlFiles.length}건\n`);
@@ -213,8 +217,6 @@ function validateLinks() {
       if (basePath && link.startsWith(basePath)) {
         linkWithoutBasePath = link.slice(basePath.length) || '/';
       }
-
-      const fsPath = path.join(OUT_DIR, linkWithoutBasePath);
 
       // Step 4: trailing slash 처리
       const pathOnly = linkWithoutBasePath.split('#')[0].split('?')[0];
