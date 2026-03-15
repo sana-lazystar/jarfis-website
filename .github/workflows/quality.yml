@@ -46,3 +46,6 @@ jobs:
 
       - name: Build verification
         run: pnpm build
+
+      - name: Validate internal links
+        run: pnpm validate-links

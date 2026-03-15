@@ -15,7 +15,8 @@
     "lint:fix": "eslint --fix app/ components/ lib/ i18n/",
     "format": "prettier --write .",
     "type-check": "tsc --noEmit",
-    "i18n:check": "node scripts/check-i18n-sync.mjs"
+    "i18n:check": "node scripts/check-i18n-sync.mjs",
+    "validate-links": "node scripts/validate-links.mjs"
   },
   "dependencies": {
     "@fontsource/dm-sans": "^5.2.8",

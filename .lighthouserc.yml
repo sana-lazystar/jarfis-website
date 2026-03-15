@@ -9,6 +9,8 @@ ci:
       - http://localhost/en/docs/getting-started/
       - http://localhost/en/blog/
       - http://localhost/en/showcase/
+      # 다국어 blog 대표 URL — T2 blog fallback 수정 후 4개 locale HTML 생성 확인
+      - http://localhost/ko/blog/introducing-jarfis/
     numberOfRuns: 3
 
   assert:
