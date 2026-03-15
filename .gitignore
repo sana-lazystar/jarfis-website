@@ -35,3 +35,7 @@ pnpm-debug.log*
 .claude
 .jarfis
 .serena
+
+# Playwright
+playwright-report/
+test-results/

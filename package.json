@@ -16,7 +16,8 @@
     "format": "prettier --write .",
     "type-check": "tsc --noEmit",
     "i18n:check": "node scripts/check-i18n-sync.mjs",
-    "validate-links": "node scripts/validate-links.mjs"
+    "validate-links": "node scripts/validate-links.mjs",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@fontsource/dm-sans": "^5.2.8",
@@ -34,6 +35,7 @@
     "tailwindcss": "^4.0.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.58.2",
     "@types/node": "^22.0.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",

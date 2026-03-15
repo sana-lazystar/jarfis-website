@@ -3,7 +3,8 @@ import path from 'path';
 import matter from 'gray-matter';
 import { evaluate } from '@mdx-js/mdx';
 import * as runtime from 'react/jsx-runtime';
-import { createElement } from 'react';
+import { createElement, type AnchorHTMLAttributes, type ReactNode } from 'react';
+import Link from 'next/link';
 import rehypePrettyCode from 'rehype-pretty-code';
 import type { ReactElement } from 'react';
 import PhasePipeline from '@/components/docs/PhasePipeline';
@@ -13,6 +14,38 @@ import ArtifactList from '@/components/docs/ArtifactList';
 import CommandCard from '@/components/docs/CommandCard';
 import StateFieldTable from '@/components/docs/StateFieldTable';
 
+/**
+ * MDX 마크다운 링크([text](/path))에 대한 커스텀 앵커 컴포넌트.
+ *
+ * - 내부 링크 (/ 시작, // 아님): Next.js <Link>로 래핑 → basePath 자동 적용
+ * - 앵커 링크 (# 시작): 순수 <a> 유지 (페이지 내 이동)
+ * - 외부 링크 (http://, https:// 등): <a target="_blank" rel="noopener noreferrer">
+ * - href 없음: 순수 <a> fallback
+ */
+function MdxAnchor({
+  href,
+  children,
+  ...props
+}: AnchorHTMLAttributes<HTMLAnchorElement> & { children?: ReactNode }) {
+  if (!href) {
+    return createElement('a', props, children);
+  }
+  // 앵커 링크: 페이지 내 이동
+  if (href.startsWith('#')) {
+    return createElement('a', { href, ...props }, children);
+  }
+  // 내부 링크: /로 시작하며 //가 아닌 경우 → Next.js Link로 basePath 자동 적용
+  if (href.startsWith('/') && !href.startsWith('//')) {
+    return createElement(Link, { href, ...(props as Record<string, unknown>) }, children);
+  }
+  // 외부 링크 및 기타: 새 탭, 보안 rel 속성 부여
+  return createElement(
+    'a',
+    { href, target: '_blank', rel: 'noopener noreferrer', ...props },
+    children,
+  );
+}
+
 const mdxComponents = {
   PhasePipeline,
   AgentGrid,
@@ -20,6 +53,8 @@ const mdxComponents = {
   ArtifactList,
   CommandCard,
   StateFieldTable,
+  // MDX 마크다운 링크 basePath 자동 적용
+  a: MdxAnchor,
 };
 
 export interface MdxContent {
