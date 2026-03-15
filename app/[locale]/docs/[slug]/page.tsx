@@ -7,7 +7,6 @@ import { getDocsByLocale, getDocByLocaleAndSlug, getAllDocStaticParams } from '@
 import { generateSeoMetadata } from '@/lib/seo';
 import DocsSidebar from '@/components/docs/DocsSidebar';
 import TableOfContents from '@/components/docs/TableOfContents';
-import MdxContent from '@/components/docs/MdxContent';
 import type { Locale } from '@/i18n/config';
 
 interface DocPageProps {
@@ -133,7 +132,7 @@ export default async function DocPage({ params }: DocPageProps) {
                 </p>
               )}
             </div>
-            <MdxContent compiledSource={mdxContent.compiledSource} />
+            {mdxContent.content}
           </article>
 
           {/* Prev / Next Navigation */}

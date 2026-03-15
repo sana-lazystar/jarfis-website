@@ -5,7 +5,6 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { getMdxContent } from '@/lib/mdx';
 import { getBlogPostByLocaleAndSlug, getAllBlogStaticParams } from '@/lib/blog';
 import { generateSeoMetadata } from '@/lib/seo';
-import MdxContent from '@/components/docs/MdxContent';
 import type { Locale } from '@/i18n/config';
 
 interface BlogPostPageProps {
@@ -185,7 +184,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
           {/* MDX content */}
           <article className="prose prose-invert max-w-none">
-            <MdxContent compiledSource={mdxContent.compiledSource} />
+            {mdxContent.content}
           </article>
         </div>
       </section>
