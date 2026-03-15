@@ -22,10 +22,10 @@ export async function generateMetadata({ params }: FeaturesPageProps): Promise<M
   });
 }
 
-type AgentKey = 'po' | 'architect' | 'tech_lead' | 'ux' | 'backend' | 'frontend' | 'devops' | 'qa' | 'security';
+type AgentKey = 'po' | 'architect' | 'tech_lead' | 'ux' | 'backend' | 'frontend' | 'devops' | 'qa' | 'security' | 'advocate' | 'critic';
 
 const AGENT_KEYS: AgentKey[] = [
-  'po', 'architect', 'tech_lead', 'ux', 'backend', 'frontend', 'devops', 'qa', 'security'
+  'po', 'architect', 'tech_lead', 'ux', 'backend', 'frontend', 'devops', 'qa', 'security', 'advocate', 'critic'
 ];
 
 const AGENT_AVATAR_STYLES: Record<AgentKey, { bg: string; abbr: string }> = {
@@ -38,6 +38,8 @@ const AGENT_AVATAR_STYLES: Record<AgentKey, { bg: string; abbr: string }> = {
   devops:     { bg: 'linear-gradient(135deg, #FBBF24, #D97706)', abbr: 'DO' },
   qa:         { bg: 'linear-gradient(135deg, #10B981, #047857)', abbr: 'QA' },
   security:   { bg: 'linear-gradient(135deg, #EF4444, #B91C1C)', abbr: 'SE' },
+  advocate:   { bg: 'linear-gradient(135deg, #F59E0B, #D97706)', abbr: 'ADV' },
+  critic:     { bg: 'linear-gradient(135deg, #6366F1, #4F46E5)', abbr: 'CRT' },
 };
 
 type PhaseKey = 'T' | '0' | '1' | '2' | '3' | '4' | '4_5' | '5' | '6';
