@@ -13,7 +13,7 @@
     "title_evolve": "evolves",
     "title_middle": "— your",
     "title_team": "AI development team",
-    "subtitle": "From Product Manager to QA Engineer, 9 AI specialists become your team.",
+    "subtitle": "From Product Manager to QA Engineer, 11 AI specialists become your team.",
     "cta_start": "Get Started",
     "cta_github": "GitHub"
   },
@@ -27,7 +27,7 @@
       },
       {
         "title": "Orchestration for All",
-        "description": "9 domain-expert agents — PO, Architect, Tech Lead, Backend, Frontend, DevOps, QA, Security, UX — working together."
+        "description": "11 domain-expert agents — PO, Architect, Tech Lead, Backend, Frontend, DevOps, QA, Security, UX, Advocate, Critic — working together."
       },
       {
         "title": "Resilient Continuity",
@@ -45,7 +45,7 @@
     "items": [
       {
         "title": "Orchestration for All",
-        "description": "9 domain-expert agents collaborate on every task. Specialization beats generalization every time."
+        "description": "11 domain-expert agents collaborate on every task. Specialization beats generalization every time."
       },
       {
         "title": "Token Austerity",
@@ -86,7 +86,7 @@
     "title": "A Team That Gets Stronger With Use",
     "stats": [
       {
-        "value": "9",
+        "value": "11",
         "label": "AI Agents"
       },
       {
@@ -128,16 +128,16 @@
     "page_subtitle": "Everything you need to build with AI — without the trade-offs.",
     "eyebrow": "Features",
     "hero_badge": "All-in-One AI Development Team",
-    "hero_title_teal": "9 AI Experts",
+    "hero_title_teal": "11 AI Experts",
     "hero_title_mid": "crafting a",
     "hero_title_coral": "perfect workflow",
     "hero_subtitle": "From Product Manager to Security Engineer. Explore the complete journey of JARFIS's agent pipeline — turning ideas into production code.",
     "capabilities_eyebrow": "Core Capabilities",
     "capabilities_title": "What Makes JARFIS Different",
     "capabilities_subtitle": "Beyond a simple AI coding tool — the experience of a complete AI development team.",
-    "capability_agents_title": "9 Expert Agents",
-    "capability_agents_desc": "PO, Architect, TL, UX, Backend, Frontend, DevOps, QA, Security — 9 specialist agents mirroring a real development team.",
-    "capability_agents_stat": "9 roles / 1 team",
+    "capability_agents_title": "11 Expert Agents",
+    "capability_agents_desc": "PO, Architect, TL, UX, Backend, Frontend, DevOps, QA, Security, Advocate, Critic — 11 specialist agents mirroring a real development team.",
+    "capability_agents_stat": "11 roles / 1 team",
     "capability_claude_title": "Claude Code Native",
     "capability_claude_desc": "Runs purely on Claude Code — no external servers, no API required. Zero-dependency design, ready to use right after install.",
     "capability_claude_stat": "0 dependencies",
@@ -173,25 +173,26 @@
         ]
       },
       "1": {
-        "name": "Blueprint",
-        "role": "PO — Write PRD, define feature requirements",
+        "name": "Discovery",
+        "role": "PO + Architect — Requirements, Working Backwards, PRD, feasibility",
         "artifacts": [
-          "PRD"
+          "PRD",
+          "working-backwards"
         ]
       },
       "2": {
-        "name": "Architecture",
-        "role": "Architect — Design system architecture",
+        "name": "Architecture & Planning",
+        "role": "Architect + TL — System architecture, task breakdown, QA test strategy",
         "artifacts": [
-          "architecture"
+          "architecture",
+          "tasks"
         ]
       },
       "3": {
-        "name": "Task Planning",
-        "role": "TL — Task decomposition and dependency definition",
+        "name": "UX Design",
+        "role": "UX — Conditional execution, screen & interaction design",
         "artifacts": [
-          "tasks",
-          "dependencies"
+          "ux-spec"
         ]
       },
       "4": {
@@ -203,24 +204,24 @@
         ]
       },
       "4_5": {
-        "name": "Review",
-        "role": "TL/QA — Code review, quality validation",
+        "name": "Operational Readiness",
+        "role": "DevOps — Deployment strategy, rollback plan",
         "artifacts": [
-          "review",
-          "feedback"
+          "deployment-plan",
+          "rollback"
         ]
       },
       "5": {
-        "name": "QA & Security",
-        "role": "QA/SE — Integration testing, security audit",
+        "name": "Review & QA",
+        "role": "TL/QA/SE — API contract validation, parallel reviews",
         "artifacts": [
           "test-report",
           "security-audit"
         ]
       },
       "6": {
-        "name": "Wrap-up",
-        "role": "TL/DO — Deployment prep, documentation, learning record",
+        "name": "Retrospective",
+        "role": "TL — Knowledge accumulation, retrospective",
         "artifacts": [
           "changelog",
           "learning"
@@ -228,7 +229,7 @@
       }
     },
     "agents_eyebrow": "Meet the Team",
-    "agents_title": "9 AI Experts",
+    "agents_title": "11 AI Experts",
     "agents_subtitle": "Agents with specialized expertise collaborate organically.",
     "why_eyebrow": "Why JARFIS",
     "differentiator_title": "How Is It Different from Traditional AI Tools?",
@@ -239,7 +240,7 @@
     "compare": {
       "category_team": "Team Structure",
       "single_ai": "Single AI chat assistant",
-      "team": "9 domain-expert agents with defined roles",
+      "team": "11 domain-expert agents with defined roles",
       "category_workflow": "Workflow",
       "suggestion": "Code suggestions you apply manually",
       "autonomous": "Full workflow from press release to retrospective",
@@ -261,10 +262,10 @@
     },
     "learn_more": "Learn more in Docs",
     "view_github": "View on GitHub",
-    "agent_team_title": "9 Expert Agents, One Workflow",
-    "agent_team_desc": "JARFIS orchestrates nine specialized agents — PO, Architect, Tech Lead, Backend, Frontend, DevOps, QA, Security, and UX — each with dedicated domain expertise and role-specific CLAUDE.md instructions. They collaborate sequentially, handing off artifacts at every phase.",
+    "agent_team_title": "11 Expert Agents, One Workflow",
+    "agent_team_desc": "JARFIS orchestrates eleven specialized agents — PO, Architect, Tech Lead, Backend, Frontend, DevOps, QA, Security, UX, Advocate, and Critic — each with dedicated domain expertise and role-specific CLAUDE.md instructions. They collaborate sequentially, handing off artifacts at every phase.",
     "agent_team_bullets": [
-      "9 roles: PO, Architect, Tech Lead, Backend, Frontend, DevOps, QA, Security, UX",
+      "11 roles: PO, Architect, Tech Lead, Backend, Frontend, DevOps, QA, Security, UX, Advocate, Critic",
       "Each agent has domain-specific instructions and expertise",
       "Sequential collaboration with artifact handoffs",
       "Defined roles eliminate ambiguity and overlap"
@@ -297,7 +298,7 @@
     "cta_subtitle": "Open-source AI development team orchestrator. 5 minutes to install, permanent in effect.",
     "cta_docs": "Documentation",
     "footnote": "* Comparison based on general category patterns, not specific products.",
-    "agents_section_title": "Meet the 9 Agents",
+    "agents_section_title": "Meet the 11 Agents",
     "agents_section_subtitle": "Each agent carries deep domain expertise and role-specific instructions. Together they cover the full product lifecycle — from the first user story to the final retrospective.",
     "agents": {
       "po": {
@@ -333,11 +334,11 @@
       "ux": {
         "name": "UX Designer",
         "abbr": "UX",
-        "desc": "Defines information architecture, user flows, wireframes, and interaction patterns. Ensures the product is accessible and intuitive before implementation begins.",
+        "desc": "Designs and directly produces SVG assets, design token systems, and brand identity. Defines information architecture, user flows, wireframes, and interaction patterns. Ensures the product is accessible and visually consistent before implementation begins.",
         "tags": [
-          "Information Architecture",
-          "Wireframes",
-          "Accessibility"
+          "SVG Assets",
+          "Design Tokens",
+          "Brand Design"
         ]
       },
       "backend": {
@@ -389,12 +390,32 @@
           "Auth & AuthZ",
           "Vulnerability Analysis"
         ]
+      },
+      "advocate": {
+        "name": "Advocate",
+        "abbr": "ADV",
+        "desc": "Champions proposed changes to the JARFIS system by analyzing their merits, potential, and user value. Provides concrete scenario-based arguments for why a change should proceed, while honestly acknowledging risks.",
+        "tags": [
+          "Dialectic Review",
+          "Change Advocacy",
+          "User Value"
+        ]
+      },
+      "critic": {
+        "name": "Critic",
+        "abbr": "CRT",
+        "desc": "Critically examines proposed changes to the JARFIS system to identify risks, side effects, and design inconsistencies. Guards system consistency and token economy, presenting concrete failure scenarios and constructive alternatives.",
+        "tags": [
+          "Dialectic Review",
+          "Risk Analysis",
+          "System Consistency"
+        ]
       }
     }
   },
   "seo": {
-    "home_description": "One slash command. Nine expert agents. JARFIS orchestrates your entire product workflow on Claude Code.",
-    "features_description": "Explore JARFIS features: 9 expert agents, 11 structured artifacts, and a continuous learning system.",
+    "home_description": "One slash command. Eleven expert agents. JARFIS orchestrates your entire product workflow on Claude Code.",
+    "features_description": "Explore JARFIS features: 11 expert agents, 11 structured artifacts, and a continuous learning system.",
     "docs_description": "JARFIS documentation: getting started, concepts, guides, and API reference.",
     "blog_description": "Updates, deep dives, and release notes from the JARFIS team.",
     "showcase_description": "Projects built with JARFIS — AI-orchestrated product development in action."
@@ -487,7 +508,7 @@
     "view_github": "View JARFIS on GitHub",
     "close_nav": "Close navigation menu",
     "open_nav": "Open navigation menu",
-    "solar_system": "JARFIS AI agent ecosystem — 9 agents orbiting the central JARFIS core"
+    "solar_system": "JARFIS AI agent ecosystem — 11 agents orbiting the central JARFIS core"
   },
   "common": {
     "read_more": "Read More",
