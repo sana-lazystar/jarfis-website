@@ -21,6 +21,10 @@ export const BASE_URL = `https://sana-lazystar.github.io${BASE_PATH}`;
  * Next.js <Link> 내에서 사용하면 basePath가 이중 적용되어
  * '/jarfis-website/jarfis-website/...' 형태의 잘못된 경로가 생성된다.
  *
+ * **이중 적용 방어**:
+ * 입력 경로가 이미 BASE_PATH로 시작하는 경우 그대로 반환한다.
+ * 예: withBasePath('/jarfis-website/en/') → '/jarfis-website/en/' (이중 적용 방지)
+ *
  * @param path - '/'로 시작하는 경로 (예: '/en/', '/favicon.ico')
  * @returns basePath가 prepend된 경로 (예: '/jarfis-website/en/')
  *
@@ -36,6 +40,10 @@ export const BASE_URL = `https://sana-lazystar.github.io${BASE_PATH}`;
  */
 export function withBasePath(path: string): string {
   const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+  // 이중 적용 방지: 이미 basePath로 시작하는 경우 그대로 반환
+  if (normalizedPath.startsWith(`${BASE_PATH}/`) || normalizedPath === BASE_PATH) {
+    return normalizedPath;
+  }
   return `${BASE_PATH}${normalizedPath}`;
 }
 
