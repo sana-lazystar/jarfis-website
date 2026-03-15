@@ -74,4 +74,4 @@ export function generateSeoMetadata({
   };
 }
 
-export { BASE_URL, SITE_NAME };
+export { SITE_NAME };
