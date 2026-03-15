@@ -2,8 +2,16 @@
  * HeroSolarSystem — Server Component
  * Inline SVG, CSS-only animations, GPU-accelerated (transform/opacity).
  * Security: no <script>, no <foreignObject>, no event handlers.
+ *
+ * Props:
+ *   ariaLabel — accessible description for the SVG (from i18n a11y.solar_system key).
+ *               Defaults to the English fallback if omitted.
  */
-export default function HeroSolarSystem() {
+interface HeroSolarSystemProps {
+  ariaLabel?: string;
+}
+
+export default function HeroSolarSystem({ ariaLabel }: HeroSolarSystemProps) {
   return (
     <div className="relative flex items-center justify-center" style={{ maxWidth: '440px', width: '100%', margin: '0 auto' }}>
       {/* Background blobs — positioned outside SVG as divs */}
@@ -61,7 +69,7 @@ export default function HeroSolarSystem() {
         aria-labelledby="solar-system-title"
         style={{ width: '100%', height: 'auto' }}
       >
-        <title id="solar-system-title">JARFIS AI agent ecosystem — 9 agents orbiting the central JARFIS core</title>
+        <title id="solar-system-title">{ariaLabel ?? 'JARFIS AI agent ecosystem — 11 agents orbiting the central JARFIS core'}</title>
         <defs>
           {/* Sun glow */}
           <radialGradient id="ss-sunGlow" cx="50%" cy="50%" r="50%">

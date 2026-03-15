@@ -32,6 +32,7 @@ export default async function HomePage({ params }: HomePageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: 'hero' });
+  const tA11y = await getTranslations({ locale, namespace: 'a11y' });
 
   return (
     <>
@@ -168,7 +169,7 @@ export default async function HomePage({ params }: HomePageProps) {
 
             {/* Right: Solar System SVG — 모바일에서 텍스트보다 위로 reorder */}
             <div className="order-first lg:order-none">
-              <HeroSolarSystem />
+              <HeroSolarSystem ariaLabel={tA11y('solar_system')} />
             </div>
           </div>
         </div>
