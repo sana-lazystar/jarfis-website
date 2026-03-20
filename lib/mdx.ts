@@ -13,6 +13,20 @@ import GateCard from '@/components/docs/GateCard';
 import ArtifactList from '@/components/docs/ArtifactList';
 import CommandCard from '@/components/docs/CommandCard';
 import StateFieldTable from '@/components/docs/StateFieldTable';
+import Callout from '@/components/docs/Callout';
+import QuickGateCards from '@/components/docs/QuickGateCards';
+import QuickPhaseList from '@/components/docs/QuickPhaseList';
+import QuickAgentGrid from '@/components/docs/QuickAgentGrid';
+import PrincipleZeroBanner from '@/components/docs/PrincipleZeroBanner';
+import PrincipleGrid from '@/components/docs/PrincipleGrid';
+import TensionList from '@/components/docs/TensionList';
+import StateDiagram from '@/components/docs/StateDiagram';
+import FlowDiagram from '@/components/docs/FlowDiagram';
+import RoleConfigGrid from '@/components/docs/RoleConfigGrid';
+import ModeGrid from '@/components/docs/ModeGrid';
+import RecoveryFlow from '@/components/docs/RecoveryFlow';
+import LearningGrid from '@/components/docs/LearningGrid';
+import ExampleCard from '@/components/docs/ExampleCard';
 
 /**
  * MDX 마크다운 링크([text](/path))에 대한 커스텀 앵커 컴포넌트.
@@ -53,6 +67,24 @@ const mdxComponents = {
   ArtifactList,
   CommandCard,
   StateFieldTable,
+  // Shared
+  Callout,
+  QuickGateCards,
+  // Getting Started
+  QuickPhaseList,
+  QuickAgentGrid,
+  // Concepts
+  PrincipleZeroBanner,
+  PrincipleGrid,
+  TensionList,
+  StateDiagram,
+  // Guides
+  FlowDiagram,
+  RoleConfigGrid,
+  ModeGrid,
+  RecoveryFlow,
+  LearningGrid,
+  ExampleCard,
   // MDX 마크다운 링크 basePath 자동 적용
   a: MdxAnchor,
 };

@@ -8,8 +8,6 @@ lastUpdated: 2026-03-15
 draft: false
 ---
 
-# Quick Start
-
 Ship software with AI — one slash command, eleven expert agents, structured phases with human gates.
 
 ## Prerequisites
@@ -29,19 +27,9 @@ JARFIS is installed via the `install.sh` script from the GitHub repository. Run 
 bash install.sh
 ```
 
-This registers the JARFIS slash commands in your Claude Code environment. After installation, the following project structure is available:
-
-```
-your-project/
-├── .jarfis/
-│   ├── context.md             # Project-specific context
-│   └── project-profile.md     # Project profile
-├── .jarfis-state.json         # Workflow state tracking
-└── ~/.claude/
-    └── jarfis-learnings.md    # Global learning file (cross-project)
-```
-
-> **Note**: There is no `/jarfis:install` command. Installation is done exclusively through `bash install.sh`.
+<Callout>
+  **Note:** There is no `/jarfis:install` command. Installation is done exclusively through `bash install.sh`.
+</Callout>
 
 ## Run Your First Workflow
 
@@ -57,47 +45,60 @@ JARFIS will classify your request (Phase T — Triage) and then guide you throug
 
 Every workflow progresses through up to 9 phases. Phases may be skipped when not applicable (e.g., Phase 3 is skipped if no UI is needed):
 
-| Phase | Name | What Happens |
-|-------|------|--------------|
-| T | Triage | Request classification into A/B/C types |
-| 0 | Pre-flight | Git sync, branch creation, learning files loaded |
-| 1 | Discovery | PO reverse-questions, Working Backwards, PRD, feasibility |
-| 2 | Architecture & Planning | Impact analysis, design, API spec, task breakdown, test strategy |
-| 3 | UX Design | Screen design, SVG assets, design tokens (conditional — only when UI is needed) |
-| 4 | Implementation | BE/FE/DevOps parallel implementation |
-| 4.5 | Operational Readiness | Deployment strategy, rollback plan, ops readiness |
-| 5 | Review & QA | API contract verification, Tech Lead + QA + Security reviews |
-| 6 | Retrospective | Learning accumulation (global learnings + project context) |
+<QuickPhaseList items={[
+  { type: "phase", id: "T", name: "Triage", description: "Request classification into A/B/C types" },
+  { type: "phase", id: "0", name: "Pre-flight", description: "Git sync, branch creation, learning files loaded" },
+  { type: "phase", id: "1", name: "Discovery", description: "PO reverse-questions, Working Backwards, PRD, feasibility" },
+  { type: "gate", label: "Gate 1", options: "Approve / Revise / Abort" },
+  { type: "phase", id: "2", name: "Architecture & Planning", description: "Impact analysis, design, API spec, task breakdown, test strategy" },
+  { type: "phase", id: "3", name: "UX Design", description: "Screen design, SVG assets, design tokens (conditional — only when UI is needed)" },
+  { type: "gate", label: "Gate 2", options: "Approve / Revise / Abort" },
+  { type: "phase", id: "4", name: "Implementation", description: "BE/FE/DevOps parallel implementation" },
+  { type: "phase", id: "4.5", name: "Operational Readiness", description: "Deployment strategy, rollback plan, ops readiness" },
+  { type: "phase", id: "5", name: "Review & QA", description: "API contract verification, Tech Lead + QA + Security reviews" },
+  { type: "gate", label: "Gate 3", options: "Approve / Revise & re-review / Abort / Revisit design" },
+  { type: "phase", id: "6", name: "Retrospective", description: "Learning accumulation (global learnings + project context)" }
+]} />
 
 ## The 11 Agents
 
-JARFIS orchestrates 11 specialized agents, each activated only when relevant to the current phase and project requirements:
+JARFIS orchestrates 11 specialized agents, each activated only when relevant:
 
-| Agent | Role |
-|-------|------|
-| **Product Owner (PO)** | Reverse-questions, Working Backwards, PRD authoring |
-| **Architect** | Feasibility evaluation, impact analysis, architecture design, ADR |
-| **Tech Lead** | API spec review, task breakdown, code review, retrospective |
-| **UX Designer** | Screen design, interaction design, SVG asset creation, design tokens |
-| **Backend Engineer** | Backend implementation |
-| **Frontend Engineer** | Frontend implementation |
-| **DevOps/SRE** | Infrastructure and CI/CD implementation |
-| **QA Engineer** | Test strategy, QA verification |
-| **Security Engineer** | Pre-review security analysis, security review |
-| **Advocate** | Argues for proposed solutions, defends trade-off decisions |
-| **Critic** | Challenges assumptions, identifies risks and weaknesses |
+<QuickAgentGrid agents={[
+  { abbr: "PO", name: "Product Owner", role: "Reverse-questions, Working Backwards, PRD authoring", category: "planning" },
+  { abbr: "AR", name: "Architect", role: "Feasibility evaluation, impact analysis, architecture design, ADR", category: "planning" },
+  { abbr: "TL", name: "Tech Lead", role: "API spec review, task breakdown, code review, retrospective", category: "planning" },
+  { abbr: "UX", name: "UX Designer", role: "Screen design, interaction design, SVG asset creation, design tokens", category: "conditional" },
+  { abbr: "BE", name: "Backend Engineer", role: "Backend implementation", category: "impl" },
+  { abbr: "FE", name: "Frontend Engineer", role: "Frontend implementation", category: "impl" },
+  { abbr: "DO", name: "DevOps/SRE", role: "Infrastructure and CI/CD implementation", category: "impl" },
+  { abbr: "QA", name: "QA Engineer", role: "Test strategy, QA verification", category: "review" },
+  { abbr: "SE", name: "Security Engineer", role: "Pre-review security analysis, security review", category: "review" },
+  { abbr: "ADV", name: "Advocate", role: "Argues for proposed solutions, defends trade-off decisions", category: "dialectic" },
+  { abbr: "CRT", name: "Critic", role: "Challenges assumptions, identifies risks and weaknesses", category: "dialectic" }
+]} />
 
 ## Human Gates
 
 JARFIS includes 3 gates where your explicit approval is required before proceeding:
 
-| Gate | When | Your Options |
-|------|------|--------------|
-| Gate 1 | After Phase 1 (Discovery) | Approve / Revise / Abort |
-| Gate 2 | After Phase 2 & 3 (Architecture + UX) | Approve / Revise / Abort |
-| Gate 3 | After Phase 5 (Review & QA) | Approve / Revise & re-review / Abort / Revisit design |
-
-These gates ensure you stay in control of the direction at every major milestone.
+<QuickGateCards gates={[
+  {
+    title: "Gate 1 — After Phase 1 (Discovery)",
+    description: "Review the PRD, feasibility analysis, and scope before architecture begins.",
+    actions: ["Approve", "Revise", "Abort"]
+  },
+  {
+    title: "Gate 2 — After Phase 2 & 3 (Architecture + UX)",
+    description: "Review architecture decisions, API specs, task breakdown, and UX designs before implementation.",
+    actions: ["Approve", "Revise", "Abort"]
+  },
+  {
+    title: "Gate 3 — After Phase 5 (Review & QA)",
+    description: "Final quality gate before retrospective. Review all code, tests, and security findings.",
+    actions: ["Approve", "Revise & re-review", "Abort", "Revisit design"]
+  }
+]} />
 
 ## Next Steps
 
