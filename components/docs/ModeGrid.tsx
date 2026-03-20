@@ -1,0 +1,77 @@
+import type { CSSProperties, ReactNode } from 'react';
+
+export interface ModeCardData {
+  name: string;
+  description: string;
+  flag: string;
+  active?: boolean;
+}
+
+interface ModeGridProps {
+  modes: ModeCardData[];
+  columns?: 2 | 3;
+}
+
+export default function ModeGrid({ modes, columns = 2 }: ModeGridProps): ReactNode {
+  const gridStyle: CSSProperties = {
+    display: 'grid',
+    gridTemplateColumns: `repeat(${columns}, 1fr)`,
+    gap: '10px',
+    margin: '1rem 0 1.5rem',
+  };
+
+  return (
+    <div style={gridStyle} className="mode-grid-component">
+      <style>{`
+        @media (max-width: 768px) {
+          .mode-grid-component {
+            grid-template-columns: 1fr !important;
+          }
+        }
+      `}</style>
+      {modes.map((mode, index) => (
+        <div
+          key={index}
+          style={{
+            background: mode.active ? 'rgba(13,148,136,0.05)' : 'var(--color-surface)',
+            border: `1px solid ${mode.active ? 'var(--color-primary)' : 'var(--color-border)'}`,
+            borderRadius: '10px',
+            padding: '1rem',
+            textAlign: 'center',
+          }}
+        >
+          <div
+            style={{
+              fontFamily: 'var(--font-mono)',
+              fontSize: '0.875rem',
+              fontWeight: 600,
+              color: 'var(--color-text-primary)',
+              marginBottom: '0.25rem',
+            }}
+          >
+            {mode.name}
+          </div>
+          <div
+            style={{
+              fontSize: '0.75rem',
+              color: 'var(--color-text-muted)',
+              lineHeight: 1.4,
+            }}
+          >
+            {mode.description}
+          </div>
+          <div
+            style={{
+              fontFamily: 'var(--font-mono)',
+              fontSize: '0.6875rem',
+              color: 'var(--color-primary-light)',
+              marginTop: '0.5rem',
+            }}
+          >
+            {mode.flag}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
