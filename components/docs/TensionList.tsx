@@ -13,6 +13,7 @@ interface TensionListProps {
 export default function TensionList({ tensions }: TensionListProps): ReactNode {
   return (
     <div
+      role="list"
       style={{
         display: 'flex',
         flexDirection: 'column',
@@ -23,10 +24,9 @@ export default function TensionList({ tensions }: TensionListProps): ReactNode {
       {tensions.map((tension, index) => (
         <div
           key={index}
+          role="listitem"
+          className="flex flex-col sm:flex-row items-start sm:items-center gap-2"
           style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '1rem',
             background: 'var(--color-surface)',
             border: '1px solid var(--color-border)',
             borderRadius: '8px',
@@ -45,6 +45,7 @@ export default function TensionList({ tensions }: TensionListProps): ReactNode {
             {tension.left}
           </div>
           <div
+            aria-hidden="true"
             style={{
               fontFamily: 'var(--font-mono)',
               fontSize: '0.6875rem',

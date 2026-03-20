@@ -1,4 +1,4 @@
-import type { CSSProperties, ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 export interface RoleField {
   key: string;
@@ -17,25 +17,17 @@ interface RoleConfigGridProps {
 }
 
 export default function RoleConfigGrid({ cards }: RoleConfigGridProps): ReactNode {
-  const gridStyle: CSSProperties = {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(3, 1fr)',
-    gap: '10px',
-    margin: '1rem 0 1.5rem',
-  };
-
   return (
-    <div style={gridStyle} className="role-config-grid-component">
-      <style>{`
-        @media (max-width: 768px) {
-          .role-config-grid-component {
-            grid-template-columns: 1fr !important;
-          }
-        }
-      `}</style>
+    <div
+      role="list"
+      aria-label="Role configurations"
+      className="grid grid-cols-1 sm:grid-cols-3 gap-2"
+      style={{ margin: '1rem 0 1.5rem' }}
+    >
       {cards.map((card, index) => (
         <div
           key={index}
+          role="listitem"
           style={{
             background: 'var(--color-surface)',
             border: '1px solid var(--color-border)',

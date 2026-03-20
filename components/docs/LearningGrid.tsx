@@ -1,4 +1,4 @@
-import type { CSSProperties, ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 export type LearningVariant = 'global' | 'project' | 'workflow';
 
@@ -30,27 +30,21 @@ const variantStyles: Record<LearningVariant, { border: string; labelColor: strin
 };
 
 export default function LearningGrid({ cards, columns = 2 }: LearningGridProps): ReactNode {
-  const gridStyle: CSSProperties = {
-    display: 'grid',
-    gridTemplateColumns: `repeat(${columns}, 1fr)`,
-    gap: '10px',
-    margin: '1rem 0 1.5rem',
-  };
+  const colClass = columns === 3 ? 'grid grid-cols-1 sm:grid-cols-3 gap-2' : 'grid grid-cols-1 sm:grid-cols-2 gap-2';
 
   return (
-    <div style={gridStyle} className="learning-grid-component">
-      <style>{`
-        @media (max-width: 768px) {
-          .learning-grid-component {
-            grid-template-columns: 1fr !important;
-          }
-        }
-      `}</style>
+    <div
+      role="list"
+      aria-label="Learning scope"
+      className={colClass}
+      style={{ margin: '1rem 0 1.5rem' }}
+    >
       {cards.map((card, index) => {
         const styles = variantStyles[card.variant];
         return (
           <div
             key={index}
+            role="listitem"
             style={{
               background: 'var(--color-surface)',
               border: '1px solid var(--color-border)',

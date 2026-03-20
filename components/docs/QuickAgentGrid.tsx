@@ -1,4 +1,4 @@
-import type { CSSProperties, ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 export type AgentCategory = 'planning' | 'impl' | 'review' | 'dialectic' | 'conditional';
 
@@ -37,27 +37,19 @@ const categoryColors: Record<AgentCategory, { border: string; abbr: string }> = 
 };
 
 export default function QuickAgentGrid({ agents }: QuickAgentGridProps): ReactNode {
-  const gridStyle: CSSProperties = {
-    display: 'grid',
-    gridTemplateColumns: '1fr 1fr',
-    gap: '8px',
-    margin: '1rem 0 1.5rem',
-  };
-
   return (
-    <div style={gridStyle} className="quick-agent-grid">
-      <style>{`
-        @media (max-width: 640px) {
-          .quick-agent-grid {
-            grid-template-columns: 1fr !important;
-          }
-        }
-      `}</style>
+    <div
+      role="list"
+      aria-label="Agent roles"
+      className="grid grid-cols-1 sm:grid-cols-2 gap-2"
+      style={{ margin: '1rem 0 1.5rem' }}
+    >
       {agents.map((agent, index) => {
         const colors = categoryColors[agent.category];
         return (
           <div
             key={index}
+            role="listitem"
             style={{
               padding: '12px',
               background: 'var(--color-surface)',

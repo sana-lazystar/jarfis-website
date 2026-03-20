@@ -14,7 +14,8 @@ export default function PrincipleZeroBanner({
   descriptionEn,
 }: PrincipleZeroBannerProps): ReactNode {
   return (
-    <div
+    <section
+      aria-label={label}
       style={{
         background: 'linear-gradient(135deg, rgba(13,148,136,0.15), rgba(94,234,212,0.05))',
         border: '1px solid rgba(13,148,136,0.3)',
@@ -60,6 +61,6 @@ export default function PrincipleZeroBanner({
         <br />
         <span style={{ fontStyle: 'italic' }}>{descriptionEn}</span>
       </div>
-    </div>
+    </section>
   );
 }

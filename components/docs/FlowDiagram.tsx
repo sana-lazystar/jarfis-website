@@ -9,6 +9,7 @@ export interface FlowDiagramNode {
 
 interface FlowDiagramProps {
   nodes: FlowDiagramNode[];
+  ariaLabel?: string;
 }
 
 const variantStyles: Record<FlowNodeVariant, { bg: string; color: string; border: string }> = {
@@ -29,9 +30,10 @@ const variantStyles: Record<FlowNodeVariant, { bg: string; color: string; border
   },
 };
 
-export default function FlowDiagram({ nodes }: FlowDiagramProps): ReactNode {
+export default function FlowDiagram({ nodes, ariaLabel = 'Flow diagram' }: FlowDiagramProps): ReactNode {
   return (
     <div
+      aria-label={ariaLabel}
       style={{
         background: 'var(--color-surface)',
         border: '1px solid var(--color-border)',
@@ -68,7 +70,12 @@ export default function FlowDiagram({ nodes }: FlowDiagramProps): ReactNode {
                 {node.label}
               </span>
               {index < nodes.length - 1 && (
-                <span style={{ color: 'var(--color-text-muted)', fontSize: '0.875rem' }}>→</span>
+                <span
+                  aria-hidden="true"
+                  style={{ color: 'var(--color-text-muted)', fontSize: '0.875rem' }}
+                >
+                  →
+                </span>
               )}
             </span>
           );

@@ -1,4 +1,4 @@
-import type { CSSProperties, ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 export type PrincipleAccent = 'teal' | 'coral' | 'yellow' | 'purple';
 
@@ -46,27 +46,19 @@ const accentStyles: Record<
 };
 
 export default function PrincipleGrid({ principles }: PrincipleGridProps): ReactNode {
-  const gridStyle: CSSProperties = {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(3, 1fr)',
-    gap: '10px',
-    margin: '1.5rem 0',
-  };
-
   return (
-    <div style={gridStyle} className="principle-grid-component">
-      <style>{`
-        @media (max-width: 768px) {
-          .principle-grid-component {
-            grid-template-columns: 1fr !important;
-          }
-        }
-      `}</style>
+    <div
+      role="list"
+      aria-label="Design principles"
+      className="grid grid-cols-1 md:grid-cols-3 gap-2"
+      style={{ margin: '1.5rem 0' }}
+    >
       {principles.map((p, index) => {
         const styles = accentStyles[p.accent];
         return (
           <div
             key={index}
+            role="listitem"
             style={{
               background: 'var(--color-surface)',
               border: '1px solid var(--color-border)',

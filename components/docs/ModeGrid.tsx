@@ -1,4 +1,4 @@
-import type { CSSProperties, ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 export interface ModeCardData {
   name: string;
@@ -13,25 +13,19 @@ interface ModeGridProps {
 }
 
 export default function ModeGrid({ modes, columns = 2 }: ModeGridProps): ReactNode {
-  const gridStyle: CSSProperties = {
-    display: 'grid',
-    gridTemplateColumns: `repeat(${columns}, 1fr)`,
-    gap: '10px',
-    margin: '1rem 0 1.5rem',
-  };
+  const colClass = columns === 3 ? 'grid grid-cols-1 sm:grid-cols-3 gap-2' : 'grid grid-cols-1 sm:grid-cols-2 gap-2';
 
   return (
-    <div style={gridStyle} className="mode-grid-component">
-      <style>{`
-        @media (max-width: 768px) {
-          .mode-grid-component {
-            grid-template-columns: 1fr !important;
-          }
-        }
-      `}</style>
+    <div
+      role="list"
+      aria-label="Modes"
+      className={colClass}
+      style={{ margin: '1rem 0 1.5rem' }}
+    >
       {modes.map((mode, index) => (
         <div
           key={index}
+          role="listitem"
           style={{
             background: mode.active ? 'rgba(13,148,136,0.05)' : 'var(--color-surface)',
             border: `1px solid ${mode.active ? 'var(--color-primary)' : 'var(--color-border)'}`,

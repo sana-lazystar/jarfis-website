@@ -12,6 +12,7 @@ interface StateDiagramProps {
 export default function StateDiagram({ nodes }: StateDiagramProps): ReactNode {
   return (
     <div
+      aria-label="Workflow state diagram"
       style={{
         background: 'var(--color-surface)',
         border: '1px solid var(--color-border)',
@@ -51,7 +52,12 @@ export default function StateDiagram({ nodes }: StateDiagramProps): ReactNode {
               {node.label}
             </span>
             {index < nodes.length - 1 && (
-              <span style={{ color: 'var(--color-text-muted)', fontSize: '0.875rem' }}>→</span>
+              <span
+                aria-hidden="true"
+                style={{ color: 'var(--color-text-muted)', fontSize: '0.875rem' }}
+              >
+                →
+              </span>
             )}
           </span>
         ))}

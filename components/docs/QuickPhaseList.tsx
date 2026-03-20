@@ -22,6 +22,7 @@ interface QuickPhaseListProps {
 export default function QuickPhaseList({ items }: QuickPhaseListProps): ReactNode {
   return (
     <div
+      role="list"
       style={{
         display: 'flex',
         flexDirection: 'column',
@@ -34,6 +35,7 @@ export default function QuickPhaseList({ items }: QuickPhaseListProps): ReactNod
           return (
             <div
               key={index}
+              role="listitem"
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -87,6 +89,7 @@ export default function QuickPhaseList({ items }: QuickPhaseListProps): ReactNod
         return (
           <div
             key={index}
+            role="listitem"
             style={{
               display: 'flex',
               alignItems: 'flex-start',

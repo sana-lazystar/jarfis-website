@@ -13,6 +13,8 @@ interface QuickGateCardsProps {
 export default function QuickGateCards({ gates }: QuickGateCardsProps): ReactNode {
   return (
     <div
+      role="list"
+      aria-label="Gate cards"
       style={{
         display: 'flex',
         flexDirection: 'column',
@@ -23,6 +25,7 @@ export default function QuickGateCards({ gates }: QuickGateCardsProps): ReactNod
       {gates.map((gate, index) => (
         <div
           key={index}
+          role="listitem"
           style={{
             padding: '14px 16px',
             background: 'var(--color-surface)',

@@ -10,6 +10,7 @@ export default function Callout({ variant = 'info', children }: CalloutProps): R
 
   return (
     <div
+      role="note"
       style={{
         background: isWarning ? 'rgba(251,191,36,0.08)' : 'rgba(13,148,136,0.08)',
         border: `1px solid ${isWarning ? 'rgba(251,191,36,0.2)' : 'rgba(13,148,136,0.2)'}`,
