@@ -8,35 +8,44 @@ lastUpdated: 2026-03-15
 draft: false
 ---
 
-# Guides & Customization
-
-Practical patterns for getting the most out of JARFIS on real projects.
+Master advanced JARFIS patterns — from linking meetings to work items, to customizing agent roles, managing gates, and recovering from interruptions.
 
 ## Meeting-to-Work Linkage
 
-One of JARFIS's most powerful patterns is using a kickoff meeting to feed context into a work session. This ensures alignment between planning decisions and implementation.
+JARFIS connects meeting outcomes directly to development workflows. Run a meeting first to produce structured outputs, then link those outputs to a work command so the entire pipeline starts with full context.
 
-### Step 1: Hold a Kickoff Meeting
+<FlowDiagram nodes={[
+  { label: "/jarfis:meeting", variant: "meeting" },
+  { label: "summary.md + decisions.md + meeting-notes.md" },
+  { label: "/jarfis:work --meeting", variant: "work" },
+  { label: "Phase 0 loads meeting context" }
+]} />
+
+### Step-by-Step
+
+1. Run the meeting command with a topic:
 
 ```
 /jarfis:meeting Define the authentication strategy for the mobile app
 ```
 
-The meeting produces structured decisions and artifacts stored in a meeting directory.
+This produces `summary.md`, `decisions.md`, and `meeting-notes.md`.
 
-### Step 2: Start Work with Meeting Reference
+2. Link the meeting output to a work command using the `--meeting` flag:
 
 ```
 /jarfis:work Implement mobile auth with biometric login --meeting auth-strategy-meeting
 ```
 
-The `--meeting` flag links the meeting output as input context. The state file will include `meeting_ref` and `meeting_dir` fields, and agents will reference the meeting decisions throughout the workflow.
+3. Phase 0 (Pre-flight) automatically loads the meeting context. Agents reference meeting decisions throughout all subsequent phases.
 
-This pattern is especially valuable for complex features where multiple stakeholders need to align before implementation begins.
+<Callout>
+  **Tip:** The `--meeting` flag references the meeting output directory. Phase 0 loads all meeting artifacts so every agent in the pipeline has access to decisions and constraints discussed.
+</Callout>
 
-## Role Configuration with `required_roles`
+## Role Configuration
 
-Not every project needs all 11 agents. JARFIS uses the `required_roles` field in `.jarfis-state.json` to control which agents are activated:
+JARFIS uses the `required_roles` field in `.jarfis-state.json` to determine which agent roles are active for a workflow. This controls which phases execute and how parallel work is distributed in Phase 4.
 
 ```json
 {
@@ -50,242 +59,218 @@ Not every project needs all 11 agents. JARFIS uses the `required_roles` field in
 }
 ```
 
-### Common Role Patterns
-
-**Frontend-only project** (e.g., landing page redesign):
-```json
-{
-  "required_roles": {
-    "backend": false,
-    "frontend": true,
-    "ux": true,
-    "devops": false,
-    "security": false
+<RoleConfigGrid cards={[
+  {
+    name: "Frontend Only",
+    description: "Phase 3 (UX) active, Phase 4 runs FE implementation only",
+    fields: [
+      { key: "backend:", value: "false" },
+      { key: "frontend:", value: "true" },
+      { key: "ux:", value: "true" },
+      { key: "devops:", value: "false" },
+      { key: "security:", value: "false" }
+    ]
+  },
+  {
+    name: "Full Stack + Security",
+    description: "All phases active, Phase 4 runs BE/FE/DevOps in parallel",
+    variant: "custom",
+    fields: [
+      { key: "backend:", value: "true" },
+      { key: "frontend:", value: "true" },
+      { key: "ux:", value: "true" },
+      { key: "devops:", value: "true" },
+      { key: "security:", value: "true" }
+    ]
+  },
+  {
+    name: "Backend API Only",
+    description: "Phase 3 (UX) skipped, Phase 4 runs BE + DevOps",
+    fields: [
+      { key: "backend:", value: "true" },
+      { key: "frontend:", value: "false" },
+      { key: "ux:", value: "false" },
+      { key: "devops:", value: "true" },
+      { key: "security:", value: "true" }
+    ]
   }
-}
-```
-Phase 3 (UX Design) is active. Phase 4 runs only the Frontend Engineer. Backend and DevOps agents are not invoked.
+]} />
 
-**Full-stack project with security requirements**:
-```json
-{
-  "required_roles": {
-    "backend": true,
-    "frontend": true,
-    "ux": true,
-    "devops": true,
-    "security": true
-  }
-}
-```
-All phases are active. Phase 4 runs BE, FE, and DevOps in parallel. Phase 5 includes Security Engineer review.
-
-**Backend API-only project**:
-```json
-{
-  "required_roles": {
-    "backend": true,
-    "frontend": false,
-    "ux": false,
-    "devops": true,
-    "security": true
-  }
-}
-```
-Phase 3 (UX Design) is skipped entirely. Phase 4 runs Backend and DevOps only.
-
-JARFIS determines these roles automatically during Phase T (Triage), but you can adjust them if needed.
+<Callout>
+  **Note:** JARFIS determines roles automatically during Phase T (Triage) based on the work description and project structure. You can override by editing `.jarfis-state.json` before approving Gate 1.
+</Callout>
 
 ## Continuing a Completed Workflow
 
-When you need to add to or fix a completed workflow, use `/jarfis:continue` instead of starting fresh. This reuses the existing branch and artifacts:
+Use `/jarfis:continue` to build on a completed workflow — add tests, fix edge cases, or extend scope without starting from scratch.
 
 ```
 /jarfis:continue Add unit tests for the auth module
-```
-
-Use the `--mode` flag to skip automatic classification:
-
-```
 /jarfis:continue Fix the token refresh edge case --mode fix
 ```
 
-This is faster than `/jarfis:work` for follow-up tasks because it skips the Triage/Discovery phases when unnecessary.
+<ModeGrid modes={[
+  {
+    name: "Fix Mode",
+    description: "Skips Triage and Discovery. Goes directly to Implementation phase for targeted fixes.",
+    flag: "--mode fix",
+    active: true
+  },
+  {
+    name: "Extend Mode",
+    description: "Skips Triage but runs Discovery to properly scope the new additions.",
+    flag: "--mode extend"
+  }
+]} columns={2} />
+
+You can also specify the workflow to continue with `--workflow path` to target a specific previous workflow's output.
 
 ## Project Profiles
 
-Project profiles give JARFIS deep understanding of your codebase structure and conventions.
+Project profiles give JARFIS a complete understanding of your codebase — repo structure, dependencies, build tools, and conventions — so every workflow starts with accurate project context.
 
-### Initialize a Profile
+<RecoveryFlow steps={[
+  { text: <><strong><code>/jarfis:project-init</code></strong> — Generates <code>.jarfis/project-profile.md</code> by analyzing your repository structure, dependencies, build tools, and conventions.</> },
+  { text: <><strong><code>/jarfis:project-update</code></strong> — Refreshes the profile when your project evolves, without losing any manual context you've added.</> }
+]} />
 
-```
-/jarfis:project-init
-```
-
-This analyzes your project and generates `.jarfis/project-profile.md` containing:
-- Repository structure and organization
-- Dependencies and versions
-- Build tools and scripts
-- Detected conventions and patterns
-
-### Keep Profiles Updated
-
-When your project structure changes significantly (new packages, major dependency updates, etc.):
-
-```
-/jarfis:project-update
-```
-
-This refreshes the profile without losing manually added context.
+<Callout>
+  **Tip:** Run `/jarfis:project-init` once when you first set up JARFIS in a repo, then use `/jarfis:project-update` after major dependency or structure changes.
+</Callout>
 
 ## Working with Gates
 
-Gates are mandatory human checkpoints. Here is how to use them effectively.
+Gates are the primary mechanism for human oversight. Each gate offers specific actions to control workflow direction.
 
-### Gate 1 — After Discovery
+<QuickGateCards gates={[
+  {
+    title: "Gate 1 — After Phase 1 (Discovery)",
+    description: "Review the PRD, feasibility analysis, and scope definition. This is your cheapest opportunity to change direction.",
+    actions: ["Approve", "Revise", "Abort"]
+  },
+  {
+    title: "Gate 2 — After Phase 2 & 3 (Architecture + UX)",
+    description: "Review architecture decisions, task breakdown, and UX designs. Check tasks.md carefully — missing tasks mean missing features.",
+    actions: ["Approve", "Revise", "Abort"]
+  },
+  {
+    title: "Gate 3 — After Phase 5 (Review & QA)",
+    description: "Review all implementation, test results, and security findings. \"Revisit design\" sends back to Phase 2 for fundamental architecture issues.",
+    actions: ["Approve", "Revise & re-review", "Abort", "Revisit design"]
+  }
+]} />
 
-At Gate 1, you review the PRD and feasibility assessment. Your options:
-
-- **Approve**: Proceed to Architecture & Planning (Phase 2)
-- **Revise**: Provide specific feedback. The PO and Architect will revise their outputs and re-present
-- **Abort**: Cancel the workflow entirely
-
-**Tip**: This is the cheapest place to change direction. A revision at Gate 1 costs minutes; a revision at Gate 3 may cost hours.
-
-### Gate 2 — After Architecture & UX
-
-At Gate 2, you review the architecture design, task breakdown, and (if applicable) UX specifications. Your options:
-
-- **Approve**: Proceed to Implementation (Phase 4)
-- **Revise**: Request changes to architecture, task scope, or UX designs
-- **Abort**: Cancel the workflow
-
-**Tip**: Pay close attention to `tasks.md` — this defines exactly what will be implemented. Missing tasks here mean missing features later.
-
-### Gate 3 — After Review & QA
-
-At Gate 3, you review the completed implementation, test results, and security findings. Your options:
-
-- **Approve**: Proceed to Retrospective (Phase 6) and wrap up
-- **Revise & re-review**: Request fixes and trigger another review cycle
-- **Abort**: Cancel the workflow
-- **Revisit design**: For pathological patterns (fundamental design issues discovered during review), go back to Phase 2
+<Callout variant="warning">
+  **Important:** Minutes spent at Gate 1 save hours at Gate 3. Early course corrections are dramatically cheaper than late ones. Review thoroughly at every gate.
+</Callout>
 
 ## Managing the Learning System
 
-JARFIS's learning system is what makes each workflow better than the last.
+JARFIS operates a two-tier learning system that improves output quality over time through accumulated project knowledge.
 
-### Global Learnings: `~/.claude/jarfis-learnings.md`
+<LearningGrid cards={[
+  {
+    variant: "global",
+    label: "Global",
+    title: "Global Learnings",
+    description: <>Stored at <code>~/.claude/jarfis-learnings.md</code>. Contains Agent Hints and Workflow Patterns shared across all projects.</>
+  },
+  {
+    variant: "project",
+    label: "Project",
+    title: "Project Context",
+    description: <>Stored at <code>.jarfis/context.md</code>. Tech stack, conventions, business domain, and integration constraints specific to this project.</>
+  }
+]} columns={2} />
 
-This file lives in your home directory and is shared across all projects. It contains:
+### Learning Cycle
 
-- **Agent Hints**: Behavioral rules like "always check for existing middleware before creating new ones" or "use `mutateAsync` with try-catch to prevent unhandled rejections"
-- **Workflow Patterns**: Proven approaches like "for monorepo projects, run impact analysis per package"
+<FlowDiagram nodes={[
+  { label: "Phase 6 (Retro)" },
+  { label: "learnings.md" },
+  { label: "Phase 0 (Pre-flight)" },
+  { label: "Agents reference", variant: "work" },
+  { label: "Better output", variant: "meeting" }
+]} />
 
-The file is loaded during Phase 0 of every workflow and updated during Phase 6 (Retrospective).
-
-### Project Context: `.jarfis/context.md`
-
-Project-specific knowledge that agents reference throughout the workflow:
+### context.md Example
 
 ```markdown
 # Project Context
-
 ## Tech Stack
-- Frontend: Next.js 15 (App Router), TypeScript strict, Tailwind CSS 4
+- Frontend: Next.js 15, TypeScript strict, Tailwind CSS 4
 - Backend: FastAPI (Python 3.12), PostgreSQL 16, Redis
-- Infrastructure: AWS ECS, Terraform, GitHub Actions
-
 ## Conventions
 - API responses follow RFC 9457 Problem Details format
 - All database models use UUID primary keys
-- Frontend components follow atomic design
-- Commit format: conventional commits (feat/fix/chore)
-
-## Business Domain
-- SaaS B2B platform for legal document management
-- Compliance: SOC 2 Type II, GDPR
-
-## Integration Constraints
-- Auth: Auth0 (cannot change)
-- Payment: Stripe (webhooks configured)
-- Storage: S3 with presigned URLs
+- Commit format: conventional commits
 ```
 
-The more specific your `context.md`, the more accurate agent outputs will be. This is the single highest-leverage investment you can make before starting a workflow.
-
-### Curating Learnings with `/jarfis:upgrade`
-
-Over time, `jarfis-learnings.md` may accumulate outdated or redundant entries. Use the upgrade command to review and curate:
-
-```
-/jarfis:upgrade
-```
-
-This walks you through existing learning items, allowing you to keep, edit, or remove them.
+Use `/jarfis:upgrade` to curate learning items — keep, edit, or remove entries to maintain quality.
 
 ## Workflow Recovery After Context Compression
 
-Long-running workflows may encounter Claude Code context compression. JARFIS is designed to recover from this:
+JARFIS persists phase and progress state on disk via `.jarfis-state.json`. No special resume command is needed — the system automatically detects and resumes interrupted workflows.
 
-1. The `.jarfis-state.json` file persists the exact phase and progress state
-2. The `last_checkpoint` field records what was happening before compression
-3. Learning files and artifacts on disk are not affected by context compression
+<RecoveryFlow steps={[
+  { text: <><strong>Session dies</strong> — Connection loss, timeout, or context window compression</> },
+  { text: <><strong>Run <code>/jarfis:work</code> again</strong> — Use the same work description as before</> },
+  { text: <><strong>JARFIS detects existing state file</strong> — Finds <code>.jarfis-state.json</code> with in-progress workflow</> },
+  { text: <><strong>Resumes from last checkpoint</strong> — Picks up exactly where the previous session left off</> }
+]} />
 
-To resume after a context reset, simply run `/jarfis:work` again with the same description. JARFIS will detect the existing `.jarfis-state.json` and resume from the last checkpoint rather than starting over.
+<Callout>
+  **Key point:** There is no special resume command. Simply run `/jarfis:work` with the same description and JARFIS handles recovery automatically via the persisted state file.
+</Callout>
 
 ## Modifying JARFIS Itself
 
-When you need to customize JARFIS's behavior — add a new command, modify an agent prompt, or extend the workflow — use the dedicated self-modification command:
+Use `/jarfis:implement` when you want to modify or extend JARFIS itself — add new commands, change agent behavior, or update the pipeline structure.
 
 ```
 /jarfis:implement Add a /jarfis:standup command for daily status reports
 ```
 
-This command understands the JARFIS system structure and ensures changes are applied correctly across all affected files.
+<Callout>
+  **How it works:** `/jarfis:implement` understands the JARFIS system structure and applies changes across all affected files — prompt templates, command definitions, phase handlers, and documentation.
+</Callout>
 
 ## Practical Examples
 
-### Example 1: Frontend-Only Feature
+Real-world usage patterns for common development scenarios:
 
-```
-/jarfis:work Redesign the dashboard with new chart components
-```
+<ExampleCard example={{
+  label: "Example 1 — Frontend-Only Work",
+  commands: ["/jarfis:work Redesign the dashboard with new chart components"],
+  description: "Triage activates frontend + UX roles. Phase 3 (UX Design) runs, Phase 4 executes FE implementation only."
+}} />
 
-JARFIS will set `required_roles.backend` to false and skip backend-related work. Phase 3 (UX Design) will be active, and Phase 4 will only invoke the Frontend Engineer.
+<ExampleCard example={{
+  label: "Example 2 — Full-Stack with Meeting",
+  commands: [
+    "/jarfis:meeting Plan the multi-tenant architecture migration",
+    "/jarfis:work Implement multi-tenant data isolation --meeting tenant-architecture"
+  ],
+  description: "Meeting produces decisions and constraints. Work command links meeting output for full-context pipeline execution."
+}} />
 
-### Example 2: Full-Stack with Meeting Input
+<ExampleCard example={{
+  label: "Example 3 — Quick Fix",
+  commands: ["/jarfis:work Fix the broken pagination on the orders list"],
+  description: "Triage classifies as a small fix. Streamlined pipeline with minimal ceremony."
+}} />
 
-```
-/jarfis:meeting Plan the multi-tenant architecture migration
-/jarfis:work Implement multi-tenant data isolation --meeting tenant-architecture
-```
+<ExampleCard example={{
+  label: "Example 4 — Follow-Up on Completed Work",
+  commands: ["/jarfis:continue Add internationalization support to the auth module"],
+  description: "Continues a previously completed workflow. Extends scope with new Discovery pass while preserving existing context."
+}} />
 
-The meeting decisions (e.g., "use row-level security in PostgreSQL") flow into the work session, ensuring the Architect and Backend Engineer follow the agreed approach.
-
-### Example 3: Quick Fix with Minimal Overhead
-
-```
-/jarfis:work Fix the broken pagination on the orders list
-```
-
-For simple bug fixes, JARFIS's Triage phase (Phase T) will classify this as a Type C (simple fix) and streamline the phase pipeline accordingly, skipping heavyweight phases like UX Design and Operational Readiness.
-
-### Example 4: Follow-Up After Completion
-
-```
-/jarfis:continue Add internationalization support to the auth module
-```
-
-Continues the previous auth workflow, reusing the branch and referencing existing artifacts. Faster than starting a new workflow for closely related work.
-
-### Example 5: Diagnosing Issues
-
-```
-/jarfis:health
-```
-
-If workflows seem stuck or behaving unexpectedly, the health command diagnoses zombie processes and other operational issues.
+<ExampleCard example={{
+  label: "Example 5 — Health Check",
+  commands: ["/jarfis:health"],
+  description: "Diagnoses zombie processes, stale state files, and other workflow health issues."
+}} />
 
 ## Next Steps
 
