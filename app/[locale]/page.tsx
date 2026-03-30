@@ -133,8 +133,13 @@ export default async function HomePage({ params }: HomePageProps) {
 
               {/* Headline */}
               <h1
-                className="text-4xl font-bold leading-tight tracking-tight lg:text-5xl"
-                style={{ color: 'var(--color-text-primary)', fontFamily: 'var(--font-mono)', marginBottom: '1rem' }}
+                className="font-bold leading-tight tracking-tight"
+                style={{
+                  color: 'var(--color-text-primary)',
+                  fontFamily: 'var(--font-mono)',
+                  marginBottom: '1rem',
+                  fontSize: 'clamp(2rem, 4vw, 3rem)',
+                }}
               >
                 {t('title_prefix')}{' '}
                 <span className="hero-title-gradient">{t('title_evolve')}</span>
