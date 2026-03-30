@@ -9,75 +9,75 @@
   },
   "hero": {
     "badge": "自我进化的AI团队",
-    "title_prefix": "用得越多，越",
+    "title_prefix": "越用越",
     "title_evolve": "进化",
-    "title_middle": "——您的",
+    "title_middle": "——你的",
     "title_team": "AI开发团队",
-    "subtitle": "从产品经理到QA工程师，11位AI专家成为您的团队。",
+    "subtitle": "从Product Owner到QA Engineer，11位AI专家组成你的团队。",
     "cta_start": "开始使用",
     "cta_github": "GitHub"
   },
   "features_home": {
     "eyebrow": "核心价值",
-    "title": "共同成长的AI生态系统",
+    "title": "共同成长的AI生态",
     "cards": [
       {
         "title": "自我进化",
-        "description": "JARFIS从每次复盘中学习。全局经验积累，让系统在每个项目中都变得更智能。"
+        "description": "JARFIS从每次复盘中学习。全局经验不断积累，系统随项目推进愈发聪明。"
       },
       {
-        "title": "全员编排",
-        "description": "PO、Architect、Tech Lead、Backend、Frontend、DevOps、QA、Security、UX、Advocate、Critic — 11位领域专家代理协力合作。"
+        "title": "全员协作编排",
+        "description": "PO、Architect、Tech Lead、Backend、Frontend、DevOps、QA、Security、UX、Advocate、Critic — 11位领域专家Agent协同作战。"
       },
       {
-        "title": "弹性连续性",
-        "description": "PreCompact钩子和状态文件在上下文重置时保留工作流。永不丢失任何内容。"
+        "title": "不间断的连续性",
+        "description": "PreCompact钩子和状态文件在上下文重置时保留工作流，不丢失任何进度。"
       },
       {
-        "title": "AI原生工件",
-        "description": "每个工作流产生11个结构化工件：新闻稿、PRD、架构、API规范、UX规范、任务等。"
+        "title": "AI原生产出物",
+        "description": "每个工作流生成11份结构化产出物：新闻稿、PRD、架构文档、API规范、UX规范、任务清单等。"
       }
     ]
   },
   "philosophy": {
     "eyebrow": "理念",
-    "title": "9个哲学理念造就差异",
+    "title": "造就差异的9条哲学",
     "items": [
       {
-        "title": "全员编排",
-        "description": "11位领域专家代理协作处理每项任务。专业化始终优于泛化。"
+        "title": "全员协作编排",
+        "description": "11位领域专家Agent参与每项任务。专业化始终胜过泛化。"
       },
       {
         "title": "Token节约",
-        "description": "在不牺牲质量的情况下最小化token消耗。高效的AI是负责任的AI。"
+        "description": "在不牺牲质量的前提下将token消耗降到最低。高效AI就是负责任的AI。"
       },
       {
         "title": "自我进化",
-        "description": "每次复盘都为全局学习做出贡献。JARFIS在每次项目迭代中变得更智能。"
+        "description": "每次复盘都转化为全局学习。JARFIS随项目迭代变得更加敏锐。"
       },
       {
         "title": "辩证式质量",
-        "description": "QA和Security代理挑战假设。对立性审查产生更好的结果。"
+        "description": "QA Engineer和Security Engineer质疑既有假设。建设性对抗带来更优结果。"
       },
       {
-        "title": "AI原生工件",
-        "description": "每个工作流产生11个结构化文档。每个决策从创意到部署都可追溯。"
+        "title": "AI原生产出物",
+        "description": "每个工作流生成11份结构化文档。从构想到部署，每个决策都可追溯。"
       },
       {
-        "title": "抽象优于记忆",
-        "description": "构建可重用的模式和原则，而不仅仅是任务列表。知识在项目间复利积累。"
+        "title": "抽象胜于记忆",
+        "description": "构建可复用的模式和原则，而非仅仅堆积任务清单。知识在项目间复利增长。"
       },
       {
         "title": "确定性基础",
-        "description": "可重现的工作流、明确的状态和文档化的决策消除歧义。"
+        "description": "可复现的工作流、明确的状态、有据可查的决策，不留任何模糊空间。"
       },
       {
         "title": "人类审批，AI执行",
-        "description": "AI执行，人类决定。每个关键门控都需要明确批准才能进行。"
+        "description": "AI执行，人类决策。每个关键Gate都需要明确批准才能通过。"
       },
       {
-        "title": "弹性连续性",
-        "description": "PreCompact钩子和状态文件确保工作流进度永不丢失，即使跨上下文重置。"
+        "title": "不间断的连续性",
+        "description": "PreCompact钩子和状态文件确保工作流进度在上下文重置后依然完好。"
       }
     ]
   },
@@ -87,7 +87,7 @@
     "stats": [
       {
         "value": "11",
-        "label": "AI代理"
+        "label": "AI Agent"
       },
       {
         "value": "24/7",
@@ -101,7 +101,7 @@
   },
   "quickstart": {
     "eyebrow": "快速开始",
-    "title": "快速上手",
+    "title": "即刻上手",
     "steps": [
       {
         "label": "阅读文档"
@@ -125,31 +125,31 @@
   },
   "features": {
     "page_title": "功能",
-    "page_subtitle": "无需权衡，用AI构建所需的一切。",
+    "page_subtitle": "零妥协，用AI构建所需一切。",
     "eyebrow": "功能",
     "hero_badge": "一体化AI开发团队",
     "hero_title_teal": "11位AI专家",
     "hero_title_mid": "打造",
     "hero_title_coral": "完美工作流",
-    "hero_subtitle": "从产品经理到安全工程师。探索JARFIS代理流水线将创意转化为生产代码的完整旅程。",
+    "hero_subtitle": "从Product Owner到Security Engineer。探索JARFIS Agent流水线如何将构想变为生产代码的完整历程。",
     "capabilities_eyebrow": "核心能力",
-    "capabilities_title": "JARFIS的与众不同之处",
-    "capabilities_subtitle": "超越简单的AI编码工具——体验完整AI开发团队的力量。",
-    "capability_agents_title": "11位专业代理",
-    "capability_agents_desc": "PO、Architect、TL、UX、Backend、Frontend、DevOps、QA、Security、Advocate、Critic — 11位专业代理，映射真实开发团队。",
+    "capabilities_title": "JARFIS的与众不同",
+    "capabilities_subtitle": "不只是AI编码工具，而是完整AI开发团队的体验。",
+    "capability_agents_title": "11位专业Agent",
+    "capability_agents_desc": "PO、Architect、TL、UX、Backend、Frontend、DevOps、QA、Security、Advocate、Critic — 映射真实开发团队的11位专业Agent。",
     "capability_agents_stat": "11 roles / 1 team",
     "capability_claude_title": "Claude Code原生",
-    "capability_claude_desc": "纯粹在Claude Code上运行——无需外部服务器，无需API。零依赖设计，安装后即可使用。",
+    "capability_claude_desc": "无需外部服务器，无需API。纯粹运行于Claude Code之上，零依赖设计，安装即用。",
     "capability_claude_stat": "0 dependencies",
-    "capability_artifacts_title": "AI原生工件",
-    "capability_artifacts_desc": "包含press-release、PRD、architecture等11个结构化工件，专为AI读取和复用而设计。",
+    "capability_artifacts_title": "AI原生产出物",
+    "capability_artifacts_desc": "包含press-release、PRD、architecture等11份结构化产出物，为AI读取和复用而设计。",
     "capability_artifacts_stat": "11 artifacts",
     "capability_evolution_title": "自我进化",
-    "capability_evolution_desc": "从每个工作流中获取模式的全局学习系统。团队随每个项目变得更聪明。",
+    "capability_evolution_desc": "从每个工作流中提取模式的全局学习系统。团队随项目推进而持续成长。",
     "capability_evolution_stat": "evolving",
     "pipeline_eyebrow": "开发流水线",
     "pipeline_title": "9阶段Phase Pipeline",
-    "pipeline_subtitle": "从创意到生产。在每个Phase，专业代理产出结构化工件。",
+    "pipeline_subtitle": "从构想到生产。每个Phase都有专业Agent输出结构化产出物。",
     "pipeline_group_discovery": "Discovery",
     "pipeline_group_design": "Design & Planning",
     "pipeline_group_implementation": "Implementation",
@@ -160,7 +160,7 @@
     "phases": {
       "T": {
         "name": "Triage",
-        "role": "PO — 请求分类和工作流决定",
+        "role": "PO — 分类请求，确定工作流",
         "artifacts": [
           "classification"
         ]
@@ -190,14 +190,14 @@
       },
       "3": {
         "name": "UX Design",
-        "role": "UX — 条件执行，界面与交互设计",
+        "role": "UX — 条件执行、界面与交互设计",
         "artifacts": [
           "ux-spec"
         ]
       },
       "4": {
         "name": "Implementation",
-        "role": "BE/FE/UX — 代码实现，UI开发",
+        "role": "BE/FE/UX — 代码实现、UI开发",
         "artifacts": [
           "code",
           "tests"
@@ -205,7 +205,7 @@
       },
       "4_5": {
         "name": "Operational Readiness",
-        "role": "DevOps — 部署策略，回滚计划",
+        "role": "DevOps — 部署策略、回滚计划",
         "artifacts": [
           "deployment-plan",
           "rollback"
@@ -213,7 +213,7 @@
       },
       "5": {
         "name": "Review & QA",
-        "role": "TL/QA/SE — API契约验证，并行审查",
+        "role": "TL/QA/SE — API契约验证、并行审查",
         "artifacts": [
           "test-report",
           "security-audit"
@@ -221,7 +221,7 @@
       },
       "6": {
         "name": "Retrospective",
-        "role": "TL — 知识积累，复盘总结",
+        "role": "TL — 知识积累、复盘总结",
         "artifacts": [
           "changelog",
           "learning"
@@ -230,81 +230,81 @@
     },
     "agents_eyebrow": "认识团队",
     "agents_title": "11位AI专家",
-    "agents_subtitle": "具备专业知识的代理有机协作。",
-    "why_eyebrow": "为什么选JARFIS",
-    "differentiator_title": "与传统AI工具有何不同",
-    "differentiator_subtitle": "超越代码补全——覆盖软件开发全生命周期的AI团队。",
+    "agents_subtitle": "各具专长的Agent有机协作。",
+    "why_eyebrow": "为何选择JARFIS",
+    "differentiator_title": "与传统AI工具有何不同？",
+    "differentiator_subtitle": "不止于代码补全——覆盖软件开发全生命周期的AI团队。",
     "compare_category": "类别",
-    "traditional": "传统AI编码工具",
+    "traditional": "传统AI工具",
     "jarfis": "JARFIS",
     "compare": {
       "category_team": "团队结构",
       "single_ai": "单一AI聊天助手",
-      "team": "11个具有定义角色的领域专家代理",
+      "team": "角色明确的11位领域专家Agent",
       "category_workflow": "工作流",
-      "suggestion": "手动应用的代码建议",
-      "autonomous": "从新闻稿到复盘的完整工作流",
-      "category_artifacts": "工件",
+      "suggestion": "需手动应用的代码建议",
+      "autonomous": "从新闻稿到复盘的端到端工作流",
+      "category_artifacts": "产出物",
       "completion": "仅代码级输出",
-      "workflow": "每个项目11个结构化工件",
-      "category_quality": "质量控制",
-      "blackbox": "不透明的决策过程",
-      "transparent": "每个决策都在工件中文档化",
-      "category_learning": "学习",
-      "vendor": "需要供应商平台或API",
-      "selfhost": "纯Claude Code — 在您的CLI上运行",
-      "category_dependency": "依赖性",
+      "workflow": "每个项目11份结构化产出物",
+      "category_quality": "质量管控",
+      "blackbox": "依赖用户自行验证",
+      "transparent": "3道Human Gate + QA/SE Agent",
+      "category_learning": "学习能力",
+      "vendor": "每次会话重置",
+      "selfhost": "全局学习系统",
+      "category_dependency": "依赖",
       "single_dep": "需要外部API或服务器",
-      "zero_dep": "仅在Claude Code上运行",
+      "zero_dep": "仅凭Claude Code运行",
       "category_continuity": "连续性",
-      "no_continuity": "会话结束时中断",
+      "no_continuity": "会话断开即中止",
       "resilient": "Resilient Continuity"
     },
     "learn_more": "在文档中了解更多",
     "view_github": "在GitHub上查看",
-    "agent_team_title": "11位专家代理，一个工作流",
-    "agent_team_desc": "JARFIS编排11个专业代理 — PO、Architect、Tech Lead、Backend、Frontend、DevOps、QA、Security、UX、Advocate、Critic — 每个代理都有专属领域专业知识和角色特定的CLAUDE.md指令。",
+    "agent_team_title": "11位专业Agent，一个工作流",
+    "agent_team_desc": "JARFIS编排PO、Architect、Tech Lead、Backend、Frontend、DevOps、QA、Security、UX、Advocate、Critic共11位专业Agent。每位Agent拥有专属领域知识和角色专用CLAUDE.md指令，通过产出物接力实现顺序协作。",
     "agent_team_bullets": [
       "11个角色：PO、Architect、Tech Lead、Backend、Frontend、DevOps、QA、Security、UX、Advocate、Critic",
-      "每个代理都有特定领域的指令和专业知识",
-      "通过工件交接进行顺序协作",
-      "定义的角色消除歧义和重叠"
+      "每位Agent拥有领域专属指令和专业知识",
+      "基于产出物交接的顺序协作",
+      "清晰的角色定义消除模糊与重叠"
     ],
     "claude_code_title": "Claude Code原生架构",
-    "claude_code_desc": "JARFIS作为纯Claude Code工作流构建 — 无外部服务器、API包装器或专有运行时。一切通过本地CLI的斜杠命令和CLAUDE.md约定运行。",
+    "claude_code_desc": "JARFIS是纯粹的Claude Code工作流——无外部服务器、API封装或专有运行时。所有操作通过本地CLI的斜杠command和CLAUDE.md约定完成。PreCompact钩子在上下文重置时保留工作流状态。",
     "claude_code_bullets": [
-      "纯斜杠命令接口 — 无需外部服务器",
-      "用于代理指令的CLAUDE.md约定",
-      "用于上下文重置弹性的PreCompact钩子",
-      "Claude Code运行的任何地方都可以使用"
+      "斜杠command接口——无需外部服务器",
+      "CLAUDE.md约定承载Agent指令",
+      "PreCompact钩子抵御上下文重置",
+      "Claude Code运行之处即JARFIS运行之处——本地或CI皆可"
     ],
-    "artifacts_title": "11个结构化工件",
-    "artifacts_desc": "每个JARFIS工作流产生11个文档化工件：新闻稿、PRD、架构文档、API规范、UX规范、任务列表、测试策略、部署计划、代码审查、复盘。",
+    "artifacts_title": "11份结构化产出物",
+    "artifacts_desc": "每个JARFIS工作流生成11份文档化产出物：新闻稿、PRD、架构文档、API规范、UX规范、任务清单、测试策略、部署计划、代码审查和复盘。每个决策都有记录，每次交接都可追溯。",
     "artifacts_bullets": [
       "新闻稿 → PRD → 架构 → API规范",
       "UX规范 → 任务 → 测试策略 → 部署计划",
-      "代码审查 + 复盘关闭每个工作流",
-      "从创意到部署的完整审计跟踪"
+      "代码审查 + 复盘收尾工作流",
+      "从构想到部署的完整审计链"
     ],
     "learning_title": "持续学习系统",
-    "learning_desc": "JARFIS在运行中积累知识。jarfis-learnings.md记录每次复盘的全局经验。context.md保持项目特定状态。",
+    "learning_desc": "JARFIS在每次运行中积累知识。jarfis-learnings.md记录所有复盘中提炼的全局经验，context.md保存项目专属状态，.jarfis-state.json追踪工作流进度，让JARFIS总能从中断处精准恢复。",
     "learning_bullets": [
-      "jarfis-learnings.md：所有项目的全局经验",
-      "context.md：项目特定的持久状态",
-      ".jarfis-state.json：工作流进度跟踪",
-      "每次迭代都让系统更智能"
+      "jarfis-learnings.md：跨项目的全局经验",
+      "context.md：项目专属持久状态",
+      ".jarfis-state.json：工作流进度追踪",
+      "每次迭代都让系统更敏锐"
     ],
-    "cta_heading": "立即开始使用JARFIS",
-    "cta_subtitle": "开源AI开发团队编排器。5分钟安装，永久生效。",
+    "cta_heading": "现在就开始使用JARFIS",
+    "cta_subtitle": "开源AI开发团队编排器。5分钟安装，长久受益。",
     "cta_docs": "文档",
-    "footnote": "* 比较基于一般类别模式，而非特定产品。",
-    "agents_section_title": "认识11位代理",
-    "agents_section_subtitle": "每个代理都具有深厚的领域专业知识和角色特定的指令。共同覆盖从第一个用户故事到最终复盘的完整产品生命周期。",
+    "footnote": "* 对比基于通用类别模式，不指向特定产品。",
+    "agents_section_title": "认识这11位Agent",
+    "agents_section_subtitle": "每位Agent具备深厚的领域专长和角色专属指令。从第一个用户故事到最终复盘，共同覆盖完整的产品生命周期。",
     "agents": {
       "po": {
-        "name": "产品负责人",
+        "name": "Product Owner",
         "abbr": "PO",
-        "desc": "通过反问来澄清需求。撰写Working Backwards文档和PRD。在写下一行代码之前评估功能是否值得构建。",
+        "desc": "通过反向提问精确打磨需求。撰写Working Backwards文档和PRD，在写出一行代码之前先判断这个功能是否值得构建。",
         "tags": [
           "需求",
           "PRD",
@@ -312,9 +312,9 @@
         ]
       },
       "architect": {
-        "name": "架构师",
+        "name": "Architect",
         "abbr": "ARCH",
-        "desc": "评估技术可行性和长期影响。生成整个团队依赖的系统架构文档、影响分析和Architecture Decision Records（ADR）。",
+        "desc": "评估技术可行性和长远影响。产出团队赖以决策的系统架构文档、影响分析和ADR。",
         "tags": [
           "架构",
           "ADR",
@@ -322,9 +322,9 @@
         ]
       },
       "tech_lead": {
-        "name": "技术负责人",
+        "name": "Tech Lead",
         "abbr": "TL",
-        "desc": "审查API规范，将任务分解为可操作单元，进行代码审查，拥有部署策略，并运行将经验反馈到系统的复盘。",
+        "desc": "审查API规范，将任务拆解为可执行单元，主导代码审查和部署策略，并通过复盘将经验反馈给系统。",
         "tags": [
           "代码审查",
           "任务分解",
@@ -332,19 +332,19 @@
         ]
       },
       "ux": {
-        "name": "UX设计师",
+        "name": "UX Designer",
         "abbr": "UX",
-        "desc": "直接制作SVG资产和设计令牌系统，定义品牌标识。设计信息架构、用户流程、线框图和交互模式。确保产品在实现前具有可访问性和视觉一致性。",
+        "desc": "直接制作SVG资产、设计token系统和品牌标识。规划信息架构、用户流程、线框图和交互模式，在实现前确保产品的可访问性和视觉一致性。",
         "tags": [
           "SVG资产",
-          "设计令牌",
+          "设计token",
           "品牌设计"
         ]
       },
       "backend": {
-        "name": "后端工程师",
+        "name": "Backend Engineer",
         "abbr": "BE",
-        "desc": "实现服务器端API，定义数据模型，根据工作流前期生成的架构和API规范构建后端服务。",
+        "desc": "实现服务端API，定义数据模型，依据前序Phase产出的架构和API规范构建后端服务。",
         "tags": [
           "API实现",
           "数据模型",
@@ -352,9 +352,9 @@
         ]
       },
       "frontend": {
-        "name": "前端工程师",
+        "name": "Frontend Engineer",
         "abbr": "FE",
-        "desc": "构建UI组件，管理客户端状态，根据UX规范和上游生成的任务列表将前端与后端API集成。",
+        "desc": "构建UI组件，管理客户端状态，依据UX规范和任务清单将前端与后端API对接。",
         "tags": [
           "UI组件",
           "状态管理",
@@ -364,7 +364,7 @@
       "devops": {
         "name": "DevOps / SRE",
         "abbr": "OPS",
-        "desc": "拥有基础设施配置、CI/CD流水线设置、自动化部署和监控。确保每个发布都是可重现和可观测的。",
+        "desc": "负责基础设施配置、CI/CD流水线搭建、自动化部署和监控。确保每次发布都可复现、可观测。",
         "tags": [
           "CI/CD",
           "基础设施",
@@ -372,9 +372,9 @@
         ]
       },
       "qa": {
-        "name": "QA工程师",
+        "name": "QA Engineer",
         "abbr": "QA",
-        "desc": "设计测试策略，构建测试金字塔，编写E2E场景，在工件移交到下一阶段前验证质量关口。",
+        "desc": "设计测试策略，搭建测试金字塔，编写E2E场景，在产出物进入下一Phase前验证质量Gate。",
         "tags": [
           "测试策略",
           "测试金字塔",
@@ -382,9 +382,9 @@
         ]
       },
       "security": {
-        "name": "安全工程师",
+        "name": "Security Engineer",
         "abbr": "SEC",
-        "desc": "在代码发布前审查安全态势。涵盖OWASP Top 10、认证和授权模型，并对每个功能进行漏洞分析。",
+        "desc": "在代码部署前审查安全态势。覆盖OWASP Top 10、认证与授权模型，对每项功能执行漏洞分析。",
         "tags": [
           "OWASP Top 10",
           "认证授权",
@@ -394,7 +394,7 @@
       "advocate": {
         "name": "Advocate",
         "abbr": "ADV",
-        "desc": "在JARFIS系统变更讨论中为提案的优点和潜力辩护。通过具体场景论证变更带来的用户价值，同时坦诚承认风险并说明继续推进的理由。",
+        "desc": "为JARFIS系统变更提案的优点和潜力辩护。用具体场景论证变更带来的用户价值，同时坦诚面对风险。",
         "tags": [
           "辩证审查",
           "变更倡导",
@@ -404,7 +404,7 @@
       "critic": {
         "name": "Critic",
         "abbr": "CRT",
-        "desc": "批判性地审查JARFIS系统变更提案，识别风险、副作用和设计不一致性。守护系统一致性和token经济，提出具体的失败场景并提供建设性替代方案。",
+        "desc": "批判性审视JARFIS系统变更提案中的风险、副作用和设计不一致。守护系统一致性和token经济，提出具体的失败场景与建设性替代方案。",
         "tags": [
           "辩证审查",
           "风险分析",
@@ -414,17 +414,17 @@
     }
   },
   "seo": {
-    "home_description": "一个斜杠命令。十一位专家代理。JARFIS在Claude Code上编排您的完整产品工作流。",
-    "features_description": "探索JARFIS功能：11位专家代理、11个结构化工件和持续学习系统。",
-    "docs_description": "JARFIS文档：入门指南、概念、指南和API参考。",
-    "blog_description": "来自JARFIS团队的更新、深度分析和发布说明。",
-    "showcase_description": "用JARFIS构建的项目 — AI编排产品开发的实际案例。"
+    "home_description": "一条斜杠command，十一位专业Agent。JARFIS在Claude Code上编排你的完整产品工作流。",
+    "features_description": "探索JARFIS功能：11位专业Agent、11份结构化产出物、持续学习系统。",
+    "docs_description": "JARFIS文档：入门、核心概念、指南、API参考。",
+    "blog_description": "来自JARFIS团队的更新、技术深度解析与发布说明。",
+    "showcase_description": "JARFIS构建的项目——AI编排驱动的产品开发实践。"
   },
   "docs": {
     "page_title": "文档",
     "sidebar_title": "文档",
     "categories": {
-      "getting_started": "入门指南",
+      "getting_started": "入门",
       "concepts": "概念",
       "guides": "指南",
       "api_reference": "API参考"
@@ -432,49 +432,49 @@
     "last_updated": "最后更新",
     "prev_page": "上一页",
     "next_page": "下一页",
-    "on_this_page": "本页内容",
-    "not_translated": "此页面尚未翻译。显示英文版本。",
+    "on_this_page": "本页目录",
+    "not_translated": "本页尚未翻译，显示英文版本。",
     "landing_title": "文档",
-    "landing_subtitle": "JARFIS AI开发团队编排器的一切。从快速开始到高级指南。",
+    "landing_subtitle": "JARFIS AI开发团队编排器的方方面面。从快速入门到进阶指南。",
     "landing_categories": {
       "getting_started": {
-        "title": "入门指南",
-        "desc": "在5分钟内安装JARFIS并运行您的第一个工作流。",
+        "title": "入门",
+        "desc": "5分钟安装JARFIS并运行第一个工作流。",
         "link": "开始使用"
       },
       "concepts": {
         "title": "核心概念",
-        "desc": "了解代理、Phase Pipeline、Human Gates等关键概念。",
+        "desc": "理解Agent、Phase Pipeline、Human Gate等关键概念。",
         "link": "学习概念"
       },
       "api": {
         "title": "API参考",
-        "desc": "斜杠命令、配置选项和代理API的详细参考。",
+        "desc": "斜杠command、配置选项、Agent API的详细参考。",
         "link": "查看参考"
       },
       "guides": {
         "title": "指南",
-        "desc": "实践指南：编写自定义代理、调整学习系统等。",
+        "desc": "实战指南：编写自定义Agent、调优学习系统等。",
         "link": "查看指南"
       }
     },
     "popular_title": "热门页面",
     "popular_jarfis_work": "/jarfis:work",
     "popular_phase_pipeline": "Phase Pipeline",
-    "popular_agent_roles": "Agent Roles",
-    "popular_artifacts": "Artifacts",
-    "popular_human_gates": "Human Gates",
-    "popular_configuration": "Configuration"
+    "popular_agent_roles": "Agent角色",
+    "popular_artifacts": "产出物",
+    "popular_human_gates": "Human Gate",
+    "popular_configuration": "配置"
   },
   "blog": {
     "eyebrow": "博客",
-    "page_title": "洞见与更新",
-    "page_subtitle": "最新消息、技术洞见和JARFIS生态系统故事。",
-    "empty_title": "故事正在撰写中。",
-    "empty_desc": "第一篇文章即将到来 — 关注我们的GitHub以获取最新动态。",
+    "page_title": "洞见与动态",
+    "page_subtitle": "最新消息、技术洞见与JARFIS生态故事。",
+    "empty_title": "故事正在酝酿中。",
+    "empty_desc": "首篇文章即将发布——关注GitHub，第一时间获取更新。",
     "follow_github": "关注GitHub",
     "watch_repo": "订阅仓库",
-    "read_more": "阅读更多",
+    "read_more": "阅读全文",
     "back_to_blog": "返回博客",
     "prev_post": "上一篇",
     "next_post": "下一篇"
@@ -482,33 +482,33 @@
   "showcase": {
     "eyebrow": "社区",
     "page_title": "用JARFIS构建的项目",
-    "page_subtitle": "探索社区打造的项目。共同塑造的活跃生态系统。",
-    "cta_title": "分享您的项目",
-    "cta_desc": "用JARFIS构建了什么？通过GitHub Issue提交，在这里展示。",
+    "page_subtitle": "探索社区共同打造的项目。这是一个鲜活的生态。",
+    "cta_title": "分享你的项目",
+    "cta_desc": "用JARFIS做了什么？通过GitHub Issue提交，就能在这里展示。",
     "cta_submit": "通过GitHub Issue提交",
     "cta_guide": "提交指南",
     "featured_badge": "精选",
-    "empty_title": "成为第一个用JARFIS构建的人。",
-    "empty_desc": "这个网站本身就是由JARFIS代理构建的 — UX、前端和QA共同协作。您的项目可以是下一个。",
-    "submit": "提交您的项目",
+    "empty_title": "成为用JARFIS构建的第一人。",
+    "empty_desc": "这个网站本身就是JARFIS Agent的协作成果——UX、Frontend和QA共同完成。下一个可以是你的项目。",
+    "submit": "提交项目",
     "view_project": "查看项目",
-    "view_source": "查看源代码"
+    "view_source": "查看源码"
   },
   "footer": {
-    "copyright": "2026 Sana-Lazystar. 开源。",
+    "copyright": "2026 Sana-Lazystar. Open Source.",
     "documentation": "文档",
     "github_link": "GitHub",
     "blog": "博客",
     "community": "社区"
   },
   "a11y": {
-    "skip_to_content": "跳转到主要内容",
+    "skip_to_content": "跳转至正文",
     "toggle_menu": "切换导航菜单",
     "switch_language": "切换语言",
     "view_github": "在GitHub上查看JARFIS",
     "close_nav": "关闭导航菜单",
     "open_nav": "打开导航菜单",
-    "solar_system": "JARFIS AI代理生态系统 — 11个代理围绕中央JARFIS核心运行"
+    "solar_system": "JARFIS AI Agent生态——11个Agent环绕核心JARFIS运行"
   },
   "common": {
     "read_more": "阅读更多",
@@ -519,11 +519,11 @@
     "copied": "已复制！"
   },
   "terminal": {
-    "loading": "正在加载终端..."
+    "loading": "终端加载中..."
   },
   "error": {
-    "not_found_title": "404: 页面未找到",
-    "not_found_message": "$ cat page.txt\ncat: page.txt: 没有这个文件或目录",
+    "not_found_title": "404：页面未找到",
+    "not_found_message": "$ cat page.txt\ncat: page.txt: 没有此文件或目录",
     "go_home": "$ cd ~",
     "go_home_label": "返回首页"
   }
