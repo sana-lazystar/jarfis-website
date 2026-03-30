@@ -6,6 +6,7 @@ import { getMdxContent } from '@/lib/mdx';
 import { getDocsByLocale, getDocByLocaleAndSlug, getAllDocStaticParams } from '@/lib/docs';
 import { generateSeoMetadata } from '@/lib/seo';
 import DocsSidebar from '@/components/docs/DocsSidebar';
+import DocsDrawer from '@/components/docs/DocsDrawer';
 import TableOfContents from '@/components/docs/TableOfContents';
 import type { Locale } from '@/i18n/config';
 
@@ -36,6 +37,7 @@ export default async function DocPage({ params }: DocPageProps) {
   const { locale, slug } = await params;
   setRequestLocale(locale);
   const t = await getTranslations('docs');
+  const tA11y = await getTranslations('a11y');
 
   const result = getDocByLocaleAndSlug(locale as Locale, slug);
   if (!result) notFound();
@@ -63,40 +65,80 @@ export default async function DocPage({ params }: DocPageProps) {
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 pt-24 pb-8">
       <div className="flex gap-8 lg:gap-12">
-        {/* Sidebar */}
+        {/* Desktop Sidebar (lg 이상에서만 표시) */}
         <aside className="hidden lg:block w-56 shrink-0">
           <DocsSidebar docs={docs} currentSlug={slug} locale={locale} />
         </aside>
 
         {/* Main Content */}
         <div className="min-w-0 flex-1">
-          {/* Breadcrumb */}
-          <nav
-            aria-label="Breadcrumb"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.375rem',
-              fontSize: '0.8125rem',
-              color: 'var(--color-text-muted)',
-              marginBottom: '2rem',
-              fontFamily: 'var(--font-mono)',
-            }}
-          >
-            <Link
-              href={`/${locale}/docs/`}
-              style={{ color: 'var(--color-text-muted)', textDecoration: 'none' }}
-              className="breadcrumb-link"
+          {/* Breadcrumb + Drawer 토글 버튼 (모바일/태블릿) */}
+          <div className="flex items-center gap-3 mb-8">
+            {/* Drawer 토글 버튼 — lg:hidden은 DocsDrawer 내부에서 처리 */}
+            <DocsDrawer
+              openLabel={tA11y('open_nav')}
+              closeLabel={tA11y('close_nav')}
             >
-              {t('sidebar_title')}
-            </Link>
-            <span style={{ color: 'var(--color-border)' }}>/</span>
-            <span style={{ color: 'var(--color-text-muted)' }}>{categoryLabel}</span>
-            <span style={{ color: 'var(--color-border)' }}>/</span>
-            <span style={{ color: 'var(--color-text-secondary)', fontWeight: 500 }}>
-              {frontmatter.title}
-            </span>
-          </nav>
+              <DocsSidebar docs={docs} currentSlug={slug} locale={locale} isDrawer />
+            </DocsDrawer>
+
+            {/* Breadcrumb — overflow: 중간 생략 (Home > ... > Current) */}
+            <nav
+              aria-label="Breadcrumb"
+              className="flex items-center gap-1.5 min-w-0 flex-1"
+              style={{
+                fontSize: '0.8125rem',
+                color: 'var(--color-text-muted)',
+                fontFamily: 'var(--font-mono)',
+              }}
+            >
+              {/* Home(Docs) 링크: 항상 표시 */}
+              <Link
+                href={`/${locale}/docs/`}
+                style={{ color: 'var(--color-text-muted)', textDecoration: 'none', whiteSpace: 'nowrap' }}
+                className="breadcrumb-link shrink-0"
+              >
+                {t('sidebar_title')}
+              </Link>
+              <span style={{ color: 'var(--color-border)' }} className="shrink-0">/</span>
+
+              {/* 카테고리: 모바일에서는 생략 (...) */}
+              <span
+                className="hidden sm:inline shrink-0"
+                style={{ color: 'var(--color-text-muted)', whiteSpace: 'nowrap' }}
+              >
+                {categoryLabel}
+              </span>
+              <span
+                className="hidden sm:inline shrink-0"
+                style={{ color: 'var(--color-border)' }}
+              >
+                /
+              </span>
+              {/* 모바일 전용 생략 표시 */}
+              <span
+                className="sm:hidden shrink-0"
+                style={{ color: 'var(--color-text-muted)' }}
+                aria-hidden="true"
+              >
+                ...
+              </span>
+              <span
+                className="sm:hidden shrink-0"
+                style={{ color: 'var(--color-border)' }}
+              >
+                /
+              </span>
+
+              {/* 현재 페이지: 항상 표시, overflow 시 truncate */}
+              <span
+                className="truncate"
+                style={{ color: 'var(--color-text-secondary)', fontWeight: 500 }}
+              >
+                {frontmatter.title}
+              </span>
+            </nav>
+          </div>
 
           {isFallback && (
             <div
@@ -135,18 +177,12 @@ export default async function DocPage({ params }: DocPageProps) {
             {mdxContent.content}
           </article>
 
-          {/* Prev / Next Navigation */}
+          {/* Prev / Next Navigation — 모바일: 1열 스택, md 이상: 2열 grid */}
           {(prevDoc || nextDoc) && (
             <nav
               aria-label="Document navigation"
-              style={{
-                display: 'grid',
-                gridTemplateColumns: '1fr 1fr',
-                gap: '1rem',
-                marginTop: '3rem',
-                paddingTop: '2rem',
-                borderTop: '1px solid var(--color-border)',
-              }}
+              className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-12 pt-8"
+              style={{ borderTop: '1px solid var(--color-border)' }}
             >
               {prevDoc ? (
                 <Link
@@ -245,6 +281,10 @@ export default async function DocPage({ params }: DocPageProps) {
         .doc-nav-link:hover {
           border-color: rgba(13, 148, 136, 0.3) !important;
           background: rgba(13, 148, 136, 0.05) !important;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          /* DocsDrawer 내 transition 비활성화 */
+          [role="dialog"] { transition: none !important; }
         }
       `}</style>
     </div>

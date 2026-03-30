@@ -5,16 +5,16 @@
     "docs": "ドキュメント",
     "blog": "ブログ",
     "showcase": "ショーケース",
-    "get_started": "始める"
+    "get_started": "はじめる"
   },
   "hero": {
-    "badge": "自己進化型AIチーム",
-    "title_prefix": "使えば使うほど",
-    "title_evolve": "進化する",
-    "title_middle": "あなたの",
+    "badge": "自己進化するAIチーム",
+    "title_prefix": "使うほど",
+    "title_evolve": "進化",
+    "title_middle": "する、あなたの",
     "title_team": "AI開発チーム",
-    "subtitle": "プロダクトマネージャーからQAエンジニアまで、11人のAI専門家があなたのチームになります。",
-    "cta_start": "始める",
+    "subtitle": "Product OwnerからQA Engineerまで、11人のAIスペシャリストがあなたのチームになります。",
+    "cta_start": "はじめる",
     "cta_github": "GitHub"
   },
   "features_home": {
@@ -23,75 +23,75 @@
     "cards": [
       {
         "title": "自己進化",
-        "description": "JARFISはすべての振り返りから学習します。グローバルな教訓が蓄積され、プロジェクトごとにシステムがよりスマートになります。"
+        "description": "JARFISは毎回のふりかえりから学びます。グローバルな教訓が積み重なり、プロジェクトを重ねるたびにシステムが賢くなります。"
       },
       {
-        "title": "全員のためのオーケストレーション",
-        "description": "PO、Architect、Tech Lead、Backend、Frontend、DevOps、QA、Security、UX、Advocate、Critic — 11人のドメイン専門エージェントが協力します。"
+        "title": "全員参加のオーケストレーション",
+        "description": "PO、Architect、Tech Lead、Backend、Frontend、DevOps、QA、Security、UX、Advocate、Critic — 11人のドメイン専門Agentが連携します。"
       },
       {
-        "title": "回復力のある継続性",
-        "description": "PreCompactフックと状態ファイルがコンテキストリセット全体でワークフローを保持します。何も失われません。"
+        "title": "途切れない継続性",
+        "description": "PreCompactフックとステートファイルが、コンテキストリセットを跨いでもワークフローを維持します。何ひとつ失われません。"
       },
       {
-        "title": "AIネイティブアーティファクト",
-        "description": "ワークフローごとに11個の構造化アーティファクト：プレスリリース、PRD、アーキテクチャ、API仕様、UX仕様、タスクなど。"
+        "title": "AIネイティブ成果物",
+        "description": "ワークフローごとに11個の構造化された成果物を生成します。プレスリリース、PRD、アーキテクチャ、APIスペック、UXスペック、タスクなど。"
       }
     ]
   },
   "philosophy": {
     "eyebrow": "フィロソフィー",
-    "title": "違いを生み出す9つの哲学",
+    "title": "違いを生む9つの哲学",
     "items": [
       {
-        "title": "全員のためのオーケストレーション",
-        "description": "11人のドメイン専門エージェントがすべてのタスクで協力します。専門化は常に一般化を上回ります。"
+        "title": "全員参加のオーケストレーション",
+        "description": "11人のドメイン専門Agentがすべてのタスクに参加します。専門特化は常に汎用化に勝ります。"
       },
       {
-        "title": "トークン節約",
-        "description": "品質を犠牲にせずにトークン消費を最小化します。効率的なAIは責任あるAIです。"
+        "title": "トークンの倹約",
+        "description": "品質を犠牲にせずトークン消費を最小化します。効率的なAIこそ、責任あるAIです。"
       },
       {
         "title": "自己進化",
-        "description": "すべての振り返りがグローバルな学習に貢献します。JARFISはプロジェクトの反復ごとにスマートになります。"
+        "description": "すべてのふりかえりがグローバルな学習につながります。JARFISはプロジェクトを重ねるごとに磨かれていきます。"
       },
       {
         "title": "弁証法的品質",
-        "description": "QAとセキュリティエージェントが仮定に挑戦します。対立的なレビューがより良い結果をもたらします。"
+        "description": "QA EngineerとSecurity Engineerが前提を問い直します。建設的な対立がより良い結果を導きます。"
       },
       {
-        "title": "AIネイティブアーティファクト",
-        "description": "ワークフローごとに11個の構造化文書。すべての決定がアイデアから展開まで追跡可能です。"
+        "title": "AIネイティブ成果物",
+        "description": "ワークフローごとに11個の構造化ドキュメントを生成。アイデアからデプロイまで、すべての意思決定を追跡できます。"
       },
       {
         "title": "暗記より抽象化",
-        "description": "タスクリストだけでなく、再利用可能なパターンと原則を構築します。知識がプロジェクト全体で複利で蓄積されます。"
+        "description": "タスクリストではなく、再利用可能なパターンと原則を積み上げます。知識がプロジェクトを越えて複利で蓄積されます。"
       },
       {
-        "title": "決定論的基盤",
-        "description": "再現可能なワークフロー、明示的な状態、文書化された決定が曖昧さを排除します。"
+        "title": "決定論的な基盤",
+        "description": "再現可能なワークフロー、明示的なステート、文書化された意思決定。曖昧さの入り込む余地がありません。"
       },
       {
-        "title": "人間が承認、AIが実行",
-        "description": "AIが実行し、人間が決定します。すべての重要なゲートは進行前に明示的な承認が必要です。"
+        "title": "人間が承認し、AIが実行する",
+        "description": "AIが実行し、人間が判断します。すべての重要なGateは明示的な承認なしには通過しません。"
       },
       {
-        "title": "回復力のある継続性",
-        "description": "PreCompactフックと状態ファイルがコンテキストリセット全体でワークフローの進行を保持します。"
+        "title": "途切れない継続性",
+        "description": "PreCompactフックとステートファイルにより、コンテキストリセットを跨いでもワークフローの進捗が保持されます。"
       }
     ]
   },
   "growth": {
     "eyebrow": "成長",
-    "title": "使えば使うほど強くなるチーム",
+    "title": "使うほど強くなるチーム",
     "stats": [
       {
         "value": "11",
-        "label": "AIエージェント"
+        "label": "AI Agent"
       },
       {
         "value": "24/7",
-        "label": "途切れない協力"
+        "label": "途切れないコラボレーション"
       },
       {
         "value": "100%",
@@ -101,7 +101,7 @@
   },
   "quickstart": {
     "eyebrow": "クイックスタート",
-    "title": "素早く始める",
+    "title": "すぐにはじめる",
     "steps": [
       {
         "label": "ドキュメントを読む"
@@ -125,42 +125,42 @@
   },
   "features": {
     "page_title": "機能",
-    "page_subtitle": "トレードオフなしにAIで構築するために必要なすべて。",
+    "page_subtitle": "トレードオフなしに、AIで構築するために必要なすべて。",
     "eyebrow": "機能",
     "hero_badge": "オールインワンAI開発チーム",
-    "hero_title_teal": "11人のAI専門家",
-    "hero_title_mid": "が作り上げる",
+    "hero_title_teal": "11人のAIエキスパート",
+    "hero_title_mid": "が紡ぎ出す",
     "hero_title_coral": "完璧なワークフロー",
-    "hero_subtitle": "プロダクトマネージャーからセキュリティエンジニアまで。JARFISのエージェントパイプラインがアイデアをプロダクションコードに変えていく全過程をご覧ください。",
-    "capabilities_eyebrow": "コア機能",
-    "capabilities_title": "JARFISを特別にするもの",
-    "capabilities_subtitle": "単純なAIコーディングツールを超えた、完全なAI開発チームの体験。",
-    "capability_agents_title": "11人の専門エージェント",
-    "capability_agents_desc": "PO、Architect、TL、UX、Backend、Frontend、DevOps、QA、Security、Advocate、Critic — 実際のチーム構成を反映した11人の専門エージェント。",
+    "hero_subtitle": "Product OwnerからSecurity Engineerまで。JARFISのAgentパイプラインがアイデアをプロダクションコードへ変えていく全過程をご覧ください。",
+    "capabilities_eyebrow": "コアケイパビリティ",
+    "capabilities_title": "JARFISが特別な理由",
+    "capabilities_subtitle": "単なるAIコーディングツールではありません。完全なAI開発チームの体験をお届けします。",
+    "capability_agents_title": "11人の専門Agent",
+    "capability_agents_desc": "PO、Architect、TL、UX、Backend、Frontend、DevOps、QA、Security、Advocate、Critic — 実際の開発チームと同じ構成の11人の専門Agent。",
     "capability_agents_stat": "11 roles / 1 team",
     "capability_claude_title": "Claude Code Native",
-    "capability_claude_desc": "外部サーバーやAPIなしに、純粋なClaude Code上で動作。インストール後すぐに使えるゼロ依存設計。",
+    "capability_claude_desc": "外部サーバーもAPIも不要。純粋にClaude Code上で動作するゼロ依存設計。インストールすればすぐに使えます。",
     "capability_claude_stat": "0 dependencies",
-    "capability_artifacts_title": "AI-Native Artifacts",
-    "capability_artifacts_desc": "press-release、PRD、architectureなど11個の構造化アーティファクト。AIが読み取り再利用できる形式で設計。",
+    "capability_artifacts_title": "AIネイティブ成果物",
+    "capability_artifacts_desc": "press-release、PRD、architectureなど11個の構造化成果物。AIが読み取り再利用できる形式で設計されています。",
     "capability_artifacts_stat": "11 artifacts",
-    "capability_evolution_title": "Self-Evolution",
-    "capability_evolution_desc": "すべてのワークフローからパターンを学習するグローバル学習システム。プロジェクトを重ねるごとにチームが賢くなります。",
+    "capability_evolution_title": "自己進化",
+    "capability_evolution_desc": "すべてのワークフローからパターンを学ぶグローバル学習システム。プロジェクトを重ねるたびにチーム全体が成長します。",
     "capability_evolution_stat": "evolving",
-    "pipeline_eyebrow": "Development Pipeline",
-    "pipeline_title": "9段階Phase Pipeline",
-    "pipeline_subtitle": "アイデアからプロダクションまで。各Phaseで専門エージェントが構造化アーティファクトを生成します。",
+    "pipeline_eyebrow": "開発パイプライン",
+    "pipeline_title": "9段階のPhase Pipeline",
+    "pipeline_subtitle": "アイデアからプロダクションまで。各Phaseで専門Agentが構造化された成果物を生成します。",
     "pipeline_group_discovery": "Discovery",
     "pipeline_group_design": "Design & Planning",
     "pipeline_group_implementation": "Implementation",
     "pipeline_group_delivery": "Delivery",
-    "pipeline_gate_1": "Human Gate 1 — ビジョン・要件の承認",
-    "pipeline_gate_2": "Human Gate 2 — アーキテクチャ・タスクの承認",
+    "pipeline_gate_1": "Human Gate 1 — ビジョンと要件の承認",
+    "pipeline_gate_2": "Human Gate 2 — アーキテクチャとタスクの承認",
     "pipeline_gate_3": "Human Gate 3 — 実装結果の承認",
     "phases": {
       "T": {
         "name": "Triage",
-        "role": "PO — リクエスト分類とワークフロー決定",
+        "role": "PO — リクエストを分類しワークフローを決定",
         "artifacts": [
           "classification"
         ]
@@ -174,7 +174,7 @@
       },
       "1": {
         "name": "Discovery",
-        "role": "PO + Architect — 要件定義、Working Backwards、PRD、実現可能性評価",
+        "role": "PO + Architect — 要件定義、Working Backwards、PRD、実現可能性の検証",
         "artifacts": [
           "PRD",
           "working-backwards"
@@ -213,7 +213,7 @@
       },
       "5": {
         "name": "Review & QA",
-        "role": "TL/QA/SE — API契約検証、並列レビュー",
+        "role": "TL/QA/SE — APIコントラクト検証、並列レビュー",
         "artifacts": [
           "test-report",
           "security-audit"
@@ -221,90 +221,90 @@
       },
       "6": {
         "name": "Retrospective",
-        "role": "TL — 知識蓄積、振り返り",
+        "role": "TL — ナレッジ蓄積、ふりかえり",
         "artifacts": [
           "changelog",
           "learning"
         ]
       }
     },
-    "agents_eyebrow": "チームを紹介",
-    "agents_title": "11人のAI専門家",
-    "agents_subtitle": "専門知識を持つエージェントが有機的に協力します。",
-    "why_eyebrow": "Why JARFIS",
-    "differentiator_title": "従来のAIツールとの違い",
-    "differentiator_subtitle": "コード補完を超えた、ソフトウェア開発ライフサイクル全体をカバーするAIチームです。",
+    "agents_eyebrow": "チーム紹介",
+    "agents_title": "11人のAIエキスパート",
+    "agents_subtitle": "それぞれの専門性を持つAgentが有機的にコラボレーションします。",
+    "why_eyebrow": "なぜJARFISか",
+    "differentiator_title": "従来のAIツールとどう違うのか？",
+    "differentiator_subtitle": "コード補完の先へ。ソフトウェア開発のライフサイクル全体をカバーするAIチームです。",
     "compare_category": "カテゴリ",
-    "traditional": "従来のAIコーディングツール",
+    "traditional": "従来のAIツール",
     "jarfis": "JARFIS",
     "compare": {
       "category_team": "チーム構成",
       "single_ai": "単一のAIチャットアシスタント",
-      "team": "定義された役割を持つ11人のドメイン専門エージェント",
+      "team": "役割が明確な11人のドメイン専門Agent",
       "category_workflow": "ワークフロー",
       "suggestion": "手動で適用するコード提案",
-      "autonomous": "プレスリリースから振り返りまでの完全なワークフロー",
-      "category_artifacts": "アーティファクト",
+      "autonomous": "プレスリリースからふりかえりまで一貫したワークフロー",
+      "category_artifacts": "成果物",
       "completion": "コードレベルの出力のみ",
-      "workflow": "プロジェクトごとに11個の構造化アーティファクト",
+      "workflow": "プロジェクトごとに11個の構造化成果物",
       "category_quality": "品質管理",
-      "blackbox": "不透明な決定プロセス",
-      "transparent": "アーティファクトに文書化されたすべての決定",
+      "blackbox": "ユーザー任せの検証",
+      "transparent": "3段階のHuman Gate + QA/SE Agent",
       "category_learning": "学習",
-      "vendor": "ベンダープラットフォームまたはAPIが必要",
-      "selfhost": "純粋なClaude Code — CLIで実行",
-      "category_dependency": "依存性",
+      "vendor": "セッションごとにリセット",
+      "selfhost": "グローバル学習システム",
+      "category_dependency": "依存関係",
       "single_dep": "外部APIまたはサーバーが必要",
-      "zero_dep": "Claude Codeのみで動作",
+      "zero_dep": "Claude Codeだけで動作",
       "category_continuity": "継続性",
-      "no_continuity": "セッション終了時に中断",
+      "no_continuity": "セッション終了で中断",
       "resilient": "Resilient Continuity"
     },
-    "learn_more": "ドキュメントで詳しく",
+    "learn_more": "ドキュメントで詳しく見る",
     "view_github": "GitHubで見る",
-    "agent_team_title": "11人の専門エージェント、1つのワークフロー",
-    "agent_team_desc": "JARFISは11個の専門エージェント — PO、Architect、Tech Lead、Backend、Frontend、DevOps、QA、Security、UX、Advocate、Critic — をオーケストレーションします。各エージェントは専用のドメイン専門知識と役割別CLAUDE.md指示を持っています。",
+    "agent_team_title": "11人の専門Agent、1つのワークフロー",
+    "agent_team_desc": "JARFISはPO、Architect、Tech Lead、Backend、Frontend、DevOps、QA、Security、UX、Advocate、Criticの11専門Agentをオーケストレーションします。各Agentは固有のドメイン専門知識と役割別CLAUDE.md指示を備え、成果物をリレーしながら順次協力します。",
     "agent_team_bullets": [
-      "11役割：PO、Architect、Tech Lead、Backend、Frontend、DevOps、QA、Security、UX、Advocate、Critic",
-      "各エージェントはドメイン固有の指示と専門知識を持つ",
-      "アーティファクトのハンドオフを通じた順次協力",
-      "定義された役割が曖昧さと重複を排除"
+      "11の役割: PO、Architect、Tech Lead、Backend、Frontend、DevOps、QA、Security、UX、Advocate、Critic",
+      "各Agentがドメイン固有の指示と専門知識を保持",
+      "成果物のハンドオフによる順次コラボレーション",
+      "明確な役割定義が曖昧さと重複を排除"
     ],
     "claude_code_title": "Claude Codeネイティブアーキテクチャ",
-    "claude_code_desc": "JARFISは純粋なClaude Codeワークフローとして構築されています — 外部サーバー、APIラッパー、独自ランタイムなし。すべてがローカルCLIのスラッシュコマンドとCLAUDE.md規約を通じて実行されます。",
+    "claude_code_desc": "JARFISは純粋なClaude Codeワークフローです。外部サーバー、APIラッパー、専用ランタイムは一切不要。ローカルCLIのスラッシュcommandとCLAUDE.md規約だけですべてが動きます。PreCompactフックがコンテキストリセット時もワークフローステートを保持します。",
     "claude_code_bullets": [
-      "純粋なスラッシュコマンドインターフェイス — 外部サーバー不要",
-      "エージェント指示のためのCLAUDE.md慣例",
-      "コンテキストリセット耐性のためのPreCompactフック",
-      "Claude Codeが実行できる場所ならどこでも"
+      "スラッシュcommandインターフェース — 外部サーバー不要",
+      "Agent指示を格納するCLAUDE.md規約",
+      "コンテキストリセットに強いPreCompactフック",
+      "Claude Codeが動く場所ならどこでも — ローカルでもCIでも"
     ],
-    "artifacts_title": "11個の構造化アーティファクト",
-    "artifacts_desc": "すべてのJARFISワークフローは11個の文書化されたアーティファクトを生成します：プレスリリース、PRD、アーキテクチャ文書、API仕様、UX仕様、タスクリスト、テスト戦略、デプロイ計画、コードレビュー、振り返り。",
+    "artifacts_title": "11個の構造化成果物",
+    "artifacts_desc": "すべてのJARFISワークフローは11個のドキュメント化された成果物を生成します。プレスリリース、PRD、アーキテクチャドキュメント、APIスペック、UXスペック、タスクリスト、テスト戦略、デプロイ計画、コードレビュー、ふりかえり。すべての意思決定が記録され、すべてのハンドオフが追跡されます。",
     "artifacts_bullets": [
-      "プレスリリース → PRD → アーキテクチャ → API仕様",
-      "UX仕様 → タスク → テスト戦略 → デプロイ計画",
-      "コードレビュー + 振り返りですべてのワークフローを締めくくり",
-      "アイデアから展開まで完全な監査証跡"
+      "プレスリリース → PRD → アーキテクチャ → APIスペック",
+      "UXスペック → タスク → テスト戦略 → デプロイ計画",
+      "コードレビュー + ふりかえりでワークフローを締めくくる",
+      "アイデアからデプロイまで完全な監査証跡"
     ],
     "learning_title": "継続的学習システム",
-    "learning_desc": "JARFISは実行全体で知識を蓄積します。jarfis-learnings.mdがすべての振り返りのグローバル教訓を記録します。context.mdがプロジェクト固有の状態を保持します。",
+    "learning_desc": "JARFISは実行するたびにナレッジを蓄積します。jarfis-learnings.mdにすべてのふりかえりのグローバル教訓が記録され、context.mdにプロジェクト固有のステートが保持されます。.jarfis-state.jsonがワークフロー進捗を追跡し、JARFISは常に中断した箇所から正確に再開します。",
     "learning_bullets": [
-      "jarfis-learnings.md：すべてのプロジェクトのグローバル教訓",
-      "context.md：プロジェクト固有の永続状態",
-      ".jarfis-state.json：ワークフロー進行追跡",
-      "反復ごとにシステムがスマートになる"
+      "jarfis-learnings.md: 全プロジェクトのグローバル教訓",
+      "context.md: プロジェクト固有の永続ステート",
+      ".jarfis-state.json: ワークフロー進捗の追跡",
+      "繰り返すたびにシステムがよりシャープになります"
     ],
-    "cta_heading": "今すぐJARFISを始めましょう",
-    "cta_subtitle": "オープンソースAI開発チームオーケストレーター。インストール5分、効果は永続。",
+    "cta_heading": "今すぐJARFISをはじめましょう",
+    "cta_subtitle": "オープンソースのAI開発チームオーケストレーター。インストール5分、効果は永続的。",
     "cta_docs": "ドキュメント",
-    "footnote": "* 比較は一般的なカテゴリパターンに基づいており、特定の製品に関するものではありません。",
-    "agents_section_title": "11人のエージェントに会う",
-    "agents_section_subtitle": "各エージェントは深いドメイン専門知識と役割固有の指示を持っています。共に最初のユーザーストーリーから最後の振り返りまで製品ライフサイクル全体をカバーします。",
+    "footnote": "* 比較は一般的なカテゴリのパターンに基づいており、特定の製品を指すものではありません。",
+    "agents_section_title": "11人のAgentをご紹介",
+    "agents_section_subtitle": "各Agentは深いドメイン専門知識と役割固有の指示を備えています。最初のユーザーストーリーから最後のふりかえりまで、プロダクトライフサイクル全体をカバーします。",
     "agents": {
       "po": {
-        "name": "プロダクトオーナー",
+        "name": "Product Owner",
         "abbr": "PO",
-        "desc": "逆質問で要件を明確にします。Working Backwards文書とPRDを作成します。コードを1行も書く前に機能を構築する価値があるかを評価します。",
+        "desc": "逆質問で要件を精緻に整理します。Working BackwardsドキュメントとPRDを作成し、コードを1行も書く前にその機能を作る価値があるかを見極めます。",
         "tags": [
           "要件定義",
           "PRD",
@@ -312,9 +312,9 @@
         ]
       },
       "architect": {
-        "name": "アーキテクト",
+        "name": "Architect",
         "abbr": "ARCH",
-        "desc": "技術的実現可能性と長期的影響を評価します。チーム全体が依存するシステムアーキテクチャ文書、影響分析、Architecture Decision Records（ADR）を作成します。",
+        "desc": "技術的な実現可能性と長期的な影響を評価します。チーム全体が依拠するシステムアーキテクチャドキュメント、影響分析、ADRを作成します。",
         "tags": [
           "アーキテクチャ",
           "ADR",
@@ -322,19 +322,19 @@
         ]
       },
       "tech_lead": {
-        "name": "テックリード",
+        "name": "Tech Lead",
         "abbr": "TL",
-        "desc": "API仕様をレビューし、タスクを実行可能な単位に分解し、コードレビューを行い、デプロイ戦略を管理し、教訓をシステムにフィードバックする振り返りを実施します。",
+        "desc": "APIスペックをレビューし、タスクを実行可能な単位に分解し、コードレビューを行い、デプロイ戦略を主導します。ふりかえりを通じて教訓をシステムにフィードバックします。",
         "tags": [
           "コードレビュー",
           "タスク分解",
-          "振り返り"
+          "ふりかえり"
         ]
       },
       "ux": {
-        "name": "UXデザイナー",
+        "name": "UX Designer",
         "abbr": "UX",
-        "desc": "SVGアセットとデザイントークンシステムを直接制作し、ブランドアイデンティティを定義します。情報アーキテクチャ、ユーザーフロー、ワイヤーフレーム、インタラクションパターンを設計します。実装前に製品がアクセシブルで視覚的に一貫していることを確認します。",
+        "desc": "SVGアセット、デザイントークンシステム、ブランドアイデンティティを直接制作します。情報アーキテクチャ、ユーザーフロー、ワイヤーフレーム、インタラクションパターンを設計し、実装前にアクセシビリティと視覚的一貫性を確保します。",
         "tags": [
           "SVGアセット",
           "デザイントークン",
@@ -342,9 +342,9 @@
         ]
       },
       "backend": {
-        "name": "バックエンドエンジニア",
+        "name": "Backend Engineer",
         "abbr": "BE",
-        "desc": "サーバーサイドAPIを実装し、データモデルを定義し、ワークフロー前段で作成されたアーキテクチャとAPI仕様に従ってバックエンドサービスを構築します。",
+        "desc": "サーバーサイドAPIを実装し、データモデルを定義し、前段のPhaseで作成されたアーキテクチャとAPIスペックに従ってバックエンドサービスを構築します。",
         "tags": [
           "API実装",
           "データモデル",
@@ -352,19 +352,19 @@
         ]
       },
       "frontend": {
-        "name": "フロントエンドエンジニア",
+        "name": "Frontend Engineer",
         "abbr": "FE",
-        "desc": "UIコンポーネントを構築し、クライアントサイドの状態を管理し、UX仕様と上流で生成されたタスクリストに従ってフロントエンドをバックエンドAPIと統合します。",
+        "desc": "UIコンポーネントを構築し、クライアントサイドのステートを管理し、UXスペックとタスクリストに基づいてフロントエンドをバックエンドAPIと統合します。",
         "tags": [
           "UIコンポーネント",
-          "状態管理",
+          "ステート管理",
           "API統合"
         ]
       },
       "devops": {
         "name": "DevOps / SRE",
         "abbr": "OPS",
-        "desc": "インフラ構成、CI/CDパイプライン設定、自動化されたデプロイ、モニタリングを担当します。すべてのリリースが再現可能で観測可能であることを保証します。",
+        "desc": "インフラ構成、CI/CDパイプラインの設定、自動デプロイ、モニタリングを担当します。すべてのリリースが再現可能かつ観測可能であることを保証します。",
         "tags": [
           "CI/CD",
           "インフラ",
@@ -372,9 +372,9 @@
         ]
       },
       "qa": {
-        "name": "QAエンジニア",
+        "name": "QA Engineer",
         "abbr": "QA",
-        "desc": "テスト戦略を設計し、テストピラミッドを構築し、E2Eシナリオを作成し、アーティファクトが次のフェーズに引き渡される前に品質ゲートを検証します。",
+        "desc": "テスト戦略を設計し、テストピラミッドを構築し、E2Eシナリオを作成します。成果物が次のPhaseに渡される前に品質Gateを検証します。",
         "tags": [
           "テスト戦略",
           "テストピラミッド",
@@ -382,9 +382,9 @@
         ]
       },
       "security": {
-        "name": "セキュリティエンジニア",
+        "name": "Security Engineer",
         "abbr": "SEC",
-        "desc": "コード出荷前にセキュリティ態勢をレビューします。OWASP Top 10、認証・認可モデルをカバーし、すべての機能に対して脆弱性分析を実施します。",
+        "desc": "コードがデプロイされる前にセキュリティ態勢を点検します。OWASP Top 10、認証・認可モデルをカバーし、すべての機能に脆弱性分析を実施します。",
         "tags": [
           "OWASP Top 10",
           "認証・認可",
@@ -394,7 +394,7 @@
       "advocate": {
         "name": "Advocate",
         "abbr": "ADV",
-        "desc": "JARFISシステムの変更提案における長所と可能性を擁護します。変更がもたらすユーザー価値を具体的なシナリオで論証し、リスクを認めながらも進めるべき理由を提示します。",
+        "desc": "JARFISシステムの変更提案の長所と可能性を擁護します。変更がもたらすユーザー価値を具体的シナリオで論証しつつ、リスクも正直に認めます。",
         "tags": [
           "弁証法的レビュー",
           "変更擁護",
@@ -404,7 +404,7 @@
       "critic": {
         "name": "Critic",
         "abbr": "CRT",
-        "desc": "JARFISシステムの変更提案におけるリスクや副作用を批判的に検証します。システムの一貫性とトークン経済を守り、具体的な失敗シナリオを提示して建設的な代替案を提案します。",
+        "desc": "JARFISシステムの変更提案のリスク、副作用、設計の不整合を批判的に検証します。システムの一貫性とトークン経済を守り、具体的な失敗シナリオと建設的な代替案を提示します。",
         "tags": [
           "弁証法的レビュー",
           "リスク分析",
@@ -414,66 +414,66 @@
     }
   },
   "seo": {
-    "home_description": "1つのスラッシュコマンド。11人の専門エージェント。JARFISがClaude Codeで製品ワークフロー全体をオーケストレーションします。",
-    "features_description": "JARFIS機能の探索：11人の専門エージェント、11個の構造化アーティファクト、継続的学習システム。",
-    "docs_description": "JARFISドキュメント：始め方、概念、ガイド、APIリファレンス。",
-    "blog_description": "JARFISチームからのアップデート、詳細な分析、リリースノート。",
-    "showcase_description": "JARFISで構築されたプロジェクト — AIオーケストレーション製品開発の実例。"
+    "home_description": "スラッシュcommandひとつで始まる11人の専門Agent。JARFISがClaude Code上でプロダクトワークフロー全体をオーケストレーションします。",
+    "features_description": "JARFISの機能を探索: 11人の専門Agent、11個の構造化成果物、継続的学習システム。",
+    "docs_description": "JARFISドキュメント: はじめかた、コアコンセプト、ガイド、APIリファレンス。",
+    "blog_description": "JARFISチームからのアップデート、技術的ディープダイブ、リリースノート。",
+    "showcase_description": "JARFISで構築されたプロジェクト — AIオーケストレーションによるプロダクト開発の実例。"
   },
   "docs": {
     "page_title": "ドキュメント",
     "sidebar_title": "ドキュメント",
     "categories": {
       "getting_started": "はじめに",
-      "concepts": "概念",
+      "concepts": "コンセプト",
       "guides": "ガイド",
       "api_reference": "APIリファレンス"
     },
     "last_updated": "最終更新",
     "prev_page": "前へ",
     "next_page": "次へ",
-    "on_this_page": "このページで",
-    "not_translated": "このページはまだ翻訳されていません。英語版を表示します。",
+    "on_this_page": "このページの目次",
+    "not_translated": "このページはまだ翻訳されていません。英語版を表示しています。",
     "landing_title": "ドキュメント",
-    "landing_subtitle": "JARFIS AIチームオーケストレーターのすべて。クイックスタートから高度なガイドまで。",
+    "landing_subtitle": "JARFIS AI開発チームオーケストレーターのすべて。クイックスタートから応用ガイドまで。",
     "landing_categories": {
       "getting_started": {
         "title": "はじめに",
-        "desc": "5分でJARFISをインストールし、最初のワークフローを実行してみましょう。",
-        "link": "始める"
+        "desc": "5分でJARFISをインストールし、最初のワークフローを実行できます。",
+        "link": "はじめる"
       },
       "concepts": {
         "title": "コアコンセプト",
-        "desc": "エージェント、Phase Pipeline、Human Gateなどの主要概念を理解します。",
-        "link": "概念を学ぶ"
+        "desc": "Agent、Phase Pipeline、Human Gateなどの主要コンセプトを理解します。",
+        "link": "コンセプトを学ぶ"
       },
       "api": {
         "title": "APIリファレンス",
-        "desc": "スラッシュコマンド、設定オプション、エージェントAPIの詳細リファレンスです。",
+        "desc": "スラッシュcommand、設定オプション、Agent APIの詳細リファレンスです。",
         "link": "リファレンスを見る"
       },
       "guides": {
         "title": "ガイド",
-        "desc": "実践ガイド：カスタムエージェントの作成、学習システムのチューニングなど。",
+        "desc": "実践ガイド: カスタムAgentの作成、学習システムのチューニングなど。",
         "link": "ガイドを見る"
       }
     },
     "popular_title": "人気ページ",
     "popular_jarfis_work": "/jarfis:work",
     "popular_phase_pipeline": "Phase Pipeline",
-    "popular_agent_roles": "Agent Roles",
-    "popular_artifacts": "Artifacts",
-    "popular_human_gates": "Human Gates",
-    "popular_configuration": "Configuration"
+    "popular_agent_roles": "Agentの役割",
+    "popular_artifacts": "成果物",
+    "popular_human_gates": "Human Gate",
+    "popular_configuration": "設定"
   },
   "blog": {
     "eyebrow": "ブログ",
     "page_title": "インサイト & アップデート",
-    "page_subtitle": "最新ニュース、技術的インサイト、JARFISエコシステムのストーリー。",
-    "empty_title": "ストーリーが作成中です。",
-    "empty_desc": "最初の投稿が準備中です — GitHubをフォローして更新を受け取ってください。",
+    "page_subtitle": "最新ニュース、技術インサイト、JARFISエコシステムのストーリー。",
+    "empty_title": "ストーリーを準備中です。",
+    "empty_desc": "最初の投稿がまもなく公開されます — GitHubをフォローして最新情報をお受け取りください。",
     "follow_github": "GitHubをフォロー",
-    "watch_repo": "リポジトリを購読",
+    "watch_repo": "リポジトリをウォッチ",
     "read_more": "続きを読む",
     "back_to_blog": "ブログに戻る",
     "prev_post": "前へ",
@@ -481,21 +481,21 @@
   },
   "showcase": {
     "eyebrow": "コミュニティ",
-    "page_title": "JARFISで構築されたもの",
-    "page_subtitle": "コミュニティが作り上げるプロジェクトをご覧ください。共に形成される生きたエコシステムです。",
-    "cta_title": "プロジェクトを共有する",
-    "cta_desc": "JARFISで作ったものがありますか？GitHub Issueから提出してここで紹介されましょう。",
+    "page_title": "JARFISで生まれたもの",
+    "page_subtitle": "コミュニティが共に育てるプロジェクトをご覧ください。生きたエコシステムがここにあります。",
+    "cta_title": "プロジェクトを共有しましょう",
+    "cta_desc": "JARFISで何か作りましたか？GitHub Issueから提出すれば、ここに紹介されます。",
     "cta_submit": "GitHub Issueで提出",
     "cta_guide": "提出ガイド",
     "featured_badge": "注目",
-    "empty_title": "JARFISで最初に構築しましょう。",
-    "empty_desc": "このウェブサイト自体がJARFISエージェントによって構築されました。あなたのプロジェクトが次になれます。",
+    "empty_title": "JARFISで最初のプロジェクトを作りましょう。",
+    "empty_desc": "このウェブサイト自体がJARFIS Agentの合作です — UX、Frontend、QAが協力して作りました。次はあなたのプロジェクトかもしれません。",
     "submit": "プロジェクトを提出",
     "view_project": "プロジェクトを見る",
     "view_source": "ソースを見る"
   },
   "footer": {
-    "copyright": "2026 Sana-Lazystar. オープンソース。",
+    "copyright": "2026 Sana-Lazystar. Open Source.",
     "documentation": "ドキュメント",
     "github_link": "GitHub",
     "blog": "ブログ",
@@ -508,7 +508,7 @@
     "view_github": "GitHubでJARFISを見る",
     "close_nav": "ナビゲーションメニューを閉じる",
     "open_nav": "ナビゲーションメニューを開く",
-    "solar_system": "JARFIS AIエージェントエコシステム — 11つのエージェントが中央のJARFISコアを周回します"
+    "solar_system": "JARFIS AIエージェントエコシステム — 11のAgentが中央のJARFISコアを周回しています"
   },
   "common": {
     "read_more": "続きを読む",
@@ -519,7 +519,7 @@
     "copied": "コピーしました！"
   },
   "terminal": {
-    "loading": "ターミナル読み込み中..."
+    "loading": "ターミナルを読み込み中..."
   },
   "error": {
     "not_found_title": "404: ページが見つかりません",

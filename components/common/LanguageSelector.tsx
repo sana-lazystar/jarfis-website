@@ -4,6 +4,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { useTranslations } from 'next-intl';
 import { SUPPORTED_LOCALES, LOCALE_NATIVE_LABELS, LOCALE_LABELS, type Locale } from '@/i18n/config';
+import { getPathWithoutLocale } from '@/lib/paths';
 
 interface LanguageSelectorProps {
   currentLocale: string;
@@ -17,17 +18,6 @@ export default function LanguageSelector({ currentLocale }: LanguageSelectorProp
   const router = useRouter();
   const dropdownRef = useRef<HTMLDivElement>(null);
   const optionRefs = useRef<(HTMLButtonElement | null)[]>([]);
-
-  function getPathWithoutLocale(path: string): string {
-    const segments = path.split('/');
-    const localeIndex = segments.findIndex((s) =>
-      SUPPORTED_LOCALES.includes(s as Locale)
-    );
-    if (localeIndex !== -1) {
-      segments.splice(localeIndex, 1);
-    }
-    return segments.join('/') || '/';
-  }
 
   function switchLocale(newLocale: Locale) {
     const pathWithoutLocale = getPathWithoutLocale(pathname);
@@ -100,7 +90,7 @@ export default function LanguageSelector({ currentLocale }: LanguageSelectorProp
       <button
         onClick={() => setIsOpen(!isOpen)}
         onKeyDown={handleTriggerKeyDown}
-        className="flex items-center gap-1 rounded-full px-3 py-1.5 text-sm transition-colors"
+        className="flex min-h-[44px] items-center gap-1 rounded-full px-3 py-2.5 text-sm transition-colors"
         style={{
           border: '1px solid var(--color-border)',
           color: 'var(--color-text-secondary)',
@@ -130,9 +120,7 @@ export default function LanguageSelector({ currentLocale }: LanguageSelectorProp
               ref={(el) => { optionRefs.current[index] = el; }}
               onClick={() => switchLocale(locale)}
               onKeyDown={(e) => handleOptionKeyDown(e, locale)}
-              className={`w-full flex items-center justify-between px-3 py-2 text-sm transition-colors text-left rounded-sm ${
-                locale === currentLocale ? '' : ''
-              }`}
+              className="w-full flex items-center justify-between px-3 py-3 text-sm transition-colors text-left rounded-sm"
               style={{
                 color: locale === currentLocale ? 'var(--color-primary-light)' : 'var(--color-text-secondary)',
                 background: 'transparent',

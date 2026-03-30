@@ -58,3 +58,20 @@ export function siteUrl(path: string): string {
   const normalizedPath = path.startsWith('/') ? path : `/${path}`;
   return `${BASE_URL}${normalizedPath}`;
 }
+
+/**
+ * 경로에서 locale segment를 제거한다.
+ * 예: '/jarfis-website/ko/docs/getting-started' → '/jarfis-website/docs/getting-started'
+ *
+ * 사용처: 언어 전환 시 현재 경로를 유지한 채 locale만 교체.
+ */
+export function getPathWithoutLocale(path: string): string {
+  // 동적 import 대신 인라인 — 순환 의존성 방지
+  const locales = ['en', 'ko', 'ja', 'zh'];
+  const segments = path.split('/');
+  const localeIndex = segments.findIndex((s) => locales.includes(s));
+  if (localeIndex !== -1) {
+    segments.splice(localeIndex, 1);
+  }
+  return segments.join('/') || '/';
+}
