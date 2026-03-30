@@ -667,21 +667,57 @@ function FeaturesContent({ locale }: { locale: string }) {
         }
 
         /* ---- Responsive ---- */
-        @media (max-width: 1024px) {
+        /* Tailwind breakpoint 정렬: max-width에 .98px 패턴 (ADR-005) */
+        @media (max-width: 1023.98px) {
           .fp-cap-grid { grid-template-columns: repeat(2, 1fr); }
           .fp-agents-grid { grid-template-columns: repeat(2, 1fr); }
           .fp-phase-card { width: 180px; }
           .fp-compare-table thead th,
           .fp-compare-table tbody td { padding: 0.875rem 1rem; }
+          /* 모바일 패딩 통일 (T-3.5) */
+          .fp-hero-inner,
+          .fp-capabilities-inner,
+          .fp-pipeline-inner,
+          .fp-agents-inner,
+          .fp-comparison-inner,
+          .fp-cta-inner { padding-left: 1rem; padding-right: 1rem; }
         }
-        @media (max-width: 640px) {
+        @media (max-width: 639.98px) {
           .fp-cap-grid { grid-template-columns: 1fr; }
           .fp-agents-grid { grid-template-columns: 1fr; }
           .fp-phase-row { flex-direction: column; align-items: center; }
-          .fp-phase-card { width: 100%; max-width: 320px; }
+          /* T-2.2: 모바일 phase card 100%, max-width 400px */
+          .fp-phase-card { width: 100%; max-width: 400px; }
           .fp-cta-actions { flex-direction: column; align-items: center; }
           .fp-compare-table thead th,
           .fp-compare-table tbody td { padding: 0.75rem; font-size: 0.75rem; }
+          /* 모바일 패딩 16px */
+          .fp-hero-inner,
+          .fp-capabilities-inner,
+          .fp-pipeline-inner,
+          .fp-agents-inner,
+          .fp-comparison-inner,
+          .fp-cta-inner { padding-left: 1rem; padding-right: 1rem; }
+        }
+        /* 데스크톱 패딩 32px 통일 (T-3.5) */
+        @media (min-width: 1024px) {
+          .fp-hero-inner,
+          .fp-capabilities-inner,
+          .fp-pipeline-inner,
+          .fp-agents-inner,
+          .fp-comparison-inner,
+          .fp-cta-inner { padding-left: 2rem; padding-right: 2rem; }
+        }
+
+        /* T-2.3: 비교 테이블 가로스크롤 wrapper */
+        .fp-table-scroll {
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
+          /* fade shadow for scroll indicator */
+          background:
+            linear-gradient(to right, var(--color-neutral-dark) 30%, transparent) left / 40px 100% no-repeat,
+            linear-gradient(to left, var(--color-neutral-dark) 30%, transparent) right / 40px 100% no-repeat;
+          background-attachment: local, local;
         }
       `}</style>
 
@@ -881,6 +917,8 @@ function FeaturesContent({ locale }: { locale: string }) {
           <h2 className="fp-section-title">{t('differentiator_title')}</h2>
           <p className="fp-section-desc">{t('differentiator_subtitle')}</p>
 
+          {/* T-2.3: 가로스크롤 wrapper */}
+          <div className="fp-table-scroll">
           <table className="fp-compare-table">
             <thead>
               <tr>
@@ -905,6 +943,7 @@ function FeaturesContent({ locale }: { locale: string }) {
               ))}
             </tbody>
           </table>
+          </div>{/* /fp-table-scroll */}
 
           <p
             className="text-xs mt-3 text-center"
