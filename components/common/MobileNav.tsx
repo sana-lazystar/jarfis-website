@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { SUPPORTED_LOCALES, LOCALE_LABELS, LOCALE_NATIVE_LABELS, type Locale } from '@/i18n/config';
+import { useScrollLock } from '@/hooks/useScrollLock';
 
 interface NavLink {
   href: string;
@@ -32,6 +33,9 @@ export default function MobileNav({ locale, navLinks }: MobileNavProps) {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
+
+  // iOS Safari 대응 body scroll lock (T-3.1)
+  useScrollLock(isOpen);
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
