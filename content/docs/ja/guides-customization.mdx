@@ -1,41 +1,51 @@
 ---
-title: "ガイドとカスタマイズ"
-description: "JARFISの高度なパターン: Meeting-to-Work連携、role設定、プロジェクトプロファイル、Gate活用、学習システム管理、ワークフロー復旧。"
+title: "Guides & Customization"
+description: "JARFISの高度なパターン：Meeting-to-Work連携、role設定、プロジェクトプロファイル、Gate活用、学習システム管理、ワークフロー復旧。"
 category: "guides"
 order: 1
 locale: "ja"
-translationOf: "en"
 lastUpdated: 2026-03-15
 draft: false
 ---
 
-# ガイドとカスタマイズ
-
-実際のプロジェクトでJARFISを最大限に活用するための実践的なパターン集。
+JARFISの高度なパターンをマスターしましょう — ミーティングと作業項目の連携から、エージェントの役割のカスタマイズ、Gate管理、中断からの復旧まで。
 
 ## Meeting-to-Work連携
 
-キックオフミーティングをワークセッションの入力コンテキストとして活用することは、JARFISの最も強力なパターンの一つです。計画段階の決定が実装段階まで一貫して流れます。
+JARFISはミーティングの成果を開発ワークフローに直接連結します。まずミーティングを実行して構造化された出力を生成し、その出力をworkコマンドに連結することで、パイプライン全体が完全なコンテキストを持ってスタートします。
 
-### Step 1: キックオフミーティングを実施する
+<FlowDiagram nodes={[
+  { label: "/jarfis:meeting", variant: "meeting" },
+  { label: "summary.md + decisions.md + meeting-notes.md" },
+  { label: "/jarfis:work --meeting", variant: "work" },
+  { label: "Phase 0でミーティングコンテキストを読み込み" }
+]} />
+
+### ステップバイステップ
+
+1. トピックとともにミーティングコマンドを実行します：
 
 ```
 /jarfis:meeting Define the authentication strategy for the mobile app
 ```
 
-ミーティングは構造化された決定とartifactをミーティングディレクトリに保存します。
+実行結果として`summary.md`、`decisions.md`、`meeting-notes.md`が生成されます。
 
-### Step 2: ミーティング参照と共に作業を開始する
+2. `--meeting`フラグでミーティング出力物をworkコマンドに連結します：
 
 ```
 /jarfis:work Implement mobile auth with biometric login --meeting auth-strategy-meeting
 ```
 
-`--meeting`フラグはミーティングの出力を入力コンテキストとして連携します。Agentはワークフロー全体を通じてミーティングの決定を参照します。
+3. Phase 0（Pre-flight）が自動的にミーティングコンテキストを読み込みます。以降すべてのPhaseのエージェントがミーティングで決定された事項を参照します。
 
-## `required_roles`によるrole設定
+<Callout>
+  **ヒント：** `--meeting`フラグはミーティング出力物ディレクトリを参照します。Phase 0がすべてのミーティング成果物を読み込むため、パイプラインのすべてのエージェントが議論された決定と制約にアクセスできます。
+</Callout>
 
-すべてのプロジェクトに11のAgent全てが必要なわけではありません。JARFISは`.jarfis-state.json`の`required_roles`フィールドでどのAgentを活性化するかを制御します:
+## Role設定
+
+JARFISは`.jarfis-state.json`の`required_roles`フィールドを使用して、ワークフローで有効なエージェントの役割を決定します。どのPhaseを実行するか、Phase 4での並行作業をどのように分散するかを制御します。
 
 ```json
 {
@@ -49,197 +59,221 @@ draft: false
 }
 ```
 
-### 一般的なroleパターン
-
-**フロントエンド専用プロジェクト** (例: ランディングページのリデザイン):
-```json
-{
-  "required_roles": {
-    "backend": false,
-    "frontend": true,
-    "ux": true,
-    "devops": false,
-    "security": false
+<RoleConfigGrid cards={[
+  {
+    name: "Frontend Only",
+    description: "Phase 3（UX）が有効、Phase 4はFE実装のみ実行",
+    fields: [
+      { key: "backend:", value: "false" },
+      { key: "frontend:", value: "true" },
+      { key: "ux:", value: "true" },
+      { key: "devops:", value: "false" },
+      { key: "security:", value: "false" }
+    ]
+  },
+  {
+    name: "Full Stack + Security",
+    description: "すべてのPhaseが有効、Phase 4はBE/FE/DevOpsが並行実行",
+    variant: "custom",
+    fields: [
+      { key: "backend:", value: "true" },
+      { key: "frontend:", value: "true" },
+      { key: "ux:", value: "true" },
+      { key: "devops:", value: "true" },
+      { key: "security:", value: "true" }
+    ]
+  },
+  {
+    name: "Backend API Only",
+    description: "Phase 3（UX）をスキップ、Phase 4はBE + DevOpsのみ実行",
+    fields: [
+      { key: "backend:", value: "true" },
+      { key: "frontend:", value: "false" },
+      { key: "ux:", value: "false" },
+      { key: "devops:", value: "true" },
+      { key: "security:", value: "true" }
+    ]
   }
-}
-```
-Phase 3 (UX Design)が活性化されます。Phase 4はFrontend Engineerのみ実行します。
+]} />
 
-**セキュリティ要件があるフルスタックプロジェクト**:
-```json
-{
-  "required_roles": {
-    "backend": true,
-    "frontend": true,
-    "ux": true,
-    "devops": true,
-    "security": true
-  }
-}
-```
-すべてのPhaseが活性化されます。Phase 4はBE、FE、DevOpsが並行して実行されます。
-
-**バックエンドAPI専用プロジェクト**:
-```json
-{
-  "required_roles": {
-    "backend": true,
-    "frontend": false,
-    "ux": false,
-    "devops": true,
-    "security": true
-  }
-}
-```
-Phase 3 (UX Design)は完全にスキップされます。
+<Callout>
+  **注意：** JARFISはPhase T（Triage）中に作業の説明とプロジェクト構造に基づいて役割を自動的に決定します。Gate 1の承認前に`.jarfis-state.json`を編集して上書きできます。
+</Callout>
 
 ## 完了したワークフローの継続
 
-完了したワークフローに追加作業や修正が必要な場合は、最初からやり直す代わりに`/jarfis:continue`を使用してください:
+`/jarfis:continue`を使用して、完了したワークフローを基に作業を続けられます — テストの追加、エッジケースの修正、スコープの拡張など、ゼロから始めることなく。
 
 ```
 /jarfis:continue Add unit tests for the auth module
-```
-
-`--mode`フラグで自動分類をスキップできます:
-
-```
 /jarfis:continue Fix the token refresh edge case --mode fix
 ```
 
+<ModeGrid modes={[
+  {
+    name: "Fix Mode",
+    description: "TriageとDiscoveryをスキップします。ピンポイントの修正のためにImplementation Phaseに直接進みます。",
+    flag: "--mode fix",
+    active: true
+  },
+  {
+    name: "Extend Mode",
+    description: "Triageはスキップしますが、新しい追加作業のスコープを適切に把握するためにDiscoveryは実行します。",
+    flag: "--mode extend"
+  }
+]} columns={2} />
+
+`--workflow path`で特定の過去のワークフローの出力物をターゲットにして継続することもできます。
+
 ## プロジェクトプロファイル
 
-プロジェクトプロファイルはJARFISがコードベースの構造とconventionを深く理解するのに役立ちます。
+プロジェクトプロファイルはJARFISがコードベースを完全に理解できるようにします — リポジトリ構造、依存関係、ビルドツール、規約まで — すべてのワークフローが正確なプロジェクトコンテキストとともに始まります。
 
-### プロファイルの初期化
+<RecoveryFlow steps={[
+  { text: <><strong><code>/jarfis:project-init</code></strong> — リポジトリ構造、依存関係、ビルドツール、規約を分析して<code>.jarfis/project-profile.md</code>を生成します。</> },
+  { text: <><strong><code>/jarfis:project-update</code></strong> — プロジェクトが進化した際に、手動で追加したコンテキストを維持しながらプロファイルを更新します。</> }
+]} />
 
-```
-/jarfis:project-init
-```
-
-プロジェクトを分析して`.jarfis/project-profile.md`を生成します:
-- リポジトリ構造と組織
-- 依存関係とバージョン
-- ビルドツールとスクリプト
-- 検出されたconventionとパターン
-
-### プロファイルを最新状態に保つ
-
-```
-/jarfis:project-update
-```
+<Callout>
+  **ヒント：** リポジトリにJARFISを初めて設定する際に`/jarfis:project-init`を一度実行し、主要な依存関係や構造の変更後には`/jarfis:project-update`を使用してください。
+</Callout>
 
 ## Gateの活用
 
-Gateは必須の人間チェックポイントです。効果的な活用方法を紹介します。
+Gateは人間による監視の主要なメカニズムです。各Gateはワークフローの方向を制御するための具体的なアクションを提供します。
 
-### Gate 1 — Discovery後
+<QuickGateCards gates={[
+  {
+    title: "Gate 1 — Phase 1（Discovery）の後",
+    description: "PRD、実現可能性分析、スコープ定義を確認します。方向転換のコストが最も低いポイントです。",
+    actions: ["承認", "修正", "中断"]
+  },
+  {
+    title: "Gate 2 — Phase 2 & 3（Architecture + UX）の後",
+    description: "アーキテクチャの決定、タスク分解、UXデザインを確認します。tasks.mdを丁寧にチェックしてください — 抜け落ちたタスクは後で抜け落ちた機能になります。",
+    actions: ["承認", "修正", "中断"]
+  },
+  {
+    title: "Gate 3 — Phase 5（Review & QA）の後",
+    description: "すべての実装、テスト結果、セキュリティの発見事項を確認します。「設計再検討」は根本的なアーキテクチャの問題がある場合にPhase 2に戻します。",
+    actions: ["承認", "修正後再レビュー", "中断", "設計再検討"]
+  }
+]} />
 
-Gate 1ではPRDと実現可能性評価を確認します。選択肢:
-
-- **承認**: Architecture & Planning (Phase 2)に進む
-- **修正**: 具体的なフィードバックを提供。POとArchitectが出力を修正して再発表します
-- **中断**: ワークフロー全体をキャンセル
-
-**ヒント**: 方向を変えるコストが最も低い地点です。Gate 1での修正は数分で済みますが、Gate 3での修正は数時間かかる場合があります。
-
-### Gate 2 — Architecture & UX後
-
-Gate 2ではアーキテクチャ設計、タスク分解、(該当する場合は)UX仕様を確認します:
-
-- **承認**: Implementation (Phase 4)に進む
-- **修正**: アーキテクチャ、タスクスコープ、UXデザインの変更を要求
-- **中断**: ワークフローをキャンセル
-
-**ヒント**: `tasks.md`を丁寧に確認してください — これが正確に何を実装するかを定義します。
-
-### Gate 3 — Review & QA後
-
-Gate 3では完成した実装、テスト結果、セキュリティの発見事項を確認します:
-
-- **承認**: Retrospective (Phase 6)に進み、ラップアップ
-- **修正後再レビュー**: 修正を要求し、別のレビューサイクルを開始
-- **中断**: ワークフローをキャンセル
-- **設計再検討**: レビュー中に発見された根本的な設計問題に対してPhase 2に戻る
+<Callout variant="warning">
+  **重要：** Gate 1での数分の検討がGate 3での数時間を節約します。早期の軌道修正は遅いものより格段に安上がりです。各Gateで十分に確認してください。
+</Callout>
 
 ## 学習システムの管理
 
-JARFISの学習システムは各ワークフローを前回より改善するための核心です。
+JARFISは蓄積されたプロジェクト知識を通じて出力品質を継続的に向上させる2段階の学習システムを運用しています。
 
-### グローバル学習: `~/.claude/jarfis-learnings.md`
+<LearningGrid cards={[
+  {
+    variant: "global",
+    label: "Global",
+    title: "グローバル学習",
+    description: <><code>~/.claude/jarfis-learnings.md</code>に保存されます。すべてのプロジェクトで共有されるAgent HintsとWorkflow Patternsを含みます。</>
+  },
+  {
+    variant: "project",
+    label: "Project",
+    title: "プロジェクトコンテキスト",
+    description: <><code>.jarfis/context.md</code>に保存されます。このプロジェクトに固有の技術スタック、規約、ビジネスドメイン、統合制約。</>
+  }
+]} columns={2} />
 
-ホームディレクトリに存在し、すべてのプロジェクトで共有されます:
+### 学習サイクル
 
-- **Agent Hints**: 「新しいmiddlewareを作成する前に既存のものを確認する」や「mutateAsyncはtry-catchで囲みunhandled rejectionを防ぐ」などの行動ルール
-- **Workflow Patterns**: 「モノレポプロジェクトではパッケージ別に影響分析を実行する」などの実証済みアプローチ
+<FlowDiagram nodes={[
+  { label: "Phase 6 (Retro)" },
+  { label: "learnings.md" },
+  { label: "Phase 0 (Pre-flight)" },
+  { label: "エージェントが参照", variant: "work" },
+  { label: "より良い出力", variant: "meeting" }
+]} />
 
-### プロジェクトコンテキスト: `.jarfis/context.md`
+### context.mdの例
 
 ```markdown
 # Project Context
-
 ## Tech Stack
-- Frontend: Next.js 15 (App Router), TypeScript strict, Tailwind CSS 4
+- Frontend: Next.js 15, TypeScript strict, Tailwind CSS 4
 - Backend: FastAPI (Python 3.12), PostgreSQL 16, Redis
-
 ## Conventions
 - API responses follow RFC 9457 Problem Details format
-- Commit format: conventional commits (feat/fix/chore)
+- All database models use UUID primary keys
+- Commit format: conventional commits
 ```
 
-### `/jarfis:upgrade`による学習の整理
-
-```
-/jarfis:upgrade
-```
+`/jarfis:upgrade`を使用して学習項目を整理しましょう — 保持、編集、削除で品質を維持します。
 
 ## コンテキスト圧縮後のワークフロー復旧
 
-長期実行ワークフローではClaude Codeのコンテキスト圧縮が発生することがあります。JARFISはこれから復旧するよう設計されています:
+JARFISは`.jarfis-state.json`を通じてPhaseと進行状態をディスクに保存します。特別な再開コマンドは不要です — システムが中断されたワークフローを自動的に検出して再開します。
 
-1. `.jarfis-state.json`ファイルが正確なPhaseと進行状態を保持します
-2. `last_checkpoint`フィールドに圧縮前の状況が記録されます
-3. ディスク上の学習ファイルとartifactはコンテキスト圧縮の影響を受けません
+<RecoveryFlow steps={[
+  { text: <><strong>セッション終了</strong> — 接続断、タイムアウト、またはコンテキスト圧縮</> },
+  { text: <><strong><code>/jarfis:work</code>を再実行</strong> — 前回と同じ作業説明を使用</> },
+  { text: <><strong>JARFISが既存の状態ファイルを検出</strong> — 進行中のワークフローがある<code>.jarfis-state.json</code>を発見</> },
+  { text: <><strong>最後のチェックポイントから再開</strong> — 前のセッションが中断した正確な地点から作業を再開</> }
+]} />
 
-コンテキストリセット後に再開するには、同じ説明で`/jarfis:work`を再実行してください。JARFISが既存の`.jarfis-state.json`を検出し、最後のcheckpointから再開します。
+<Callout>
+  **ポイント：** 特別な再開コマンドはありません。同じ説明で`/jarfis:work`を実行するだけで、JARFISが保存された状態ファイルを通じて自動的に復旧を処理します。
+</Callout>
 
-## 実践例
+## JARFIS自体の修正
 
-### 例1: フロントエンド専用機能
-
-```
-/jarfis:work Redesign the dashboard with new chart components
-```
-
-JARFISが`required_roles.backend`をfalseに設定し、バックエンド関連作業をスキップします。
-
-### 例2: ミーティング入力を活用したフルスタック作業
+JARFIS自体を修正または拡張したい場合 — 新しいコマンドの追加、エージェントの動作変更、パイプライン構造の更新 — `/jarfis:implement`を使用してください。
 
 ```
-/jarfis:meeting Plan the multi-tenant architecture migration
-/jarfis:work Implement multi-tenant data isolation --meeting tenant-architecture
+/jarfis:implement Add a /jarfis:standup command for daily status reports
 ```
 
-### 例3: 最小限のオーバーヘッドで素早い修正
+<Callout>
+  **仕組み：** `/jarfis:implement`はJARFISのシステム構造を理解し、プロンプトテンプレート、コマンド定義、Phaseハンドラー、ドキュメントなど影響を受けるすべてのファイルに変更を適用します。
+</Callout>
 
-```
-/jarfis:work Fix the broken pagination on the orders list
-```
+## 実践的な例
 
-### 例4: 完了した作業の継続
+一般的な開発シナリオに対する実際の使用パターン：
 
-```
-/jarfis:continue Add internationalization support to the auth module
-```
+<ExampleCard example={{
+  label: "例 1 — フロントエンド専用の作業",
+  commands: ["/jarfis:work Redesign the dashboard with new chart components"],
+  description: "Triageがfrontend + UXの役割を有効化します。Phase 3（UX Design）が実行され、Phase 4はFE実装のみを行います。"
+}} />
 
-### 例5: 問題の診断
+<ExampleCard example={{
+  label: "例 2 — ミーティングを活用したフルスタック作業",
+  commands: [
+    "/jarfis:meeting Plan the multi-tenant architecture migration",
+    "/jarfis:work Implement multi-tenant data isolation --meeting tenant-architecture"
+  ],
+  description: "ミーティングで決定事項と制約を整理します。workコマンドがミーティング出力物を連結し、完全なコンテキストでパイプラインを実行します。"
+}} />
 
-```
-/jarfis:health
-```
+<ExampleCard example={{
+  label: "例 3 — クイックフィックス",
+  commands: ["/jarfis:work Fix the broken pagination on the orders list"],
+  description: "Triageが単純な修正として分類します。最小限の手順で合理化されたパイプラインで進行します。"
+}} />
+
+<ExampleCard example={{
+  label: "例 4 — 完了した作業の継続",
+  commands: ["/jarfis:continue Add internationalization support to the auth module"],
+  description: "以前に完了したワークフローを継続します。既存のコンテキストを維持しながら新しいDiscoveryパスでスコープを拡張します。"
+}} />
+
+<ExampleCard example={{
+  label: "例 5 — 状態確認",
+  commands: ["/jarfis:health"],
+  description: "ゾンビプロセス、古い状態ファイル、その他のワークフロー健全性の問題を診断します。"
+}} />
 
 ## 次のステップ
 
-- [API Reference](/ja/docs/api-reference) — 完全なcommandおよび設定リファレンス
-- [Architecture & Concepts](/ja/docs/concepts-overview) — オーケストレーションモデルの詳細
+- [API Reference](/ja/docs/api-reference) — 完全なコマンドと設定のリファレンス
+- [Architecture & Concepts](/ja/docs/concepts-overview) — オーケストレーションモデルの詳細解説
 - [Quick Start](/ja/docs/getting-started) — インストールと最初のワークフロー

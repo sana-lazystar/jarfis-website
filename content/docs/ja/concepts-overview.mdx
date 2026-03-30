@@ -1,6 +1,6 @@
 ---
 title: "Architecture & Concepts"
-description: "JARFISのコアアーキテクチャを理解しましょう: オーケストレーションモデル、11のAgent、9段階のPhaseパイプライン、3つのHuman Gate、状態管理、学習システム。"
+description: "JARFISのコアアーキテクチャを理解しましょう：オーケストレーションモデル、11のAgent、9段階のPhaseパイプライン、3つのHuman Gate、状態管理、学習システム。"
 category: "concepts"
 order: 1
 locale: "ja"
@@ -8,208 +8,201 @@ lastUpdated: 2026-03-15
 draft: false
 ---
 
-# Architecture & Concepts
+JARFISがAI AgentをTriageからRetrospectiveまで構造化されたPhaseで調整する方法 — すべての重要な意思決定ポイントで人間の監督を伴いながら。
 
-JARFIS(Just A Rather Foolish Integration System)が11の専門AIAgentを構造化されたPhaseパイプラインで調整し、プロダクションソフトウェアを出荷する方法。
+## JARFISの哲学
+
+JARFISは、エージェントの動作からPhase遷移まで、すべての設計決定を導く基本原則の上に構築されています。これらの原則は抽象的な理想ではなく、システムに埋め込まれた強制制約です。
+
+<PrincipleZeroBanner
+  title='"哲学が実装より優先する"'
+  description="哲学がシステムを導きます。実装が哲学を100%満たせなくても、哲学を実装レベルに下げることはしません。"
+/>
+
+### 9つの原則
+
+システムのすべての設計決定を導く9つのコア原則：
+
+<PrincipleGrid principles={[
+  {
+    num: "P1",
+    title: "Orchestration for All",
+    description: "非専門家もAI ITチームを通じて永続的に開発を続けられます。ユーザーは「何を」と言うだけでいい。",
+    accent: "teal",
+    category: "Core"
+  },
+  {
+    num: "P2",
+    title: "Token Austerity",
+    description: "AIは思考・推論・学習・批判にのみ使います。機械的な作業はScriptが担当。最小トークン、最大効果。",
+    accent: "yellow",
+    category: "Quality"
+  },
+  {
+    num: "P3",
+    title: "Self-Evolution",
+    description: "すべてのワークフローが学習データです。振り返り → 学習蓄積 → エージェント強化。使うほど進化する。",
+    accent: "coral",
+    category: "Evolution"
+  },
+  {
+    num: "P4",
+    title: "Dialectic Quality",
+    description: "すべての重要な決定に生産的な批評家が存在します。Advocate/Critic議論が完全性を高めます。",
+    accent: "purple",
+    category: "Quality"
+  },
+  {
+    num: "P5",
+    title: "AI-Native Artifacts",
+    description: "成果物はAIが読み取り再利用しやすい形式で。構造化されたMarkdown + JSON = コンテキスト効率の最大化。",
+    accent: "coral",
+    category: "Evolution"
+  },
+  {
+    num: "P6",
+    title: "Abstraction over Memorization",
+    description: "パターンを抽象化して汎用原則に昇格させることがDeveloper。エージェントはDeveloperになるべきです。",
+    accent: "coral",
+    category: "Evolution"
+  },
+  {
+    num: "P7",
+    title: "Deterministic Foundation",
+    description: "決定的な部分は必ずScriptで。AIの非決定性は判断が必要な場所にのみ許容。予測可能な土台の上に知性を乗せる。",
+    accent: "yellow",
+    category: "Quality"
+  },
+  {
+    num: "P8",
+    title: "Human Gate, AI Execute",
+    description: "意思決定ポイントでは人間が判断。実行はAIが自律的に。ゲートは人間のもの、パイプラインはAIのもの。",
+    accent: "teal",
+    category: "Core"
+  },
+  {
+    num: "P9",
+    title: "Resilient Continuity",
+    description: "セッションが終わっても、コンテキストが圧縮されても作業は続きます。状態ファイル + 自動コミット + バックアップが永続性を保証します。",
+    accent: "purple",
+    category: "Resilience"
+  }
+]} />
+
+### 生産的な緊張関係
+
+原則間には意図的な緊張関係が存在します。このバランスがシステムを健全に保ちます：
+
+<TensionList tensions={[
+  { left: "P3 Self-Evolution", right: "P8 Human Gate", description: "自律的な進化 vs 人間のコントロールポイント" },
+  { left: "P2 Token Austerity", right: "P3 Self-Evolution", description: "トークン節約 vs 学習への投資" },
+  { left: "P4 Dialectic Quality", right: "P1 Orchestration for All", description: "批判的品質 vs アクセシビリティの単純化" }
+]} />
 
 ## オーケストレーションモデル
 
-JARFISは**Claude Code**の中でスラッシュコマンドワークフローとして動作します。別途CLIツールや外部サービスではなく、Claude Code環境を活用して11の専門Agentをフェーズパイプラインで調整します。
+JARFISは**Phase管理型オーケストレーション**モデルに従います。作業は順次Phaseを経て流れ、重要な意思決定ポイントにHuman Gateが置かれます。オーケストレーターが状態遷移とエージェントの活性化を管理します。
 
-<PhasePipeline phases={[
-  { id: "T", name: "Triage", description: "受信したリクエストをA/B/Cタイプに分類し、適切なワークフローの深さと必要なAgentを決定します。", agents: ["PO"] },
-  { id: "0", name: "Pre-flight", description: "Git状態を同期し、作業ブランチを作成し、学習ファイル(jarfis-learnings.md、context.md、project-profile.md)を読み込みます。" },
-  { id: "1", name: "Discovery", description: "POが逆質問で要件を完全に把握した後、Working Backwards文書とPRDを作成します。Architectが実現可能性を評価します。", agents: ["PO", "Architect"] },
-  { id: "gate1", name: "Gate 1", description: "ユーザー承認チェックポイント", isGate: true, gate: { label: "GATE 1 — ユーザー承認", options: ["承認", "修正", "中断"] } },
-  { id: "2", name: "Architecture & Planning", description: "Architectが影響分析とシステム設計を行います。api_spec_requiredがtrueの場合はAPI specを作成します。Tech Leadがタスクを分解し、QA Engineerがテスト戦略を定義します。", agents: ["Architect", "Tech Lead", "QA"] },
-  { id: "3", name: "UX Design", description: "プロジェクトにUI作業が必要な場合(required_roles.uxがtrue)にのみ活性化されます。UX Designerが画面設計、インタラクション仕様、SVG asset、デザイントークンを作成します。", agents: ["UX Designer"] },
-  { id: "gate2", name: "Gate 2", description: "ユーザー承認チェックポイント", isGate: true, gate: { label: "GATE 2 — ユーザー承認", options: ["承認", "修正", "中断"] } },
-  { id: "4", name: "Implementation", description: "Backend、Frontend、DevOpsエンジニアが並行して作業し、各自の役割に該当する部分のみを実装します。進行状況はtasks.mdで追跡します。", agents: ["BE", "FE", "DevOps"] },
-  { id: "4.5", name: "Operational Readiness", description: "Review Phaseの前にデプロイ戦略、ロールバック計画、運用準備状態を整えます。", agents: ["DevOps"] },
-  { id: "5", name: "Review & QA", description: "API契約検証が最初に実行された後、Tech Lead、QA Engineer、Security Engineerの並行レビューが行われます。", agents: ["Tech Lead", "QA", "Security"] },
-  { id: "gate3", name: "Gate 3", description: "ユーザー承認チェックポイント", isGate: true, gate: { label: "GATE 3 — ユーザー承認", options: ["承認", "修正後再レビュー", "中断", "設計再検討"] } },
-  { id: "6", name: "Retrospective", description: "学習内容がグローバルなjarfis-learnings.mdとプロジェクト固有のcontext.mdに蓄積され、将来のワークフローを改善します。", agents: ["Tech Lead"] }
+<StateDiagram nodes={[
+  { label: "Triage" },
+  { label: "Pre-flight" },
+  { label: "Discovery" },
+  { label: "Gate 1", isGate: true },
+  { label: "Arch" },
+  { label: "UX" },
+  { label: "Gate 2", isGate: true },
+  { label: "Impl" },
+  { label: "Ops" },
+  { label: "Review" },
+  { label: "Gate 3", isGate: true },
+  { label: "Retro" }
 ]} />
 
-## 11のAgentの役割
+オーケストレーションモデルの主要な特性：
 
-各Agentは明確に定義された責任範囲を持ちます。Agentは役割が必要な場合にのみ活性化され、`.jarfis-state.json`の`required_roles`フィールドで制御されます。
+- **順次Phase** — 各Phaseは次が始まる前に必ず完了しなければなりません
+- **条件付き実行** — Phase 3（UX）はUI変更が必要なときのみ実行され、Phase 4.5（Ops）はインフラ変更時のみ実行されます
+- **タイプ別ルーティング** — Type A（単純修正）はPhase 4に直接進み、Type B（中規模）はPhase 1から、Type C（複雑）は全パイプラインを経由します
+- **Gate可逆性** — 人間はどのGateからでも作業を前のPhaseに戻せます
 
-<AgentGrid agents={[
-  { name: "Product Owner", abbr: "PO", description: "要件明確化のための逆質問、Working Backwards報道文作成、PRD作成。", phases: ["1"], iconBg: "rgba(13, 148, 136, 0.15)", iconColor: "#0D9488" },
-  { name: "Architect", abbr: "AR", description: "実現可能性評価、影響分析、システムアーキテクチャ設計、ADR作成。", phases: ["1", "2"], iconBg: "rgba(251, 191, 36, 0.12)", iconColor: "#FBBF24" },
-  { name: "Tech Lead", abbr: "TL", description: "API spec検討、タスク分解、コードレビュー、Retrospectiveのリード。", phases: ["2", "5", "6"], iconBg: "rgba(94, 234, 212, 0.10)", iconColor: "#5EEAD4" },
-  { name: "UX Designer", abbr: "UX", description: "画面およびインタラクション設計、SVG assetの直接作成、デザイントークンシステムの構築、ブランドデザインの担当。UI作業が必要な場合にのみ活性化されます。", phases: ["3"], iconBg: "rgba(251, 113, 133, 0.12)", iconColor: "#FB7185" },
-  { name: "Backend Engineer", abbr: "BE", description: "バックエンドサービス、API、データモデルの実装。", phases: ["4"], iconBg: "rgba(13, 148, 136, 0.15)", iconColor: "#0D9488" },
-  { name: "Frontend Engineer", abbr: "FE", description: "UIコンポーネント、フロントエンドロジック、統合の実装。", phases: ["4"], iconBg: "rgba(251, 191, 36, 0.12)", iconColor: "#FBBF24" },
-  { name: "DevOps/SRE", abbr: "DO", description: "インフラ、CI/CDパイプライン、デプロイ設定の構成。デプロイおよびロールバック計画の策定。", phases: ["4", "4.5"], iconBg: "rgba(94, 234, 212, 0.10)", iconColor: "#5EEAD4" },
-  { name: "QA Engineer", abbr: "QA", description: "テスト戦略の定義、QA検証の実行。", phases: ["2", "5"], iconBg: "rgba(251, 113, 133, 0.12)", iconColor: "#FB7185" },
-  { name: "Security Engineer", abbr: "SE", description: "事前セキュリティ分析およびセキュリティレビューの実施。", phases: ["5"], iconBg: "rgba(13, 148, 136, 0.15)", iconColor: "#0D9488" },
-  { name: "Advocate", abbr: "ADV", description: "提案されたソリューションの利点を擁護し、トレードオフの決定を守り、ステークホルダー間の合意を促進します。Dialectic Reviewシステムで活性化されます。", phases: ["2", "5"], iconBg: "rgba(251, 191, 36, 0.12)", iconColor: "#FBBF24" },
-  { name: "Critic", abbr: "CRT", description: "前提に疑問を投げかけ、弱点とリスクを特定し、システムの一貫性を守ります。Dialectic Reviewシステムで活性化されます。", phases: ["2", "5"], iconBg: "rgba(94, 234, 212, 0.10)", iconColor: "#5EEAD4" }
+## 11のAgent役割
+
+各エージェントは明確に定義された責任を持つ専門的な役割であり、現在のPhaseが必要とする専門知識が求められるときにのみ活性化されます。エージェントは4つのカテゴリに整理されます：
+
+### 計画 & 設計 Agent
+
+<QuickAgentGrid agents={[
+  { abbr: "PO", name: "Product Owner", role: "意図明確化のための逆質問、Working Backwards Press Release、PRD作成、スコープ調整", category: "planning" },
+  { abbr: "AR", name: "Architect", role: "実現可能性評価、影響分析、アーキテクチャ設計、ADR（Architecture Decision Records）作成", category: "planning" },
+  { abbr: "TL", name: "Tech Lead", role: "API spec検討、タスク分解、コードレビューのリード、Retrospective進行", category: "planning" },
+  { abbr: "UX", name: "UX Designer", role: "画面設計、インタラクション設計、SVGアセット制作、デザイントークン（条件付き — UIが必要な場合のみ）", category: "conditional" }
 ]} />
 
-## 3つのHuman Gate
+### 実装 Agent
 
-GateはユーザーがワークフローのDirectionをコントロールする必須の承認チェックポイントです。
+<QuickAgentGrid agents={[
+  { abbr: "BE", name: "Backend Engineer", role: "サーバーサイド実装、データベーススキーマ、APIエンドポイント、ビジネスロジック", category: "impl" },
+  { abbr: "FE", name: "Frontend Engineer", role: "クライアントサイド実装、コンポーネント、状態管理、UX実装", category: "impl" },
+  { abbr: "DO", name: "DevOps/SRE", role: "インフラ、CI/CDパイプライン、デプロイ設定、モニタリング構成", category: "impl" }
+]} />
 
-<GateCard gate={{
-  number: 1,
-  position: "Phase 1 (Discovery) 後",
-  options: [
-    { label: "承認", description: "Architecture & Planning (Phase 2) に進む" },
-    { label: "修正", description: "フィードバックを提供 — POとArchitectが修正後に再発表" },
-    { label: "中断", description: "ワークフロー全体をキャンセル" }
-  ]
-}} />
+### 品質 & レビュー Agent
 
-<GateCard gate={{
-  number: 2,
-  position: "Phase 2 & 3 (Architecture + UX) 後",
-  options: [
-    { label: "承認", description: "Implementation (Phase 4) に進む" },
-    { label: "修正", description: "アーキテクチャ、タスクスコープ、UXデザインの変更を要求" },
-    { label: "中断", description: "ワークフローをキャンセル" }
-  ]
-}} />
+<QuickAgentGrid agents={[
+  { abbr: "QA", name: "QA Engineer", role: "テスト戦略、テスト実装、QA検証、カバレッジ分析", category: "review" },
+  { abbr: "SE", name: "Security Engineer", role: "脅威モデリング、事前セキュリティ分析、セキュリティレビュー、コンプライアンス確認", category: "review" }
+]} />
 
-<GateCard gate={{
-  number: 3,
-  position: "Phase 5 (Review & QA) 後",
-  options: [
-    { label: "承認", description: "Retrospective (Phase 6) に進み、ラップアップ" },
-    { label: "修正後再レビュー", description: "修正を要求し、別のレビューサイクルを開始" },
-    { label: "中断", description: "ワークフローをキャンセル" },
-    { label: "設計再検討", description: "レビュー中に発見された根本的な設計問題に対し、Phase 2に戻る" }
-  ]
-}} />
+### 弁証法 Agent
 
-Gateを通過するまで、いかなるPhaseも進行しません。
+<QuickAgentGrid agents={[
+  { abbr: "ADV", name: "Advocate", role: "提案されたソリューションを擁護し、トレードオフの決定を守り、メリットを提示します", category: "dialectic" },
+  { abbr: "CRT", name: "Critic", role: "前提に疑問を投げかけ、リスクと弱点を特定し、代替案を提示します", category: "dialectic" }
+]} />
 
-## ワークフローartifact
+## 9段階 Phase パイプライン
 
-JARFISワークフローは作業ディレクトリに最大11の構造化された文書を生成します。
+Phase別の責任とGate位置を含む全パイプライン：
 
-<ArtifactList groups={[
-  {
-    phase: "Phase 1 — Discovery",
-    artifacts: [
-      { name: "Working Backwards（報道文）", author: "PO" },
-      { name: "PRD", author: "PO" },
-      { name: "実現可能性評価", author: "Architect" }
-    ]
-  },
-  {
-    phase: "Phase 2 — Architecture & Planning",
-    artifacts: [
-      { name: "影響分析", author: "Architect" },
-      { name: "Architecture / ADR", author: "Architect" },
-      { name: "API specification", author: "Architect / Tech Lead" },
-      { name: "タスク分解 (tasks.md)", author: "Tech Lead" },
-      { name: "テスト戦略", author: "QA Engineer" }
-    ]
-  },
-  {
-    phase: "Phase 3 — UX Design",
-    artifacts: [
-      { name: "UX specification", author: "UX Designer" }
-    ]
-  },
-  {
-    phase: "Phase 4.5 — Operational Readiness",
-    artifacts: [
-      { name: "デプロイ / ロールバック計画", author: "DevOps/SRE" }
-    ]
-  },
-  {
-    phase: "Phase 5 — Review & QA",
-    artifacts: [
-      { name: "レビューレポート", author: "Tech Lead / QA / Security" }
-    ]
-  }
+<QuickPhaseList items={[
+  { type: "phase", id: "T", name: "Triage", description: "リクエストをType A（単純）、B（中規模）、C（複雑）に分類します。実行するPhaseを決定します。" },
+  { type: "phase", id: "0", name: "Pre-flight", description: "Git同期、ブランチ作成、学習ファイルの読み込み（グローバル学習 + プロジェクトコンテキスト）、環境検証。" },
+  { type: "phase", id: "1", name: "Discovery", description: "POが逆質問を行い、Working Backwards文書とPRDを作成します。Architectが実現可能性を評価します。" },
+  { type: "gate", label: "Gate 1", options: "承認 / 修正 / 中断" },
+  { type: "phase", id: "2", name: "Architecture & Planning", description: "影響分析、アーキテクチャ設計、API spec、タスク分解、テスト戦略。重要な決定にADV/CRT弁証法議論。" },
+  { type: "phase", id: "3", name: "UX Design", description: "画面設計、SVGアセット、デザイントークン。条件付き — UI変更が必要な場合のみ実行されます。" },
+  { type: "gate", label: "Gate 2", options: "承認 / 修正 / 中断" },
+  { type: "phase", id: "4", name: "Implementation", description: "BE/FE/DevOpsの並行実装。各エージェントはPhase 2のAPI契約に従い自身のドメインで作業します。" },
+  { type: "phase", id: "4.5", name: "Operational Readiness", description: "デプロイ戦略、ロールバック計画、モニタリング、運用文書化。条件付き — インフラ変更時のみ実行されます。" },
+  { type: "phase", id: "5", name: "Review & QA", description: "API契約検証、TLコードレビュー、QAテスト、SEセキュリティレビュー。すべてのレビューが通過する必要があります。" },
+  { type: "gate", label: "Gate 3", options: "承認 / 修正後再レビュー / 中断 / 設計再検討" },
+  { type: "phase", id: "6", name: "Retrospective", description: "TLがRetrospectiveを進行します。学習内容がグローバル学習とプロジェクトコンテキストに保存され、将来のワークフローに反映されます。" }
 ]} />
 
 ## 状態管理
 
-JARFISはプロジェクトルートの`.jarfis-state.json`でワークフロー状態を追跡します。
+JARFISは以下を追跡する構造化された状態ファイルでワークフローの状態を維持します：
 
-```json
-{
-  "work_name": "auth-system",
-  "docs_dir": ".jarfis/works/2026-03-05/auth-system",
-  "branch": "jarfis/auth-system",
-  "base_branch": "main",
-  "current_phase": 4,
-  "required_roles": {
-    "backend": true,
-    "frontend": true,
-    "ux": true,
-    "devops": false,
-    "security": true
-  },
-  "api_spec_required": true,
-  "phases": {
-    "T": { "status": "completed" },
-    "0": { "status": "completed" },
-    "1": { "status": "completed" },
-    "4": { "status": "in_progress" },
-    "4.5": { "status": "pending" },
-    "5": { "status": "pending" },
-    "6": { "status": "pending" }
-  }
-}
-```
+- **現在のPhase** — 現在実行中のPhase
+- **Phase出力物** — 各完了Phaseが生成した成果物
+- **Gate決定** — タイムスタンプとともに記録された各Gateでの人間の決定
+- **エージェント活性化** — 活性化されたエージェントとその出力物
+- **回復チェックポイント** — 中断されたワークフローの再開のためのスナップショット
 
-主要フィールド:
-- **`current_phase`** — 現在アクティブなPhaseを示す数値または`"done"`
-- **`required_roles`** — どのAgentを活性化するかを制御するbooleanフラグ
-- **`api_spec_required`** — API specificationドキュメントの作成が必要かどうか
-- **`phases`** — Phase別の状態追跡（pending / in_progress / completed / skipped）
+状態はプロジェクト内の`.jarfis/`ディレクトリにJSONファイルとして保存されます。これにより中断後もワークフローを回復でき、中断した正確な地点から再開できます。
 
 ## 学習システム
 
-JARFISは2段階の学習システムを通じて、ワークフローを重ねるごとに進化します。
+JARFISは継続的な改善を可能にする3ブロックの学習アーキテクチャを実装しています：
 
-### グローバル学習: `~/.claude/jarfis-learnings.md`
-ユーザーのホームディレクトリに保存され、すべてのプロジェクトで共有されます。以下を含みます:
-- **Agent Hints** — Retrospectiveから蓄積された行動ルール
-- **Workflow Patterns** — 効果が検証された繰り返しパターン
+- **グローバル学習** — プロジェクトを横断するパターン、ベストプラクティス、アンチパターン。Phase 0で読み込まれ、Phase 6で更新されます。
+- **プロジェクトコンテキスト** — プロジェクト固有の規約、技術スタックの決定、アーキテクチャパターン。同一プロジェクト内のワークフロー全体を通じて保持されます。
+- **ワークフローメモリ** — 現在のワークフロー状態、下された決定、根拠。一時的 — ワークフローの期間のみ存在します。
 
-### プロジェクトコンテキスト: `.jarfis/context.md`
-Agentプロンプトに注入されるプロジェクト固有の知識:
-- 技術スタックの詳細とconvention
-- ビジネスドメインの知識
-- 統合上の制約と既存パターン
-
-### プロジェクトプロファイル: `.jarfis/project-profile.md`
-`/jarfis:project-init`で生成され、`/jarfis:project-update`で更新されます。
-
-## ミーティングシステム
-
-`/jarfis:meeting`コマンドは計画のための構造化されたキックオフミーティングを開始します:
-
-```
-/jarfis:meeting Define the authentication strategy for the mobile app
-```
-
-ミーティング結果は以降のワークフローで`--meeting`フラグを使って参照できます:
-
-```
-/jarfis:work Implement auth system --meeting auth-strategy-meeting
-```
-
-## 設計原則
-
-1. **専門化** — 各Agentは1つのドメインで深い専門知識を持ちます
-2. **段階的デリバリー** — 構造化されたPhaseは完全性を保証します
-3. **Human Gate** — 重要な決定は3つのチェックポイントで明示的な承認を必要とします
-4. **条件付き活性化** — AgentとPhaseは関連がある場合にのみ活性化されます
-5. **Stateful** — 作業は`.jarfis-state.json`を通じてセッション境界を越えて維持されます
-6. **継続的学習** — すべてのRetrospectiveが将来のワークフローを改善します
-7. **Claude Codeネイティブ** — 外部サービスなしで開発環境内で完全に実行されます
+このアーキテクチャにより、JARFISは時間が経つほど向上します — 過去の失敗と成功から学び、あなたの特定のプロジェクトコンテキストに合わせて推奨を調整します。
 
 ## 次のステップ
 
-- [Quick Start](/ja/docs/getting-started) — JARFISのインストールと最初のワークフロー実行
-- [API Reference](/ja/docs/api-reference) — すべてのcommandと設定の詳細情報
+- [Quick Start](/ja/docs/getting-started) — JARFISをインストールして最初のワークフローを実行
+- [API Reference](/ja/docs/api-reference) — すべてのコマンドと設定の詳細
 - [Guides & Customization](/ja/docs/guides-customization) — 高度なワークフローパターン

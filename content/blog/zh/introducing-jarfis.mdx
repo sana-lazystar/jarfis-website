@@ -1,0 +1,123 @@
+---
+title: "JARFIS介绍：11个AI Agent，一条斜杠命令"
+description: "JARFIS协调11个专业AI Agent，从需求定义到部署，只需一条Claude Code斜杠命令即可完成生产级软件。"
+pubDate: 2026-03-05
+author: "JARFIS Team"
+tags: ["announcement", "architecture", "agents"]
+locale: "zh"
+draft: false
+ogImage: "/images/og/og-blog.png"
+---
+
+# JARFIS介绍：11个AI Agent，一条斜杠命令
+
+软件开发团队花费大量时间协调跨领域的工作——产品、设计、工程、QA、DevOps。每一次交接都会带来摩擦，每一次上下文切换都会消耗时间。JARFIS建立在一个想法之上：如果能彻底消除这些交接呢？
+
+JARFIS（Just A Rather Foolish Integration System）是一个100%开源的AI Agent框架，作为斜杠命令工作流原生运行在**Claude Code**内部。它协调一支11名专业Agent组成的团队，覆盖软件开发生命周期的每个阶段——无需外部服务，无需供应商锁定，无需安装独立CLI。
+
+## 单Agent AI的局限
+
+今天大多数AI编码工具都是单Agent的。你提问，得到答案；描述功能，得到代码。这个模式——到一定程度——是有效的。
+
+软件交付中真正的瓶颈从来不是"有没有人能写这段代码"，而是整个工作流：理解需求、做出设计决策、编写符合规范的代码、捕获回归、处理部署。没有哪个单一Agent能可靠地保持所有这些上下文。
+
+JARFIS通过专业化解决这个问题。每个Agent拥有特定领域，并以结构化的、经过验证的输出交接给下一个Agent。
+
+## 11个Agent
+
+JARFIS内置11个专用Agent，每个Agent负责明确的角色：
+
+| Agent | 主要职责 |
+|-------|---------|
+| **Product Owner（PO）** | 通过逆向提问明确需求，撰写Working Backwards新闻稿，起草PRD |
+| **Architect** | 评估可行性，进行影响分析，设计系统架构，编写ADR |
+| **Tech Lead** | 审查API规范，分解任务，进行代码审查，主导Retrospective |
+| **UX Designer** | 直接制作SVG资产和设计令牌系统；设计界面和交互（仅在需要UI工作时激活） |
+| **Backend Engineer** | 实现后端服务、API和数据模型 |
+| **Frontend Engineer** | 实现UI组件、前端逻辑和集成 |
+| **DevOps/SRE** | 搭建基础设施、CI/CD流水线和部署配置 |
+| **QA Engineer** | 制定测试策略并执行QA验证 |
+| **Security Engineer** | 进行预审安全分析和安全审查 |
+| **Advocate** | 在辩证审查中为提案的优点和用户价值辩护 |
+| **Critic** | 在辩证审查中批判性地审查提案的风险、副作用和设计不一致性 |
+
+这些Agent不只是顺序运行——它们有机协作。Frontend Engineer基于UX Designer的规范实现，QA Engineer基于PO的验收标准进行测试，Tech Lead在发布前审查每位工程师的产出。
+
+## 9阶段Phase流水线
+
+JARFIS将每个工作流组织为9个定义明确的Phase，每个Phase都有特定的输入、输出和负责的Agent。3个Human Gate位于关键检查点——在Gate通过之前，任何Phase都不会继续。
+
+```
+Phase T:   Triage               — 请求类型分类
+Phase 0:   Pre-flight           — Git同步，加载学习文件
+Phase 1:   Discovery            — PO + Architect
+           ↓ Gate 1: 批准 / 修改 / 中止
+Phase 2:   Architecture         — 系统设计，任务分解
+Phase 3:   UX Design            — 界面与交互规范（条件执行）
+           ↓ Gate 2: 批准 / 修改 / 中止
+Phase 4:   Implementation       — BE / FE / DevOps并行
+Phase 4.5: Operational Readiness — 部署与回滚计划
+Phase 5:   Review & QA          — Tech Lead / QA / Security并行审查
+           ↓ Gate 3: 批准 / 修改后重审 / 中止
+Phase 6:   Retrospective        — 积累学习，改进未来工作流
+```
+
+每个Gate都会产出工件——文档、测试报告、已签批的规范——输入到下一个Phase。Gate未通过则一切停止。这意味着在周期后期减少意外，并为每个决策留下清晰的审计跟踪。
+
+## 实践中的样子
+
+JARFIS作为Claude Code内的斜杠命令运行。启动新功能的样子是这样的：
+
+```
+/jarfis:work Implement user authentication with OAuth 2.0
+```
+
+JARFIS从这里接手：
+
+1. **Phase T** 对请求进行分类，确定需要哪些Agent
+2. **Phase 0** 同步Git状态，加载项目学习
+3. **Phase 1** — PO明确需求，Architect评估可行性。在Gate 1审查并批准
+4. **Phase 2** — Architect设计系统，Tech Lead分解任务
+5. **Phase 3** — 如果涉及UI，UX Designer创建交互规范。随后是Gate 2
+6. **Phase 4** — Backend Engineer、Frontend Engineer和DevOps/SRE并行工作
+7. **Phase 4.5** — 准备部署策略和回滚计划
+8. **Phase 5** — Tech Lead、QA Engineer和Security Engineer并行审查。随后是Gate 3
+9. **Phase 6** — 积累学习，改进下一个工作流
+
+结果不是原型，而是带有测试、文档和整洁git历史的生产就绪代码。
+
+## Claude Code原生，开源
+
+JARFIS完全在您的Claude Code环境中运行。无需运行独立服务器，无需调用外部API，无需创建账户。只需一条命令安装：
+
+```bash
+bash install.sh
+```
+
+此后，JARFIS在任何Claude Code会话中都可作为斜杠命令使用：
+
+```
+/jarfis:work [description]
+/jarfis:meeting [topic]
+```
+
+`meeting`命令启动结构化规划会话。会议决策可在后续工作流中引用：
+
+```
+/jarfis:work Implement auth system --meeting auth-strategy-meeting
+```
+
+框架本身采用MIT许可证。每个Agent提示、每个Gate标准、每个工作流配置都是可查阅和可修改的。如果JARFIS有您不喜欢的行为，您可以改变它。
+
+## 下一步计划
+
+JARFIS v1.0涵盖大多数Web应用项目的完整开发生命周期。后续工作包括：
+
+- **Agent Dashboard**：实时了解每个Agent正在做什么以及原因
+- **Custom Agents**：用于向流水线添加领域特定Agent的插件API
+- **Multi-Repo Orchestration**：跨微服务架构协调Agent
+- **Gate Policies**：为每个项目每个Gate配置自定义通过/失败标准
+
+如果您正在使用JARFIS构建东西，我们期待听到您的声音。提交Issue、发起讨论或提交PR。越多团队在真实问题上使用它，框架就会变得越好。
+
+给仓库点Star，加入社区。开发现在开始。
