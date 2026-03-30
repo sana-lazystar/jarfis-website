@@ -100,7 +100,7 @@ export default function LanguageSelector({ currentLocale }: LanguageSelectorProp
       <button
         onClick={() => setIsOpen(!isOpen)}
         onKeyDown={handleTriggerKeyDown}
-        className="flex items-center gap-1 rounded-full px-3 py-1.5 text-sm transition-colors"
+        className="flex min-h-[44px] items-center gap-1 rounded-full px-3 py-2.5 text-sm transition-colors"
         style={{
           border: '1px solid var(--color-border)',
           color: 'var(--color-text-secondary)',
@@ -130,9 +130,7 @@ export default function LanguageSelector({ currentLocale }: LanguageSelectorProp
               ref={(el) => { optionRefs.current[index] = el; }}
               onClick={() => switchLocale(locale)}
               onKeyDown={(e) => handleOptionKeyDown(e, locale)}
-              className={`w-full flex items-center justify-between px-3 py-2 text-sm transition-colors text-left rounded-sm ${
-                locale === currentLocale ? '' : ''
-              }`}
+              className="w-full flex items-center justify-between px-3 py-3 text-sm transition-colors text-left rounded-sm"
               style={{
                 color: locale === currentLocale ? 'var(--color-primary-light)' : 'var(--color-text-secondary)',
                 background: 'transparent',
