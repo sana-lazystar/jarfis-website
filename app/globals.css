@@ -337,3 +337,14 @@ body {
     scroll-behavior: auto;
   }
 }
+
+/* CJK Word-break Policy (ADR-004)
+ * :lang() selector 기반으로 CJK 언어에만 적용.
+ * layout.tsx에서 <html lang={locale}>이 설정되므로 selector가 정상 동작.
+ * 영어(:lang(en)) 레이아웃에는 영향 없음. */
+:lang(ko),
+:lang(ja),
+:lang(zh) {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}

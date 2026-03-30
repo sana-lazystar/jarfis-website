@@ -1,0 +1,123 @@
+---
+title: "JARFIS紹介：11のAIエージェント、1つのスラッシュコマンド"
+description: "JARFISは11の専門AIエージェントをオーケストレーションし、要件定義からデプロイまで、たった1つのClaude Codeスラッシュコマンドでプロダクションレベルのソフトウェアを完成させます。"
+pubDate: 2026-03-05
+author: "JARFIS Team"
+tags: ["announcement", "architecture", "agents"]
+locale: "ja"
+draft: false
+ogImage: "/images/og/og-blog.png"
+---
+
+# JARFIS紹介：11のAIエージェント、1つのスラッシュコマンド
+
+ソフトウェア開発チームは、製品、デザイン、エンジニアリング、QA、DevOpsといった各専門分野にまたがる作業の調整に膨大な時間を費やします。すべての引き継ぎは摩擦を生み、コンテキストの切り替えは時間を奪います。JARFISはひとつのアイデアから生まれました：これらの引き継ぎを完全になくせるとしたら？
+
+JARFIS（Just A Rather Foolish Integration System）は、**Claude Code**内でスラッシュコマンドワークフローとして動作する100%オープンソースのAIエージェントフレームワークです。外部サービスなし、ベンダーロックインなし、追加のCLIインストールなしで、ソフトウェア開発ライフサイクルのあらゆる段階で11の専門エージェントが協力します。
+
+## シングルエージェントAIの限界
+
+今日のほとんどのAIコーディングツールはシングルエージェントです。質問すれば答えが返ってきて、機能を説明すればコードが出てきます。このモデルは――ある地点までは――うまく機能します。
+
+ソフトウェア開発における本当のボトルネックは「誰かがこのコードを書けるか」ではありません。それは全体のワークフローです：要件の理解、設計判断、仕様に合ったコードの作成、リグレッションの検出、デプロイの処理。どんなシングルエージェントもこれらのコンテキスト全体を確実に保持することはできません。
+
+JARFISは専門化でこの問題を解決します。各エージェントが特定のドメインを担い、構造化された検証済みの出力と共に次のエージェントへ引き継ぎます。
+
+## 11のエージェント
+
+JARFISは各自が明確な役割を担う11の専用エージェントを搭載しています：
+
+| エージェント | 主な責任 |
+|------------|---------|
+| **Product Owner（PO）** | 逆質問で要件を明確化、Working Backwards Press Release作成、PRD作成 |
+| **Architect** | 実現可能性評価、影響分析、システムアーキテクチャ設計、ADR作成 |
+| **Tech Lead** | API仕様レビュー、タスク分解、コードレビュー、Retrospective進行 |
+| **UX Designer** | SVGアセットとデザイントークンシステムを直接制作；画面・インタラクション設計（UIが必要な場合のみ活性化） |
+| **Backend Engineer** | バックエンドサービス、API、データモデルの実装 |
+| **Frontend Engineer** | UIコンポーネント、フロントエンドロジック、統合の実装 |
+| **DevOps/SRE** | インフラ、CI/CDパイプライン、デプロイ設定の構成 |
+| **QA Engineer** | テスト戦略の策定とQA検証の実施 |
+| **Security Engineer** | 事前セキュリティ分析とセキュリティレビューの実施 |
+| **Advocate** | 弁証法的レビューにおいて提案のメリットとユーザー価値を擁護 |
+| **Critic** | 弁証法的レビューにおいて提案のリスク、副作用、設計上の不整合を批判的に検証 |
+
+これらのエージェントは単に順次実行されるだけではありません――有機的に協力します。Frontend EngineerはUX Designerの仕様に基づいて実装し、QA EngineerはPOのAcceptance Criteriaに基づいてテストし、Tech Leadはすべてのエンジニアの成果物を出荷前にレビューします。
+
+## 9段階のPhaseパイプライン
+
+JARFISはすべてのワークフローを9つの定義されたPhaseで構成し、各Phaseは明確な入力、出力、担当エージェントを持ちます。3つのHuman Gateが重要なチェックポイントに配置されており――Gateを通過するまでどのPhaseも進みません。
+
+```
+Phase T:   Triage               — リクエストタイプの分類
+Phase 0:   Pre-flight           — Git同期、学習ファイルの読み込み
+Phase 1:   Discovery            — PO + Architect
+           ↓ Gate 1: 承認 / 修正 / 中断
+Phase 2:   Architecture         — システム設計、タスク分解
+Phase 3:   UX Design            — 画面・インタラクション仕様（条件付き）
+           ↓ Gate 2: 承認 / 修正 / 中断
+Phase 4:   Implementation       — BE / FE / DevOps並行実施
+Phase 4.5: Operational Readiness — デプロイ & ロールバック計画
+Phase 5:   Review & QA          — Tech Lead / QA / Security並行レビュー
+           ↓ Gate 3: 承認 / 修正後再レビュー / 中断
+Phase 6:   Retrospective        — 将来のワークフローのための学習蓄積
+```
+
+すべてのGateは成果物を生成します――ドキュメント、テストレポート、承認済み仕様書――が次のPhaseに供給されます。Gateを通過するまで何も進みません。これによりサイクル後半でのサプライズが減り、すべての決定の明確な監査証跡が残ります。
+
+## 実際にはどのように動作するか
+
+JARFISはClaude Code内のスラッシュコマンドとして実行されます。新しい機能を始めると以下のようになります：
+
+```
+/jarfis:work Implement user authentication with OAuth 2.0
+```
+
+JARFISが残りを処理します：
+
+1. **Phase T** — リクエストを分類し、必要なエージェントを決定します
+2. **Phase 0** — Gitの状態を同期し、プロジェクトの学習を読み込みます
+3. **Phase 1** — POが要件を明確化し、Architectが実現可能性を評価します。Gate 1でレビュー後承認
+4. **Phase 2** — Architectがシステムを設計し、Tech Leadがタスクを分解します
+5. **Phase 3** — UIが含まれる場合、UX Designerがインタラクション仕様を作成します。Gate 2が続きます
+6. **Phase 4** — Backend Engineer、Frontend Engineer、DevOps/SREが並行して作業します
+7. **Phase 4.5** — デプロイ戦略とロールバック計画が準備されます
+8. **Phase 5** — Tech Lead、QA Engineer、Security Engineerが並行してレビューします。Gate 3が続きます
+9. **Phase 6** — 次のワークフローを改善するために学習が蓄積されます
+
+結果はプロトタイプではありません――テストとドキュメント、クリーンなgit履歴を備えたプロダクションレディなコードです。
+
+## Claude Codeネイティブ、オープンソース
+
+JARFISは完全にClaude Code環境内で実行されます。別途サーバーを動かす必要も、外部APIを呼び出す必要も、アカウントを作成する必要もありません。単一のコマンドでインストールできます：
+
+```bash
+bash install.sh
+```
+
+それ以降、JARFISはすべてのClaude CodeセッションでスラッシュコマンドとしてURL使用できます：
+
+```
+/jarfis:work [description]
+/jarfis:meeting [topic]
+```
+
+`meeting`コマンドは構造化されたプランニングセッションを開始します。ミーティングの決定事項は後続のワークフローで参照できます：
+
+```
+/jarfis:work Implement auth system --meeting auth-strategy-meeting
+```
+
+フレームワーク自体はMITライセンスです。すべてのエージェントプロンプト、すべてのGate基準、すべてのワークフロー設定を確認・変更できます。JARFISが気に入らない動作をすれば、変更できます。
+
+## これからの計画
+
+JARFIS v1.0はほとんどのWebアプリケーションプロジェクトの完全な開発ライフサイクルをカバーしています。今後の予定：
+
+- **Agent Dashboard**：各エージェントが何を、なぜ行っているかをリアルタイムで可視化
+- **Custom Agents**：ドメイン固有のエージェントをパイプラインに追加するためのプラグインAPI
+- **Multi-Repo Orchestration**：マイクロサービスアーキテクチャ全体にわたるエージェントの調整
+- **Gate Policies**：プロジェクトごと、Gateごとのカスタム合否基準の設定
+
+JARFISで何かを構築していれば、ぜひ教えてください。Issueを開いたり、ディスカッションを始めたり、PRを提出してください。より多くのチームが実際の問題に使うほど、フレームワークは良くなります。
+
+リポジトリにStarをつけてコミュニティに参加してください。開発は今始まります。

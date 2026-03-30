@@ -30,6 +30,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
   return (
     <html lang={locale} className="dark">
       <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta httpEquiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none';" />
         <meta name="color-scheme" content="dark" />
         <link rel="icon" href={withBasePath('/favicon.ico')} sizes="any" />

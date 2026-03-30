@@ -1,6 +1,6 @@
 ---
-title: "クイックスタート"
-description: "JARFISをインストールし、11の専門Agentと構造化されたPhaseで最初のAI駆動ソフトウェア開発ワークフローを実行しましょう。"
+title: "Quick Start"
+description: "JARFISをインストールして、11の専門AIエージェントと構造化されたPhaseで最初のAI駆動ソフトウェア開発ワークフローを実行しましょう。"
 category: "getting-started"
 order: 1
 locale: "ja"
@@ -8,99 +8,100 @@ lastUpdated: 2026-03-15
 draft: false
 ---
 
-# クイックスタート
-
-AIとともにソフトウェアを出荷しましょう — スラッシュコマンド1つ、11の専門Agent、Human Gateで構成された構造化されたPhase。
+AIとともにソフトウェアを届けましょう — 1つのスラッシュコマンド、11人の専門エージェント、Human Gateを備えた構造化されたPhase。
 
 ## 前提条件
 
-始める前に、以下の準備ができているか確認してください:
+始める前に、以下をご準備ください：
 
-- **Claude Code** (Anthropic) — JARFISはClaude Codeの中でスラッシュコマンドワークフローとしてネイティブに動作します
-- APIアクセス権限を持つClaudeアカウント
-- **Git** >= 2.x (Phase 0のブランチ管理に必要)
-- [JARFIS GitHubリポジトリ](https://github.com/sana-lazystar/jarfis)をクローンしたか、アクセス可能な状態
+- **Claude Code**（Anthropic） — JARFISはスラッシュコマンドワークフローとしてClaude Code内でネイティブに動作します
+- APIアクセスを持つClaudeアカウント
+- **Git** >= 2.x（Phase 0でのブランチ管理のため）
+- [JARFIS GitHubリポジトリ](https://github.com/sana-lazystar/jarfis)のクローンまたはアクセス可能な状態
 
 ## インストール
 
-JARFISはGitHubリポジトリの`install.sh`スクリプトでインストールします。ターミナルで以下のコマンドを実行してください:
+JARFISはGitHubリポジトリの`install.sh`スクリプトでインストールします。ターミナルで以下を実行してください：
 
 ```bash
 bash install.sh
 ```
 
-このコマンドはClaude Code環境にJARFISスラッシュコマンドを登録します。インストール後、以下のプロジェクト構造が利用可能になります:
-
-```
-your-project/
-├── .jarfis/
-│   ├── context.md             # プロジェクト固有コンテキスト
-│   └── project-profile.md     # プロジェクトプロファイル
-├── .jarfis-state.json         # ワークフロー状態追跡
-└── ~/.claude/
-    └── jarfis-learnings.md    # グローバル学習ファイル（プロジェクト横断）
-```
-
-> **注意**: `/jarfis:install`コマンドは存在しません。インストールは必ず`bash install.sh`で行います。
+<Callout>
+  **注意：** `/jarfis:install`コマンドはありません。インストールは必ず`bash install.sh`で行ってください。
+</Callout>
 
 ## 最初のワークフローを実行する
 
-Claude Codeでプロジェクトディレクトリを開き、ワークフローを開始します:
+プロジェクトディレクトリでClaude Codeを開き、ワークフローを開始します：
 
 ```
 /jarfis:work Build a user authentication system with JWT tokens
 ```
 
-JARFISはリクエストを分類(Phase T — Triage)した後、専門AIAgentが担当する構造化されたPhaseを順に案内します。
+JARFISがリクエストを分類（Phase T — Triage）した後、各段階を専門AIエージェントが担当する構造化されたPhaseへと案内します。
 
 ## 9つのPhase
 
-すべてのワークフローは最大9つのPhaseを経ます。該当しない場合はPhaseをスキップします(例: UIが不要な場合はPhase 3を省略):
+すべてのワークフローは最大9つのPhaseを経由します。UIが不要な場合のPhase 3など、該当しないPhaseはスキップされます：
 
-| Phase | 名前 | 実行内容 |
-|-------|------|---------|
-| T | Triage | リクエストをA/B/Cタイプに分類 |
-| 0 | Pre-flight | Git同期、ブランチ作成、学習ファイル読み込み |
-| 1 | Discovery | POの逆質問、Working Backwards、PRD、実現可能性評価 |
-| 2 | Architecture & Planning | 影響分析、設計、API spec、タスク分解、テスト戦略 |
-| 3 | UX Design | 画面設計、SVG asset、デザイントークン（条件付き — UIが必要な場合のみ） |
-| 4 | Implementation | BE/FE/DevOps並行実装 |
-| 4.5 | Operational Readiness | デプロイ戦略、ロールバック計画、運用準備 |
-| 5 | Review & QA | API契約検証、Tech Lead + QA + Securityレビュー |
-| 6 | Retrospective | 学習蓄積（グローバルlearnings + プロジェクトcontext） |
+<QuickPhaseList items={[
+  { type: "phase", id: "T", name: "Triage", description: "リクエストをA/B/Cタイプに分類します" },
+  { type: "phase", id: "0", name: "Pre-flight", description: "Git同期、ブランチ作成、学習ファイルの読み込み" },
+  { type: "phase", id: "1", name: "Discovery", description: "POの逆質問、Working Backwards、PRD、実現可能性評価" },
+  { type: "gate", label: "Gate 1", options: "承認 / 修正 / 中断" },
+  { type: "phase", id: "2", name: "Architecture & Planning", description: "影響分析、設計、API spec、タスク分解、テスト戦略" },
+  { type: "phase", id: "3", name: "UX Design", description: "画面設計、SVGアセット、デザイントークン（条件付き — UIが必要な場合のみ）" },
+  { type: "gate", label: "Gate 2", options: "承認 / 修正 / 中断" },
+  { type: "phase", id: "4", name: "Implementation", description: "BE/FE/DevOpsの並行実装" },
+  { type: "phase", id: "4.5", name: "Operational Readiness", description: "デプロイ戦略、ロールバック計画、運用準備" },
+  { type: "phase", id: "5", name: "Review & QA", description: "API契約検証、Tech Lead + QA + Securityレビュー" },
+  { type: "gate", label: "Gate 3", options: "承認 / 修正後再レビュー / 中断 / 設計再検討" },
+  { type: "phase", id: "6", name: "Retrospective", description: "学習の蓄積（グローバル学習 + プロジェクトコンテキスト）" }
+]} />
 
-## 11のAgent
+## 11のエージェント
 
-JARFISは11の専門Agentを調整しており、各Agentは現在のPhaseとプロジェクト要件に関係する場合にのみ活性化されます:
+JARFISは11の専門エージェントをオーケストレーションします。各エージェントは関連するPhaseでのみ活性化されます：
 
-| Agent | 役割 |
-|-------|------|
-| **Product Owner (PO)** | 逆質問、Working Backwards、PRD作成 |
-| **Architect** | 実現可能性評価、影響分析、アーキテクチャ設計、ADR |
-| **Tech Lead** | API spec検討、タスク分解、コードレビュー、Retrospective |
-| **UX Designer** | 画面設計、インタラクション設計、SVG asset作成、デザイントークン |
-| **Backend Engineer** | バックエンド実装 |
-| **Frontend Engineer** | フロントエンド実装 |
-| **DevOps/SRE** | インフラおよびCI/CD実装 |
-| **QA Engineer** | テスト戦略、QA検証 |
-| **Security Engineer** | 事前セキュリティ分析、セキュリティレビュー |
-| **Advocate** | 提案されたソリューションの利点を擁護、トレードオフの防衛 |
-| **Critic** | 前提への疑問提起、リスクと弱点の特定 |
+<QuickAgentGrid agents={[
+  { abbr: "PO", name: "Product Owner", role: "逆質問、Working Backwards、PRD作成", category: "planning" },
+  { abbr: "AR", name: "Architect", role: "実現可能性評価、影響分析、アーキテクチャ設計、ADR", category: "planning" },
+  { abbr: "TL", name: "Tech Lead", role: "API spec検討、タスク分解、コードレビュー、Retrospective", category: "planning" },
+  { abbr: "UX", name: "UX Designer", role: "画面設計、インタラクション設計、SVGアセット制作、デザイントークン", category: "conditional" },
+  { abbr: "BE", name: "Backend Engineer", role: "バックエンド実装", category: "impl" },
+  { abbr: "FE", name: "Frontend Engineer", role: "フロントエンド実装", category: "impl" },
+  { abbr: "DO", name: "DevOps/SRE", role: "インフラおよびCI/CD実装", category: "impl" },
+  { abbr: "QA", name: "QA Engineer", role: "テスト戦略、QA検証", category: "review" },
+  { abbr: "SE", name: "Security Engineer", role: "事前セキュリティ分析、セキュリティレビュー", category: "review" },
+  { abbr: "ADV", name: "Advocate", role: "提案されたソリューションを擁護し、トレードオフの決定を守ります", category: "dialectic" },
+  { abbr: "CRT", name: "Critic", role: "前提に疑問を投げかけ、リスクと弱点を特定します", category: "dialectic" }
+]} />
 
 ## Human Gate
 
-JARFISは次のPhaseに進む前に明示的な承認が必要な3つのGateを含んでいます:
+JARFISには進行前に明示的な承認が必要な3つのGateがあります：
 
-| Gate | タイミング | 選択肢 |
-|------|-----------|--------|
-| Gate 1 | Phase 1 (Discovery) 後 | 承認 / 修正 / 中断 |
-| Gate 2 | Phase 2 & 3 (Architecture + UX) 後 | 承認 / 修正 / 中断 |
-| Gate 3 | Phase 5 (Review & QA) 後 | 承認 / 修正後再レビュー / 中断 / 設計再検討 |
-
-これらのGateにより、主要なマイルストーンごとに方向を自分でコントロールできます。
+<QuickGateCards gates={[
+  {
+    title: "Gate 1 — Phase 1（Discovery）の後",
+    description: "アーキテクチャが始まる前に、PRD、実現可能性分析、スコープを確認します。",
+    actions: ["承認", "修正", "中断"]
+  },
+  {
+    title: "Gate 2 — Phase 2 & 3（Architecture + UX）の後",
+    description: "実装開始前に、アーキテクチャの決定、API spec、タスク分解、UXデザインを確認します。",
+    actions: ["承認", "修正", "中断"]
+  },
+  {
+    title: "Gate 3 — Phase 5（Review & QA）の後",
+    description: "Retrospective前の最終品質ゲート。すべてのコード、テスト、セキュリティの発見事項を確認します。",
+    actions: ["承認", "修正後再レビュー", "中断", "設計再検討"]
+  }
+]} />
 
 ## 次のステップ
 
-- [Architecture & Concepts](/ja/docs/concepts-overview)でJARFIS全体のオーケストレーションモデルを理解する
-- [API Reference](/ja/docs/api-reference)ですべてのcommandと設定を確認する
-- [Guides & Customization](/ja/docs/guides-customization)で高度なワークフローパターンを参照する
+- [Architecture & Concepts](/ja/docs/concepts-overview)を読んで、JARFISオーケストレーションモデル全体を理解しましょう
+- [API Reference](/ja/docs/api-reference)で利用可能なすべてのコマンドと設定を確認しましょう
+- [Guides & Customization](/ja/docs/guides-customization)で高度なワークフローパターンを探索しましょう

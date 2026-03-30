@@ -8,189 +8,201 @@ lastUpdated: 2026-03-15
 draft: false
 ---
 
-# 架构与概念
+JARFIS如何通过结构化Phase协调AI Agent——从Triage到Retrospective，在每个关键决策节点都有人类监督。
 
-JARFIS（Just A Rather Foolish Integration System）通过结构化的Phase流水线协调11个专业AI Agent，交付生产级软件。
+## JARFIS哲学
+
+JARFIS建立在一套基础原则之上，这些原则指导着每一个设计决策，从Agent行为到Phase转换。这些原则不是抽象的理想，而是嵌入系统中的强制约束。
+
+<PrincipleZeroBanner
+  title='"哲学优先于实现"'
+  description="哲学引导系统。即使实现无法100%满足哲学，也绝不将哲学降低到实现水平。"
+/>
+
+### 九大原则
+
+指导系统所有设计决策的9个核心原则：
+
+<PrincipleGrid principles={[
+  {
+    num: "P1",
+    title: "Orchestration for All",
+    description: "非专业人员也能通过AI IT团队持续进行开发。用户只需说明做什么即可。",
+    accent: "teal",
+    category: "Core"
+  },
+  {
+    num: "P2",
+    title: "Token Austerity",
+    description: "AI只用于思考、推理、学习和批判。机械性任务由Script承担。最少token，最大效果。",
+    accent: "yellow",
+    category: "Quality"
+  },
+  {
+    num: "P3",
+    title: "Self-Evolution",
+    description: "每个工作流都是学习数据。复盘 → 积累学习 → 强化Agent。越用越进化。",
+    accent: "coral",
+    category: "Evolution"
+  },
+  {
+    num: "P4",
+    title: "Dialectic Quality",
+    description: "每个重要决策都有建设性的批评者。Advocate/Critic辩论提升完整性。",
+    accent: "purple",
+    category: "Quality"
+  },
+  {
+    num: "P5",
+    title: "AI-Native Artifacts",
+    description: "产出物以AI易于读取和复用的形式呈现。结构化Markdown + JSON = 最大化上下文效率。",
+    accent: "coral",
+    category: "Evolution"
+  },
+  {
+    num: "P6",
+    title: "Abstraction over Memorization",
+    description: "将模式抽象为通用原则，这才是Developer。Agent应该成为Developer。",
+    accent: "coral",
+    category: "Evolution"
+  },
+  {
+    num: "P7",
+    title: "Deterministic Foundation",
+    description: "确定性的部分必须用Script。AI的非确定性只允许在需要判断的地方。在可预测的基础上搭载智能。",
+    accent: "yellow",
+    category: "Quality"
+  },
+  {
+    num: "P8",
+    title: "Human Gate, AI Execute",
+    description: "在决策节点由人类判断。执行由AI自主完成。Gate属于人类，流水线属于AI。",
+    accent: "teal",
+    category: "Core"
+  },
+  {
+    num: "P9",
+    title: "Resilient Continuity",
+    description: "即使会话终止、上下文被压缩，工作也能继续。状态文件 + 自动提交 + 备份保证持久性。",
+    accent: "purple",
+    category: "Resilience"
+  }
+]} />
+
+### 建设性张力
+
+原则之间存在着有意为之的张力关系。这种平衡使系统保持健康：
+
+<TensionList tensions={[
+  { left: "P3 Self-Evolution", right: "P8 Human Gate", description: "自主进化 vs 人类控制节点" },
+  { left: "P2 Token Austerity", right: "P3 Self-Evolution", description: "节省token vs 为学习投入" },
+  { left: "P4 Dialectic Quality", right: "P1 Orchestration for All", description: "批判性质量 vs 可访问性简化" }
+]} />
 
 ## 编排模型
 
-JARFIS以斜杠命令工作流的形式在**Claude Code**内原生运行。它不是独立的CLI工具或外部服务，而是利用Claude Code环境，通过Phase流水线协调11个专业Agent。
+JARFIS遵循**Phase门控编排**模型。工作流经顺序Phase流转，在关键决策节点设有Human Gate。编排器负责管理状态转换和Agent激活。
 
-<PhasePipeline phases={[
-  { id: "T", name: "Triage", description: "将传入请求分类为A/B/C类型，确定适当的工作流深度和所需的Agent。", agents: ["PO"] },
-  { id: "0", name: "Pre-flight", description: "同步Git状态，创建工作分支，加载学习文件（jarfis-learnings.md、context.md、project-profile.md）。" },
-  { id: "1", name: "Discovery", description: "PO通过逆向提问充分了解需求，然后撰写Working Backwards文档和PRD。Architect评估可行性。", agents: ["PO", "Architect"] },
-  { id: "gate1", name: "Gate 1", description: "用户审批检查点", isGate: true, gate: { label: "GATE 1 — 用户审批", options: ["批准", "修改", "中止"] } },
-  { id: "2", name: "Architecture & Planning", description: "Architect执行影响分析和系统设计。如果api_spec_required为true，则编写API规范。Tech Lead分解任务，QA Engineer定义测试策略。", agents: ["Architect", "Tech Lead", "QA"] },
-  { id: "3", name: "UX Design", description: "仅在项目需要UI工作时激活（required_roles.ux为true）。UX Designer创建界面设计、交互规范、SVG资产和设计令牌。", agents: ["UX Designer"] },
-  { id: "gate2", name: "Gate 2", description: "用户审批检查点", isGate: true, gate: { label: "GATE 2 — 用户审批", options: ["批准", "修改", "中止"] } },
-  { id: "4", name: "Implementation", description: "Backend、Frontend和DevOps工程师并行工作，各自只实现与其角色相关的部分。进度通过tasks.md跟踪。", agents: ["BE", "FE", "DevOps"] },
-  { id: "4.5", name: "Operational Readiness", description: "在Review Phase之前准备部署策略、回滚计划和运维就绪状态。", agents: ["DevOps"] },
-  { id: "5", name: "Review & QA", description: "首先运行API契约验证，随后Tech Lead、QA Engineer和Security Engineer并行审查。", agents: ["Tech Lead", "QA", "Security"] },
-  { id: "gate3", name: "Gate 3", description: "用户审批检查点", isGate: true, gate: { label: "GATE 3 — 用户审批", options: ["批准", "修改后重审", "中止", "重新审视设计"] } },
-  { id: "6", name: "Retrospective", description: "学习内容积累到全局jarfis-learnings.md和项目特定的context.md中，改进未来的工作流。", agents: ["Tech Lead"] }
+<StateDiagram nodes={[
+  { label: "Triage" },
+  { label: "Pre-flight" },
+  { label: "Discovery" },
+  { label: "Gate 1", isGate: true },
+  { label: "Arch" },
+  { label: "UX" },
+  { label: "Gate 2", isGate: true },
+  { label: "Impl" },
+  { label: "Ops" },
+  { label: "Review" },
+  { label: "Gate 3", isGate: true },
+  { label: "Retro" }
 ]} />
+
+编排模型的核心特性：
+
+- **顺序Phase** — 每个Phase必须完成后下一个才能开始
+- **条件执行** — Phase 3（UX）仅在需要UI变更时运行；Phase 4.5（Ops）仅在基础设施变更时运行
+- **基于类型的路由** — Type A（简单修复）直接跳到Phase 4；Type B（中等）从Phase 1开始；Type C（复杂）经过完整流水线
+- **Gate可逆性** — 人类可以在任何Gate将工作退回到之前的Phase
 
 ## 11个Agent角色
 
-每个Agent都有明确定义的责任边界。Agent仅在需要其角色时才被激活，通过`.jarfis-state.json`中的`required_roles`字段控制。
+每个Agent都是具有明确职责的专业角色，仅在当前Phase需要其专业知识时才被激活。Agent分为四个类别：
 
-<AgentGrid agents={[
-  { name: "Product Owner", abbr: "PO", description: "通过逆向提问明确需求，撰写Working Backwards新闻稿，起草PRD。", phases: ["1"], iconBg: "rgba(13, 148, 136, 0.15)", iconColor: "#0D9488" },
-  { name: "Architect", abbr: "AR", description: "评估可行性，进行影响分析，设计系统架构，编写ADR。", phases: ["1", "2"], iconBg: "rgba(251, 191, 36, 0.12)", iconColor: "#FBBF24" },
-  { name: "Tech Lead", abbr: "TL", description: "审查API规范，分解任务，进行代码审查，主导Retrospective。", phases: ["2", "5", "6"], iconBg: "rgba(94, 234, 212, 0.10)", iconColor: "#5EEAD4" },
-  { name: "UX Designer", abbr: "UX", description: "设计界面和交互，直接创建SVG资产，建立设计令牌系统，负责品牌设计。仅在需要UI工作时激活。", phases: ["3"], iconBg: "rgba(251, 113, 133, 0.12)", iconColor: "#FB7185" },
-  { name: "Backend Engineer", abbr: "BE", description: "实现后端服务、API、数据模型。", phases: ["4"], iconBg: "rgba(13, 148, 136, 0.15)", iconColor: "#0D9488" },
-  { name: "Frontend Engineer", abbr: "FE", description: "实现UI组件、前端逻辑、集成。", phases: ["4"], iconBg: "rgba(251, 191, 36, 0.12)", iconColor: "#FBBF24" },
-  { name: "DevOps/SRE", abbr: "DO", description: "搭建基础设施、CI/CD流水线、部署配置。制定部署和回滚计划。", phases: ["4", "4.5"], iconBg: "rgba(94, 234, 212, 0.10)", iconColor: "#5EEAD4" },
-  { name: "QA Engineer", abbr: "QA", description: "定义测试策略，执行QA验证。", phases: ["2", "5"], iconBg: "rgba(251, 113, 133, 0.12)", iconColor: "#FB7185" },
-  { name: "Security Engineer", abbr: "SE", description: "执行预审安全分析和安全审查。", phases: ["5"], iconBg: "rgba(13, 148, 136, 0.15)", iconColor: "#0D9488" },
-  { name: "Advocate", abbr: "ADV", description: "为提议的解决方案的优点辩护，维护权衡决策，促进利益相关者达成共识。在Dialectic Review系统中激活。", phases: ["2", "5"], iconBg: "rgba(251, 191, 36, 0.12)", iconColor: "#FBBF24" },
-  { name: "Critic", abbr: "CRT", description: "质疑假设，识别弱点和风险，维护系统一致性。在Dialectic Review系统中激活。", phases: ["2", "5"], iconBg: "rgba(94, 234, 212, 0.10)", iconColor: "#5EEAD4" }
+### 规划 & 设计 Agent
+
+<QuickAgentGrid agents={[
+  { abbr: "PO", name: "Product Owner", role: "逆向提问明确意图、Working Backwards新闻稿、PRD撰写、范围协调", category: "planning" },
+  { abbr: "AR", name: "Architect", role: "可行性评估、影响分析、架构设计、ADR（架构决策记录）撰写", category: "planning" },
+  { abbr: "TL", name: "Tech Lead", role: "API规范审查、任务分解、代码审查主导、Retrospective主持", category: "planning" },
+  { abbr: "UX", name: "UX Designer", role: "界面设计、交互设计、SVG资产制作、设计令牌（条件执行——仅在需要UI时）", category: "conditional" }
 ]} />
 
-## 3个Human Gate
+### 实现 Agent
 
-Gate是用户控制工作流方向的强制审批检查点。
+<QuickAgentGrid agents={[
+  { abbr: "BE", name: "Backend Engineer", role: "服务端实现、数据库Schema、API端点、业务逻辑", category: "impl" },
+  { abbr: "FE", name: "Frontend Engineer", role: "客户端实现、组件、状态管理、UX实现", category: "impl" },
+  { abbr: "DO", name: "DevOps/SRE", role: "基础设施、CI/CD流水线、部署配置、监控搭建", category: "impl" }
+]} />
 
-<GateCard gate={{
-  number: 1,
-  position: "Phase 1（Discovery）之后",
-  options: [
-    { label: "批准", description: "进入Architecture & Planning（Phase 2）" },
-    { label: "修改", description: "提供反馈 — PO和Architect将修改并重新呈现" },
-    { label: "中止", description: "完全取消工作流" }
-  ]
-}} />
+### 质量 & 审查 Agent
 
-<GateCard gate={{
-  number: 2,
-  position: "Phase 2 & 3（Architecture + UX）之后",
-  options: [
-    { label: "批准", description: "进入Implementation（Phase 4）" },
-    { label: "修改", description: "请求更改架构、任务范围或UX设计" },
-    { label: "中止", description: "取消工作流" }
-  ]
-}} />
+<QuickAgentGrid agents={[
+  { abbr: "QA", name: "QA Engineer", role: "测试策略、测试实现、QA验证、覆盖率分析", category: "review" },
+  { abbr: "SE", name: "Security Engineer", role: "威胁建模、预审安全分析、安全审查、合规检查", category: "review" }
+]} />
 
-<GateCard gate={{
-  number: 3,
-  position: "Phase 5（Review & QA）之后",
-  options: [
-    { label: "批准", description: "进入Retrospective（Phase 6）并收尾" },
-    { label: "修改后重审", description: "请求修复并触发另一个审查周期" },
-    { label: "中止", description: "取消工作流" },
-    { label: "重新审视设计", description: "针对审查中发现的根本性设计问题，返回Phase 2" }
-  ]
-}} />
+### 辩证 Agent
 
-在通过Gate之前，任何Phase都不会继续执行。
+<QuickAgentGrid agents={[
+  { abbr: "ADV", name: "Advocate", role: "为提议的解决方案辩护，捍卫权衡决策，呈现利益", category: "dialectic" },
+  { abbr: "CRT", name: "Critic", role: "质疑假设，识别风险和弱点，提出替代方案", category: "dialectic" }
+]} />
 
-## 工作流artifact
+## 9阶段Phase流水线
 
-JARFIS工作流在工作目录中生成最多11份结构化文档。
+包含各Phase职责和Gate位置的完整流水线：
 
-<ArtifactList groups={[
-  {
-    phase: "Phase 1 — Discovery",
-    artifacts: [
-      { name: "Working Backwards（新闻稿）", author: "PO" },
-      { name: "PRD", author: "PO" },
-      { name: "可行性评估", author: "Architect" }
-    ]
-  },
-  {
-    phase: "Phase 2 — Architecture & Planning",
-    artifacts: [
-      { name: "影响分析", author: "Architect" },
-      { name: "Architecture / ADR", author: "Architect" },
-      { name: "API specification", author: "Architect / Tech Lead" },
-      { name: "任务分解（tasks.md）", author: "Tech Lead" },
-      { name: "测试策略", author: "QA Engineer" }
-    ]
-  },
-  {
-    phase: "Phase 3 — UX Design",
-    artifacts: [
-      { name: "UX specification", author: "UX Designer" }
-    ]
-  },
-  {
-    phase: "Phase 4.5 — Operational Readiness",
-    artifacts: [
-      { name: "部署 / 回滚计划", author: "DevOps/SRE" }
-    ]
-  },
-  {
-    phase: "Phase 5 — Review & QA",
-    artifacts: [
-      { name: "审查报告", author: "Tech Lead / QA / Security" }
-    ]
-  }
+<QuickPhaseList items={[
+  { type: "phase", id: "T", name: "Triage", description: "将请求分类为Type A（简单）、B（中等）或C（复杂）。决定执行哪些Phase。" },
+  { type: "phase", id: "0", name: "Pre-flight", description: "Git同步、创建分支、加载学习文件（全局学习 + 项目上下文）、验证环境。" },
+  { type: "phase", id: "1", name: "Discovery", description: "PO进行逆向提问，撰写Working Backwards文档和PRD。Architect评估可行性。" },
+  { type: "gate", label: "Gate 1", options: "批准 / 修改 / 中止" },
+  { type: "phase", id: "2", name: "Architecture & Planning", description: "影响分析、架构设计、API规范、任务分解、测试策略。关键决策进行ADV/CRT辩证讨论。" },
+  { type: "phase", id: "3", name: "UX Design", description: "界面设计、SVG资产、设计令牌。条件执行——仅在需要UI变更时运行。" },
+  { type: "gate", label: "Gate 2", options: "批准 / 修改 / 中止" },
+  { type: "phase", id: "4", name: "Implementation", description: "BE/FE/DevOps并行实现。每个Agent在自己的领域内工作，遵循Phase 2的API契约。" },
+  { type: "phase", id: "4.5", name: "Operational Readiness", description: "部署策略、回滚计划、监控、运维文档化。条件执行——仅在基础设施变更时运行。" },
+  { type: "phase", id: "5", name: "Review & QA", description: "API契约验证、TL代码审查、QA测试、SE安全审查。所有审查必须通过。" },
+  { type: "gate", label: "Gate 3", options: "批准 / 修改后重审 / 中止 / 重新审视设计" },
+  { type: "phase", id: "6", name: "Retrospective", description: "TL主持Retrospective。学习内容保存到全局学习和项目上下文，用于改进未来的工作流。" }
 ]} />
 
 ## 状态管理
 
-JARFIS在项目根目录的`.jarfis-state.json`中跟踪工作流状态。
+JARFIS通过结构化状态文件维护工作流状态，跟踪以下内容：
 
-```json
-{
-  "work_name": "auth-system",
-  "docs_dir": ".jarfis/works/2026-03-05/auth-system",
-  "branch": "jarfis/auth-system",
-  "base_branch": "main",
-  "current_phase": 4,
-  "required_roles": {
-    "backend": true,
-    "frontend": true,
-    "ux": true,
-    "devops": false,
-    "security": true
-  },
-  "api_spec_required": true,
-  "phases": {
-    "T": { "status": "completed" },
-    "4": { "status": "in_progress" },
-    "4.5": { "status": "pending" }
-  }
-}
-```
+- **当前Phase** — 正在执行的Phase
+- **Phase输出物** — 每个已完成Phase产生的产出物
+- **Gate决策** — 在每个Gate记录的人类决策及时间戳
+- **Agent激活** — 已激活的Agent及其输出物
+- **恢复检查点** — 用于恢复中断工作流的快照
 
-主要字段：
-- **`current_phase`** — 表示当前活跃Phase的数字或`"done"`
-- **`required_roles`** — 控制哪些Agent被激活的布尔标志
-- **`phases`** — 各Phase的状态追踪（pending / in_progress / completed / skipped）
+状态以JSON文件形式持久化保存在项目内的`.jarfis/`目录中。这使得工作流在中断后可以恢复——从中断的准确位置继续。
 
 ## 学习系统
 
-JARFIS通过两级学习系统，随着工作流的积累不断进化。
+JARFIS实现了支持持续改进的3块学习架构：
 
-### 全局学习：`~/.claude/jarfis-learnings.md`
-存储在用户主目录，所有项目共享。包含：
-- **Agent Hints** — 从Retrospective中积累的行为规则
-- **Workflow Patterns** — 经过验证的重复模式
+- **全局学习** — 跨项目的模式、最佳实践和反模式。Phase 0加载，Phase 6更新。
+- **项目上下文** — 项目特定的规范、技术栈决策、架构模式。在同一项目内的工作流间持久保留。
+- **工作流记忆** — 当前工作流状态、已做的决策及其依据。临时性——仅在工作流期间存在。
 
-### 项目上下文：`.jarfis/context.md`
-注入Agent提示词的项目特定知识：
-- 技术栈详情和convention
-- 业务领域知识
-- 集成约束和现有模式
-
-### 项目概要：`.jarfis/project-profile.md`
-由`/jarfis:project-init`生成，由`/jarfis:project-update`更新。
-
-## 设计原则
-
-1. **专业化** — 每个Agent在一个领域拥有深度专业知识
-2. **阶段交付** — 结构化Phase确保完整性，不会意外跳过任何步骤
-3. **Human Gate** — 重要决策在3个检查点要求明确的用户审批
-4. **条件激活** — Agent和Phase仅在相关时激活
-5. **有状态** — 工作通过`.jarfis-state.json`跨会话边界持久化
-6. **持续学习** — 每次Retrospective通过全局和项目学习改进未来工作流
-7. **Claude Code原生** — 无需外部服务，完全在开发环境内运行
+这一架构意味着JARFIS随时间不断进步——从过去的失败和成功中学习，根据你的具体项目上下文调整推荐内容。
 
 ## 下一步
 
 - [快速开始](/zh/docs/getting-started) — 安装JARFIS并运行第一个工作流
 - [API参考](/zh/docs/api-reference) — 所有命令和配置详情
-- [指南与定制](/zh/docs/guides-customization) — 高级工作流模式
+- [指南与自定义](/zh/docs/guides-customization) — 高级工作流模式
