@@ -68,7 +68,7 @@ export default function TableOfContents({ className = '' }: TableOfContentsProps
           <li key={heading.id} style={{ paddingLeft: `${(heading.level - 2) * 12}px` }}>
             <a
               href={`#${heading.id}`}
-              className="block text-xs py-1.5 transition-colors"
+              className="block text-xs py-2.5 transition-colors"
               style={{
                 fontFamily: 'var(--font-mono)',
                 color: activeId === heading.id ? 'var(--color-primary-light)' : 'var(--color-text-muted)',

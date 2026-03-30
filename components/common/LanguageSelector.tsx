@@ -4,6 +4,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { useTranslations } from 'next-intl';
 import { SUPPORTED_LOCALES, LOCALE_NATIVE_LABELS, LOCALE_LABELS, type Locale } from '@/i18n/config';
+import { getPathWithoutLocale } from '@/lib/paths';
 
 interface LanguageSelectorProps {
   currentLocale: string;
@@ -17,17 +18,6 @@ export default function LanguageSelector({ currentLocale }: LanguageSelectorProp
   const router = useRouter();
   const dropdownRef = useRef<HTMLDivElement>(null);
   const optionRefs = useRef<(HTMLButtonElement | null)[]>([]);
-
-  function getPathWithoutLocale(path: string): string {
-    const segments = path.split('/');
-    const localeIndex = segments.findIndex((s) =>
-      SUPPORTED_LOCALES.includes(s as Locale)
-    );
-    if (localeIndex !== -1) {
-      segments.splice(localeIndex, 1);
-    }
-    return segments.join('/') || '/';
-  }
 
   function switchLocale(newLocale: Locale) {
     const pathWithoutLocale = getPathWithoutLocale(pathname);

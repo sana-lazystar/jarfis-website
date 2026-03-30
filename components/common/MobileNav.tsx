@@ -6,6 +6,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { SUPPORTED_LOCALES, LOCALE_LABELS, LOCALE_NATIVE_LABELS, type Locale } from '@/i18n/config';
 import { useScrollLock } from '@/hooks/useScrollLock';
+import { getPathWithoutLocale } from '@/lib/paths';
 
 interface NavLink {
   href: string;
@@ -15,17 +16,6 @@ interface NavLink {
 interface MobileNavProps {
   locale: string;
   navLinks: NavLink[];
-}
-
-function getPathWithoutLocale(path: string): string {
-  const segments = path.split('/');
-  const localeIndex = segments.findIndex((s) =>
-    SUPPORTED_LOCALES.includes(s as Locale)
-  );
-  if (localeIndex !== -1) {
-    segments.splice(localeIndex, 1);
-  }
-  return segments.join('/') || '/';
 }
 
 export default function MobileNav({ locale, navLinks }: MobileNavProps) {

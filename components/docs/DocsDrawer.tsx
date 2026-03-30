@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { usePathname } from 'next/navigation';
 import { useScrollLock } from '@/hooks/useScrollLock';
 
 interface DocsDrawerProps {
@@ -25,7 +26,14 @@ export default function DocsDrawer({
   const drawerRef = useRef<HTMLDivElement>(null);
   const openBtnRef = useRef<HTMLButtonElement>(null);
 
+  const pathname = usePathname();
+
   useScrollLock(isOpen);
+
+  // 페이지 이동 시(사이드바 링크 클릭) 자동 닫힘
+  useEffect(() => {
+    setIsOpen(false);
+  }, [pathname]);
 
   // Escape 키로 닫기
   useEffect(() => {
